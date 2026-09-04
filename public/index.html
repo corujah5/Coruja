@@ -1,0 +1,1499 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<link rel="icon" type="image/png" href="/logo.png">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#111111">
+<title>Coruja</title>
+<style>
+:root{--yellow:#ffd400;--black:#111;--dark:#171717;--dark2:#222;--text:#111;--muted:#8b8b8b;--line:#e8e8e8;--soft:#f5f5f5;--green:#9be43d}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Arial,Helvetica,sans-serif;background:#fff;color:var(--text)}body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}button,input{font:inherit}button{cursor:pointer}a{text-decoration:none;color:inherit}
+.top{height:64px;border-bottom:1px solid var(--line);display:flex;align-items:center;padding:0 28px;gap:24px;position:sticky;top:0;background:#fff;z-index:50}.brand{display:flex;align-items:center;gap:7px}.brand img{width:150px;height:46px;object-fit:contain;display:block}.brand i{display:none}.nav{display:flex;gap:22px;font-size:14px;font-weight:800}.nav a.active{color:#000}.search{margin-left:auto;position:relative}.search input{width:250px;padding:10px 14px 10px 34px;border:1px solid #ddd;background:#f7f7f7;border-radius:22px;outline:none}.search span{position:absolute;left:13px;top:9px;color:#777}.login{border:0;background:#111;color:#fff;border-radius:22px;padding:10px 18px;font-weight:900}
+.page{max-width:1200px;margin:auto;padding:25px 28px 100px}.view{display:none}.view.active{display:block}.btn{border:0;border-radius:8px;padding:12px 18px;font-weight:900}.btn.dark{background:#111;color:#fff}.btn.yellow{background:var(--yellow);color:#111}.btn.outline{background:#fff;border:1px solid #ddd}
+.section{margin:30px 0}.sectionHead{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px}.sectionHead h2{font-size:24px;margin:0}.sectionHead button,.sectionHead a{border:0;background:none;color:#777;font-weight:900;font-size:13px}.row{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:2px 0 10px;scrollbar-width:thin}.card{flex:0 0 150px;width:150px;min-width:150px;position:relative}.poster{width:150px;height:224px;border-radius:8px;overflow:hidden;background:#ddd;position:relative}.poster img{width:100%;height:100%;object-fit:cover}.artFallback{width:100%;height:100%;display:grid;place-items:end start;padding:12px;background:linear-gradient(145deg,#333,#111);color:#fff;font-weight:950;font-size:16px;line-height:1.05}.score{position:absolute;left:7px;top:7px;background:var(--yellow);padding:5px 6px;border-radius:4px;font-weight:900;font-size:11px}.add{position:absolute;right:6px;top:7px;width:29px;height:29px;border-radius:50%;border:1px solid var(--yellow);background:#111d;color:#fff;font-size:20px;line-height:1}.add.on{background:var(--yellow);color:#111}.favorite{position:absolute;right:6px;top:40px;width:29px;height:29px;border-radius:50%;border:1px solid #fff8;background:#111d;color:#fff;font-size:17px;line-height:1}.favorite.on{background:#ff1744;border-color:#ff1744;color:#fff}.card h3{font-size:14px;margin:8px 0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.card small{color:#888}.stars{color:#ffc400;font-size:12px;margin-top:5px}.empty{padding:22px;border:1px dashed #ccc;border-radius:10px;color:#777}
+.searchView{padding-top:5px}
+/* A pesquisa principal fica no topo; não repetir a caixa dentro da página. */
+#busca > .sectionHead, #busca > .searchBox{display:none!important}.searchBox{width:100%;font-size:22px;padding:16px;border:1px solid #ddd;border-radius:12px}.grid{display:grid;grid-template-columns:repeat(7,150px);gap:18px 14px;align-items:start}.grid .card{min-width:150px;width:150px}.providerSection .row{padding-bottom:4px}.continueSectionHidden{display:none!important}.continue{background:#f6f6f6;border:1px solid #e5e5e5;border-radius:12px;padding:18px}.continue>.empty{padding:13px 16px;line-height:1.35}.continueGrid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.continueItem{background:#fff;border:1px solid #ddd;border-radius:9px;overflow:hidden;display:grid;grid-template-columns:90px 1fr}.continueItem img{width:90px;height:125px;object-fit:cover}.continueBody{padding:12px}.continueBody b{font-size:11px;color:#777}.continueBody h3{font-size:14px;margin:7px 0}.progress{height:5px;background:#ddd;border-radius:10px;overflow:hidden}.progress i{display:block;height:100%;background:var(--yellow)}
+.positionLine{display:flex;align-items:center;gap:8px;margin:9px 0;color:#666;font-size:12px}.positionEdit{border:1px solid #ddd;background:#fff;border-radius:7px;width:30px;height:30px;display:grid;place-items:center;font-size:15px}.positionEdit:hover{background:#f7f7f7}.episodeActions{display:flex;align-items:center;justify-content:flex-end;gap:7px;flex-wrap:wrap}.episodeActions .episodeOpen{border:1px solid #ddd;background:#fff;border-radius:8px;padding:9px 10px;font-weight:900;font-size:12px}.positionMini{display:flex;align-items:center;gap:6px;font-size:12px;color:#777}.positionMini strong{color:#111}.continueAction{margin-top:10px;display:flex;align-items:center;gap:8px}.continueAction .btn{padding:8px 11px;font-size:12px}.positionInput{width:95px;border:1px solid #ddd;border-radius:7px;padding:7px 8px}.positionEditor{display:flex;align-items:center;gap:6px;margin-top:8px;flex-wrap:wrap}.positionEditor button{border:0;background:var(--yellow);border-radius:7px;padding:7px 10px;font-weight:900}.positionEditor .cancel{background:#eee}.movieModal{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:190;display:flex;align-items:center;justify-content:center;padding:18px}.movieModalCard{width:min(900px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:16px}.positionModalCard{width:min(430px,100%);background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden;border:1px solid #eee}.positionModalBody{padding:22px 18px 18px}.positionModalTitle{margin:0 0 14px;font-size:24px;line-height:1.15;color:#111;font-weight:900}.positionModalHint{margin:0 0 14px;color:#777;font-size:16px;line-height:1.4}.positionModalHint b{color:#555}.positionModalInput{display:block;width:100%;height:38px;border:2px solid #f0a900;border-radius:9px;padding:7px 10px;font-size:18px;color:#222;background:#fff;outline:none;box-sizing:border-box}.positionModalInput:focus{border-color:#e3a000;box-shadow:0 0 0 3px rgba(255,204,0,.18)}.positionModalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:14px}.positionModalActions .btn{min-width:92px;height:48px}.positionModalActions .btn.yellow{background:var(--yellow);color:#111}.positionModalActions .btn.outline{background:#fff;color:#111;border:1px solid #ddd}.logoutModal{position:fixed;inset:0;background:rgba(0,0,0,.62);z-index:220;display:none;align-items:center;justify-content:center;padding:18px}.logoutModal.show{display:flex}.logoutModalCard{width:min(430px,100%);background:#fff;border-radius:14px;box-shadow:0 18px 50px rgba(0,0,0,.28);overflow:hidden;border:1px solid #eee}.logoutModalBody{padding:24px 18px 18px}.logoutModalTitle{margin:0 0 12px;font-size:24px;line-height:1.15;color:#111;font-weight:900}.logoutModalText{margin:0;color:#777;font-size:16px;line-height:1.45}.logoutModalActions{display:flex;justify-content:flex-end;gap:8px;margin-top:18px}.logoutModalActions .btn{min-width:92px;height:48px}.logoutModalActions .btn.yellow{background:var(--yellow);color:#111}.logoutModalActions .btn.outline{background:#fff;color:#111;border:1px solid #ddd}movieModalHero{position:relative;height:330px;background:#111;color:#fff}.movieModalHero img{width:100%;height:100%;object-fit:cover;opacity:.5}.movieModalOverlay{position:absolute;inset:0;background:linear-gradient(90deg,#000e,#0005,transparent);padding:28px;display:flex;align-items:flex-end}.movieModalInfo{max-width:650px}.movieModalInfo h2{font-size:38px;margin:0 0 8px}.movieModalBody{padding:24px}.movieProgressBox{background:#f6f6f6;border:1px solid #e5e5e5;border-radius:12px;padding:16px}.movieProgressTop{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap}.movieProgressTop strong{font-size:16px}.movieModalClose{position:absolute;right:16px;top:16px;width:40px;height:40px;border:0;border-radius:50%;background:#111c;color:#fff;font-size:22px;z-index:2}.movieMeta{color:#777;line-height:1.5;margin:10px 0 18px}.movieDetailPage{max-width:1050px;margin:auto}.movieDetailHero{position:relative;border-radius:14px;overflow:hidden;background:#111;color:#fff;min-height:330px}.movieDetailHero>img{width:100%;height:330px;object-fit:cover;opacity:.48}.movieDetailOverlay{position:absolute;inset:0;background:linear-gradient(180deg,#0002 20%,#0005 52%,#000e 100%);display:flex;align-items:flex-end;padding:28px}.movieDetailInfo{max-width:760px}.movieDetailInfo h1{font-size:44px;line-height:1;margin:0 0 10px}.movieDetailInfo p{line-height:1.5;color:#eee}.movieBack{position:absolute;left:16px;top:16px;z-index:3;background:#111c;color:#fff;border:0;border-radius:50%;width:40px;height:40px;font-size:20px}.movieDetailBody{padding:20px 0 30px}.movieDetailBody h2{font-size:24px;margin:0 0 10px}.movieOverview{margin:0;color:#666;line-height:1.55;font-size:16px}.movieDetailProgress{background:#f7f7f7;border:1px solid #e3e3e3;border-radius:14px;padding:18px;margin-top:18px}.movieDetailProgressTop{display:flex;align-items:center;justify-content:space-between;gap:12px}.movieDetailProgressTop h3{margin:0;font-size:18px}.movieContinue{margin-top:12px}.moviePreview{display:none!important}
+.detail{display:none}.detail.active{display:block}.detailHero{position:relative;border-radius:14px;overflow:hidden;background:#111;color:#fff;min-height:360px}.detailHero>img{width:100%;height:360px;object-fit:cover;opacity:.42}.detailOverlay{position:absolute;inset:0;background:linear-gradient(90deg,#000d 0%,#0007 45%,transparent 100%);display:flex;align-items:flex-end;padding:32px}.detailInfo{max-width:650px}.backBtn{position:absolute;left:15px;top:15px;z-index:3;background:#111c;color:#fff;border:0;border-radius:50%;width:38px;height:38px}.detailInfo h1{font-size:44px;margin:0 0 8px}.detailMeta{display:flex;align-items:center;flex-wrap:wrap;gap:7px 9px;margin:4px 0 10px;font-size:14px;line-height:1.45}.detailMeta .dot{opacity:.75}.detailMeta .statusBadge{width:max-content;max-width:100%;margin-top:2px;flex:0 0 auto}.detailInfo p{line-height:1.5}.tabs{display:flex;background:#fff;border-bottom:1px solid #ddd;margin-top:0}.tab{flex:1;padding:16px;text-align:center;border:0;background:#fff;font-weight:900;color:#777}.tab.active{color:#111;border-bottom:4px solid var(--yellow)}.detailSection{padding:20px 0}.seasonBar{display:flex;align-items:center;justify-content:space-between;padding:18px;background:#f5f5f5;border-radius:10px;margin:14px 0}.episode{display:grid;grid-template-columns:125px 1fr 48px;gap:15px;align-items:center;padding:10px;border-bottom:1px solid #eee}.episode img{width:125px;height:72px;object-fit:cover;border-radius:6px;background:#eee}.imageFallback{width:100%;height:100%;min-height:72px;border-radius:6px;background:linear-gradient(135deg,#222,#555);color:#ffd400;display:grid;place-items:center;font-weight:950;font-size:16px;letter-spacing:1px}.episode b{font-size:18px}.episode p{margin:5px 0;color:#777}.check{width:38px;height:38px;border-radius:7px;border:1px solid #e1e3e7;background:#f1f2f5;color:#8b9098;font-size:18px;font-weight:900;display:grid;place-items:center;cursor:pointer;box-shadow:inset 0 1px 0 #fff}.check:hover{background:#e8e9ed;color:#111}.check.done{background:var(--yellow);border-color:var(--yellow);color:#111}.check.done:hover{filter:brightness(.97)}.statusBadge{display:inline-flex;align-items:center;padding:4px 9px;border-radius:999px;font-weight:900;font-size:12px;background:#eef7ee;color:#287a35;border:1px solid #bfe3c3}.statusBadge.cancelled{background:#fff0f0;color:#b3261e;border-color:#f0b8b5}.seasonNotice{display:flex;align-items:center;gap:10px;margin:12px 0;padding:14px 16px;border-radius:10px;border:1px solid #cfe8d2;background:#effaf0;color:#216b2b}.seasonNotice span{color:#52705a;font-size:13px}.seasonNotice.cancelled{background:#fff1f1;border-color:#f1c5c2;color:#a52a23}.seasonNotice.cancelled span{color:#80504d}.seasonNotice.finished{background:#f5f5f5;border-color:#ddd;color:#333}.seasonNotice.finished span{color:#666}.chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}.chip{display:inline-flex;align-items:center;padding:6px 10px;border:1px solid #ddd;border-radius:999px;background:#f7f7f7;font-size:13px;font-weight:800}
+.profileHero{background:#171717;color:#fff;border-radius:16px;overflow:hidden}.cover{display:none}.profileBox{padding:28px;position:relative;margin-top:0}.avatar img{width:100%;height:100%;object-fit:cover;border-radius:50%}.avatar{width:110px;height:110px;border-radius:50%;border:5px solid #fff;background:var(--yellow);display:grid;place-items:center;color:#111;font-size:40px;font-weight:950}.profileName{display:flex;align-items:center;gap:12px;margin-top:10px}.profileName h1{margin:0}.edit{background:#fff;border:0;border-radius:22px;padding:9px 18px;font-weight:900}.stats{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:22px}.stat{background:#252525;border-radius:10px;padding:20px;text-align:center}.stat strong{display:block;color:var(--yellow);font-size:32px}.stat span{color:#aaa;font-size:12px}.profileNav{display:flex;gap:8px;margin:25px 0;overflow:auto}.pill{border:1px solid #444;background:#222;color:#fff;border-radius:22px;padding:10px 16px;font-weight:900;white-space:nowrap}.pill.active{background:var(--yellow);color:#111;border-color:var(--yellow)}.favoriteTabs{display:flex;gap:8px;margin:-5px 0 18px;overflow:auto}
+.collectionTabs{margin-bottom:8px}.typeTabs{margin-top:0}
+.bottom{display:none}.toast{position:fixed;right:20px;bottom:20px;background:#111;color:#fff;padding:12px 16px;border-radius:10px;z-index:200;font-weight:800}
+
+@media(max-width:1200px){.grid{grid-template-columns:repeat(6,150px)}}@media(max-width:900px){.grid{grid-template-columns:repeat(4,150px)}.top{padding:0 16px}.nav{display:none}.search{margin-left:auto}.search input{width:180px}.grid{grid-template-columns:repeat(4,150px)}}
+/* Tela de série - estilo mobile inspirado na referência, mantendo o visual CORUJA */
+.seriesContinue{background:#252525;border-radius:12px;padding:14px;margin:0 0 18px;border:1px solid #3a3a3a}.seriesContinueTitle{font-size:14px;font-weight:900;margin-bottom:10px;color:#fff}.seriesContinueCard{display:flex;align-items:center;gap:12px;background:#1b1b1b;border-radius:10px;padding:8px}.seriesContinueCard img{width:78px;height:58px;object-fit:cover;border-radius:6px;background:#333}.seriesContinueCard .scInfo{min-width:0;flex:1}.seriesContinueCard .scSeries{font-weight:900;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scCode{font-weight:900;color:#fff;font-size:12px;margin-top:3px}.seriesContinueCard .scName{color:#aaa;font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scPos{color:var(--yellow);font-size:11px;margin-top:5px}.seriesContinueCard .scBtn{border:0;background:var(--yellow);color:#111;border-radius:8px;padding:8px 10px;font-weight:900;white-space:nowrap}.seriesContinueActions{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:0 0 auto}.seriesContinueActions .positionEdit{width:32px;height:32px;padding:0}.seriesContinueActions .check{width:32px;height:32px;padding:0}.seasonListTitle{font-size:14px;font-weight:900;margin:8px 0 10px;color:#fff;background:#252525;border:1px solid #3a3a3a;border-left:3px solid var(--yellow);border-radius:7px;padding:8px 10px;box-sizing:border-box}.seasonRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#252525;border:1px solid #3a3a3a;border-radius:10px;padding:14px 12px;margin:8px 0;cursor:pointer;color:#fff}.seasonRow.active{border-color:var(--yellow)}.seasonRow .seasonLeft{display:flex;align-items:center;gap:7px;font-weight:900}.seasonRow .seasonArrow{color:#aaa}.seasonRow .seasonCount{color:#aaa;font-size:12px}.seasonRow .seasonDone{color:var(--yellow);font-weight:900}.seasonEpisodes{margin:0 0 16px;border-radius:10px;overflow:hidden;background:#1b1b1b;border:1px solid #333}.seasonEpisodes .episode{background:#1b1b1b}.seasonEpisodes .episode:hover{background:#222}.seasonEpisodes .episodeMain b{color:#fff}.seasonEpisodes .episodeMain p{color:#aaa}.seasonEpisodes .positionMini{color:#777}.seasonEpisodes .positionMini strong{color:#fff}.episodePositionEdit{flex:0 0 auto;background:#fff;color:#111;border-color:#ddd;width:32px;height:32px}
+@media(max-width:650px){body{background:#f3f3f3}.top{height:58px;background:#111;color:#fff;border:0}.brand{font-size:20px}.brand i{width:28px;height:28px}.search input{width:145px;background:#252525;border-color:#444;color:#fff}.login{display:none}.page{padding:0 0 82px}.section{margin:26px 16px}.sectionHead h2{font-size:21px}.row{margin-right:-16px;padding-right:16px}.card{flex-basis:150px;width:150px;min-width:150px}.poster{width:150px;height:224px}.continue{padding:10px}.continueGrid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,150px);gap:10px}.grid .card{flex-basis:auto;width:150px;min-width:150px}.grid .poster{width:150px;height:224px}.detailHero{border-radius:0;min-height:330px}.detailHero>img{height:330px}.detailOverlay{padding:20px}.detailInfo h1{font-size:34px}.episode{grid-template-columns:92px 1fr 42px;gap:10px}.episode img{width:92px;height:62px}.episode b{font-size:15px}.episode p{font-size:12px}.episodeActions{justify-content:flex-start}.episodeActions .episodeOpen{font-size:11px;padding:8px}.profileHero{border-radius:0}.cover{height:105px}.profileBox{padding:18px 18px 22px;margin-top:0}.profileName{margin-top:6px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;height:68px;background:#111;color:#fff;z-index:80;padding-bottom:env(safe-area-inset-bottom)}.bottom button{border:0;background:none;color:#aaa;font-size:11px;font-weight:800}.bottom button.active{color:var(--yellow)}.bottom span{display:block;font-size:22px;margin-bottom:3px}.tmdb{padding:0 16px 20px}}
+
+/* Comunidade e estatísticas — experiência Coruja */
+.profileStats{grid-template-columns:repeat(4,1fr)}
+.profileQuick{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:18px 0}.profileQuick button{border:1px solid #444;background:#252525;color:#fff;border-radius:10px;padding:12px;font-weight:900;text-align:left}.profileQuick button span{display:block;color:var(--yellow);font-size:18px;margin-bottom:3px}.profileSection{background:#252525;border-radius:12px;padding:16px;margin:14px 0;color:#fff}.profileSection h3{margin:0 0 12px;font-size:18px}.profileContinue{display:flex;gap:10px;overflow-x:auto;padding-bottom:4px}.profileContinueItem{flex:0 0 125px;background:#1b1b1b;border:1px solid #333;border-radius:10px;overflow:hidden;cursor:pointer}.profileContinueItem img{width:100%;height:155px;object-fit:cover;display:block}.profileContinueItem .pcBody{padding:8px}.profileContinueItem b{display:block;font-size:12px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profileContinueItem small{display:block;color:#aaa;margin-top:4px;font-size:10px}.achievementGrid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.achievement{background:#1b1b1b;border:1px solid #333;border-radius:10px;padding:12px}.achievement b{display:block;font-size:14px}.achievement span{display:block;color:#aaa;font-size:11px;margin-top:4px}.achievement.locked{opacity:.45}.profileRange{display:flex;gap:8px;overflow:auto;margin:-2px 0 14px}.profileRange button{border:1px solid #444;background:#1b1b1b;color:#fff;border-radius:18px;padding:7px 12px;font-weight:800;white-space:nowrap}.profileRange button.active{background:var(--yellow);color:#111;border-color:var(--yellow)}.statsChart .bars{display:flex;align-items:flex-end;gap:7px;min-height:175px;overflow-x:auto}.statsChart .barCol{flex:1;min-width:30px;text-align:center}.statsChart .barCol b{font-size:10px;color:#fff}.statsChart .barCol .bar{display:block;width:100%;max-width:26px;margin:4px auto;background:var(--yellow);border-radius:4px 4px 0 0}.statsChart .barCol span{display:block;color:#aaa;font-size:9px;margin-top:4px}.profileTimeStrong{color:var(--yellow);font-weight:900}
+.statsChart{background:#252525;border-radius:12px;padding:18px;margin:18px 0}.statsChart h3{margin:0 0 14px}.bars{height:180px;display:flex;align-items:flex-end;gap:8px;border-bottom:1px solid #444;padding:0 4px}.barCol{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;min-width:0}.bar{width:100%;max-width:34px;background:var(--yellow);border-radius:5px 5px 0 0;min-height:3px}.barCol span{font-size:10px;color:#aaa}.barCol b{font-size:10px;color:#fff}.statWide{background:#252525;border-radius:12px;padding:18px;margin-top:12px}.episodeCommunityCard{margin-top:18px}.commentCountBadge{display:inline-flex;align-items:center;gap:6px;background:#252525;color:#fff;border-radius:20px;padding:7px 11px;font-size:12px;font-weight:900}.replyBox{margin:10px 0 0 48px;padding:10px;background:#f5f5f5;border-radius:10px}.replyForm{display:flex;gap:8px;margin-top:8px}.replyForm input{flex:1;border:1px solid #ddd;border-radius:8px;padding:9px}.replyForm button{border:0;background:var(--yellow);border-radius:8px;padding:9px 12px;font-weight:900}.replyItem{padding:8px 0;border-top:1px solid #e5e5e5;font-size:13px}.replyItem small{display:block;color:#999;margin-top:2px}
+
+.episode{cursor:pointer}.episode:hover{background:#fafafa}.episodeMain{min-width:0}.episodeActions{display:flex;align-items:center;justify-content:flex-end;gap:8px}.commentPanel{margin:18px 0 30px;border:1px solid #e5e5e5;border-radius:14px;background:#f8f8f8;overflow:hidden}.commentHead{padding:18px 20px;background:#111;color:#fff}.commentHead h3{margin:0 0 5px;font-size:20px}.commentHead p{margin:0;color:#bbb;font-size:13px}.commentForm{padding:16px 20px;background:#fff;border-bottom:1px solid #e5e5e5}.commentForm textarea{width:100%;min-height:95px;resize:vertical;border:1px solid #ddd;border-radius:10px;padding:12px;outline:none}.commentTools{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:10px;flex-wrap:wrap}.photoLabel{display:inline-flex;align-items:center;gap:8px;border:1px solid #ddd;border-radius:9px;padding:9px 12px;font-weight:800;background:#fff;color:#111;cursor:pointer}.photoLabel:hover{background:#f7f7f7}.profilePhotoEdit .photoLabel{color:#111!important}.photoLabel input{display:none}.photoPreview{display:none;max-width:180px;max-height:120px;border-radius:8px;margin-top:10px;object-fit:cover}.commentsList{padding:0 20px 20px}.commentsEmpty{padding:25px 0;color:#888;text-align:center}.commentItem{padding:17px 0;border-bottom:1px solid #e6e6e6}.commentTop{display:flex;align-items:center;gap:10px}.commentAvatar{width:38px;height:38px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:950;color:#111;overflow:hidden;flex:0 0 auto}.commentAvatar img{width:100%;height:100%;object-fit:cover}.commentMeta b{display:block;font-size:14px}.commentMeta span{display:block;color:#999;font-size:11px;margin-top:2px}.commentText{margin:10px 0 0;white-space:pre-wrap;line-height:1.45}.commentImage{display:block;width:min(100%,520px);max-height:520px;object-fit:cover;border-radius:10px;margin-top:10px}.commentActions{display:flex;gap:14px;margin-top:10px}.commentActions button{border:0;background:none;padding:0;color:#777;font-size:12px;font-weight:800}.commentActions button:hover{color:#111}.episodeOpen{border:1px solid #ddd;background:#fff;border-radius:8px;padding:7px 9px;font-size:11px;font-weight:900}.episodeOpen.active{background:var(--yellow);border-color:var(--yellow)}
+@media(max-width:650px){.commentHead{padding:15px}.commentForm,.commentsList{padding-left:14px;padding-right:14px}.commentTools{align-items:stretch}.commentTools .btn{width:100%}.photoLabel{justify-content:center}.commentImage{max-height:360px}.episodeOpen{padding:6px 7px}.episodeActions{gap:4px}.movieModal{padding:0}.movieModalCard{width:100%;max-height:100%;height:100%;border-radius:0}.movieModalHero{height:300px}.movieModalInfo h2{font-size:30px}.movieModalBody{padding:18px}}
+
+/* TV Time-inspired organization: compact cards, clean progress and profile sections. */
+.episodeCommunitySlot{margin:0 0 12px}
+.commentPanel{border:1px solid #e4e4e4;border-radius:12px;overflow:hidden;background:#fff}
+.commentHead{background:#111;color:#fff;padding:18px 20px}
+.commentHead h3{margin:0 0 6px;font-size:19px}.commentHead p{margin:0;color:#ddd;font-size:13px}
+.commentForm{padding:16px;border-bottom:1px solid #eee}.commentForm textarea{width:100%;min-height:105px;resize:vertical;border:1px solid #ddd;border-radius:10px;padding:12px;outline:none}.commentForm textarea:focus{border-color:#ffd400}
+.commentTools{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-top:12px}.photoLabel{display:inline-flex;align-items:center;gap:7px;border:1px solid #ddd;border-radius:8px;padding:10px 13px;font-weight:900;background:#fff;color:#111;cursor:pointer}.photoLabel input{display:none}.photoPreview{display:none;max-width:180px;max-height:180px;border-radius:9px;margin-top:10px;object-fit:cover}
+.commentsList{padding:0 16px 16px}.commentCountBadge{display:inline-block;background:#111;color:#fff;border-radius:18px;padding:7px 11px;font-weight:900;font-size:12px;margin:14px 0}.commentItem{padding:15px 0;border-bottom:1px solid #eee}.commentTop{display:flex;gap:10px;align-items:center}.commentAvatar{width:38px;height:38px;border-radius:50%;background:#ffd400;display:grid;place-items:center;font-weight:950}.commentMeta{display:flex;flex-direction:column}.commentMeta span{font-size:11px;color:#999}.commentText{margin:10px 0;line-height:1.45}.commentImage{display:block;max-width:min(100%,520px);max-height:420px;border-radius:10px;object-fit:cover}.commentActions{display:flex;gap:14px;flex-wrap:wrap;margin-top:10px}.commentActions button{border:0;background:none;color:#777;font-size:12px;font-weight:800;padding:0}.replyForm{display:flex;gap:8px;margin-top:12px}.replyForm input{flex:1;border:1px solid #ddd;border-radius:8px;padding:9px}.replyForm button{border:0;background:#ffd400;border-radius:8px;padding:9px 12px;font-weight:900}.replyItem{margin:10px 0 0 48px;padding:9px 12px;background:#f6f6f6;border-radius:9px;font-size:12px}.replyItem small{display:block;color:#999;margin-top:4px}
+.episodeFeedItem{display:grid;grid-template-columns:110px 1fr auto;gap:15px;align-items:center;background:#fff;border:1px solid #e5e5e5;border-radius:12px;padding:10px;margin:10px 0}.episodeFeedItem img{width:110px;height:70px;object-fit:cover;border-radius:7px;background:#eee}.episodeFeedBody{min-width:0}.episodeFeedBody>b{display:block;font-size:16px}.episodeFeedBody>span{display:block;color:#777;font-size:12px;margin:4px 0}.episodeFeedItem .positionLine{margin:6px 0}.episodeFeedItem .btn{white-space:nowrap}
+.profileHero{box-shadow:0 8px 28px #00000018}.profileName h1{font-size:28px}.profileStats{grid-template-columns:repeat(4,1fr)}.profileStats .stat{padding:16px}.profileStats .stat strong{font-size:27px}
+.statsChart,.statWide{background:#252525;border-radius:12px;padding:18px;margin-top:12px}.statsChart h3,.statWide h3{margin-top:0}.bars{height:190px;display:flex;align-items:flex-end;justify-content:space-between;gap:8px}.barCol{height:100%;display:flex;flex:1;flex-direction:column;justify-content:flex-end;align-items:center;gap:5px}.barCol b{font-size:11px}.bar{display:block;width:min(28px,70%);background:#ffd400;border-radius:5px 5px 0 0;min-height:3px}.barCol span{font-size:10px;color:#aaa;text-transform:uppercase}
+@media(max-width:650px){
+  .profileStats{grid-template-columns:repeat(2,1fr)}
+  .episodeFeedItem{grid-template-columns:78px 1fr}.episodeFeedItem img{width:78px;height:78px}.episodeFeedItem>.btn{grid-column:2;justify-self:start}.commentTools{align-items:stretch;flex-direction:column}.commentTools .btn{width:100%}.commentPanel{border-radius:0}.commentsList{padding:0 12px 14px}.commentHead{padding:15px}.replyItem{margin-left:25px}
+}
+
+
+.ratingFlow{position:fixed;inset:0;background:#0009;z-index:300;display:flex;align-items:center;justify-content:center;padding:20px}.ratingFlowCard{width:min(520px,100%);max-height:90vh;overflow:auto;background:#fff;border-radius:18px;box-shadow:0 25px 80px #0007;padding:26px}.ratingFlowCard h2{margin:0 0 6px;font-size:24px}.ratingFlowCard>p{margin:0 0 20px;color:#777}.ratingStars{display:flex;justify-content:center;gap:7px;margin:12px 0 22px}.ratingStars button{border:0;background:none;font-size:36px;color:#ccc;padding:2px;cursor:pointer}.ratingStars button.on{color:#ffc400}.feelingTitle{text-align:center;font-weight:900;margin:4px 0 10px}.feelingGrid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}.feeling{border:1px solid #ddd;background:#fff;border-radius:10px;padding:10px 5px;font-size:12px;font-weight:800}.feeling.on{border-color:#111;background:#fff8cc}.ratingFlowActions{display:flex;justify-content:flex-end;gap:8px;margin-top:22px}.ratingFlowActions button{border:0;border-radius:9px;padding:11px 16px;font-weight:900}.ratingSkip{background:#eee}.ratingSave{background:var(--yellow)}.finishMovieBtn{margin-top:12px}.completionGate{padding:16px;border:1px dashed #ccc;border-radius:12px;background:#fafafa;color:#666}.completionGate strong{display:block;color:#111;margin-bottom:5px}.movieDoneBadge{display:inline-flex;align-items:center;gap:6px;background:#eefaf0;border:1px solid #bfe3c3;color:#287a35;padding:6px 10px;border-radius:999px;font-size:12px;font-weight:900} .movieDoneToggle{cursor:pointer}.movieDoneToggle:hover{filter:brightness(.97)}
+.seasonPrompt{position:fixed;inset:0;background:#0008;z-index:250;display:flex;align-items:center;justify-content:center;padding:20px}.seasonPromptCard{width:min(430px,100%);background:#fff;border-radius:18px;box-shadow:0 20px 60px #0006;padding:26px 22px 18px;text-align:center}.seasonPromptIcon{width:54px;height:54px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;margin:0 auto 14px;font-size:26px;font-weight:950}.seasonPromptCard h3{font-size:21px;margin:0 0 8px}.seasonPromptCard p{color:#777;line-height:1.45;margin:0 auto 20px;max-width:340px}.seasonPromptActions{display:flex;flex-direction:column;gap:8px}.seasonPromptActions button{width:100%;border-radius:10px;padding:12px 14px;font-weight:950;font-size:14px;cursor:pointer}.seasonPromptYes{border:0;background:var(--yellow);color:#111}.seasonPromptNo{border:1px solid #ddd;background:#fff;color:#222}.seasonPromptNever{border:0;background:#f2f2f2;color:#555;font-size:12px!important}
+
+.socialTools{display:flex;gap:10px;flex-wrap:wrap;margin:18px 0}.socialBtn{border:1px solid #444;background:#222;color:#fff;border-radius:10px;padding:10px 14px;font-weight:900}.socialBtn.yellow{background:var(--yellow);color:#111;border-color:var(--yellow)}
+.socialCounts{display:flex;gap:10px;flex-wrap:wrap;margin:12px 0}.socialCount{background:#252525;border-radius:9px;padding:10px 14px;color:#ddd}.socialCount b{color:var(--yellow);margin-right:4px}.peopleResults{display:grid;gap:10px;margin-top:15px}.personCard{display:flex;align-items:center;gap:12px;background:#fff;border:1px solid #ddd;border-radius:12px;padding:12px}.personAvatar{width:46px;height:46px;border-radius:50%;background:var(--yellow);display:grid;place-items:center;font-weight:950;color:#111;flex:0 0 46px}.personInfo{flex:1;min-width:0}.personInfo b{display:block;font-size:15px}.personInfo small{color:#888}.followBtn{border:0;background:var(--yellow);color:#111;border-radius:9px;padding:9px 12px;font-weight:900}.followBtn.following{background:#eee}.publicHero{background:#171717;color:#fff;border-radius:16px;padding:24px;margin-bottom:20px}.publicTop{display:flex;align-items:center;gap:15px}.publicAvatar{width:78px;height:78px;border-radius:50%;background:var(--yellow);color:#111;display:grid;place-items:center;font-size:30px;font-weight:950}.publicName{margin:0}.publicTabs{display:flex;gap:8px;overflow:auto;margin:18px 0}.publicTab{border:1px solid #444;background:#222;color:#fff;border-radius:20px;padding:9px 14px;font-weight:900;white-space:nowrap}.publicTab.active{background:var(--yellow);color:#111;border-color:var(--yellow)}
+ .authModal{position:fixed;inset:0;background:radial-gradient(circle at 50% 20%,#222 0%,#111 48%,#0c0c0c 100%);z-index:500;display:none;align-items:center;justify-content:center;padding:24px;overflow:auto}.authModal.authGate .movieModalClose{display:none}.authGateActive{overflow:hidden}.authGateActive>header,.authGateActive>main,.authGateActive>.tmdb,.authGateActive>.bottom{display:none!important}.authModal.show{display:flex}.authCard{width:min(500px,100%);background:#1d1d1d;color:#f5f5f5;border:1px solid #303030;border-radius:18px;padding:28px;box-shadow:0 30px 100px #000b}.authBrand{display:flex;align-items:center;justify-content:center;margin-bottom:22px}.authBrand img{width:230px;height:68px;object-fit:contain;display:block}.authCard h2{margin:0 0 8px;text-align:center;font-size:25px}.authCard>p{color:#aaa;text-align:center;margin:0 0 24px;line-height:1.45}.authField{display:grid;gap:7px;margin:14px 0}.authField label{font-size:13px;font-weight:800;color:#eee}.authField input{width:100%;padding:13px 14px;border:1px solid #3b3b3b;border-radius:10px;background:#242424;color:#fff;outline:none}.authField input:focus{border-color:#d5aa00;box-shadow:0 0 0 2px #ffd40022}.authField input::placeholder{color:#888}.authActions{display:grid;gap:10px;margin-top:18px}.authActions .btn{width:100%;padding:13px 18px;border-radius:10px}.authActions .btn.outline{background:transparent;color:#bbb;border-color:#444}.authActions .btn.outline:hover{background:#292929;color:#fff}.authSwitch{border:0;background:none;color:#aaa;font-weight:800}.authError{color:#ef5350;font-size:13px;min-height:18px;margin-top:4px}.authHint{text-align:center;color:#777;font-size:12px;margin-top:18px}.authHint b{color:var(--yellow)}.authClose{position:absolute;right:18px;top:18px;border:0;background:#292929;color:#bbb;border-radius:50%;width:34px;height:34px;font-size:22px}.registerOnly,.loginOnly{display:none}.authUsernameStatus{font-size:12px;min-height:15px}.authCard .movieModalClose{background:#292929;color:#bbb}.adminLogo{display:flex;justify-content:center;margin:-6px 0 16px}.adminLogo img{width:180px;height:auto;display:block;object-fit:contain}.profilePhotoEdit{display:grid;justify-items:center;gap:12px;margin:8px 0 18px}.profilePhotoPreview{width:88px;height:88px;border-radius:50%;display:grid;place-items:center;background:var(--yellow);color:#111;font-size:34px;font-weight:950;overflow:hidden;border:3px solid #fff}.profilePhotoPreview img{width:100%;height:100%;object-fit:cover}#admin.active .detail{display:block}.adminPanel{max-width:650px;margin:40px auto;background:#fff;border:1px solid #ddd;border-radius:16px;padding:28px}.adminPanel h1{margin-top:0}.publicGrid{display:grid;grid-template-columns:repeat(6,1fr);gap:14px}.publicSection{margin:22px 0}.publicSection h3{margin:0 0 12px}.publicEmpty{padding:18px;border:1px dashed #ccc;border-radius:10px;color:#777}.adminUsers{margin-top:22px;border-top:1px solid #eee;padding-top:22px}.adminUsersHead{display:flex;gap:10px;align-items:center;justify-content:space-between;margin-bottom:12px}.adminUsersHead h2{margin:0;font-size:20px}.adminUsersSearch{width:100%;padding:12px 14px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#111;margin-bottom:12px}.adminUserRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:12px;align-items:center;padding:14px 0;border-bottom:1px solid #eee}.adminUserInfo{min-width:0}.adminUserInfo b{display:block;font-size:15px}.adminUserInfo small{display:block;color:#777;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.adminUserActions{display:flex;gap:8px;align-items:center}.adminResetBtn{border:1px solid #ddd;background:#111;color:#fff;border-radius:9px;padding:9px 12px;font-weight:800;cursor:pointer}.adminResetResult{margin-top:12px;padding:14px;border-radius:10px;background:#fff8d6;border:1px solid #ead26b;color:#111}.adminCode{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:18px;font-weight:900;letter-spacing:.5px}.adminDashboard{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:22px 0}.adminStat{background:#f7f7f7;border:1px solid #e1e1e1;border-radius:12px;padding:15px}.adminStat b{display:block;font-size:26px;line-height:1.1;margin-bottom:5px}.adminStat span{font-size:12px;color:#777;text-transform:uppercase;letter-spacing:.5px}.adminInviteBox{display:flex;gap:10px;align-items:center;flex-wrap:wrap}.adminInviteCodeBox{flex:1;min-width:240px;background:#fff8d6;border:1px solid #ead26b;border-radius:10px;padding:12px}.adminInviteActions{display:flex;gap:8px;flex-wrap:wrap}.adminSecondary{margin-top:14px}.adminInviteList{display:grid;gap:8px;margin-top:10px;max-height:520px;overflow-y:auto;padding-right:4px;overscroll-behavior:contain}.adminMiniList{max-height:420px;overflow-y:auto;padding-right:4px;overscroll-behavior:contain}.adminInviteItem{display:flex;justify-content:space-between;gap:12px;align-items:center;padding:10px 12px;border:1px solid #eee;border-radius:9px}.adminInviteItem small{color:#777}.adminStatus{display:inline-flex;align-items:center;padding:4px 8px;border-radius:999px;font-size:11px;font-weight:900}.adminStatus.active{background:#e8f7eb;color:#27783a}.adminStatus.blocked{background:#ffe9e9;color:#b22}.adminUserMeta{display:flex;gap:8px;flex-wrap:wrap;align-items:center;color:#777;font-size:12px}.adminFilterBar{display:flex;gap:8px;align-items:center;margin-bottom:12px}.adminFilterBar select{padding:10px 12px;border:1px solid #ddd;border-radius:10px;background:#fff;color:#111}.adminRecent{margin-top:20px;padding-top:20px;border-top:1px solid #eee}.adminSectionHead{display:flex;justify-content:space-between;align-items:center;gap:10px}.adminViewAll{border:0;background:none;color:#111;font-weight:900;cursor:pointer;padding:4px 0}.adminViewAll:hover{text-decoration:underline} .adminTableControls{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap;margin:10px 0}.adminTableControls label{font-size:13px;color:#777;display:flex;align-items:center;gap:6px}.adminPageSize{padding:8px 28px 8px 10px;border:1px solid #ddd;border-radius:8px;background:#fff;color:#111}.adminPager{display:flex;align-items:center;justify-content:flex-end;gap:5px;flex-wrap:wrap;margin-top:12px}.adminPager button{min-width:34px;height:34px;padding:0 9px;border:1px solid #ddd;background:#fff;color:#333;border-radius:8px;font-weight:800;cursor:pointer}.adminPager button.active{background:#ffd500;border-color:#ffd500;color:#111}.adminPager button:disabled{opacity:.45;cursor:not-allowed}.adminPager .dots{padding:0 3px;color:#777}.adminMiniList{display:grid;gap:8px;margin-top:10px}.adminMiniRow{display:flex;justify-content:space-between;gap:10px;padding:10px 12px;border:1px solid #eee;border-radius:9px}.adminMiniRow small{color:#777}.adminCopyBtn{border:1px solid #d7b700;background:#ffd900;color:#111;border-radius:8px;padding:8px 10px;font-weight:900;cursor:pointer}@media(max-width:800px){.adminDashboard{grid-template-columns:repeat(2,1fr)}}@media(max-width:900px){.publicGrid{grid-template-columns:repeat(4,1fr)}}@media(max-width:650px){.publicGrid{display:flex;overflow:auto}.publicGrid .card{flex:0 0 150px}.adminInviteList{max-height:430px}.adminMiniList{max-height:360px}}
+
+/* Tela exclusiva de Favoritos: independente do Perfil */
+.favoritesPage{background:#171717;color:#fff;min-height:calc(100vh - 70px);padding:28px 5% 90px}.favoritesPage .favoriteTitle{font-size:28px;font-weight:900;margin:0 0 18px}.favoritesPage .favoriteTabs{display:flex;gap:10px;margin:0 0 20px;overflow:auto}.favoritesPage .favoriteTabs .pill{flex:0 0 auto}.favoritesPage .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px;padding-bottom:10px}.favoritesPage .row .card{width:100%;min-width:0}.favoritesPage .row .poster{width:100%;height:auto;aspect-ratio:2/3}.favoritesPage .empty{background:#171717;color:#999;border:1px dashed #555}
+@media(max-width:650px){.favoritesPage{min-height:calc(100vh - 58px);padding:22px 12px 90px}.favoritesPage .favoriteTitle{font-size:24px}.favoritesPage .row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}.favoritesPage .row .card{width:100%;min-width:0}.favoritesPage .row .poster{width:100%;height:auto;aspect-ratio:2/3}}
+@media(max-width:650px){.favoritesPage .favoriteTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;overflow:visible;width:100%}.favoritesPage .favoriteTabs .pill{width:100%;min-width:0;max-width:none;flex:none;padding:10px 4px;text-align:center;white-space:nowrap;line-height:1.15;font-size:14px}}
+
+/* Tela exclusiva de Favoritos no mobile: não mostra o cabeçalho completo do perfil */
+@media (max-width:650px){
+  body.favoritesOnly #perfil .cover,
+  body.favoritesOnly #perfil .profileBox > .avatar,
+  body.favoritesOnly #perfil .profileName,
+  body.favoritesOnly #perfil .profileBox > p,
+  body.favoritesOnly #perfil .profileStats,
+  body.favoritesOnly #perfil .profileNav{display:none!important}
+  body.favoritesOnly #perfil .profileHero{border-radius:0;background:#171717;min-height:100vh}
+  body.favoritesOnly #perfil .profileBox{margin-top:0;padding:18px 12px 90px}
+  body.favoritesOnly #perfil #profileContent{padding-top:4px}
+  body.favoritesOnly #perfil #profileContent:before{content:"⭐ Favoritos";display:block;font-size:24px;font-weight:900;margin:0 0 18px}
+}
+
+/* Correção de largura do perfil no mobile */
+@media (max-width:650px){
+  .profileHero,.profileBox,.cover,#profileContent,.profileStats,.profileNav,.favoriteTabs{width:100%;max-width:100%;min-width:0;box-sizing:border-box}
+  .profileHero{overflow:hidden}
+  .profileBox{padding-left:18px;padding-right:18px;overflow:hidden}
+  .profileName{width:100%;min-width:0;flex-wrap:nowrap}
+  .profileName>div{min-width:0;flex:0 1 auto}
+  .profileName h1{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:27px}
+  .profileName .edit{flex:0 0 auto;white-space:nowrap}
+  .profileStats{overflow:hidden}
+  .profileNav{overflow-x:auto;overflow-y:hidden;padding-bottom:2px;scrollbar-width:none}
+  .profileNav::-webkit-scrollbar{display:none}
+  .profileNav .pill{flex:0 0 auto}
+  .favoriteTabs{overflow:hidden}
+  .favoriteTabs .pill{min-width:0;max-width:100%;overflow:hidden}
+}
+
+/* Ajustes finais para celular */
+@media (max-width: 650px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  *{box-sizing:border-box}
+  .top{padding:0 12px;gap:8px}
+  .brand{font-size:24px;white-space:nowrap}
+  .brand img{width:105px;height:34px}
+  .search{min-width:0;flex:1}
+  .search input{width:100%;max-width:none;height:38px}
+  .page{width:100%;padding:0 0 82px}
+  .section{margin-left:12px;margin-right:12px}
+  .row{padding-left:0}
+  /* No celular, carrosséis usam cards menores para não ocupar a tela inteira. */
+  .row .card{flex:0 0 112px;width:112px;min-width:112px}
+  .row .poster{width:112px;height:auto;aspect-ratio:2/3}
+  /* Perfil usa catálogo em 2 colunas, em vez de uma capa gigante. */
+  .profileBox #profileContent .row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;overflow:visible;padding-bottom:0}
+  /* Favoritos no celular usam o mesmo tamanho compacto dos cards da Home. */
+  body.favoritesOnly #profileContent .row{display:flex;grid-template-columns:none;gap:14px;overflow-x:auto;overflow-y:hidden;padding:2px 0 10px;scrollbar-width:none}
+  body.favoritesOnly #profileContent .row::-webkit-scrollbar{display:none}
+  body.favoritesOnly #profileContent .row .card{flex:0 0 112px;width:112px;min-width:112px}
+  body.favoritesOnly #profileContent .row .poster{width:112px;height:auto;aspect-ratio:2/3}
+  .profileBox #profileContent .row .card{width:auto;min-width:0;flex:initial}
+  .profileBox #profileContent .row .poster{width:100%;height:auto;aspect-ratio:2/3}
+  /* Catálogo "Ver todas": 3 colunas no celular, mantendo as capas compactas da Home. */
+  .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:12px 10px}
+  .grid .card{width:auto;min-width:0;flex-basis:auto}
+  .grid .poster{width:100%;height:auto;aspect-ratio:2/3}
+  /* Abas de favoritos cabem na largura do celular, sem cortar texto nem criar rolagem horizontal. */
+  .favoriteTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:-5px 0 18px;overflow:visible}
+  .favoriteTabs .pill{width:100%;min-width:0;padding:10px 4px;text-align:center;white-space:nowrap;line-height:1.15;font-size:14px}
+  .continue{width:100%;overflow:hidden}
+  .continueCard{width:100%;min-width:0}
+  .episode{grid-template-columns:76px minmax(0,1fr) 40px;gap:8px}
+  .episode img{width:76px;height:58px}
+  .detailInfo h1{font-size:28px}
+  .detailHero>img{height:300px}
+  .movieDetailHero{min-height:270px;border-radius:0}
+  .movieDetailHero>img{height:270px}
+  .movieDetailOverlay{padding:18px 16px}
+  .movieDetailInfo h1{font-size:30px;margin-bottom:8px}
+  .movieDetailInfo .detailMeta{font-size:12px;line-height:1.35}
+  .movieDetailBody{padding:18px 14px 28px}
+  .movieDetailBody h2{font-size:22px}
+  .movieOverview{font-size:15px;line-height:1.55}
+  .movieDetailProgress{padding:16px;margin-top:16px}
+  .movieDetailProgressTop h3{font-size:17px}
+  #admin.active ~ .bottom{display:none!important}
+  #admin.active .detail{padding-bottom:0!important}
+  #admin.active .adminPanel{width:100%;max-width:none;min-height:calc(100vh - 56px);box-sizing:border-box;margin:0;border:0;border-radius:0;padding:16px 14px 28px}
+  #admin.active .adminLogo{margin:0 0 10px}
+  #admin.active .adminLogo img{width:145px;height:auto}
+  #admin.active .adminPanel h1{font-size:25px;line-height:1.12;margin:0 0 8px}
+  #admin.active .adminPanel>p{font-size:14px;line-height:1.35;margin:0 0 14px}
+  #admin.active .authField{margin:10px 0 14px}
+  #admin.active .adminDashboard{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px;margin:14px 0}
+  #admin.active .adminStat{padding:12px 10px;border-radius:11px}
+  #admin.active .adminStat b{font-size:23px}
+  #admin.active .adminStat span{font-size:10px;line-height:1.25}
+  #admin.active .adminInviteBox{display:block}
+  #admin.active .adminInviteCodeBox{min-width:0;width:100%;box-sizing:border-box;margin-bottom:9px}
+  #admin.active .adminInviteActions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  #admin.active .adminInviteActions .btn{width:100%;padding:11px 8px;font-size:13px}
+  #admin.active .adminUsers{margin-top:18px;padding-top:18px}
+  .adminUsersHead{align-items:flex-start}
+  .adminUsersHead .btn{white-space:nowrap}
+  .adminUserRow{grid-template-columns:1fr}
+  .adminUserActions{display:grid;grid-template-columns:1fr 1fr;justify-content:stretch}
+  .adminUserActions button{width:100%}
+  #admin.active .adminFilterBar{display:grid;grid-template-columns:minmax(0,1fr) 112px;gap:7px}
+  #admin.active .adminUsersSearch{min-width:0}
+  #admin.active .adminFilterBar select{width:100%}
+  #admin.active .adminInviteItem{padding:9px 10px}
+  #admin.active .adminMiniRow{padding:9px 10px;display:block}
+  #admin.active .adminMiniRow small{display:block;margin-top:4px;line-height:1.35}
+  .authModal{padding:12px}
+  .authCard{width:100%;max-width:500px;padding:22px 16px;border-radius:14px}
+  .authBrand img{width:190px;height:auto}
+}
+@media (max-width:380px){
+  .brand{font-size:21px}
+  .brand img{width:95px;height:31px}
+  .search input{font-size:13px}
+  .grid{gap:8px}
+  .episode{grid-template-columns:68px minmax(0,1fr) 38px}
+  .episode img{width:68px;height:52px}
+}
+
+
+/* CORRECAO PERFIL: favoritos somente na tela Favoritos */
+body:not(.favoritesOnly) #perfil .favoriteTabs,
+body:not(.favoritesOnly) #perfil #favoriteContent,
+body:not(.favoritesOnly) #perfil .favoriteTabs + #favoriteContent { display:none !important; }
+body:not(.favoritesOnly) #perfil .profileNav .pill[data-profile="favoritos"] { display:none !important; }
+
+.trendsHead{display:flex;align-items:center;gap:16px;flex-wrap:wrap}.trendTabs{display:flex;border:1px solid #111;border-radius:20px;overflow:hidden;background:#fff}.trendTab{border:0;background:#fff;color:#111;font-weight:800;padding:6px 16px;cursor:pointer}.trendTab.active{background:#0b2b46;color:#fff}.trendRow{overflow-x:auto;scrollbar-width:none;gap:14px;padding-bottom:8px}.trendRow::-webkit-scrollbar{display:none}.trendRow .card{flex:0 0 150px;width:150px;min-width:150px}.trendRow .poster{width:150px;height:224px}.trendDate{display:block;color:#555;font-size:12px;margin-top:4px;line-height:1.25}@media(max-width:650px){.trendsHead{display:block}.trendTabs{width:max-content;margin-top:8px}.trendTab{padding:6px 14px}.trendRow .card{flex:0 0 112px;width:112px;min-width:112px}.trendRow .poster{width:112px;height:auto;aspect-ratio:2/3}.trendDate{font-size:11px}}
+.providerPageDesc{color:#777;margin-top:-8px}.grid .card{min-width:0;width:100%}@media(max-width:600px){.grid{grid-template-columns:repeat(3,1fr);gap:18px 12px}.grid .card{width:100%;min-width:0}.grid .card img{width:100%;height:auto;aspect-ratio:2/3;object-fit:cover}}
+.profileLogout{margin:18px 0 2px;width:100%;border:1px solid #444;background:#242424;color:#fff;border-radius:10px;padding:12px 16px;font-weight:900;font-size:14px;cursor:pointer}.profileLogout:hover{background:#303030}@media(max-width:650px){.profileLogout{margin:16px 0 0;padding:13px 16px;font-size:14px}}
+</style>
+</head>
+<body class="booting">
+<header class="top">
+  <a class="brand" href="#descobrir" aria-label="CORUJA"><img src="/logo.png" alt="CORUJA"></a>
+  <nav class="nav"><a href="#descobrir">Descobrir</a><a href="#series">Séries</a><a href="#filmes">Filmes</a><a href="#perfil">Perfil</a></nav>
+  <div class="search"><span>⌕</span><input id="topSearch" placeholder="Buscar..."></div>
+  <button class="login" id="loginBtn">Entrar</button>
+</header>
+
+<main class="page">
+<section id="descobrir" class="view active">
+  <section class="section trendsSection"><div class="sectionHead trendsHead"><h2>Tendências</h2><div class="trendTabs"><button id="trendToday" class="trendTab active">Hoje</button><button id="trendWeek" class="trendTab">Nesta Semana</button></div></div><div id="homeTrending" class="row trendRow"></div></section>
+  <section class="section"><div class="sectionHead"><h2>⭐ Séries mais bem avaliadas</h2><button data-route="series-avaliadas">Ver todas ›</button></div><div id="homeTopRatedSeries" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>🎬 Filmes em Cartaz</h2><button data-route="filmes-cartaz">Ver todos ›</button></div><p style="color:#777;margin-top:-8px">Atualmente nos cinemas</p><div id="homeNowPlayingMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>🎬 Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>📺 Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>⏳ Filmes que estreiam em breve</h2><button data-route="filmes-breve">Ver todos ›</button></div><div id="homeUpcomingMovies" class="row"></div></section>
+</section>
+
+<section id="series-novas" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>🆕 Séries novas</h2></div><div id="seriesNovasGrid" class="grid"></div></section>
+<section id="filmes-novos" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>🆕 Filmes novos</h2></div><div id="filmesNovosGrid" class="grid"></div></section>
+<section id="series" class="view"><div class="sectionHead"><h2>Séries</h2></div><div id="seriesGrid" class="grid"></div></section>
+<section id="filmes" class="view"><div class="sectionHead"><h2>Filmes</h2></div><div id="moviesGrid" class="grid"></div></section>
+<section id="movieDetail" class="view"><div id="movieDetailContent"></div></section>
+<section id="busca" class="view searchView">
+  <div class="sectionHead"><h2>Pesquisar</h2></div>
+  <input id="bigSearch" class="searchBox" placeholder="Digite o nome de uma série ou filme...">
+  <div id="searchHomeSections">
+    <section class="section"><div class="sectionHead"><h2>Principais para você</h2><button data-route="series">Ver todas ›</button></div><div id="searchTopMatches" class="row"></div></section>
+    <section class="section"><div class="sectionHead"><h2>Em alta</h2><button data-route="filmes">Ver todas ›</button></div><div id="searchTrending" class="row"></div></section>
+    <section class="section"><div class="sectionHead"><h2>Continue assistindo</h2><button data-route="episodios">Ver episódios ›</button></div><div id="searchContinueGrid" class="continue"></div></section>
+    <section class="section"><div class="sectionHead"><h2>Séries populares</h2><button data-route="series">Explorar ›</button></div><div id="searchHomeSeries" class="row"></div></section>
+    <section class="section"><div class="sectionHead"><h2>Filmes populares</h2><button data-route="filmes">Explorar ›</button></div><div id="searchHomeMovies" class="row"></div></section>
+  </div>
+  <div class="section"><div id="searchGrid" class="grid"></div></div>
+</section>
+<section id="principais" class="view"><div class="sectionHead"><h2>Principais para você</h2><button data-route="descobrir">Voltar ao início ›</button></div><p style="color:#777;margin-top:-8px">Sugestões escolhidas com base no que você acompanha e, quando ainda não há histórico, em títulos populares.</p><div id="principaisGrid" class="grid"></div></section>
+<section id="em-alta" class="view"><div class="sectionHead"><h2>Em alta</h2><button data-route="descobrir">Voltar ao início ›</button></div><p style="color:#777;margin-top:-8px">Os títulos mais populares do momento no CORUJA.</p><div id="emAltaGrid" class="grid"></div></section>
+<section id="series-avaliadas" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>⭐ Séries mais bem avaliadas</h2></div><p class="providerPageDesc">As séries com as melhores avaliações no TMDB.</p><div id="topRatedSeriesGrid" class="grid"></div><div id="topRatedSeriesLoad" class="loadMoreWrap"><button id="loadMoreTopRatedSeries" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-cartaz" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>🎬 Filmes em Cartaz</h2></div><p class="providerPageDesc">Atualmente nos cinemas no Brasil.</p><div id="nowPlayingMoviesGrid" class="grid"></div><div id="nowPlayingMoviesLoad" class="loadMoreWrap"><button id="loadMoreNowPlayingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-populares" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>🎬 Filmes populares</h2></div><p class="providerPageDesc">Os filmes mais populares do TMDB.</p><div id="popularMoviesGrid" class="grid"></div><div id="popularMoviesLoad" class="loadMoreWrap"><button id="loadMorePopularMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>📺 Séries populares</h2></div><p class="providerPageDesc">As séries mais populares do TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>⏳ Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="minha-lista" class="view"><div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2>Minha lista</h2></div><div id="listGrid" class="grid"></div></section>
+<section id="episodios" class="view"><div class="sectionHead"><h2>Continue assistindo</h2><button data-route="descobrir">Voltar ao início ›</button></div><p style="color:#777;margin-top:-8px">Seus episódios em andamento, com o ponto exato onde você parou.</p><div id="episodeFeed"></div></section>
+
+<section id="perfil" class="view"><div class="profileHero"><div class="profileBox"><div class="profileName"><div><h1 id="profileName">Coruja</h1><div id="profileUsername" style="color:#aaa;font-weight:800"></div></div><button class="edit" id="editProfile">Editar perfil</button></div><p style="color:#aaa">🇧🇷 Brasil • Coruja</p><div class="stats profileStats"><div class="stat"><strong id="watchedCount">0</strong><span>EPISÓDIOS VISTOS</span></div><div class="stat"><strong id="showCount">0</strong><span>SÉRIES VISTAS</span></div><div class="stat"><strong id="movieCount">0</strong><span>FILMES VISTOS</span></div><div class="stat"><strong id="hoursCount">0h</strong><span>TEMPO ASSISTIDO</span></div></div><button class="profileLogout" id="profileLogout">↪ Sair da conta</button><div id="profileContent"></div></div></div></section>
+
+<section id="favoritos" class="view favoritesScreen">
+  <div class="sectionHead"><h2>⭐ Favoritos</h2></div>
+  <div class="favoriteTabs">
+    <button type="button" class="pill" data-route="minha-lista">📋 Minha Lista</button>
+  </div>
+  <div class="favoriteTabs">
+    <button type="button" class="pill" data-route="favoritos-series">📺 Séries</button>
+    <button type="button" class="pill" data-route="favoritos-filmes">🎬 Filmes</button>
+  </div>
+</section>
+
+<section id="favoritos-series" class="view favoritesScreen">
+  <div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2>📺 Séries favoritas</h2></div>
+  <div id="favoriteSeriesGrid" class="grid"></div>
+</section>
+
+<section id="favoritos-filmes" class="view favoritesScreen">
+  <div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2>🎬 Filmes favoritos</h2></div>
+  <div id="favoriteMoviesGrid" class="grid"></div>
+</section>
+
+
+<section id="comunidade" class="view">
+  <div class="sectionHead"><h2>Comunidade</h2></div>
+  <p style="color:#777">Pesquise pessoas, siga seus perfis e veja o que elas estão assistindo.</p>
+  <div class="socialTools"><button class="socialBtn yellow" id="communitySearchBtn">🔎 Pesquisar usuários</button></div>
+  <div id="communityPeople" class="peopleResults"></div>
+</section>
+<section id="perfil-publico" class="view"><div id="publicProfileContent"></div></section>
+<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
+</main>
+<section id="admin" class="view"><div class="detail"><div class="adminPanel"><div class="adminLogo"><img src="/logo.png" alt="CORUJA"></div><h1>Painel de administrador</h1><p>Gere códigos de convite e gerencie as contas do CORUJA.</p><div class="authField"><label>Chave do painel</label><input id="adminKey" type="password" placeholder="Digite sua chave de administrador" autocomplete="off"></div><div class="adminDashboard"><div class="adminStat"><b id="adminStatUsers">0</b><span>Usuários</span></div><div class="adminStat"><b id="adminStatAvailable">0</b><span>Convites disponíveis</span></div><div class="adminStat"><b id="adminStatUsed">0</b><span>Convites usados</span></div><div class="adminStat"><b id="adminStatActive">0</b><span>Sessões ativas</span></div></div><div class="adminInviteBox"><div class="adminInviteCodeBox" id="adminInviteResult">Digite a chave e gere um código. Cada código pode ser usado uma única vez.</div><div class="adminInviteActions"><button class="btn yellow" id="adminGenerate">Gerar código de convite</button><button class="btn outline" id="adminCopyLast" style="display:none">Copiar código</button></div></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Convites recentes</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminInvitePageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminInviteHistory" class="adminInviteList"></div><div id="adminInvitePager" class="adminPager"></div></div><div class="adminUsers"><div class="adminUsersHead"><h2>Usuários cadastrados</h2><button class="btn outline" id="adminLoadUsers" style="padding:9px 12px">Atualizar</button></div><div class="adminFilterBar"><input id="adminUsersSearch" class="adminUsersSearch" placeholder="Pesquisar por e-mail..." style="margin:0"><select id="adminUsersStatus"><option value="all">Todos</option><option value="active">Ativos</option><option value="blocked">Bloqueados</option></select></div><div class="adminTableControls"><label>Mostrar <select id="adminUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminUsersResult" class="publicEmpty">Digite a chave do painel e clique em Atualizar para carregar os usuários.</div><div id="adminUsersPager" class="adminPager"></div><div id="adminResetResult" class="adminResetResult" style="display:none"></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Últimos cadastros</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminRecentUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminRecentUsers" class="adminMiniList"></div><div id="adminRecentUsersPager" class="adminPager"></div></div></div></div></div></section>
+
+<nav class="bottom"><button data-route="episodios"><span>▣</span>Episódios</button><button data-route="descobrir" class="active"><span>⌕</span>Descobrir</button><button data-route="favoritos"><span>★</span>Favoritos</button><button data-route="perfil"><span>♙</span>Perfil</button></nav>
+
+
+<div class="authModal" id="authModal"><div class="authCard"><button class="movieModalClose" id="authClose">×</button><div class="authBrand"><img src="/logo.png" alt="CORUJA"></div><h2 id="authTitle">Entrar no CORUJA</h2><p id="authSubtitle">Entre com seu e-mail e sua senha para continuar de onde parou.</p><form id="authForm"><div class="authField registerOnly"><label>Código de convite</label><input id="authInvite" maxlength="40" autocomplete="off" placeholder="CORUJA-XXXXXXXX"></div><div class="authField registerOnly"><label>Nome</label><input id="authName" type="text" maxlength="60" autocomplete="name" placeholder="Seu nome"></div><div class="authField registerOnly"><label>E-mail</label><input id="authEmail" type="email" required autocomplete="email" placeholder="seu@email.com"></div><div class="authField loginOnly"><label>E-mail</label><input id="authIdentifier" type="email" required autocomplete="email" placeholder="seu@email.com"></div><div class="authField"><label>Senha</label><input id="authPassword" type="password" required minlength="6" autocomplete="current-password" placeholder="Sua senha"></div><div class="authField registerOnly"><label>Confirmar senha</label><input id="authPasswordConfirm" type="password" minlength="6" autocomplete="new-password" placeholder="Digite a senha novamente"></div><div class="authError" id="authError"></div><div class="authActions"><button type="submit" class="btn yellow" id="authSubmit">Entrar</button><button type="button" class="btn outline" id="authSwitch">Junte-se ao CORUJA</button></div></form></div></div>
+<div class="logoutModal" id="logoutModal" role="dialog" aria-modal="true" aria-labelledby="logoutModalTitle"><div class="logoutModalCard"><div class="logoutModalBody"><h2 class="logoutModalTitle" id="logoutModalTitle">🚪 Sair da conta?</h2><p class="logoutModalText">Tem certeza que deseja sair da sua conta?</p><div class="logoutModalActions"><button type="button" class="btn outline" id="logoutCancel">Cancelar</button><button type="button" class="btn yellow" id="logoutConfirm">Sair da conta</button></div></div></div></div>
+<div class="authModal" id="profileEditModal"><div class="authCard"><button class="movieModalClose" id="profileEditClose">×</button><h2>Editar perfil</h2><div class="authField"><label>Nome</label><input id="profileEditName" maxlength="60" placeholder="Seu nome"></div><div class="authError" id="profileEditError"></div><div class="authActions"><button class="btn outline" id="profileEditCancel">Cancelar</button><button class="btn yellow" id="profileEditSave">Salvar alterações</button></div></div></div>
+<div class="authModal" id="peopleModal"><div class="authCard"><button class="movieModalClose" id="peopleClose">×</button><h2>Pesquisar usuários</h2><p>Encontre pessoas pelo nome ou @nome de usuário.</p><input id="peopleSearch" class="searchBox" style="font-size:16px" placeholder="Digite um nome ou @usuário..."><div id="peopleResultsModal" class="peopleResults"></div></div></div>
+<script>
+(() => {
+  const $ = (s,r=document)=>r.querySelector(s), $$=(s,r=document)=>[...r.querySelectorAll(s)];
+  const img=p=>{if(!p)return ''; const v=String(p); return /^https?:\/\//i.test(v)?v:`https://image.tmdb.org/t/p/w500${v.startsWith('/')?v:'/'+v}`}; const back=p=>{if(!p)return ''; const v=String(p); return /^https?:\/\//i.test(v)?v:`https://image.tmdb.org/t/p/w1280${v.startsWith('/')?v:'/'+v}`};
+  function setImageFallback(el,fallback){if(!el)return; el.addEventListener('error',()=>{if(fallback && el.dataset.fallbackApplied!=='1'){el.dataset.fallbackApplied='1';el.src=img(fallback);return;} el.style.display='none'; const holder=el.parentElement; if(holder && !holder.querySelector('.imageFallback')){const d=document.createElement('div');d.className='imageFallback';d.textContent='CORUJA';holder.appendChild(d)}});}
+  const state={home:null,current:null,season:1};
+  const KEY='coruja_time_state_v2';
+  const loadState=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{"list":[],"watched":{},"profile":"Coruja","seasonPromptNever":{}}')}catch{return {list:[],watched:{},profile:'Coruja',seasonPromptNever:{}}}};
+  let user=loadState();
+  function mergePositionStates(localPositions,serverPositions){
+    const local=localPositions&&typeof localPositions==='object'?localPositions:{};
+    const server=serverPositions&&typeof serverPositions==='object'?serverPositions:{};
+    const merged={...server};
+    Object.entries(local).forEach(([key,value])=>{
+      const lv=value&&typeof value==='object'?value:null;
+      const sv=merged[key]&&typeof merged[key]==='object'?merged[key]:null;
+      if(!sv || new Date(lv?.updatedAt||0).getTime()>new Date(sv.updatedAt||0).getTime()) merged[key]=lv;
+    });
+    return merged;
+  }
+  let syncTimer=null;
+  async function syncStateToServer(token=user.sessionToken){
+    if(!token)return false;
+    try{
+      const r=await fetch('/api/me/state',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+token},body:JSON.stringify({state:user,name:user.profile||'Coruja'}),keepalive:true});
+      return r.ok;
+    }catch{return false}
+  }
+  const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(user))}catch(e){try{const slim={...user,avatar:''};localStorage.setItem(KEY,JSON.stringify(slim))}catch{}}if(user.sessionToken){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncStateToServer(user.sessionToken),500)}};
+  // Reforça o salvamento quando o usuário troca de aba, fecha ou recarrega a página.
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&user.sessionToken){clearTimeout(syncTimer);syncStateToServer(user.sessionToken)}});
+  window.addEventListener('pagehide',()=>{if(user.sessionToken){clearTimeout(syncTimer);syncStateToServer(user.sessionToken)}});
+  if(!user.favorites || typeof user.favorites!=='object') user.favorites={series:[],movies:[]};
+  if(!Array.isArray(user.favorites.series)) user.favorites.series=[];
+  if(!Array.isArray(user.favorites.movies)) user.favorites.movies=[];
+  // Normaliza favoritos antigos: séries têm 'name' e filmes têm 'title'.
+  // Isso evita que uma série seja exibida na aba de filmes após versões anteriores.
+  const normalizeFavoriteItem=(item,forcedType)=>{
+    if(!item || item.id==null) return null;
+    const type=forcedType||(item.media_type==='tv'||item.media_type==='movie'?item.media_type:(item.name&&!item.title?'tv':'movie'));
+    return {...item,media_type:type};
+  };
+  const allFav=[...user.favorites.series.map(x=>normalizeFavoriteItem(x,'tv')),...user.favorites.movies.map(x=>normalizeFavoriteItem(x,'movie'))].filter(Boolean);
+  const seenFav=new Set();
+  user.favorites.series=[]; user.favorites.movies=[];
+  allFav.forEach(item=>{
+    // Se o objeto tiver nome de série, prevalece como TV mesmo que uma versão antiga tenha salvo como filme.
+    const inferred=item.name&&!item.title?'tv':item.media_type;
+    const type=inferred==='tv'?'tv':'movie';
+    const key=type+':'+item.id;
+    if(seenFav.has(key)) return;
+    seenFav.add(key);
+    item.media_type=type;
+    user.favorites[type==='tv'?'series':'movies'].push(item);
+  });
+  if(!user.comments) user.comments=[];
+  if(!user.watchedAt) user.watchedAt={};
+  if(!user.episodeRatings) user.episodeRatings={};
+  if(!user.movieRatings) user.movieRatings={};
+  if(!user.watchedMovies) user.watchedMovies={};
+  if(!user.positions) user.positions={};
+  if(!user.completedShows) user.completedShows={};
+  if(!user.watchDurations || typeof user.watchDurations!=='object') user.watchDurations={episodes:{},movies:{}};
+  if(!user.watchDurations.episodes) user.watchDurations.episodes={};
+  if(!user.watchDurations.movies) user.watchDurations.movies={};
+  if(!user.sessionToken) user.sessionToken='';
+  save();
+  const toast=m=>{let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}t.textContent=m;clearTimeout(window.tt);window.tt=setTimeout(()=>t.remove(),1800)};
+  async function api(u){const r=await fetch(u);const d=await r.json();if(!r.ok)throw Error(d.error||'Erro');return d}
+  function showView(id){$$('.view').forEach(v=>v.classList.remove('active'));const v=$('#'+id);if(v)v.classList.add('active');$$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route===id));window.scrollTo(0,0)}
+  function route(){
+    // O site abre diretamente na página principal. O login só aparece quando
+    // o visitante clicar em "Entrar" ou acessar uma área que exige conta.
+    const valid=['descobrir','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin'];
+    let h=location.hash.replace(/^#/,'');
+    // O painel administrativo é uma área separada e pode ser aberto sem
+    // sessão de usuário. A chave do painel é validada pelo servidor.
+    if(h==='admin'){
+      $('#authModal')?.classList.remove('show','authGate');
+      document.body.classList.remove('authGateActive');
+      document.body.classList.remove('booting');
+      showView('admin');
+      return;
+    }
+    if(!h){
+      if(!user.sessionToken){ openAuth('login',true); document.body.classList.remove('booting'); return; }
+      h='descobrir';
+    }
+    if(h==='login'||h==='callback'||h==='portal'){h='descobrir';history.replaceState(null,'','#descobrir');}
+    if(h.startsWith('tv-')){document.body.classList.remove('booting');openShow(Number(h.slice(3)));return}
+    if(h.startsWith('movie-')){document.body.classList.remove('booting');openMovie(Number(h.slice(6)));return}
+    if(valid.includes(h)){
+      document.body.classList.remove('booting');
+      if(h==='favoritos'){
+        document.body.classList.remove('favoritesOnly');
+        showView('favoritos');
+        $$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route==='favoritos'));
+        return;
+      }
+      if(h==='favoritos-series'){
+        document.body.classList.remove('favoritesOnly');
+        showView('favoritos-series');
+        renderFavoriteTypePage('series');
+        $$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route==='favoritos'));
+        return;
+      }
+      if(h==='favoritos-filmes'){
+        document.body.classList.remove('favoritesOnly');
+        showView('favoritos-filmes');
+        renderFavoriteTypePage('movies');
+        $$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route==='favoritos'));
+        return;
+      }
+      document.body.classList.remove('favoritesOnly');
+      showView(h);
+      if(h==='perfil'){
+        // Perfil normal: somente informações e Estatísticas. Nunca reutiliza o conteúdo de Favoritos.
+        renderProfile();
+      }
+      if(h==='episodios')setTimeout(renderEpisódiosFeed,0);
+      if(h==='series-avaliadas')setTimeout(renderTopRatedSeriesPage,0);if(h==='filmes-cartaz')setTimeout(renderNowPlayingMoviesPage,0);if(h==='filmes-populares')setTimeout(renderPopularMoviesPage,0);if(h==='series-populares')setTimeout(renderPopularSeriesPage,0);if(h==='filmes-breve')setTimeout(renderUpcomingMoviesPage,0);if(h==='series-novas')setTimeout(renderSeriesNovasPage,0);if(h==='filmes-novos')setTimeout(renderFilmesNovosPage,0);if(h==='principais')setTimeout(renderPrincipaisPage,0);if(h==='em-alta')setTimeout(renderEmAltaPage,0);
+      return;
+    }
+    location.hash='descobrir';
+  }
+  window.addEventListener('hashchange',route);
+  $$('[data-route]').forEach(b=>b.addEventListener('click',()=>location.hash=b.dataset.route));
+  $$('.nav a').forEach(a=>a.addEventListener('click',()=>{}));
+  let authMode='login';
+  function openAuth(mode='login',gate=false){authMode=mode;const modal=$('#authModal');modal.classList.toggle('authGate',!!gate);modal.classList.add('show');document.body.classList.toggle('authGateActive',!!gate);$('#authTitle').textContent=mode==='login'?'Entrar no CORUJA':'Junte-se ao CORUJA';$('#authSubtitle').textContent=mode==='login'?'Entre com seu e-mail e sua senha.':'Digite seu código de convite, e-mail e senha para criar sua conta.';$$('.registerOnly').forEach(x=>x.style.display=mode==='register'?'grid':'none');$$('.loginOnly').forEach(x=>x.style.display=mode==='login'?'grid':'none');$('#authName').required=mode==='register';$('#authEmail').required=mode==='register';$('#authIdentifier').required=mode==='login';$('#authPasswordConfirm').required=mode==='register';$('#authPassword').required=true;$('#authPassword').autocomplete=mode==='login'?'current-password':'new-password';$('#authPassword').placeholder=mode==='login'?'Sua senha':'Crie uma senha (mín. 6 caracteres)';$('#authSwitch').textContent=mode==='login'?'Junte-se ao CORUJA':'Já tenho conta';$('#authSubmit').textContent=mode==='login'?'Entrar':'Criar conta';$('#authError').textContent='';setTimeout(()=>$(mode==='register'?'#authInvite':'#authIdentifier')?.focus(),50)}
+  $('#loginBtn').addEventListener('click',()=>user.sessionToken?logout():openAuth('login'));
+  async function logout(){
+    const token=user.sessionToken;
+    clearTimeout(syncTimer);
+    if(token){
+      // Garante que qualquer alteração feita pouco antes de sair seja gravada no servidor.
+      await syncStateToServer(token);
+      try{await fetch('/api/auth/logout',{method:'POST',headers:{Authorization:'Bearer '+token}})}catch{}
+    }
+    user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',username:'',avatar:'',userId:'',sessionToken:'',followersCount:0,followingCount:0,commentCount:0,comments:[]};
+    // Mantém o estado local limpo após sair; ao entrar novamente, os dados são recuperados da conta no servidor.
+    save();
+    updateLoginButton();$('#profileEditModal')?.classList.remove('show');$('#peopleModal')?.classList.remove('show');$('#authModal')?.classList.remove('show');document.body.classList.remove('authGateActive');location.hash='';await home();openAuth('login',true);toast('Você saiu da conta.')}
+  $('#authClose').onclick=()=>{if($('#authModal').classList.contains('authGate'))return;$('#authModal').classList.remove('show')};
+  $('#authSwitch').onclick=()=>openAuth(authMode==='login'?'register':'login');
+  $('#authForm').onsubmit=async e=>{e.preventDefault();const name=$('#authName').value.trim();const email=$('#authEmail').value.trim();const identifier=$('#authIdentifier').value.trim();const password=$('#authPassword').value;const passwordConfirm=$('#authPasswordConfirm')?.value||'';$('#authError').textContent='';try{if(password.length<6)throw Error('A senha deve ter pelo menos 6 caracteres.');let endpoint,body;if(authMode==='register'){const invite=$('#authInvite').value.trim().toUpperCase();if(!invite)throw Error('Digite o código de convite.');if(!name)throw Error('Digite seu nome.');if(!email)throw Error('Digite seu e-mail.');if(password!==passwordConfirm)throw Error('As senhas não conferem.');const check=await fetch('/api/auth/invite-availability?code='+encodeURIComponent(invite)).then(r=>r.json());if(!check.valid)throw Error(check.error||'Código de convite inválido.');endpoint='/api/auth/register';body={name,email,password,inviteCode:invite,state:{list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',commentCount:0,comments:[]}};}else{if(!identifier)throw Error('Digite seu e-mail.');endpoint='/api/auth/login';body={identifier,password};}const r=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível continuar.');user={...(d.state||{}),profile:d.user?.name||'Coruja',username:d.user?.username||'',avatar:d.user?.avatar||'',userId:d.user?.id||'',sessionToken:d.token,followersCount:d.user?.followers||0,followingCount:d.user?.following||0};save();$('#authModal').classList.remove('show');$('#authModal').classList.remove('authGate');document.body.classList.remove('authGateActive');updateLoginButton();await home();renderProfile();renderList();renderContinue();location.hash='descobrir';toast(authMode==='login'?'Conta carregada!':'Conta criada com sucesso!')}catch(err){$('#authError').textContent=err.message}};
+  function updateLoginButton(){const b=$('#loginBtn');if(!b)return;b.textContent=user.sessionToken?'Sair':'Entrar'}
+  $('#editProfile').addEventListener('click',()=>{if(!user.sessionToken){openAuth('login');return}$('#profileEditName').value=user.profile||'Coruja';$('#profileEditError').textContent='';$('#profileEditModal').classList.add('show')});
+  const logoutModal=$('#logoutModal');
+  function openLogoutModal(){logoutModal?.classList.add('show');document.body.classList.add('authGateActive');setTimeout(()=>$('#logoutConfirm')?.focus(),30)}
+  function closeLogoutModal(){logoutModal?.classList.remove('show');if(!$('#authModal')?.classList.contains('show')) document.body.classList.remove('authGateActive')}
+  $('#profileLogout').addEventListener('click',openLogoutModal);
+  $('#logoutCancel').addEventListener('click',closeLogoutModal);
+  $('#logoutConfirm').addEventListener('click',async()=>{closeLogoutModal();await logout();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&logoutModal?.classList.contains('show'))closeLogoutModal()});
+  logoutModal?.addEventListener('click',e=>{if(e.target===logoutModal)closeLogoutModal()});
+  $('#profileEditClose').onclick=$('#profileEditCancel').onclick=()=>$('#profileEditModal').classList.remove('show');
+  $('#profileEditSave').onclick=async()=>{const name=$('#profileEditName').value.trim();if(!name){$('#profileEditError').textContent='Preencha o nome.';return}try{const r=await fetch('/api/me/profile',{method:'PUT',headers:{'Content-Type':'application/json','Authorization':'Bearer '+user.sessionToken},body:JSON.stringify({name,avatar:'',state:{...user,avatar:''}})});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível atualizar o perfil.');user.profile=d.user?.name||name;user.avatar='';save();$('#profileEditModal').classList.remove('show');renderProfile();toast('Perfil atualizado!')}catch(e){$('#profileEditError').textContent=e.message}};
+  let adminUsers=[]; let adminLastCode=''; let adminAllInvites=[]; let adminAllRecentUsers=[]; let adminInvitePage=1; let adminUsersPage=1; let adminRecentUsersPage=1; let adminInvitePageSize=10; let adminUsersPageSize=10; let adminRecentUsersPageSize=10;
+  const adminEscape=v=>String(v??'').replace(/[<>&"']/g,m=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[m]));
+  async function adminJson(url,options={}){const r=await fetch(url,options);const d=await r.json();if(!r.ok)throw Error(d.error||'Não autorizado.');return d;}
+  function setAdminInvite(code){adminLastCode=code||'';const box=$('#adminInviteResult');if(!code){box.textContent='Digite a chave e gere um código. Cada código pode ser usado uma única vez.';$('#adminCopyLast').style.display='none';return}box.innerHTML=`<div><small>Código de convite</small><br><strong class="adminCode">${adminEscape(code)}</strong></div>`;$('#adminCopyLast').style.display='inline-block';}
+  $('#adminCopyLast').onclick=async()=>{if(!adminLastCode)return;try{await navigator.clipboard.writeText(adminLastCode);toast('Código copiado!')}catch{toast('Não foi possível copiar automaticamente.')}};
+  $('#adminGenerate').onclick=async()=>{const key=$('#adminKey').value.trim();if(!key){setAdminInvite('');$('#adminInviteResult').textContent='Digite a chave do painel.';return}try{const d=await adminJson('/api/admin/invites',{method:'POST',headers:{'Content-Type':'application/json','x-admin-key':key},body:JSON.stringify({amount:1})});setAdminInvite(d.invites?.[0]?.code||'');await loadAdminDashboard();await loadAdminUsers();toast('Código de convite gerado!')}catch(e){$('#adminInviteResult').textContent=e.message}};
+  function pagerHtml(total,page,size,prefix){const pages=Math.max(1,Math.ceil(total/size));if(page>pages)page=pages;let h=`<button type="button" data-pager="${prefix}" data-page="${page-1}" ${page<=1?'disabled':''}>Anterior</button>`;const nums=[];for(let i=1;i<=pages;i++){if(i===1||i===pages||Math.abs(i-page)<=1)nums.push(i);else if(nums[nums.length-1]!=='…')nums.push('…')}nums.forEach(n=>{h+=n==='…'?'<span class="dots">…</span>':`<button type="button" class="${n===page?'active':''}" data-pager="${prefix}" data-page="${n}">${n}</button>`});h+=`<button type="button" data-pager="${prefix}" data-page="${page+1}" ${page>=pages?'disabled':''}>Próximo</button>`;return h}
+  function bindPager(id,prefix,setPage){const box=$('#'+id);if(!box)return;$$('[data-pager="'+prefix+'"]',box).forEach(b=>b.onclick=()=>{setPage(Number(b.dataset.page));renderAdminLists()})}
+  function renderAdminUsers(){const box=$('#adminUsersResult');const q=String($('#adminUsersSearch').value||'').trim().toLowerCase();const status=$('#adminUsersStatus').value;let filtered=adminUsers.filter(u=>String(u.email||'').toLowerCase().includes(q));if(status==='active')filtered=filtered.filter(u=>!u.blocked);if(status==='blocked')filtered=filtered.filter(u=>u.blocked);const pages=Math.max(1,Math.ceil(filtered.length/adminUsersPageSize));if(adminUsersPage>pages)adminUsersPage=pages;if(!filtered.length){box.className='publicEmpty';box.textContent=q||status!=='all'?'Nenhum usuário encontrado.':'Nenhum usuário cadastrado.';$('#adminUsersPager').innerHTML='';return}box.className='';const slice=filtered.slice((adminUsersPage-1)*adminUsersPageSize,adminUsersPage*adminUsersPageSize);box.innerHTML=slice.map(u=>`<div class="adminUserRow"><div class="adminUserInfo"><b>${adminEscape(u.name||'Coruja')}</b><small>${adminEscape(u.email||'')} · Cadastro: ${u.createdAt?new Date(u.createdAt).toLocaleDateString('pt-BR'):'—'}</small><div class="adminUserMeta"><span class="adminStatus ${u.blocked?'blocked':'active'}">${u.blocked?'Bloqueado':'Ativo'}</span>${u.blocked&&u.blockedAt?`<span>Bloqueado em ${new Date(u.blockedAt).toLocaleDateString('pt-BR')}</span>`:''}</div></div><div class="adminUserActions"><button class="adminResetBtn" data-reset-id="${u.id}">Redefinir senha</button><button class="adminResetBtn" data-block-id="${u.id}">${u.blocked?'Desbloquear':'Bloquear'}</button></div></div>`).join('');$$('[data-reset-id]',box).forEach(btn=>btn.onclick=()=>resetAdminPassword(btn.dataset.resetId));$$('[data-block-id]',box).forEach(btn=>btn.onclick=()=>toggleAdminBlock(btn.dataset.blockId));$('#adminUsersPager').innerHTML=pagerHtml(filtered.length,adminUsersPage,adminUsersPageSize,'users');bindPager('adminUsersPager','users',p=>adminUsersPage=p)}
+  function renderAdminLists(){renderAdminUsers();const invites=adminAllInvites.slice((adminInvitePage-1)*adminInvitePageSize,adminInvitePage*adminInvitePageSize);$('#adminInviteHistory').innerHTML=invites.length?invites.map(i=>`<div class="adminInviteItem"><div><b>${adminEscape(i.code)}</b><br><small>${i.used?'Usado':'Disponível'} · ${i.createdAt?new Date(i.createdAt).toLocaleString('pt-BR'):'—'}</small></div><span class="adminStatus ${i.used?'blocked':'active'}">${i.used?'Usado':'Disponível'}</span></div>`).join(''):'<div class="publicEmpty">Nenhum convite gerado ainda.</div>';$('#adminInvitePager').innerHTML=pagerHtml(adminAllInvites.length,adminInvitePage,adminInvitePageSize,'invites');bindPager('adminInvitePager','invites',p=>adminInvitePage=p);const recent=adminAllRecentUsers.slice((adminRecentUsersPage-1)*adminRecentUsersPageSize,adminRecentUsersPage*adminRecentUsersPageSize);$('#adminRecentUsers').innerHTML=recent.length?recent.map(u=>`<div class="adminMiniRow"><b>${adminEscape(u.name||'Coruja')}</b><small>${adminEscape(u.email||'')} · ${u.createdAt?new Date(u.createdAt).toLocaleDateString('pt-BR'):'—'} · ${u.blocked?'Bloqueado':'Ativo'}</small></div>`).join(''):'<div class="publicEmpty">Nenhum usuário cadastrado.</div>';$('#adminRecentUsersPager').innerHTML=pagerHtml(adminAllRecentUsers.length,adminRecentUsersPage,adminRecentUsersPageSize,'recent-users');bindPager('adminRecentUsersPager','recent-users',p=>adminRecentUsersPage=p)}
+  async function loadAdminUsers(){const key=$('#adminKey').value.trim(),box=$('#adminUsersResult');if(!key){box.className='publicEmpty';box.textContent='Digite a chave do painel primeiro.';return}try{const d=await adminJson('/api/admin/users',{headers:{'x-admin-key':key}});adminUsers=d.users||[];renderAdminUsers()}catch(e){box.className='publicEmpty';box.textContent=e.message}}
+  async function loadAdminDashboard(){const key=$('#adminKey').value.trim();if(!key)return;try{const d=await adminJson('/api/admin/stats',{headers:{'x-admin-key':key}});$('#adminStatUsers').textContent=d.totalUsers;$('#adminStatAvailable').textContent=d.inviteAvailable;$('#adminStatUsed').textContent=d.inviteUsed;$('#adminStatActive').textContent=d.activeSessions;adminAllInvites=d.recentInvites||[];adminAllRecentUsers=d.recentUsers||[];renderAdminLists();}catch(e){$('#adminUsersResult').className='publicEmpty';$('#adminUsersResult').textContent=e.message;}}
+  async function resetAdminPassword(id){const key=$('#adminKey').value.trim();if(!key)return toast('Digite a chave do painel.');const person=adminUsers.find(u=>u.id===id);if(!person)return;if(!confirm(`Redefinir a senha de ${person.name||'este usuário'}? A sessão atual dele será encerrada.`))return;try{const d=await adminJson('/api/admin/users/'+encodeURIComponent(id)+'/reset-password',{method:'POST',headers:{'x-admin-key':key}});const box=$('#adminResetResult');box.style.display='block';box.innerHTML=`Senha temporária para <b>${adminEscape(person.email||'')}</b>:<br><span class="adminCode">${adminEscape(d.temporaryPassword)}</span><br><small>Envie essa senha ao cliente com segurança. Ela substitui a senha anterior e encerra as sessões abertas.</small>`;toast('Senha redefinida!');await loadAdminDashboard()}catch(e){toast(e.message)}};
+  async function toggleAdminBlock(id){const key=$('#adminKey').value.trim();if(!key)return toast('Digite a chave do painel.');const person=adminUsers.find(u=>u.id===id);if(!person)return;const action=person.blocked?'desbloquear':'bloquear';if(!confirm(`${person.name||'Este usuário'} será ${action}. Continuar?`))return;try{const d=await adminJson('/api/admin/users/'+encodeURIComponent(id)+'/block',{method:'POST',headers:{'x-admin-key':key}});toast(d.blocked?'Usuário bloqueado!':'Usuário desbloqueado!');await loadAdminUsers();await loadAdminDashboard()}catch(e){toast(e.message)}};
+  $('#adminLoadUsers').onclick=async()=>{await loadAdminDashboard();await loadAdminUsers()};
+  $('#adminUsersSearch').oninput=()=>{adminUsersPage=1;renderAdminUsers()}; $('#adminUsersStatus').onchange=()=>{adminUsersPage=1;renderAdminUsers()};
+  $('#adminInvitePageSize').onchange=()=>{adminInvitePageSize=Number($('#adminInvitePageSize').value);adminInvitePage=1;renderAdminLists()};
+  $('#adminUsersPageSize').onchange=()=>{adminUsersPageSize=Number($('#adminUsersPageSize').value);adminUsersPage=1;renderAdminUsers()};
+  $('#adminRecentUsersPageSize').onchange=()=>{adminRecentUsersPageSize=Number($('#adminRecentUsersPageSize').value);adminRecentUsersPage=1;renderAdminLists()};
+  $('#adminKey').addEventListener('input',()=>{if($('#adminKey').value.trim())setTimeout(()=>{loadAdminDashboard()},150)});
+
+  $$('[data-route]').forEach(b=>b.addEventListener('click',()=>setTimeout(route,0)));
+
+  function mediaTypeOf(x){if(x?.media_type==='tv'||x?.media_type==='movie')return x.media_type;if(x?.name&&!x?.title)return 'tv';if(x?.title&&!x?.name)return 'movie';return x?.first_air_date?'tv':'movie'}
+  function card(x){const type=mediaTypeOf(x);const id=x.id;const watched=user.list.some(i=>Number(i.id)===Number(id)&&mediaTypeOf(i)===type);const favKey=type==='tv'?'series':'movies';const favorite=(user.favorites?.[favKey]||[]).some(i=>Number(i.id)===Number(id));const title=x.name||x.title||'Sem título';const el=document.createElement('article');el.className='card';el.dataset.mediaType=type;el.dataset.mediaId=String(id);el.setAttribute('role','button');el.setAttribute('tabindex','0');el.style.cursor='pointer';el.innerHTML=`<div class="poster">${x.poster_path?`<img src="${img(x.poster_path)}" loading="lazy" alt="${String(title).replace(/[<>&]/g,'')}" onerror="this.style.display='none';this.nextElementSibling?.classList.add('posterFallbackVisible')">`:`<div class="artFallback">${String(title).replace(/[<>&]/g,'')}</div>`}<span class="score">${Math.round((x.vote_average||0)*10)}%</span><button class="add ${watched?'on':''}" title="${watched?'Remover da minha lista':'Adicionar à minha lista'}">${watched?'✓':'+'}</button><button class="favorite ${favorite?'on':''}" title="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}">♥</button></div><h3>${title}</h3><small>${(x.first_air_date||x.release_date||'').slice(0,4)||'—'} · ${type==='tv'?'Série':'Filme'}</small><div class="stars">★★★★★</div>`;el.addEventListener('click',e=>{if(e.target.closest('.add,.favorite'))return;type==='tv'?location.hash='tv-'+id:location.hash='movie-'+id});$('.add',el).addEventListener('click',e=>{e.stopPropagation();toggleList({...x,media_type:type})});$('.favorite',el).addEventListener('click',e=>{e.stopPropagation();toggleFavorite({...x,media_type:type})});return el}
+  function getRecommendedForHome(){
+    const d=state.home||{};
+    const trendingTv=(d.trending?.results||[]).filter(x=>mediaTypeOf(x)==='tv');
+    const trendingIds=new Set(trendingTv.slice(0,6).map(x=>String(x.id)));
+    const personal=[];
+    const addPersonal=x=>{if(x&&mediaTypeOf(x)==='tv'&&!personal.some(y=>String(y.id)===String(x.id)))personal.push({...x,media_type:'tv'});};
+    (user.favorites?.series||[]).forEach(addPersonal);
+    (user.list||[]).filter(x=>mediaTypeOf(x)==='tv').forEach(addPersonal);
+    const watchedSeries=new Set(Object.keys(user.watched||{}).map(k=>String(k).split('-')[0]));
+    (d.tv?.results||[]).filter(x=>watchedSeries.has(String(x.id))).forEach(addPersonal);
+    const recommended=[];
+    const add=x=>{
+      if(!x||mediaTypeOf(x)!=='tv'||trendingIds.has(String(x.id))||recommended.some(y=>String(y.id)===String(x.id)))return;
+      const date=String(x.first_air_date||'');
+      const year=Number(date.slice(0,4));
+      if(!personal.length && year && year<2020)return;
+      recommended.push({...x,media_type:'tv'});
+    };
+    personal.forEach(add);
+    (d.newTv?.results||[]).forEach(add);
+    (d.popularTv?.results||[]).forEach(add);
+    (d.tv?.results||[]).forEach(add);
+    return recommended.slice(0,18);
+  }
+  function renderEmAltaPage(){
+    const box=$('#emAltaGrid');
+    if(!box)return;
+    const d=state.home||{};
+    let items=[];
+    const add=x=>{if(!x||!x.id)return;const type=x.media_type||(x.name?'tv':'movie');if(type!=='tv'&&type!=='movie')return;if(items.some(y=>String(y.id)===String(x.id)&&y.media_type===type))return;items.push({...x,media_type:type});};
+    (d.trending?.results||[]).forEach(add);
+    (d.popularTv?.results||[]).forEach(add);
+    (d.popularMovies?.results||[]).forEach(add);
+    if(!items.length){
+      const fallback=[['Lanternas','2026'],['Silo','2023'],['Reacher','2022'],['O Mentalista','2008'],['Lioness','2023'],['Ted Lasso','2020']];
+      items=fallback.map((x,i)=>({id:920000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8-(i%4)*.2,media_type:'tv'}));
+    }
+    fill('#emAltaGrid',items.slice(0,36));
+  }
+  let topRatedSeriesPage=0;
+  let topRatedSeriesLoading=false;
+  let topRatedSeriesTotalPages=1;
+  async function loadTopRatedSeries(reset=false){
+    const box=$('#topRatedSeriesGrid');
+    const loadBox=$('#topRatedSeriesLoad');
+    const btn=$('#loadMoreTopRatedSeries');
+    if(!box)return;
+    if(topRatedSeriesLoading)return;
+    if(reset){topRatedSeriesPage=0;topRatedSeriesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
+    if(topRatedSeriesPage>=topRatedSeriesTotalPages)return;
+    topRatedSeriesLoading=true;
+    if(btn){btn.disabled=true;btn.textContent='Carregando...';}
+    try{
+      const next=topRatedSeriesPage+1;
+      const d=await api('/api/series/top-rated?page='+next);
+      const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));
+      topRatedSeriesPage=next;
+      topRatedSeriesTotalPages=Number(d.total_pages||next);
+      const seen=new Set($$('#topRatedSeriesGrid .card').map(el=>el.dataset.mediaId));
+      items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});
+      if(loadBox)loadBox.style.display=topRatedSeriesPage<topRatedSeriesTotalPages?'block':'none';
+    }catch(e){
+      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries mais bem avaliadas agora.</div>';
+      if(loadBox)loadBox.style.display='none';
+    }finally{
+      topRatedSeriesLoading=false;
+      if(btn){btn.disabled=false;btn.textContent='Carregar mais';}
+    }
+  }
+  function renderTopRatedSeriesPage(){loadTopRatedSeries(true)}
+  document.addEventListener('click',e=>{if(e.target&&e.target.id==='loadMoreTopRatedSeries')loadTopRatedSeries(false)});
+  let nowPlayingMoviesPage=0;
+  let nowPlayingMoviesLoading=false;
+  let nowPlayingMoviesTotalPages=1;
+  async function loadNowPlayingMovies(reset=false){
+    const box=$('#nowPlayingMoviesGrid');
+    const loadBox=$('#nowPlayingMoviesLoad');
+    const btn=$('#loadMoreNowPlayingMovies');
+    if(!box)return;
+    if(nowPlayingMoviesLoading)return;
+    if(reset){nowPlayingMoviesPage=0;nowPlayingMoviesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
+    if(nowPlayingMoviesPage>=nowPlayingMoviesTotalPages)return;
+    nowPlayingMoviesLoading=true;
+    if(btn){btn.disabled=true;btn.textContent='Carregando...';}
+    try{
+      const next=nowPlayingMoviesPage+1;
+      const d=await api('/api/movies/now-playing?page='+next);
+      const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path).map(x=>({...x,media_type:'movie'}));
+      nowPlayingMoviesPage=next;
+      nowPlayingMoviesTotalPages=Number(d.total_pages||next);
+      const seen=new Set($$('#nowPlayingMoviesGrid .card').map(el=>el.dataset.mediaId));
+      items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});
+      if(loadBox)loadBox.style.display=nowPlayingMoviesPage<nowPlayingMoviesTotalPages?'block':'none';
+    }catch(e){
+      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes em cartaz agora.</div>';
+      if(loadBox)loadBox.style.display='none';
+    }finally{
+      nowPlayingMoviesLoading=false;
+      if(btn){btn.disabled=false;btn.textContent='Carregar mais';}
+    }
+  }
+  function renderNowPlayingMoviesPage(){loadNowPlayingMovies(true)}
+  document.addEventListener('click',e=>{if(e.target&&e.target.id==='loadMoreNowPlayingMovies')loadNowPlayingMovies(false)});
+
+
+  function renderHomeExtraCatalogs(d){
+    fill('#homePopularMovies',(d.movies?.results||[]).map(x=>({...x,media_type:'movie'})).slice(0,6));
+    fill('#homePopularSeries',(d.tv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,6));
+    fill('#homeUpcomingMovies',(d.upcomingMovies?.results||[]).map(x=>({...x,media_type:'movie'})).slice(0,6));
+  }
+  let popularMoviesPage=0,popularMoviesLoading=false,popularMoviesTotalPages=1;
+  async function loadPopularMovies(reset=false){
+    const box=$('#popularMoviesGrid'),loadBox=$('#popularMoviesLoad'),btn=$('#loadMorePopularMovies');if(!box||popularMoviesLoading)return;
+    if(reset){popularMoviesPage=0;popularMoviesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
+    if(popularMoviesPage>=popularMoviesTotalPages)return;popularMoviesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
+    try{const next=popularMoviesPage+1,d=await api('/api/movies/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'movie'}));popularMoviesPage=next;popularMoviesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#popularMoviesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=popularMoviesPage<popularMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+  }
+  function renderPopularMoviesPage(){loadPopularMovies(true)}
+  let popularSeriesPage=0,popularSeriesLoading=false,popularSeriesTotalPages=1;
+  async function loadPopularSeries(reset=false){
+    const box=$('#popularSeriesGrid'),loadBox=$('#popularSeriesLoad'),btn=$('#loadMorePopularSeries');if(!box||popularSeriesLoading)return;
+    if(reset){popularSeriesPage=0;popularSeriesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
+    if(popularSeriesPage>=popularSeriesTotalPages)return;popularSeriesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
+    try{const next=popularSeriesPage+1,d=await api('/api/series/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));popularSeriesPage=next;popularSeriesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#popularSeriesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=popularSeriesPage<popularSeriesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularSeriesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+  }
+  function renderPopularSeriesPage(){loadPopularSeries(true)}
+  let upcomingMoviesPage=0,upcomingMoviesLoading=false,upcomingMoviesTotalPages=1;
+  async function loadUpcomingMovies(reset=false){
+    const box=$('#upcomingMoviesGrid'),loadBox=$('#upcomingMoviesLoad'),btn=$('#loadMoreUpcomingMovies');if(!box||upcomingMoviesLoading)return;
+    if(reset){upcomingMoviesPage=0;upcomingMoviesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
+    if(upcomingMoviesPage>=upcomingMoviesTotalPages)return;upcomingMoviesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
+    try{const next=upcomingMoviesPage+1,d=await api('/api/movies/upcoming?page='+next);const today=new Date().toISOString().slice(0,10);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path&&String(x.release_date||'')>=today).map(x=>({...x,media_type:'movie'}));upcomingMoviesPage=next;upcomingMoviesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#upcomingMoviesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=upcomingMoviesPage<upcomingMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os próximos lançamentos agora.</div>';if(loadBox)loadBox.style.display='none';}finally{upcomingMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+  }
+  function renderUpcomingMoviesPage(){loadUpcomingMovies(true)}
+  document.addEventListener('click',e=>{if(e.target?.id==='loadMorePopularMovies')loadPopularMovies(false);if(e.target?.id==='loadMorePopularSeries')loadPopularSeries(false);if(e.target?.id==='loadMoreUpcomingMovies')loadUpcomingMovies(false)});
+
+  function renderSeriesNovasPage(){
+    const box=$('#seriesNovasGrid'); if(!box)return;
+    const d=state.home||{};
+    const today=new Date().toISOString().slice(0,10);
+    const cutoff=new Date(Date.now()-365*24*60*60*1000).toISOString().slice(0,10);
+    let items=(d.newTv?.results||[]).filter(x=>String(x.first_air_date||'')<=today && String(x.first_air_date||'')>=cutoff).map(x=>({...x,media_type:'tv'}));
+    const seen=new Set(); items=items.filter(x=>{const k=String(x.id);if(seen.has(k))return false;seen.add(k);return true}).slice(0,36);
+    if(!items.length) items=(d.tv?.results||[]).filter(x=>String(x.first_air_date||'')<=today).map(x=>({...x,media_type:'tv'})).slice(0,36);
+    fill('#seriesNovasGrid',items);
+  }
+  function renderFilmesNovosPage(){
+    const box=$('#filmesNovosGrid'); if(!box)return;
+    const d=state.home||{};
+    const today=new Date().toISOString().slice(0,10);
+    const cutoff=new Date(Date.now()-365*24*60*60*1000).toISOString().slice(0,10);
+    let items=(d.newMovies?.results||[]).filter(x=>String(x.release_date||'')<=today && String(x.release_date||'')>=cutoff).map(x=>({...x,media_type:'movie'}));
+    const seen=new Set(); items=items.filter(x=>{const k=String(x.id);if(seen.has(k))return false;seen.add(k);return true}).slice(0,36);
+    if(!items.length) items=(d.movies?.results||[]).filter(x=>String(x.release_date||'')<=today).map(x=>({...x,media_type:'movie'})).slice(0,36);
+    fill('#filmesNovosGrid',items);
+  }
+  function renderPrincipaisPage(){
+    const box=$('#principaisGrid');
+    if(!box)return;
+    let items=getRecommendedForHome();
+    if(!items.length){
+      const fallback=[['Ted Lasso','2020'],['Lioness','2023'],['O Novato','2018'],['Os Simpsons','1989'],['The Bear','2022'],['The Last of Us','2023']];
+      items=fallback.map((x,i)=>({id:930000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8-(i%4)*.2,media_type:'tv'}));
+    }
+    fill('#principaisGrid',items);
+  }
+  function homeFallback(){const series=[['Reacher','2022'],['O Mentalista','2008'],['Lioness','2023'],['Silo','2023'],['Ted Lasso','2020'],['Lanternas','2026'],['Os Simpsons','1989'],['O Novato','2018']].map((x,i)=>({id:900000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8.0-(i%4)*.2,media_type:'tv'}));const movies=[['Homem-Aranha: Um Novo Dia','2026'],['A Odisseia','2026'],['Código: Vingança','2026'],['La Captura','2026'],['O Último Nascer do Sol','2026'],['Tóxico','2026'],['Obsessão','2026'],['Toy Story 5','2026']].map((x,i)=>({id:910000+i,title:x[0],release_date:x[1]+'-01-01',vote_average:7.8-(i%5)*.2,media_type:'movie'}));const trendingSeries=series.slice(0,4);const recommended=series.slice(4,8);fill('#topMatches',recommended);fill('#trending',[...trendingSeries,...movies.slice(0,4)]);fill('#newSeries',series.slice(0,6));fill('#newMovies',movies.slice(0,6));fill('#homeSeries',series);fill('#homeMovies',movies);['#providerNetflix','#providerPrime','#providerDisney','#providerMax','#providerParamount'].forEach((sel,i)=>fill(sel,series.slice(i, i+6)));renderSearchHome();fill('#seriesGrid',series);fill('#moviesGrid',movies);renderList();renderProfile();renderEpisódiosFeed();renderContinue();renderPrincipaisPage();}
+  function fill(id,items){const box=$(id);if(!box)return;box.innerHTML='';(items||[]).filter(Boolean).forEach(x=>box.appendChild(card(x)))}
+  // Fallback de navegação: garante que qualquer card abra seu detalhe mesmo se algum listener local for perdido.
+  document.addEventListener('click',e=>{const el=e.target.closest('.card[data-media-id]');if(!el||e.target.closest('.add,.favorite'))return;const type=el.dataset.mediaType,id=el.dataset.mediaId;if(type==='tv')location.hash='tv-'+id;else if(type==='movie')location.hash='movie-'+id;});
+  document.addEventListener('keydown',e=>{if(e.key!=='Enter'&&e.key!==' ')return;const el=e.target.closest('.card[data-media-id]');if(!el)return;e.preventDefault();const type=el.dataset.mediaType,id=el.dataset.mediaId;location.hash=(type==='tv'?'tv-':'movie-')+id;});
+  function refreshPersonalMarkers(){
+    $$('.card[data-media-id]').forEach(el=>{
+      const type=el.dataset.mediaType, id=Number(el.dataset.mediaId);
+      const add=$('.add',el), fav=$('.favorite',el);
+      const listed=(user.list||[]).some(i=>Number(i.id)===id&&mediaTypeOf(i)===type);
+      const key=type==='tv'?'series':'movies';
+      const favorite=(user.favorites?.[key]||[]).some(i=>Number(i.id)===id);
+      if(add){add.classList.toggle('on',listed);add.textContent=listed?'✓':'+';add.title=listed?'Remover da minha lista':'Adicionar à minha lista';}
+      if(fav){fav.classList.toggle('on',favorite);fav.textContent='♥';fav.title=favorite?'Remover dos favoritos':'Adicionar aos favoritos';}
+    });
+  }
+  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);toast('Removido da sua lista.')}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date});toast(type==='tv'?'Série adicionada à sua lista!':'Filme adicionado à sua lista!')}save();refreshPersonalMarkers();renderList();renderProfile()}
+  function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);toast(type==='tv'?'Removida das séries favoritas.':'Removido dos filmes favoritos.')}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average});toast(type==='tv'?'Série adicionada aos favoritos!':'Filme adicionado aos favoritos!')}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
+  function renderList(){const b=$('#listGrid');b.innerHTML='';if(!user.list.length){b.innerHTML='<div class="empty">Sua lista está vazia. Adicione séries e filmes usando o botão +.</div>';return}user.list.forEach(x=>b.appendChild(card(x)))}
+  function navigateToFavorites(){
+    if(location.hash !== '#favoritos') location.hash='favoritos';
+    else { showView('favoritos'); renderFavoritesPage(); }
+  }
+  function renderFavoriteTypePage(type){
+    const b=type==='series'?$('#favoriteSeriesGrid'):$('#favoriteMoviesGrid');
+    if(!b)return;
+    b.innerHTML='';
+    const source=type==='series'?(user.favorites?.series||[]):(user.favorites?.movies||[]);
+    const items=source.map(x=>({...x,media_type:mediaTypeOf(x)}));
+    if(!items.length){
+      b.innerHTML=`<div class="empty">Você ainda não adicionou nenhum ${type==='series'?'série':'filme'} aos favoritos.</div>`;
+      return;
+    }
+    items.forEach(x=>b.appendChild(card(x)));
+  }
+  function renderFavoritesPage(){
+    renderFavoriteTypePage('series');
+  }
+  function getWatchedSeriesIds(){
+    const ids=new Set();
+    Object.entries(user.watched||{}).forEach(([key,v])=>{
+      if(!v)return;
+      const parts=key.split('-');
+      if(parts.length===3 && parts.every(x=>/^\d+$/.test(x))) ids.add(String(parts[0]));
+      else if(parts[0]==='tv' && parts.length>=4) ids.add(String(parts[1]));
+    });
+    return ids;
+  }
+  function getProfileTimeMinutes(){
+    const fallbackEpisodes=Object.values(user.watched||{}).filter(Boolean).length*45;
+    const epMinutes=Object.values(user.watchDurations?.episodes||{}).reduce((a,v)=>a+Number(v||0),0);
+    const movieMinutes=Object.values(user.watchDurations?.movies||{}).reduce((a,v)=>a+Number(v||0),0);
+    const stored=epMinutes+movieMinutes;
+    return stored>0 ? stored + Math.max(0,fallbackEpisodes-epMinutes) : fallbackEpisodes;
+  }
+  function getProfileContinueItems(){
+    const result=[]; const seen=new Set(); const positions=user.positions||{}; const watched=user.watched||{}; const watchedMovies=user.watchedMovies||{};
+    (user.list||[]).forEach(item=>{
+      const type=mediaTypeOf(item), id=String(item.id);
+      if(type==='movie'){
+        const pos=Number(positions[moviePositionKey(item.id)]?.seconds||0);
+        if(pos>0 && !watchedMovies[id]) result.push({...item,media_type:'movie',_pos:pos});
+        return;
+      }
+      let best=null;
+      Object.entries(positions).forEach(([key,val])=>{
+        const parts=key.split('-');
+        const modern=parts[0]==='tv'&&parts.length>=4, legacy=parts.length===3&&parts.every(x=>/^\d+$/.test(x));
+        const tvId=String(modern?parts[1]:legacy?parts[0]:'');
+        if(tvId!==id || Number(val?.seconds||0)<=0)return;
+        const season=Number(modern?parts[2]:parts[1]), episode=Number(modern?parts[3]:parts[2]);
+        if(watched[`${id}-${season}-${episode}`])return;
+        if(!best || new Date(val.updatedAt||0)>new Date(best.val.updatedAt||0)) best={season,episode,val};
+      });
+      if(best) result.push({...item,media_type:'tv',_season:best.season,_episode:best.episode,_pos:Number(best.val.seconds||0)});
+    });
+    return result.filter(x=>{const k=x.media_type+':'+x.id;if(seen.has(k))return false;seen.add(k);return true}).slice(0,6);
+  }
+  function renderProfile(){
+    const watchedEpisodes=Object.values(user.watched||{}).filter(Boolean).length;
+    const watchedSeries=getWatchedSeriesIds().size;
+    const watchedMovies=Object.values(user.watchedMovies||{}).filter(Boolean).length;
+    const minutes=getProfileTimeMinutes();
+    $('#profileName').textContent=user.profile||'Coruja';
+    if($('#profileUsername'))$('#profileUsername').textContent=user.username?'@'+user.username:'';
+    const av=$('.avatar'); if(av) av.innerHTML=initials(user.profile||'Coruja');
+    $('#watchedCount').textContent=watchedEpisodes;
+    $('#showCount').textContent=watchedSeries;
+    if($('#movieCount'))$('#movieCount').textContent=watchedMovies;
+    $('#hoursCount').textContent=Math.floor(minutes/60)+'h';
+    const c=$('#profileContent');
+    if(c){c.classList.remove('favoriteContentActive');renderStats(c);}
+    document.body.classList.remove('favoritesOnly');
+  }
+  function renderStats(c,range='7'){
+    const watched=Object.values(user.watched||{}).filter(Boolean).length;
+    const watchedSeries=getWatchedSeriesIds().size, watchedMovies=Object.values(user.watchedMovies||{}).filter(Boolean).length;
+    const minutes=getProfileTimeMinutes();
+    const rangeButtons=['7','30','all'].map(x=>`<button data-range="${x}" class="${String(range)===x?'active':''}">${x==='7'?'7 dias':x==='30'?'30 dias':'Tudo'}</button>`).join('');
+    const now=Date.now(), days=[];
+    if(range==='all'){
+      for(let i=11;i>=0;i--){const d=new Date(now-i*7*86400000);days.push({start:new Date(d.getFullYear(),d.getMonth(),d.getDate()-6),end:new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),label:d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})});}
+    }else{
+      const n=Number(range); for(let i=n-1;i>=0;i--){const d=new Date(now-i*86400000);days.push({start:new Date(d.getFullYear(),d.getMonth(),d.getDate()),end:new Date(d.getFullYear(),d.getMonth(),d.getDate()+1),label:n===7?d.toLocaleDateString('pt-BR',{weekday:'short'}).replace('.',''):d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})});}
+    }
+    const counts=days.map(bucket=>Object.entries(user.watchedAt||{}).filter(([key,iso])=>user.watched[key]&&iso).filter(([,iso])=>{const d=new Date(iso);return d>=bucket.start&&d<bucket.end}).length);
+    const max=Math.max(1,...counts);
+    const continueItems=getProfileContinueItems();
+    const contHtml=continueItems.length?continueItems.map(x=>{const title=x.name||x.title||'Sem título';const sub=x.media_type==='tv'?`S${String(x._season).padStart(2,'0')} • E${String(x._episode).padStart(2,'0')}`:`${formatPosition(x._pos)}`;return `<div class="profileContinueItem" data-type="${x.media_type}" data-id="${x.id}">${x.poster_path?`<img src="${img(x.poster_path)}" alt="">`:`<div class="artFallback" style="height:155px">${title}</div>`}<div class="pcBody"><b>${title}</b><small>${sub}</small></div></div>`}).join(''):'<div class="empty" style="width:100%">Você não tem nada salvo para continuar agora.</div>';
+    const achievements=[
+      ['▶️ Primeiro episódio','Marque seu primeiro episódio como assistido',watched>=1],
+      ['🔥 10 episódios','Chegue a 10 episódios assistidos',watched>=10],
+      ['📺 Primeira série','Assista pelo menos uma série',watchedSeries>=1],
+      ['🎬 Primeiro filme','Finalize seu primeiro filme',watchedMovies>=1],
+      ['⏱️ 5 horas','Passe de 5 horas assistidas',minutes>=300],
+      ['🏆 50 episódios','Chegue a 50 episódios assistidos',watched>=50]
+    ];
+    c.innerHTML=`<div class="profileSection"><h3>▶️ Continuando agora</h3><div class="profileContinue">${contHtml}</div></div><div class="profileSection statsChart"><h3>📊 Episódios assistidos</h3><div class="profileRange">${rangeButtons}</div><div class="bars">${days.map((x,i)=>`<div class="barCol"><b>${counts[i]}</b><i class="bar" style="height:${Math.max(3,(counts[i]/max)*135)}px"></i><span>${x.label}</span></div>`).join('')}</div></div><div class="profileSection"><h3>⏱️ Seu tempo no Coruja</h3><p style="color:#aaa">Você já assistiu aproximadamente <b class="profileTimeStrong">${Math.floor(minutes/60)} horas e ${minutes%60} minutos</b>.</p><p style="color:#aaa">${watched} episódio${watched===1?'':'s'} e ${watchedMovies} filme${watchedMovies===1?'':'s'} marcados como assistidos.</p></div><div class="profileSection"><h3>🏆 Conquistas</h3><div class="achievementGrid">${achievements.map(a=>`<div class="achievement ${a[2]?'':'locked'}"><b>${a[2]?'✅':'🔒'} ${a[0]}</b><span>${a[1]}</span></div>`).join('')}</div></div>`;
+    $$('.profileRange button',c).forEach(b=>b.addEventListener('click',()=>renderStats(c,b.dataset.range)));
+    $$('.profileContinueItem',c).forEach(el=>el.addEventListener('click',()=>location.hash=(el.dataset.type==='tv'?'tv-':'movie-')+el.dataset.id));
+  }
+  function positionKey(tvId,season,episode){return `tv-${tvId}-${season}-${episode}`;}
+  function recordEpisodeStart(tvId,season,episode,show){
+    const key=positionKey(tvId,season,episode);
+    const now=new Date().toISOString();
+    user.positions=user.positions||{};
+    const old=user.positions[key];
+    user.positions[key]={seconds:Math.max(60,Number(old?.seconds||0)),updatedAt:now};
+    if(show && !user.list.some(x=>Number(x.id)===Number(tvId)&&x.media_type==='tv')) user.list.push({id:Number(tvId),media_type:'tv',name:show.name,title:show.name,poster_path:show.poster_path,first_air_date:show.first_air_date});
+    save();
+    syncStateNow().catch(()=>{});
+    return key;
+  }
+  function moviePositionKey(movieId){return `movie-${movieId}`;}
+  function formatPosition(seconds){
+    seconds=Math.max(0,Math.floor(Number(seconds)||0));
+    const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), sec=seconds%60;
+    return h?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`;
+  }
+  function parsePosition(value){
+    const raw=String(value||'').trim(); if(!raw)return null;
+    const parts=raw.split(':').map(x=>Number(x)); if(parts.some(x=>!Number.isFinite(x)||x<0))return null;
+    if(parts.length===1)return Math.floor(parts[0]*60);
+    if(parts.length===2)return Math.floor(parts[0]*60+parts[1]);
+    if(parts.length===3)return Math.floor(parts[0]*3600+parts[1]*60+parts[2]);
+    return null;
+  }
+  function getPosition(tvId,season,episode){const modern=user.positions[positionKey(tvId,season,episode)];const legacy=user.positions[`${tvId}-${season}-${episode}`];return Number((modern||legacy)?.seconds||0);}
+  function getMoviePosition(movieId){return Number(user.positions[moviePositionKey(movieId)]?.seconds||0);}
+
+  // Define o próximo episódio para o card “Assistir a seguir”.
+  // Se houver um ponto salvo em um episódio ainda não assistido, ele tem prioridade.
+  // Depois de marcar um episódio como assistido, o card avança automaticamente para o próximo.
+  function getSeriesContinueEntry(show){
+    const showId=Number(show?.id||0);
+    if(!showId)return null;
+    const watched=user.watched||{}; const positions=user.positions||{}; const watchedAt=user.watchedAt||{};
+    let entry=null;
+    for(const [key,pos] of Object.entries(positions)){
+      if(Number(pos?.seconds||0)<=0)continue;
+      const parts=key.split('-');
+      const modern=parts[0]==='tv'&&parts.length>=4;
+      const legacy=parts.length===3&&parts.every(x=>/^\d+$/.test(x));
+      const tvId=Number(modern?parts[1]:legacy?parts[0]:-1);
+      if(tvId!==showId)continue;
+      const season=Number(modern?parts[2]:parts[1]);
+      const episode=Number(modern?parts[3]:parts[2]);
+      const watchKey=`${showId}-${season}-${episode}`;
+      if(watched[watchKey])continue;
+      if(!entry || new Date(pos.updatedAt||0)>new Date(entry.pos.updatedAt||0))entry={season,episode,pos};
+    }
+    if(entry)return entry;
+
+    // Sem ponto salvo: usa o último episódio marcado como assistido e avança 1 episódio.
+    let lastWatched=null;
+    for(const [key,value] of Object.entries(watched||{})){
+      if(!value)continue;
+      const parts=key.split('-');
+      const modern=parts[0]==='tv'&&parts.length>=4;
+      const legacy=parts.length===3&&parts.every(x=>/^\d+$/.test(x));
+      const tvId=Number(modern?parts[1]:legacy?parts[0]:-1);
+      if(tvId!==showId)continue;
+      const season=Number(modern?parts[2]:parts[1]);
+      const episode=Number(modern?parts[3]:parts[2]);
+      const stamp=watchedAt[key]||'';
+      if(!lastWatched || new Date(stamp||0)>new Date(lastWatched.stamp||0))lastWatched={season,episode,stamp};
+    }
+    if(!lastWatched)return null;
+
+    const seasons=(show.seasons||[]).filter(x=>Number(x.season_number)>0).sort((a,b)=>Number(a.season_number)-Number(b.season_number));
+    const currentSeason=seasons.find(x=>Number(x.season_number)===lastWatched.season);
+    const currentTotal=Number(currentSeason?.episode_count||0);
+    for(let ep=lastWatched.episode+1;ep<=currentTotal;ep++){
+      if(!watched[`${showId}-${lastWatched.season}-${ep}`])return {season:lastWatched.season,episode:ep,pos:null};
+    }
+    const nextSeason=seasons.find(x=>Number(x.season_number)>lastWatched.season);
+    if(nextSeason){
+      const total=Number(nextSeason.episode_count||0);
+      for(let ep=1;ep<=total;ep++)if(!watched[`${showId}-${Number(nextSeason.season_number)}-${ep}`])return {season:Number(nextSeason.season_number),episode:ep,pos:null};
+    }
+    return null;
+  }
+  function cleanupDuplicatePositions(){
+    user.positions=user.positions||{};
+    let changed=false;
+    Object.keys(user.positions).forEach(key=>{
+      const parts=key.split('-');
+      if(parts.length!==3 || !parts.every(x=>/^\d+$/.test(x))) return;
+      const modern=positionKey(Number(parts[0]),Number(parts[1]),Number(parts[2]));
+      const legacy=user.positions[key];
+      const current=user.positions[modern];
+      if(!current || new Date(legacy?.updatedAt||0)>new Date(current?.updatedAt||0)){
+        user.positions[modern]={seconds:Number(legacy?.seconds||0),updatedAt:legacy?.updatedAt||new Date().toISOString()};
+      }
+      delete user.positions[key];
+      changed=true;
+    });
+    if(changed) save();
+  }
+  async function syncStateNow(){
+    if(!user.sessionToken)return;
+    try{
+      await fetch('/api/me/state',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+user.sessionToken},body:JSON.stringify({state:user,name:user.profile||'Coruja'}),keepalive:true});
+    }catch{}
+  }
+  async function setPosition(tvId,season,episode,seconds,runtimeMinutes){
+    seconds=Math.max(0,Math.floor(Number(seconds)||0));
+    const max=runtimeMinutes?Math.max(60,Math.floor(Number(runtimeMinutes)*60)):86400;
+    seconds=Math.min(seconds,max);
+    user.positions=user.positions||{};
+    user.positions[positionKey(tvId,season,episode)]={seconds,updatedAt:new Date().toISOString()};
+    save();
+    // Para o Continue Assistindo, não dependemos do atraso do salvamento.
+    // Se houver conta logada, grava no servidor imediatamente antes de navegar.
+    await syncStateNow();
+  }
+  function setMoviePosition(movieId,seconds,runtimeMinutes){
+    seconds=Math.max(0,Math.floor(Number(seconds)||0));
+    const max=runtimeMinutes?Math.max(60,Math.floor(Number(runtimeMinutes)*60)):86400;
+    seconds=Math.min(seconds,max);
+    user.positions[moviePositionKey(movieId)]={seconds,updatedAt:new Date().toISOString()};
+    save();
+  }
+  function openPositionEditor(tvId,season,episode,runtimeMinutes,onDone){
+    const current=getPosition(tvId,season,episode);
+    const wrap=document.createElement('div');
+    wrap.className='movieModal';
+    wrap.innerHTML=`<div class="positionModalCard"><div class="positionModalBody"><h2 class="positionModalTitle">✎ Onde você parou?</h2><p class="positionModalHint">Digite o ponto do episódio, por exemplo: <b>32:15</b> ou <b>1:02:30</b>.</p><input class="positionModalInput" value="${formatPosition(current)}" aria-label="Tempo onde parou" inputmode="numeric"><div class="positionModalActions"><button class="btn outline" type="button">Cancelar</button><button class="btn yellow" type="button">Salvar</button></div></div></div>`;
+    document.body.appendChild(wrap);
+    const input=$('.positionModalInput',wrap);
+    input.focus();
+    input.select();
+    $('.btn.outline',wrap).onclick=()=>wrap.remove();
+    $('.btn.yellow',wrap).onclick=async()=>{
+      const seconds=parsePosition(input.value);
+      if(seconds===null){toast('Digite um tempo válido, como 32:15.');input.focus();return;}
+      await setPosition(tvId,season,episode,seconds,runtimeMinutes);
+      wrap.remove();
+      toast(`Ponto salvo em ${formatPosition(seconds)}.`);
+      if(onDone)onDone();
+      renderContinue();
+    };
+    wrap.onclick=e=>{if(e.target===wrap)wrap.remove();};
+    input.onkeydown=e=>{if(e.key==='Enter')$('.btn.yellow',wrap).click();if(e.key==='Escape')wrap.remove();};
+  }
+  let continueRenderSeq=0;
+  async function renderContinue(targetSelector='#continueGrid'){
+    const box=$(targetSelector); if(!box)return;
+    const homeSection=targetSelector==='#continueGrid'?$('#continueSection'):null;
+    const renderSeq=++continueRenderSeq;
+    cleanupDuplicatePositions();
+    // O progresso do Continue Assistindo pertence somente à conta autenticada.
+    // Não importar histórico global do navegador, pois isso poderia mostrar o progresso de outro usuário em uma conta nova.
+    const entries=Object.entries(user.positions||{})
+      .filter(([key,v])=>{
+        if(Number(v?.seconds||0)<=0)return false;
+        const parts=String(key).split('-');
+        // Episódio já concluído nunca deve aparecer em Continue assistindo.
+        if(parts[0]==='tv' && parts.length>=4){
+          const watchedKey=`${parts[1]}-${parts[2]}-${parts[3]}`;
+          return !(user.watched||{})[watchedKey];
+        }
+        // Compatibilidade com posições antigas de séries.
+        if(parts.length===3 && parts.every(x=>/^\d+$/.test(x))){
+          return !(user.watched||{})[key];
+        }
+        // Filme finalizado também deve desaparecer daqui.
+        if(parts[0]==='movie' && parts.length>=2){
+          return !(user.watchedMovies||{})[parts[1]];
+        }
+        return true;
+      })
+      .sort((a,b)=>new Date(b[1].updatedAt||0)-new Date(a[1].updatedAt||0))
+      .slice(0,6);
+    if(renderSeq!==continueRenderSeq)return;
+    box.innerHTML='';
+    if(!entries.length){box.innerHTML='';if(homeSection)homeSection.style.display='none';return;}
+    if(homeSection)homeSection.style.display='';
+    for(const [key,pos] of entries){
+      if(renderSeq!==continueRenderSeq)return;
+      let title='Título',poster='',subtitle='',runtime=0,continueAction=()=>{};
+      const parts=key.split('-');
+      const isModernTv=parts[0]==='tv' && parts.length>=4;
+      const isLegacyTv=parts.length===3 && parts.every(x=>/^\d+$/.test(x));
+      if(isModernTv || isLegacyTv){
+        const tvId=Number(isModernTv?parts[1]:parts[0]),season=Number(isModernTv?parts[2]:parts[1]),episode=Number(isModernTv?parts[3]:parts[2]);
+        const listed=user.list.find(x=>x.id===tvId&&x.media_type==='tv'); if(listed){title=listed.name||listed.title||title;poster=listed.poster_path;}
+        try{
+          const show=await api(`/api/tv/${tvId}`);
+          title=show.name||show.original_name||title;
+          poster=poster||show.poster_path||'';
+        }catch{}
+        try{const d=await api(`/api/tv/${tvId}/season/${season}`);const ep=(d.episodes||[]).find(x=>x.episode_number===episode);if(ep){subtitle=ep.name||`Episódio ${episode}`;runtime=Number(ep.runtime||0);poster=poster||d.poster_path;}}catch{}
+        if(!subtitle)subtitle=`Episódio ${episode}`;
+        const pct=runtime?Math.min(100,Math.round((Number(pos.seconds||0)/(runtime*60))*100)):0;
+        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${poster?img(poster):''}" alt=""><div class="continueBody"><b>${title} • T${String(season).padStart(2,'0')} E${String(episode).padStart(2,'0')}</b><h3>${subtitle}</h3><div class="positionLine"><span>Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou">✎</button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button></div></div>`;
+        el.querySelector('.positionEdit').onclick=e=>{e.stopPropagation();openPositionEditor(tvId,season,episode,runtime,renderContinue);};
+        el.querySelector('.continueAction button').onclick=()=>{location.hash=`tv-${tvId}`;setTimeout(()=>{$('#tabEpisodios')?.click();},150);};
+        if(renderSeq!==continueRenderSeq)return;
+        box.appendChild(el);
+      }else if(parts[0]==='movie' && parts.length>=2){
+        const movieId=Number(parts[1]);
+        let d=null;try{d=await api(`/api/movie/${movieId}`);}catch{}
+        if(!d)continue;
+        if(renderSeq!==continueRenderSeq)return;
+        title=d.title||title;poster=d.poster_path;subtitle='Filme';runtime=Number(d.runtime||0);
+        const pct=runtime?Math.min(100,Math.round((Number(pos.seconds||0)/(runtime*60))*100)):0;
+        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${poster?img(poster):''}" alt=""><div class="continueBody"><b>FILME</b><h3>${title}</h3><div class="positionLine"><span>Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou">✎</button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button></div></div>`;
+        el.querySelector('.positionEdit').onclick=e=>{e.stopPropagation();openMoviePositionEditor(movieId,runtime,()=>renderContinue());};
+        el.querySelector('.continueAction button').onclick=()=>openMovie(movieId);
+        box.appendChild(el);
+      }
+    }
+    if(!box.children.length){box.innerHTML='';if(homeSection)homeSection.style.display='none';}
+  }
+  function openMoviePositionEditor(movieId,runtimeMinutes,onDone){
+    const current=getMoviePosition(movieId);
+    const wrap=document.createElement('div');wrap.className='movieModal';wrap.innerHTML=`<div class="positionModalCard"><div class="positionModalBody"><h2 class="positionModalTitle">✎ Onde você parou?</h2><p class="positionModalHint">Digite o ponto do filme, por exemplo: <b>32:15</b> ou <b>1:02:30</b>.</p><input class="positionModalInput" value="${formatPosition(current)}" aria-label="Tempo onde parou" inputmode="numeric"><div class="positionModalActions"><button class="btn outline" type="button">Cancelar</button><button class="btn yellow" type="button">Salvar</button></div></div></div>`;
+    document.body.appendChild(wrap);const input=$('.positionModalInput',wrap);input.focus();input.select();
+    $('.btn.outline',wrap).onclick=()=>wrap.remove();
+    $('.btn.yellow',wrap).onclick=()=>{const seconds=parsePosition(input.value);if(seconds===null){toast('Digite um tempo válido, como 32:15.');input.focus();return}setMoviePosition(movieId,seconds,runtimeMinutes);wrap.remove();toast(`Ponto salvo em ${formatPosition(seconds)}.`);if(onDone)onDone();};
+  }
+
+  const genrePt={
+    28:'Ação',12:'Aventura',16:'Animação',35:'Comédia',80:'Crime',99:'Documentário',18:'Drama',10751:'Família',14:'Fantasia',36:'História',27:'Terror',10402:'Música',9648:'Mistério',10749:'Romance',878:'Ficção científica',10770:'Cinema TV',53:'Suspense',10752:'Guerra',37:'Faroeste',10759:'Ação e aventura',10762:'Infantil',10763:'Notícias',10764:'Reality show',10765:'Ficção científica e fantasia',10766:'Novela',10767:'Talk show',10768:'Guerra e política'};
+  const genreNamePt=g=>{const raw=String(g?.name||'').trim();return genrePt[Number(g?.id)]||({'Action & Adventure':'Ação e aventura','Action':'Ação','Adventure':'Aventura','Crime':'Crime','Comedy':'Comédia','Drama':'Drama','Fantasy':'Fantasia','Horror':'Terror','Mystery':'Mistério','Romance':'Romance','Science Fiction':'Ficção científica','Thriller':'Suspense','Animation':'Animação','Documentary':'Documentário','Family':'Família','History':'História','Music':'Música','War':'Guerra','Western':'Faroeste','Kids':'Infantil','News':'Notícias','Reality':'Reality show','Soap':'Novela','Talk':'Talk show','Politics':'Política'}[raw]||raw.replace(/Action\s*&\s*Adventure/gi,'Ação e aventura'));};
+  const providerNamePt=name=>({'Amazon Prime Video with Ads':'Amazon Prime Video com anúncios','Amazon Prime Video':'Amazon Prime Video','Netflix Standard with Ads':'Netflix Padrão com anúncios','Netflix Basic with Ads':'Netflix Básico com anúncios','HBO Max':'HBO Max','Max':'Max','Disney Plus':'Disney+','Disney+':'Disney+','Apple TV Plus':'Apple TV+','Paramount Plus':'Paramount+','Paramount+':'Paramount+','Globoplay':'Globoplay','Claro video':'Claro vídeo'}[String(name||'').trim()]||String(name||''));
+  const genresPt=(items=[])=>items.map(genreNamePt).filter(Boolean);
+
+  async function openShow(id){
+    try{
+      const d=await api('/api/tv/'+id);
+      state.current=d;
+      state.season=0;
+      $('#detailBackdrop').src=back(d.backdrop_path)||img(d.poster_path);
+      $('#detailTitle').textContent=d.name||'Série';
+      const year=(d.first_air_date||'').slice(0,4)||'—';
+      const genres=genresPt((d.genres||[]).slice(0,3)).join(' • ');
+      const statusMap={
+        'Returning Series':'Renovada',
+        'Canceled':'Cancelada',
+        'Ended':'Finalizada',
+        'In Production':'Em produção',
+        'Planned':'Planejada',
+        'Pilot':'Piloto'
+      };
+      const situation=statusMap[d.status]||statusMap[d.status]||d.status||'Não informado';
+      $('#detailMeta').innerHTML=`<span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${year}</span><span class="dot">•</span><span>${genres||'Série'}</span><span class="dot">•</span><span>${(d.number_of_seasons||0)} temporada${d.number_of_seasons===1?'':'s'}</span><strong class="statusBadge ${situation==='Cancelada'?'cancelled':situation==='Renovada'?'renewed':''}">Situação: ${situation}</strong>`;
+      $('#detailSinopse').textContent=d.overview||'Sem sinopse disponível.';
+      const followed=user.list.some(x=>x.id===id&&x.media_type==='tv');
+      $('#detailActions').innerHTML=`<button class="btn yellow" id="followShow">${followed?'✓ Acompanhando série':'+ Acompanhar série'}</button>`;
+      $('#followShow').onclick=()=>{toggleList({...d,media_type:'tv'});openShow(id)};
+      const cast=(d.credits?.cast||[]).slice(0,12).map(x=>x.name).join(', ');
+      let providers='';
+      try{
+        const pd=await api('/api/tv/'+id+'/providers');
+        const br=pd.results?.BR;
+        const all=[...(br?.flatrate||[]),...(br?.free||[]),...(br?.ads||[])];
+        const seen=new Set();
+        providers=all.filter(x=>!seen.has(x.provider_id)&&seen.add(x.provider_id)).slice(0,8).map(x=>`<span class="provider">${x.logo_path?`<img src="${img(x.logo_path)}" alt="">`:''}${providerNamePt(x.provider_name)}</span>`).join('');
+      }catch{}
+      $('#detailAbout').innerHTML=`<h3>Sobre</h3><p>${d.overview||'Sem sinopse disponível.'}</p>${genres?`<div class="chips">${genresPt(d.genres||[]).map(g=>`<span class="chip">${g}</span>`).join('')}</div>`:''}<h3 style="margin-top:22px">Elenco</h3><p style="color:#777">${cast||'Informação não disponível.'}</p>`;
+      $('#tabSobre').classList.add('active');$('#tabEpisodios').classList.remove('active');$('#detailAbout').style.display='block';$('#detailEpisódios').style.display='none';
+      $('.detail').classList.add('active');
+      showView('detalhe');
+      if(!$('#detalhe').classList.contains('active')) $('#detalhe').classList.add('active');
+    }catch(e){toast('Não foi possível abrir a série: '+e.message)}
+  }
+
+
+  function shouldPromptPreviousEpisódios(showId){return !user.seasonPromptNever?.[String(showId)];}
+  function promptPreviousEpisódios(showName, season, lastEpisódio, pendingCount, onChoice){
+    const wrap=document.createElement('div'); wrap.className='seasonPrompt';
+    wrap.innerHTML=`<div class="seasonPromptCard" role="dialog" aria-modal="true"><div class="seasonPromptIcon">✓</div><h3>Marcar episódios anteriores?</h3><p>Você está marcando o <b>Episódio ${lastEpisódio}</b> da <b>Temporada ${season}</b> como assistido. Quer marcar também os ${pendingCount} episódio${pendingCount===1?'':'s'} anteriores?</p><div class="seasonPromptActions"><button class="seasonPromptYes" data-choice="yes">SIM</button><button class="seasonPromptNo" data-choice="no">NÃO</button><button class="seasonPromptNever" data-choice="never">NUNCA PARA ESTA SÉRIE</button></div></div>`;
+    document.body.appendChild(wrap); wrap.querySelectorAll('[data-choice]').forEach(btn=>btn.onclick=()=>{const choice=btn.dataset.choice;if(choice==='never'){user.seasonPromptNever=user.seasonPromptNever||{};user.seasonPromptNever[String(state.current.id)]=true;save();}wrap.remove();onChoice(choice);});
+  }
+
+  function bindSeriesContinueActions(continueEntry){
+    const edit=$('#continueSeriesEdit'), check=$('#continueSeriesCheck');
+    if(!continueEntry || !state.current)return;
+    const season=Number(continueEntry.season), episode=Number(continueEntry.episode), showId=Number(state.current.id);
+    if(edit) edit.onclick=async e=>{
+      e.stopPropagation();
+      try{
+        const cd=await api(`/api/tv/${showId}/season/${season}`);
+        const ep=(cd.episodes||[]).find(x=>Number(x.episode_number)===episode);
+        openPositionEditor(showId,season,episode,Number(ep?.runtime||0),()=>loadTemporada(state.season));
+      }catch{ openPositionEditor(showId,season,episode,0,()=>loadTemporada(state.season)); }
+    };
+    if(check) check.onclick=async e=>{
+      e.stopPropagation();
+      user.watched=user.watched||{}; user.watchedAt=user.watchedAt||{};
+      const key=`${showId}-${season}-${episode}`;
+      user.watched[key]=true; user.watchedAt[key]=new Date().toISOString();
+      user.watchDurations=user.watchDurations||{episodes:{},movies:{}}; user.watchDurations.episodes=user.watchDurations.episodes||{};
+      user.watchDurations.episodes[key]=Number(continueEntry.runtime||0)||Number(user.watchDurations.episodes[key]||0)||45;
+      if(check){ check.classList.add('done'); check.textContent='✓'; check.title='Episódio assistido'; }
+      user.positions=user.positions||{}; delete user.positions[key];
+      if(!user.list.some(x=>Number(x.id)===showId&&x.media_type==='tv')) user.list.push({id:showId,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});
+      const total=Number((state.current.seasons||[]).find(x=>Number(x.season_number)===season)?.episode_count||0);
+      if(episode===total && (state.current.status==='Ended'||state.current.status==='Canceled') && season===Number(state.current.number_of_seasons||season)){
+        user.completedShows=user.completedShows||{}; user.completedShows[String(showId)]=new Date().toISOString();
+      }
+      save(); await loadTemporada(season); renderProfile(); toast('Episódio concluído!');
+    };
+  }
+
+  async function loadTemporada(n){
+    if(!state.current)return;
+    state.season=n;
+    const d=await api(`/api/tv/${state.current.id}/season/${n}`);
+    const episodes=d.episodes||[];
+    const seasons=(state.current.seasons||[]).filter(s=>s.season_number>0);
+    const watchedCount=seasonNum=>{
+      const total=(state.current.seasons||[]).find(s=>s.season_number===seasonNum)?.episode_count;
+      const keys=seasonNum===n?episodes.map(e=>e.episode_number):[];
+      if(keys.length) return keys.filter(ep=>user.watched[`${state.current.id}-${seasonNum}-${ep}`]).length;
+      if(Number.isFinite(Number(total))){
+        let c=0; for(let ep=1;ep<=Number(total);ep++) if(user.watched[`${state.current.id}-${seasonNum}-${ep}`]) c++; return c;
+      }
+      return 0;
+    };
+    const currentWatched=episodes.filter(e=>user.watched[`${state.current.id}-${n}-${e.episode_number}`]).length;
+    const allTemporadaAssistired=episodes.length>0&&currentWatched===episodes.length;
+    const status=state.current.status||'';
+    const statusMap={'Returning Series':'Renovada','Canceled':'Cancelada','Ended':'Finalizada','In Production':'Em produção','Planned':'Planejada','Pilot':'Piloto','Returning':'Renovada'};
+    const situation=statusMap[status]||status||'Não informado';
+    let seasonNotice='';
+    if(allTemporadaAssistired){
+      if(situation==='Cancelada') seasonNotice=`<div class="seasonNotice cancelled"><strong>Série cancelada</strong><span>Você concluiu todos os episódios disponíveis.</span></div>`;
+      else if(situation==='Finalizada') seasonNotice=`<div class="seasonNotice finished"><strong>Série finalizada</strong><span>Você concluiu todos os episódios disponíveis.</span></div>`;
+      else seasonNotice=`<div class="seasonNotice upToDate"><strong>Em dia</strong><span>Você assistiu a todos os episódios desta temporada.</span></div>`;
+    }
+
+    // “Assistir a seguir”: ponto salvo não assistido; depois, próximo episódio após o último concluído.
+    const continueEntry=getSeriesContinueEntry(state.current);
+    let continueHtml='';
+    if(continueEntry){
+      let epName=`Episódio ${continueEntry.episode}`, epPoster=state.current.poster_path;
+      try{
+        const cd=await api(`/api/tv/${state.current.id}/season/${continueEntry.season}`);
+        const cep=(cd.episodes||[]).find(e=>e.episode_number===continueEntry.episode);
+        if(cep){epName=cep.name||epName;epPoster=cep.still_path||epPoster;}
+      }catch{}
+      continueHtml=`<div class="seriesContinue"><div class="seriesContinueTitle">Assistir a seguir</div><div class="seriesContinueCard"><img src="${epPoster?img(epPoster):''}" alt=""><div class="scInfo"><div class="scSeries">${state.current.name||'Série'}</div><div class="scCode">S${String(continueEntry.season).padStart(2,'0')} | E${String(continueEntry.episode).padStart(2,'0')}</div><div class="scName">${epName}</div></div><div class="seriesContinueActions"><button class="positionEdit" id="continueSeriesEdit" type="button" title="Marcar onde parou">✎</button><button class="check continueCheck" id="continueSeriesCheck" type="button" title="Marcar como assistido">○</button></div></div></div>`;
+    }
+
+    const seasonRows=seasons.map(s=>{
+      const sn=s.season_number;
+      const count=sn===n?currentWatched:watchedCount(sn);
+      const total=Number(s.episode_count||0);
+      const expanded=sn===n;
+      return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>Temporada ${sn}</span></div><span class="seasonCount">${count}/${total}</span>${count>0&&total>0&&count===total?'<span class="seasonDone">✓</span>':''}</div>${expanded?`<div class="seasonEpisodes">${seasonNotice}${episodes.map(e=>{
+        const key=`${state.current.id}-${n}-${e.episode_number}`;
+        const done=!!user.watched[key]; const runtime=Number(e.runtime||0); const pos=getPosition(state.current.id,n,e.episode_number);
+        return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${img(e.still_path||state.current.poster_path)}" data-episode-image="1" alt="${e.name||'Episódio'}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${e.name||'Episódio'}</p>${pos?`<div class="positionMini">▶ Parou em <strong>${formatPosition(pos)}</strong></div>`:''}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou">✎</button><button class="check ${done?'done':''}" data-ep="${key}" title="${done?'Desmarcar como assistido':'Marcar como assistido'}">${done?'✓':'○'}</button></div></article>`
+      }).join('')}</div>`:''}`;
+    }).join('');
+
+    $('#detailEpisódios').innerHTML=`${continueHtml}<div class="seasonListTitle">Todos os episódios</div>${seasonRows}`;
+    $$('[data-episode-image]',$('#detailEpisódios')).forEach(im=>setImageFallback(im,state.current.poster_path));
+    $$('[data-season-row]',$('#detailEpisódios')).forEach(row=>row.onclick=()=>{const sn=Number(row.dataset.seasonRow);if(sn===state.season){renderSeasonListCollapsed();}else{loadTemporada(sn);}});
+    bindSeriesContinueActions(continueEntry);
+
+    $$('.episodePositionEdit',$('#detailEpisódios')).forEach(btn=>btn.onclick=async e=>{
+      e.stopPropagation();
+      const article=btn.closest('[data-episode-open]');
+      const ep=Number(article?.dataset.episodeOpen||0);
+      if(!ep || !state.current)return;
+      const epData=episodes.find(x=>Number(x.episode_number)===ep);
+      const runtime=Number(epData?.runtime||0);
+      openPositionEditor(Number(state.current.id),n,ep,runtime,()=>loadTemporada(n));
+    });
+    
+    $$('.check[data-ep]',$('#detailEpisódios')).forEach(b=>b.onclick=async e=>{
+      e.stopPropagation(); const key=b.dataset.ep; const episodeNumber=Number(key.split('-').pop()); const wasDone=!!user.watched[key];
+      if(wasDone){user.watched[key]=false;delete user.watchedAt[key];save();await loadTemporada(n);renderProfile();toast('Episódio desmarcado.');return;}
+      const isLastEpisódio=episodeNumber===episodes.length; const pendingPrevious=episodes.filter(ep=>ep.episode_number<episodeNumber&&!user.watched[`${state.current.id}-${n}-${ep.episode_number}`]).length;
+      const markCurrent=async markPrevious=>{user.watched[key]=true;user.watchedAt[key]=new Date().toISOString();user.watchDurations=user.watchDurations||{episodes:{},movies:{}};user.watchDurations.episodes=user.watchDurations.episodes||{};user.watchDurations.episodes[key]=Number(episodes.find(ep=>Number(ep.episode_number)===episodeNumber)?.runtime||0)||Number(user.watchDurations.episodes[key]||0)||45;user.positions=user.positions||{};delete user.positions[positionKey(Number(state.current.id),n,episodeNumber)];delete user.positions[`${state.current.id}-${n}-${episodeNumber}`];if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;delete user.positions[positionKey(Number(state.current.id),n,ep.episode_number)];delete user.positions[k];}})}if(!user.list.some(x=>x.id===state.current.id&&x.media_type==='tv'))user.list.push({id:state.current.id,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;user.watched[k]=true;user.watchedAt[k]=new Date().toISOString();}})}if(isLastEpisódio){user.completedShows=user.completedShows||{};if((state.current.status==='Ended'||state.current.status==='Canceled')&&n===Number(state.current.number_of_seasons||n))user.completedShows[String(state.current.id)]=new Date().toISOString();}save();await loadTemporada(n);renderProfile();toast(markPrevious?'Temporada marcada como assistida!':'Episódio concluído!');};
+      if(isLastEpisódio&&pendingPrevious>0&&shouldPromptPreviousEpisódios(state.current.id)){promptPreviousEpisódios(state.current.name||state.current.title||'esta série',n,episodeNumber,pendingPrevious,choice=>markCurrent(choice==='yes'));}else{await markCurrent(false);}
+    });
+    $$('.episode[data-episode-open]',$('#detailEpisódios')).forEach(article=>{
+      article.addEventListener('click',async e=>{
+        if(e.target.closest('button,select,input,a'))return;
+        const ep=Number(article.dataset.episodeOpen);
+        if(!ep || !state.current)return;
+        recordEpisodeStart(Number(state.current.id),n,ep,state.current);
+        renderProfile(); toast('Episódio salvo em Continue assistindo.'); await renderContinue('#continueGrid'); await renderEpisódiosFeed();
+      });
+    });
+  }
+
+  $('#tabSobre').onclick=()=>{$('#tabSobre').classList.add('active');$('#tabEpisodios').classList.remove('active');$('#detailAbout').style.display='block';$('#detailEpisódios').style.display='none'};
+  async function renderSeasonListCollapsed(){
+    if(!state.current)return;
+    const seasons=(state.current.seasons||[]).filter(s=>s.season_number>0);
+    const continueEntry=getSeriesContinueEntry(state.current);
+    let continueHtml='';
+    if(continueEntry){
+      let epName=`Episódio ${continueEntry.episode}`, epPoster=state.current.poster_path;
+      try{const cd=await api(`/api/tv/${state.current.id}/season/${continueEntry.season}`);const cep=(cd.episodes||[]).find(e=>e.episode_number===continueEntry.episode);if(cep){epName=cep.name||epName;epPoster=cep.still_path||epPoster;}}catch{}
+      continueHtml=`<div class="seriesContinue"><div class="seriesContinueTitle">Assistir a seguir</div><div class="seriesContinueCard"><img src="${epPoster?img(epPoster):''}" alt=""><div class="scInfo"><div class="scSeries">${state.current.name||'Série'}</div><div class="scCode">S${String(continueEntry.season).padStart(2,'0')} | E${String(continueEntry.episode).padStart(2,'0')}</div><div class="scName">${epName}</div></div><div class="seriesContinueActions"><button class="positionEdit" id="continueSeriesEdit" type="button" title="Marcar onde parou">✎</button><button class="check continueCheck" id="continueSeriesCheck" type="button" title="Marcar como assistido">○</button></div></div></div>`;
+    }
+    const rows=seasons.map(s=>{
+      const sn=Number(s.season_number), total=Number(s.episode_count||0);
+      let count=0; for(let ep=1;ep<=total;ep++) if(user.watched[`${state.current.id}-${sn}-${ep}`]) count++;
+      const done=count>0&&total>0&&count===total;
+      return `<div class="seasonRow" data-season-row="${sn}"><div class="seasonLeft"><span class="seasonArrow">▾</span><span>Temporada ${sn}</span></div><span class="seasonCount">${count}/${total}</span>${done?'<span class="seasonDone">✓</span>':''}</div>`;
+    }).join('');
+    $('#detailEpisódios').innerHTML=`${continueHtml}<div class="seasonListTitle">Todos os episódios</div>${rows}`;
+    $('[data-episode-image]',$('#detailEpisódios'));
+    $$('[data-season-row]',$('#detailEpisódios')).forEach(row=>row.onclick=()=>loadTemporada(Number(row.dataset.seasonRow)));
+    bindSeriesContinueActions(continueEntry);
+  }
+  $('#tabSobre').onclick=()=>{$('#tabSobre').classList.add('active');$('#tabEpisodios').classList.remove('active');$('#detailAbout').style.display='block';$('#detailEpisódios').style.display='none'};
+  $('#tabEpisodios').onclick=()=>{$('#tabEpisodios').classList.add('active');$('#tabSobre').classList.remove('active');$('#detailAbout').style.display='none';$('#detailEpisódios').style.display='block';renderSeasonListCollapsed()};
+  $('#backDetail').onclick=()=>{location.hash='descobrir'};
+  async function openMovie(id){
+    try{
+      const d=await api('/api/movie/'+id);
+      const runtime=Number(d.runtime||0);
+      const pos=getMoviePosition(id);
+      const pct=runtime?Math.min(100,Math.round((pos/(runtime*60))*100)):0;
+      const box=$('#movieDetailContent');
+      box.innerHTML=`<div class="movieDetailPage">
+        <div class="movieDetailHero">
+          <button class="movieBack" id="movieBack" aria-label="Voltar">←</button>
+          ${d.backdrop_path?`<img src="${back(d.backdrop_path)}" alt="">`:''}
+          <div class="movieDetailOverlay"><div class="movieDetailInfo">
+            <h1>${d.title||'Filme'}</h1>
+            <div class="detailMeta"><span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${(d.release_date||'').slice(0,4)||'—'}</span>${d.genres?.length?`<span class="dot">•</span><span>${genresPt(d.genres).join(' • ')}</span>`:''}<span class="dot">•</span><span>${runtime?formatPosition(runtime*60):'Duração não informada'}</span></div>
+          </div></div>
+        </div>
+        <div class="movieDetailBody">
+          <h2>Sobre o filme</h2>
+          <p class="movieOverview">${d.overview||'Sem sinopse disponível.'}</p>
+          <div class="movieDetailProgress">
+            <div class="movieDetailProgressTop"><h3>Seu progresso</h3><button class="positionEdit" id="movieEditPosition" title="Editar onde parou">✎</button></div>
+            <div class="positionLine"><span>${pos?`▶ Parou em <strong>${formatPosition(pos)}</strong>`:'Você ainda não marcou onde parou.'}</span></div>
+            <div class="progress"><i style="width:${pct}%"></i></div>
+            ${pos?`<div class="movieContinue"><button class="btn dark" id="movieContinueBtn">Continuar do ponto salvo</button></div>`:''}
+            <div id="movieCompletionArea"></div>
+          </div>
+        </div>
+      </div>`;
+      showView('movieDetail');
+      $('#movieBack').onclick=()=>{location.hash='descobrir'};
+      $('#movieEditPosition').onclick=()=>openMoviePositionEditor(id,runtime,()=>openMovie(id));
+      const cont=$('#movieContinueBtn');
+      if(cont)cont.onclick=()=>toast(`Continue a partir de ${formatPosition(pos)}.`);
+      renderMovieCompletion(id,d.title||'Filme',runtime);
+    }catch(e){toast(e.message)}
+  }
+
+  function renderMovieCompletion(movieId,title,runtime=0){
+    const area=$('#movieCompletionArea'); if(!area)return;
+    const done=!!user.watchedMovies[String(movieId)];
+    if(done){
+      area.innerHTML='<button type="button" class="movieDoneBadge movieDoneToggle" id="movieDoneToggle" title="Clique para desmarcar o filme como assistido">✓ Filme finalizado</button>';
+      $('#movieDoneToggle').onclick=async()=>{
+        delete user.watchedMovies[String(movieId)];
+        save();
+        await syncStateNow();
+        renderProfile();
+        renderMovieCompletion(movieId,title,runtime);
+        toast('Filme desmarcado como assistido.');
+      };
+      return;
+    }
+    area.innerHTML='<button type="button" class="btn yellow finishMovieBtn" id="finishMovieBtn">✓ Marcar filme como assistido</button>';
+    $('#finishMovieBtn').onclick=async()=>{
+      user.watchedMovies[String(movieId)]=new Date().toISOString();
+      user.watchDurations=user.watchDurations||{episodes:{},movies:{}}; user.watchDurations.movies=user.watchDurations.movies||{}; user.watchDurations.movies[String(movieId)]=Number(runtime||0);
+      // Ao finalizar o filme, ele deixa de ser um item em andamento.
+      // Remove o ponto salvo para que também desapareça de “Continue assistindo”.
+      user.positions=user.positions||{};
+      delete user.positions[moviePositionKey(movieId)];
+      if(!user.list.some(x=>x.id===movieId&&x.media_type==='movie'))user.list.push({id:movieId,media_type:'movie',title,name:title});
+      save();
+      await syncStateNow();
+      renderProfile();
+      renderMovieCompletion(movieId,title);
+      await renderContinue('#continueGrid');
+      await renderEpisódiosFeed();
+      toast('Filme marcado como assistido.');
+    };
+  }
+
+
+  let episodeFeedRenderSeq=0;
+  async function renderEpisódiosFeed(){
+    const box=$('#episodeFeed'); if(!box)return;
+    const renderSeq=++episodeFeedRenderSeq;
+    cleanupDuplicatePositions();
+    // Normaliza e elimina qualquer chave duplicada que represente o mesmo item.
+    cleanupDuplicatePositions();
+    const uniquePositions=new Map();
+    for(const [key,value] of Object.entries(user.positions||{})){
+      if(Number(value?.seconds||0)<=0) continue;
+      const parts=key.split('-');
+      let canonical=key;
+      if(parts.length===3 && parts.every(x=>/^\d+$/.test(x))) canonical=positionKey(Number(parts[0]),Number(parts[1]),Number(parts[2]));
+      const previous=uniquePositions.get(canonical);
+      if(!previous || new Date(value.updatedAt||0)>=new Date(previous.value.updatedAt||0)) uniquePositions.set(canonical,{key:canonical,value});
+    }
+    const entries=Array.from(uniquePositions.values())
+      .filter(x=>{
+        const parts=String(x.key||'').split('-');
+        if(parts[0]==='tv' && parts.length>=4){
+          const watchedKey=`${parts[1]}-${parts[2]}-${parts[3]}`;
+          return !(user.watched||{})[watchedKey];
+        }
+        if(parts.length===3 && parts.every(v=>/^\d+$/.test(v))){
+          return !(user.watched||{})[x.key];
+        }
+        return parts[0]!=='movie' || !(user.watchedMovies||{})[parts[1]];
+      })
+      .sort((a,b)=>new Date(b.value.updatedAt||0)-new Date(a.value.updatedAt||0))
+      .slice(0,12)
+      .map(x=>[x.key,x.value]);
+    box.innerHTML='';
+    if(!entries.length){
+      box.innerHTML='<div class="empty">Seus filmes e episódios em andamento aparecerão aqui quando você salvar onde parou. ✨</div>';
+      return;
+    }
+    for(const [key,pos] of entries){
+      const p=key.split('-');
+      const isTv=p[0]==='tv'&&p.length>=4;
+      const isMovie=p[0]==='movie'&&p.length>=2;
+      const isLegacyTv=p.length===3&&p.every(x=>/^\d+$/.test(x));
+      if(!isTv&&!isMovie&&!isLegacyTv)continue;
+
+      let title='Título',subtitle='',runtime=0,poster='';
+      if(isMovie){
+        const movieId=Number(p[1]);
+        try{
+          const d=await api(`/api/movie/${movieId}`);
+          title=d.title||'Filme'; subtitle='FILME'; runtime=Number(d.runtime||0); poster=d.poster_path||'';
+        }catch{continue}
+      }else{
+        const tvId=Number(isTv?p[1]:p[0]);
+        const season=Number(isTv?p[2]:p[1]);
+        const episode=Number(isTv?p[3]:p[2]);
+        const listed=user.list.find(x=>Number(x.id)===tvId&&x.media_type==='tv');
+        // Nunca usar 'Série' como nome definitivo: o título deve vir do TMDB.
+        // Isso corrige registros antigos que foram salvos com name='Série'.
+        title=listed?.name||listed?.title||'Série';
+        poster=listed?.poster_path||'';
+        let ep=null;
+        try{
+          const show=await api(`/api/tv/${tvId}`);
+          const tmdbTitle=show?.name||show?.original_name||'';
+          if(tmdbTitle) title=tmdbTitle;
+          poster=poster||show?.poster_path||'';
+          // Atualiza o registro salvo com o nome correto para as próximas vezes.
+          if(listed && tmdbTitle && (listed.name!==tmdbTitle || listed.title!==tmdbTitle || !listed.poster_path)){
+            listed.name=tmdbTitle;
+            listed.title=tmdbTitle;
+            if(!listed.poster_path && show?.poster_path) listed.poster_path=show.poster_path;
+            save();
+          }
+        }catch{}
+        try{
+          const d=await api(`/api/tv/${tvId}/season/${season}`);
+          ep=(d.episodes||[]).find(x=>x.episode_number===episode)||null;
+          runtime=Number(ep?.runtime||0);
+          poster=poster||d.poster_path||'';
+        }catch{}
+        subtitle=`T${String(season).padStart(2,'0')} | E${String(episode).padStart(2,'0')} • ${ep?.name||'Episódio'}`;
+      }
+      const pct=runtime?Math.min(100,Math.round(Number(pos.seconds)/(runtime*60)*100)):0;
+      const item=document.createElement('article');
+      item.className='episodeFeedItem';
+      item.innerHTML=`<img src="${poster?img(poster):''}" alt="">
+        <div class="episodeFeedBody">
+          <b>${title}</b>
+          <span>${subtitle}</span>
+          <div class="positionLine"><span>▶ Parou em <strong>${formatPosition(pos.seconds)}</strong></span>
+            <button class="positionEdit" title="Editar onde parou">✎</button></div>
+          <div class="progress"><i style="width:${pct}%"></i></div>
+        </div>
+        <button class="btn dark episodeFeedOpen">Continuar</button>`;
+      item.querySelector('.positionEdit').onclick=e=>{
+        e.stopPropagation();
+        if(isMovie){
+          const movieId=Number(p[1]); openMoviePositionEditor(movieId,runtime,renderEpisódiosFeed);
+        }else{
+          const tvId=Number(isTv?p[1]:p[0]);
+          const season=Number(isTv?p[2]:p[1]);
+          const episode=Number(isTv?p[3]:p[2]);
+          openPositionEditor(tvId,season,episode,runtime,renderEpisódiosFeed);
+        }
+      };
+      item.querySelector('.episodeFeedOpen').onclick=()=>{
+        if(isMovie){openMovie(Number(p[1]));return;}
+        const tvId=Number(isTv?p[1]:p[0]);
+        const season=Number(isTv?p[2]:p[1]);
+        const episode=Number(isTv?p[3]:p[2]);
+        location.hash=`tv-${tvId}`;
+        setTimeout(async()=>{
+          await loadTemporada(season);
+          document.querySelector(`[data-episode-open="${episode}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});
+        },200);
+      };
+      if(renderSeq!==episodeFeedRenderSeq)return;
+      box.appendChild(item);
+    }
+    if(renderSeq===episodeFeedRenderSeq && !box.children.length)box.innerHTML='<div class="empty">Seus filmes e episódios em andamento aparecerão aqui quando você salvar onde parou. ✨</div>';
+  }
+
+
+  function initials(name){return String(name||'C').trim().slice(0,1).toUpperCase()||'C';}
+  function renderPersonList(box,items){box.innerHTML='';if(!items.length){box.innerHTML='<div class="publicEmpty">Nenhum usuário encontrado.</div>';return}items.forEach(person=>{const el=document.createElement('div');el.className='personCard';el.innerHTML=`<div class="personAvatar">${initials(person.name)}</div><div class="personInfo"><b>${String(person.name||'Coruja').replace(/[<>&]/g,'')}</b><small>${person.username?'@'+person.username+' • ':''}${person.followers||0} seguidores • ${person.following||0} seguindo</small></div><button class="followBtn ${person.following?'following':''}">${person.following?'✓ Seguindo':'Seguir'}</button>`;el.querySelector('.personInfo').onclick=()=>openPublicProfile(person.id);el.querySelector('.personAvatar').onclick=()=>openPublicProfile(person.id);el.querySelector('.followBtn').onclick=async()=>{if(!user.sessionToken){openAuth('login');return}const method=person.following?'DELETE':'POST';const r=await fetch('/api/users/'+person.id+'/follow',{method,headers:{Authorization:'Bearer '+user.sessionToken}});const d=await r.json();if(!r.ok){toast(d.error||'Não foi possível seguir.');return}person.following=!person.following;el.querySelector('.followBtn').textContent=person.following?'✓ Seguindo':'Seguir';el.querySelector('.followBtn').classList.toggle('following',person.following);if(person.following)user.followingCount=Number(user.followingCount||0)+1;else user.followingCount=Math.max(0,Number(user.followingCount||0)-1);save();renderProfile()};box.appendChild(el)})}
+  async function searchPeople(q,box){const query=String(q||'').trim();if(!query){box.innerHTML='<div class="publicEmpty">Digite o nome de alguém para pesquisar.</div>';return}if(!user.sessionToken){box.innerHTML='<div class="publicEmpty">Entre na sua conta para pesquisar e seguir pessoas.</div>';return}try{const d=await fetch('/api/users/search?q='+encodeURIComponent(query),{headers:{Authorization:'Bearer '+user.sessionToken}}).then(r=>r.json());renderPersonList(box,d.users||[])}catch{box.innerHTML='<div class="publicEmpty">Não foi possível pesquisar usuários.</div>'}}
+  function openPeople(){if(!user.sessionToken){openAuth('login');return}$('#peopleModal').classList.add('show');$('#peopleSearch').value='';$('#peopleResultsModal').innerHTML='<div class="publicEmpty">Digite o nome de alguém para pesquisar.</div>';setTimeout(()=>$('#peopleSearch').focus(),50)}
+  $('#communitySearchBtn').onclick=openPeople;$('#peopleClose').onclick=()=>$('#peopleModal').classList.remove('show');
+  let peopleTimer;$('#peopleSearch').oninput=e=>{clearTimeout(peopleTimer);peopleTimer=setTimeout(()=>searchPeople(e.target.value,$('#peopleResultsModal')),250)};
+  async function openPublicProfile(id){try{const r=await fetch('/api/users/'+encodeURIComponent(id),{headers:user.sessionToken?{Authorization:'Bearer '+user.sessionToken}:{}});const d=await r.json();if(!r.ok)throw Error(d.error||'Usuário não encontrado.');renderPublicProfile(d.user,d.state||{});location.hash='perfil-publico'}catch(e){toast(e.message)}}
+  function renderPublicProfile(person,st){const box=$('#publicProfileContent');const list=Array.isArray(st.list)?st.list:[];const watchedMovies=Object.keys(st.watchedMovies||{}).filter(k=>st.watchedMovies[k]);const positions=Object.entries(st.positions||{}).filter(([,v])=>Number(v?.seconds||0)>0);const completed=Object.keys(st.completedShows||{}).filter(k=>st.completedShows[k]);box.innerHTML=`<div class="publicHero"><div class="publicTop"><div class="publicAvatar">${initials(person.name)}</div><div><h1 class="publicName">${String(person.name||'Coruja').replace(/[<>&]/g,'')}</h1><div style="color:#aaa">@${String(person.username||'coruja').replace(/[<>&]/g,'')} • ${person.followers||0} seguidores • ${person.following||0} seguindo</div></div><button class="followBtn ${person.following?'following':''}" id="publicFollowBtn" style="margin-left:auto">${person.following?'✓ Seguindo':'Seguir'}</button></div></div><div class="publicTabs"><button class="publicTab active" data-public-tab="assistindo">🎬 Assistindo</button><button class="publicTab" data-public-tab="finalizados">✅ Finalizados</button><button class="publicTab" data-public-tab="lista">📌 Minha lista</button></div><div id="publicTabContent"></div>`;$('#publicFollowBtn').onclick=async()=>{if(!user.sessionToken){openAuth('login');return}const following=person.following;const r=await fetch('/api/users/'+person.id+'/follow',{method:following?'DELETE':'POST',headers:{Authorization:'Bearer '+user.sessionToken}});const d=await r.json();if(!r.ok){toast(d.error||'Não foi possível alterar o seguimento.');return}person.following=!following;$('#publicFollowBtn').textContent=person.following?'✓ Seguindo':'Seguir';$('#publicFollowBtn').classList.toggle('following',person.following);user.followingCount=Math.max(0,Number(user.followingCount||0)+(person.following?1:-1));save()};const renderTab=tab=>{const c=$('#publicTabContent');c.innerHTML='';if(tab==='lista'){renderPublicItems(c,list);return}if(tab==='finalizados'){const items=list.filter(x=>x.media_type==='movie'&&watchedMovies.includes(String(x.id))).concat(list.filter(x=>x.media_type==='tv'&&completed.includes(String(x.id))));renderPublicItems(c,items,'Essa pessoa ainda não finalizou nenhum título.');return}const items=list.filter(x=>x.media_type==='tv'&&!completed.includes(String(x.id))).concat(list.filter(x=>x.media_type==='movie'&&!watchedMovies.includes(String(x.id))));renderPublicItems(c,items,'Essa pessoa não tem nada em andamento no momento.');};$$('.publicTab',box).forEach(b=>b.onclick=()=>{$$('.publicTab',box).forEach(x=>x.classList.remove('active'));b.classList.add('active');renderTab(b.dataset.publicTab)});renderTab('assistindo')}
+  function renderPublicItems(c,items,empty='Nenhum item nesta seção.'){const sec=document.createElement('div');sec.className='publicSection';if(!items.length){sec.innerHTML=`<div class="publicEmpty">${empty}</div>`;c.appendChild(sec);return}const grid=document.createElement('div');grid.className='publicGrid';items.forEach(x=>grid.appendChild(card(x)));sec.appendChild(grid);c.appendChild(sec)}
+  function renderSearchHome(){
+    const d=state.home;if(!d)return;
+    const tv=(d.trending?.results||[]).filter(x=>x.media_type==='tv');
+    const movies=(d.trending?.results||[]).filter(x=>x.media_type==='movie');
+    fill('#searchTopMatches',tv.slice(0,8));
+    fill('#searchTrending',[...tv.slice(0,6),...movies.slice(0,6)]);
+    fill('#searchHomeSeries',(d.tv?.results||[]).slice(0,12).map(x=>({...x,media_type:'tv'})));
+    fill('#searchHomeMovies',(d.movies?.results||[]).slice(0,12).map(x=>({...x,media_type:'movie'})));
+    renderContinue('#searchContinueGrid');
+  }
+  let timer;function doSearch(q){clearTimeout(timer);timer=setTimeout(async()=>{const query=String(q||'').trim();const sections=$('#searchHomeSections');if(!query){if(sections)sections.style.display='block';$('#searchGrid').innerHTML='';renderSearchHome();return}if(sections)sections.style.display='none';try{const d=await api('/api/search?q='+encodeURIComponent(query));fill('#searchGrid',d.results.filter(x=>x.media_type==='tv'||x.media_type==='movie').slice(0,36))}catch{}},300)}
+  $('#topSearch').addEventListener('focus',()=>location.hash='busca');$('#topSearch').addEventListener('input',e=>{$('#bigSearch').value=e.target.value;doSearch(e.target.value)});$('#bigSearch').addEventListener('input',e=>{doSearch(e.target.value);$('#topSearch').value=e.target.value});
+  let trendMode='day';
+  function formatTrendDate(x){const raw=x?.first_air_date||x?.release_date||'';if(!raw)return '';const d=new Date(raw+'T00:00:00');if(Number.isNaN(d.getTime()))return '';return d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'});} 
+  function renderTrendingHome(d){
+    const box=$('#homeTrending');if(!box)return;
+    const source=trendMode==='day'?(d.trendingDay?.results||[]):(d.trending?.results||[]);
+    const items=source.filter(x=>(x?.media_type==='tv'||x?.media_type==='movie')&&x?.id&&x?.poster_path).slice(0,20);
+    box.innerHTML='';
+    items.forEach(x=>{const el=card({...x,media_type:x.media_type});const date=formatTrendDate(x);if(date){const small=document.createElement('small');small.className='trendDate';small.textContent=date;el.appendChild(small)}box.appendChild(el)});
+    if(!items.length)box.innerHTML='<div class="empty">Nenhuma tendência disponível agora.</div>';
+  }
+  function setTrendMode(mode){trendMode=mode;$('#trendToday')?.classList.toggle('active',mode==='day');$('#trendWeek')?.classList.toggle('active',mode==='week');renderTrendingHome(state.home||{});}
+  document.addEventListener('click',e=>{if(e.target?.id==='trendToday')setTrendMode('day');if(e.target?.id==='trendWeek')setTrendMode('week')});
+  function discoveryKey(x){const type=mediaTypeOf(x);return type+'-'+String(x?.id||'');}
+  function renderDiscoverySections(d){
+    // Distribui o catálogo entre as seções para evitar que o mesmo título
+    // apareça repetido em várias categorias da página Descobrir.
+    const used=new Set();
+    const takeUnique=(items,limit=12)=>{
+      const out=[];
+      for(const raw of (items||[])){
+        if(!raw?.id)continue;
+        const type=mediaTypeOf(raw);
+        if(type!=='tv'&&type!=='movie')continue;
+        const x={...raw,media_type:type};
+        const key=discoveryKey(x);
+        if(used.has(key))continue;
+        used.add(key);out.push(x);
+        if(out.length>=limit)break;
+      }
+      return out;
+    };
+    const today=new Date().toISOString().slice(0,10);
+    const cutoffRecent=new Date(Date.now()-365*24*60*60*1000).toISOString().slice(0,10);
+    const recommended=getRecommendedForHome();
+    const principal=takeUnique(recommended,12);
+    fill('#topMatches',principal.slice(0,8));
+
+    const tv=(d.trending?.results||[]).filter(x=>mediaTypeOf(x)==='tv');
+    const movies=(d.trending?.results||[]).filter(x=>mediaTypeOf(x)==='movie');
+    const emAlta=takeUnique([...tv,...movies],12);
+    fill('#trending',emAlta.slice(0,6));
+
+    const newSeries=takeUnique((d.newTv?.results||[])
+      .filter(x=>String(x.first_air_date||'')<=today && String(x.first_air_date||'')>=cutoffRecent)
+      .map(x=>({...x,media_type:'tv'})),12);
+    fill('#newSeries',newSeries);
+
+    const newMovies=takeUnique((d.newMovies?.results||[])
+      .filter(x=>String(x.release_date||'')<=today && String(x.release_date||'')>=cutoffRecent)
+      .map(x=>({...x,media_type:'movie'})),12);
+    fill('#newMovies',newMovies);
+
+    const popularSeries=takeUnique((d.tv?.results||[]).map(x=>({...x,media_type:'tv'})),12);
+    fill('#homeSeries',popularSeries);
+    const popularMovies=takeUnique((d.movies?.results||[]).map(x=>({...x,media_type:'movie'})),12);
+    fill('#homeMovies',popularMovies);
+    fill('#homeTopRatedSeries',(d.topRatedTv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,12));
+    fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
+  }
+  async function home(){try{const d=await api('/api/home');state.home=d;renderTrendingHome(d);renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();fill('#seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).slice(0,36).map(x=>({...x,media_type:'tv'})));fill('#moviesGrid',(d.movies?.results||[]).concat(d.popularMovies?.results||[]).slice(0,36).map(x=>({...x,media_type:'movie'})));renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){homeFallback();toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
+  async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const r=await fetch('/api/me',{headers:{Authorization:'Bearer '+user.sessionToken}});const d=await r.json();if(!r.ok)throw Error();const localPositions=user.positions||{};
+        user={...(d.state||{}),profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:d.user?.id||user.userId,sessionToken:user.sessionToken,followersCount:d.user?.followers||0,followingCount:d.user?.following||0};
+        user.positions=mergePositionStates(localPositions,user.positions);save();updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
+  async function bootstrapAuth(){
+    // Decide a tela antes de carregar o catálogo para nunca mostrar a página
+    // principal por alguns instantes antes do login/painel.
+    if(user.sessionToken){
+      try{
+        const r=await fetch('/api/me',{headers:{Authorization:'Bearer '+user.sessionToken}});
+        const d=await r.json();
+        if(!r.ok)throw new Error('Sessão expirada.');
+        const localPositions=user.positions||{};
+        user={...(d.state||{}),profile:d.user?.name||'Coruja',username:d.user?.username||'',avatar:d.user?.avatar||'',userId:d.user?.id||'',sessionToken:user.sessionToken,followersCount:d.user?.followers||0,followingCount:d.user?.following||0};
+        user.positions=mergePositionStates(localPositions,user.positions);
+        save();
+      }catch{
+        user={list:[],watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',commentCount:0,comments:[],sessionToken:''};
+        localStorage.setItem(KEY,JSON.stringify(user));
+      }
+    }
+    updateLoginButton();
+    // Abre login/painel imediatamente, antes do catálogo.
+    route();
+    const currentHash=location.hash.replace(/^#/,'');
+    if(currentHash==='admin' || !user.sessionToken) return;
+    await home();
+    route();
+  }
+  updateLoginButton();bootstrapAuth();
+})();
+</script>
+<style>
+.catalogView{padding:16px 12px 90px}.catalogHead{display:flex;align-items:center;gap:12px;margin-bottom:16px}.catalogHead h2{margin:0;font-size:22px}.catalogHead button{background:transparent;border:0;color:#777;font-weight:700;font-size:14px;cursor:pointer}.catalogView .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 10px}.catalogView .card h3{font-size:14px}.catalogView .card small{font-size:12px}.catalogView .card .stars{font-size:11px}.catalogView .poster{aspect-ratio:2/3}
+@media(max-width:650px){.catalogView{padding:14px 10px 90px}.catalogHead{margin-bottom:14px}.catalogHead h2{font-size:20px}.catalogView .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px 8px}}
+</style>
+</body>
+</html>
+
+<style>
+@media(max-width:650px){
+  .detailHero{min-height:230px;border-radius:0}.detailHero>img{height:230px}.detailOverlay{padding:16px;background:linear-gradient(90deg,#000e 0%,#0008 58%,transparent 100%);align-items:flex-end}.detailInfo{max-width:100%}.detailInfo h1{font-size:24px;line-height:1.05;margin-bottom:6px}.detailMeta{font-size:12px;gap:4px 6px;margin-bottom:4px}.detailInfo p{display:none}.detailInfo #detailActions{display:none}.tabs{position:sticky;top:58px;z-index:20}.tab{padding:12px 8px;font-size:12px}.detailSection{padding:14px 10px}.detailSection>.sectionHead{display:none}.seriesContinue{margin-bottom:14px}.seasonRow{padding:13px 11px;margin:7px 0}.episode{grid-template-columns:78px 1fr 38px;gap:9px;padding:8px}.episode img{width:78px;height:58px;border-radius:5px}.episode b{font-size:14px}.episode p{font-size:12px;margin:3px 0;color:#aaa;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.episode .positionMini{font-size:10px}.episodeActions{gap:5px}.episodePositionEdit{width:32px;height:32px;font-size:15px}.check{width:32px;height:32px;font-size:15px;border-radius:50%}.seasonEpisodes{margin-bottom:12px}.seasonNotice{margin:0;padding:10px 12px;font-size:11px}.seasonNotice span{font-size:11px}.detail.active{display:block}
+}
+</style>
+<style>
+.loadMoreWrap{display:flex;justify-content:center;padding:28px 0 12px}
+.loadMoreBtn{width:100%;border:0;border-radius:9px;background:#08acd0;color:#fff;font-size:18px;font-weight:800;padding:14px 18px;cursor:pointer}
+.loadMoreBtn:disabled{opacity:.65;cursor:wait}
+</style>
+<style>
+#favoritos .sectionHead{margin-bottom:14px}
+#favoritos .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
+#favoritos .grid .card{width:100%;min-width:0}
+#favoritos .grid .poster{width:100%;height:auto;aspect-ratio:2/3}
+@media(max-width:650px){#favoritos{padding:0 12px 90px}#favoritos .sectionHead{margin-bottom:14px}#favoritos .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px 8px}}
+</style>
