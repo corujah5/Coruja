@@ -310,9 +310,24 @@ body:not(.favoritesOnly) #perfil .profileNav .pill[data-profile="favoritos"] { d
     }catch{return false}
   }
   const save=()=>{try{localStorage.setItem(KEY,JSON.stringify(user))}catch(e){try{const slim={...user,avatar:''};localStorage.setItem(KEY,JSON.stringify(slim))}catch{}}if(user.sessionToken){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncStateToServer(user.sessionToken),500)}};
-  // Reforça o salvamento quando o usuário troca de aba, fecha ou recarrega a página.
-  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='hidden'&&user.sessionToken){clearTimeout(syncTimer);syncStateToServer(user.sessionToken)}});
-  window.addEventListener('pagehide',()=>{if(user.sessionToken){clearTimeout(syncTimer);syncStateToServer(user.sessionToken)}});
+  // Reforça o salvamento em PC e, principalmente, em celulares. Em fechamento/segundo aparelho,
+  // sendBeacon é mais confiável que um fetch assíncrono que pode ser cancelado pelo navegador.
+  function syncStateBeacon(){
+    if(!user.sessionToken)return;
+    try{
+      const payload=JSON.stringify({token:user.sessionToken,state:user,name:user.profile||'Coruja'});
+      if(navigator.sendBeacon){
+        const blob=new Blob([payload],{type:'application/json'});
+        navigator.sendBeacon('/api/me/state-beacon',blob);
+      }else{
+        syncStateToServer(user.sessionToken);
+      }
+    }catch{ syncStateToServer(user.sessionToken); }
+  }
+  document.addEventListener('visibilitychange',()=>{
+    if(document.visibilityState==='hidden'&&user.sessionToken){clearTimeout(syncTimer);syncStateBeacon();}
+  });
+  window.addEventListener('pagehide',()=>{if(user.sessionToken){clearTimeout(syncTimer);syncStateBeacon();}});
   if(!user.favorites || typeof user.favorites!=='object') user.favorites={series:[],movies:[]};
   if(!Array.isArray(user.favorites.series)) user.favorites.series=[];
   if(!Array.isArray(user.favorites.movies)) user.favorites.movies=[];
