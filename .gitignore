@@ -1,0 +1,16 @@
+# Segredos
+.env
+.env.*
+!.env.example
+
+# Dependências
+node_modules/
+
+# Dados privados e persistentes
+data/*.json
+data/states/
+public/uploads/
+
+# Sistema
+.DS_Store
+Thumbs.db
