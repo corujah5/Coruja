@@ -11,6 +11,12 @@ data/*.json
 data/states/
 public/uploads/
 
+# Cópias e temporários de segurança
+backups/
+.backup/
+data/backups/
+*.tmp
+
 # Sistema
 .DS_Store
 Thumbs.db

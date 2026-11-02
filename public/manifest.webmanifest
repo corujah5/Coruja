@@ -1,0 +1,20 @@
+{
+  "id": "/",
+  "name": "CORUJA — Filmes e Séries",
+  "short_name": "CORUJA",
+  "description": "Seu catálogo pessoal de filmes e séries.",
+  "lang": "pt-BR",
+  "start_url": "/",
+  "scope": "/",
+  "display": "standalone",
+  "display_override": ["standalone", "minimal-ui"],
+  "orientation": "any",
+  "background_color": "#0c0f0c",
+  "theme_color": "#0c0f0c",
+  "categories": ["entertainment", "video"],
+  "icons": [
+    { "src": "/icons/coruja-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/coruja-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/icons/coruja-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -9,7 +9,7 @@ services:
     envVars:
       - key: TMDB_TOKEN
         sync: false
-      - key: ADMIN_KEY
+      - key: ADMIN_USERNAME
         sync: false
       - key: DATA_DIR
         value: /var/data

@@ -3,7 +3,11 @@
   "version": "1.0.1",
   "private": true,
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "backup:data": "node scripts/backup-data.js"
+  },
+  "engines": {
+    "node": "24.22.1"
   },
   "dependencies": {
     "express": "^5.1.0",

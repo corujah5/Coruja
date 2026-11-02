@@ -1,0 +1,93 @@
+/* Painel mobile-first para criação e gerenciamento protegido de contas. */
+#admin-mobile.active~.bottom{display:none!important}
+main.page:has(> #admin-mobile.active){padding:0!important}
+body:has(#admin-mobile.active) .bottom{display:none!important}
+#admin-mobile.active{padding-top:0!important}
+#admin-mobile{color:#edf2e9}
+#admin-mobile .adminMobileShell{width:min(100%,900px);margin:0 auto;padding:calc(var(--header-height) + 24px) clamp(14px,3vw,28px) calc(30px + env(safe-area-inset-bottom))}
+#admin-mobile .adminMobileHeader{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:22px}
+#admin-mobile .adminMobileBrand{display:flex;align-items:center;gap:14px;min-width:0}
+#admin-mobile .adminMobileBrand img{display:none}
+#admin-mobile .adminMobileBrand h1{margin:0;font-size:clamp(22px,3vw,30px);letter-spacing:-.035em;line-height:1.05}
+#admin-mobile .adminMobileBrand p{margin:6px 0 0;color:#a4aea2;font-size:14px;line-height:1.4}
+#admin-mobile .adminMobileClassic{display:inline-flex;align-items:center;justify-content:center;min-height:42px;padding:9px 13px;border:1px solid #394439;border-radius:11px;background:#151c16;color:#c8f66f;font-size:13px;font-weight:850;white-space:nowrap}
+#admin-mobile .adminMobileClassic:hover{border-color:#9ccc50;background:#1b241b}
+#admin-mobile .adminMobileCard{margin:0;padding:clamp(16px,2.4vw,24px);border:1px solid #2a342b;border-radius:17px;background:linear-gradient(145deg,#151b16,#101511);box-shadow:0 12px 30px rgba(0,0,0,.16)}
+#admin-mobile .adminMobileCard+.adminMobileCard{margin-top:16px}
+#admin-mobile .adminMobileCard h2{display:flex;align-items:center;gap:9px;margin:0 0 14px;color:#f1f5ee;font-size:clamp(18px,2vw,22px);line-height:1.2}
+#admin-mobile .adminMobileCard h2 .uiIcon{width:20px;height:20px;color:#b8f34a;flex:none}
+#admin-mobile .adminMobileHint{margin:-5px 0 18px;color:#9fa99e;font-size:14px;line-height:1.5}
+#admin-mobile .adminMobileCreateUserForm{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+#admin-mobile .adminMobileCreateUserForm .adminMobileCreateUserActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;grid-column:1/-1}
+#admin-mobile .adminMobileField{min-width:0;display:grid;gap:7px}
+#admin-mobile .adminMobileField label{font-size:13px;font-weight:850;color:#cbd4c8}
+#admin-mobile input{min-width:0;width:100%;height:48px;padding:10px 12px;border:1px solid #3a463b;border-radius:11px;background:#0d120e;color:#eef3eb;font:inherit;font-size:16px;outline:none}
+#admin-mobile input::placeholder{color:#758073}
+#admin-mobile input:focus-visible{border-color:#b8f34a;box-shadow:0 0 0 3px rgba(184,243,74,.16)}
+#admin-mobile .adminMobileButton{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:11px 16px;border:1px solid transparent;border-radius:11px;background:#b8f34a;color:#10150d;font-size:14px;font-weight:900;line-height:1.15;cursor:pointer;touch-action:manipulation;transition:transform .16s ease,filter .16s ease,border-color .16s ease}
+#admin-mobile .adminMobileButton:hover{filter:brightness(1.05);transform:translateY(-1px)}
+#admin-mobile .adminMobileButton:active{transform:scale(.98)}
+#admin-mobile .adminMobileButton:focus-visible{outline:3px solid #f4f8ed;outline-offset:3px}
+#admin-mobile .adminMobileButton.secondary{border-color:#394439;background:#1b231c;color:#e2eadf}
+#admin-mobile .adminMobileButton.secondary:hover{border-color:#8ebd4d}
+#admin-mobile .adminMobileButton:disabled{opacity:.55;cursor:wait;transform:none}
+#admin-mobile .adminMobileStatus{margin:14px 0 0;color:#ff9a9a;font-size:13px;line-height:1.45}
+#admin-mobile .adminMobileCredentialResult{display:grid;gap:10px;margin-top:16px;padding:14px;border:1px solid #637b3d;border-radius:12px;background:#20291c;color:#edf5e5;font-size:14px;line-height:1.45;overflow-wrap:anywhere}
+#admin-mobile .adminMobileCredentialResult>div{display:grid;grid-template-columns:70px minmax(0,1fr);align-items:start;gap:9px}
+#admin-mobile .adminMobileCredentialResult>div span{color:#aeb9a7;font-weight:800}
+#admin-mobile .adminMobileCredentialResult code{min-width:0;color:#d1ff83;font:800 14px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;user-select:all}
+#admin-mobile .adminMobileCredentialResult .adminMobileButton{width:100%}
+#admin-mobile .adminMobileAccountsLoading{margin:0 0 12px;color:#b9cf96;font-size:14px}
+#admin-mobile .adminMobileAccountSearch{margin:16px 0}
+#admin-mobile .adminMobileAccountsList{display:grid;gap:10px}
+#admin-mobile .adminMobileAccountRow{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px;padding:14px;border:1px solid #303b31;border-radius:12px;background:#101511}
+#admin-mobile .adminMobileAccountInfo{display:grid;gap:4px;min-width:0}
+#admin-mobile .adminMobileAccountInfo strong{color:#f1f5ee;font-size:15px;overflow-wrap:anywhere}
+#admin-mobile .adminMobileAccountInfo span{color:#b9cf96;font-size:13px;overflow-wrap:anywhere}
+#admin-mobile .adminMobileAccountBlocked{color:#ffb0a9;font-weight:800}
+#admin-mobile .adminMobileAccountActions{display:flex;justify-content:flex-end;gap:7px;flex-wrap:wrap}
+#admin-mobile .adminMobileAccountActions .adminMobileButton{min-height:42px;padding:9px 11px;font-size:12px}
+#admin-mobile .adminMobileAccountActions .danger{border-color:#76423e;background:#281917;color:#ffc3bd}
+#admin-mobile .adminMobileAccountActions .danger:hover{border-color:#c66d63}
+#admin-mobile .adminMobileAccountsEmpty{margin:0;padding:18px;border:1px dashed #394439;border-radius:12px;color:#aab5a7;text-align:center}
+#admin-mobile .adminMobileResetResult{display:grid;gap:9px;margin-top:14px;padding:14px;border:1px solid #718d43;border-radius:12px;background:#20291c;color:#edf5e5}
+#admin-mobile .adminMobileResetResult p{margin:0;color:#aeb9a7;font-size:13px;line-height:1.45}
+#admin-mobile .adminMobileResetResult code{display:block;padding:11px;border-radius:9px;background:#0d120e;color:#d1ff83;font:800 16px/1.4 ui-monospace,SFMono-Regular,Consolas,monospace;overflow-wrap:anywhere;user-select:all}
+#admin-mobile .adminMobileResetActions{display:grid;grid-template-columns:1fr 1fr;gap:9px}
+#admin-mobile .adminMobileResetActions .adminMobileButton{width:100%}
+#admin-mobile .adminMobileDialog{width:min(440px,calc(100% - 28px));max-width:calc(100% - 28px);padding:0;border:1px solid #3a463b;border-radius:16px;background:#151b16;color:#edf2e9;box-shadow:0 22px 70px rgba(0,0,0,.55)}
+#admin-mobile .adminMobileDialog::backdrop{background:rgba(0,0,0,.74);backdrop-filter:blur(3px)}
+#admin-mobile .adminMobileDialogContent{display:grid;gap:13px;padding:22px}
+#admin-mobile .adminMobileDialogContent h2{margin:0;color:#f1f5ee;font-size:21px}
+#admin-mobile .adminMobileDialogContent p{margin:0;color:#aab5a7;font-size:14px;line-height:1.5}
+#admin-mobile .adminMobileDialogContent p:first-of-type{color:#dbe5d4}
+#admin-mobile .adminMobileDialogActions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:4px}
+#admin-mobile .adminMobileDialogActions .adminMobileButton{width:100%}
+#admin-mobile [hidden]{display:none!important}
+@media(max-width:650px){
+ #admin-mobile{padding:0!important}
+ #admin-mobile .adminMobileShell{width:100%;padding:calc(var(--header-height) + 15px + env(safe-area-inset-top)) 13px calc(24px + env(safe-area-inset-bottom))}
+ #admin-mobile .adminMobileHeader{align-items:flex-start;margin-bottom:14px}
+ #admin-mobile .adminMobileBrand{align-items:flex-start;gap:10px;flex-direction:column}
+ #admin-mobile .adminMobileBrand h1{font-size:22px}
+ #admin-mobile .adminMobileBrand p{font-size:12px}
+ #admin-mobile .adminMobileClassic{min-height:40px;padding:8px 10px;font-size:11px}
+ #admin-mobile .adminMobileCard{padding:16px;border-radius:14px}
+ #admin-mobile .adminMobileCard h2{font-size:18px;margin-bottom:12px}
+ #admin-mobile .adminMobileHint{font-size:13px;margin-bottom:15px}
+ #admin-mobile .adminMobileCreateUserForm{grid-template-columns:minmax(0,1fr);gap:12px}
+ #admin-mobile .adminMobileCreateUserForm .adminMobileCreateUserActions{grid-template-columns:minmax(0,1fr);gap:9px}
+ #admin-mobile .adminMobileAccountRow{grid-template-columns:minmax(0,1fr);gap:11px;padding:12px}
+ #admin-mobile .adminMobileAccountActions{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}
+ #admin-mobile .adminMobileAccountActions .adminMobileButton{width:100%;min-width:0;padding:9px 7px}
+ #admin-mobile .adminMobileAccountActions .danger{grid-column:1/-1}
+ #admin-mobile .adminMobileDialogContent{padding:18px}
+}
+@media(max-width:360px){
+ #admin-mobile .adminMobileHeader{gap:8px}
+ #admin-mobile .adminMobileBrand h1{font-size:20px}
+ #admin-mobile .adminMobileClassic{max-width:112px;white-space:normal;text-align:center}
+ #admin-mobile .adminMobileCard{padding:14px}
+ #admin-mobile .adminMobileResetActions,#admin-mobile .adminMobileDialogActions{grid-template-columns:minmax(0,1fr)}
+}
+@media(prefers-reduced-motion:reduce){#admin-mobile .adminMobileButton{transition:none}}
