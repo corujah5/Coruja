@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node server.js",
     "backup:data": "node scripts/backup-data.js",
-    "test": "node --test tests/admin-bootstrap.test.js"
+    "test": "node --test tests/admin-bootstrap.test.js tests/backup-data.test.js"
   },
   "engines": {
     "node": "24.22.1"
