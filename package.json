@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "start": "node server.js",
-    "backup:data": "node scripts/backup-data.js"
+    "backup:data": "node scripts/backup-data.js",
+    "test": "node --test tests/admin-bootstrap.test.js"
   },
   "engines": {
     "node": "24.22.1"

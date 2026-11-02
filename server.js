@@ -24,6 +24,11 @@ const SESSIONS_FILE = path.join(DATA_DIR, 'sessions.json');
 const INVITES_FILE = path.join(DATA_DIR, 'invites.json');
 const STATES_DIR = path.join(DATA_DIR, 'states');
 const ADMIN_USERNAME = String(process.env.ADMIN_USERNAME || '').trim();
+const ADMIN_BOOTSTRAP_SECRET = String(process.env.ADMIN_BOOTSTRAP_SECRET || '');
+const ADMIN_BOOTSTRAP_STATE_FILE = path.join(DATA_DIR, 'admin-bootstrap.json');
+const bootstrapAttempts = new Map();
+const BOOTSTRAP_MAX_ATTEMPTS = 5;
+const BOOTSTRAP_WINDOW_MS = 15 * 60 * 1000;
 const INDEX_FILE = path.join(__dirname, 'public', 'index.html');
 app.set('trust proxy', 1);
 app.disable('x-powered-by');
@@ -234,6 +239,72 @@ function makeUsername(name,id=''){
 function normalizeUsername(value){
   return String(value||'').trim().replace(/^@/,'').toLowerCase().replace(/[^a-z0-9_.]/g,'').slice(0,30);
 }
+function bootstrapSecretMatches(candidate, configured) {
+  const digest = value => crypto.createHash('sha256').update(value, 'utf8').digest();
+  return crypto.timingSafeEqual(digest(String(candidate || '')), digest(String(configured || '')));
+}
+function readBootstrapUsers() {
+  try {
+    if (!fs.existsSync(USERS_FILE)) return [];
+    const users = JSON.parse(fs.readFileSync(USERS_FILE, 'utf8'));
+    return Array.isArray(users) ? users : null;
+  } catch { return null; }
+}
+function isBootstrapJournalUser(user) {
+  return !!user
+    && typeof user.id === 'string'
+    && /^[a-f0-9-]{36}$/i.test(user.id)
+    && /^[a-z0-9_.]{3,30}$/.test(String(user.username || ''))
+    && user.password?.algorithm === 'scrypt'
+    && /^[a-f0-9]{32}$/i.test(String(user.password.salt || ''))
+    && /^[a-f0-9]{128}$/i.test(String(user.password.hash || ''));
+}
+function recoverAdminBootstrap() {
+  if (!fs.existsSync(ADMIN_BOOTSTRAP_STATE_FILE)) return;
+  let record;
+  try { record = JSON.parse(fs.readFileSync(ADMIN_BOOTSTRAP_STATE_FILE, 'utf8')); }
+  catch { throw new Error('Bootstrap recovery state is invalid.'); }
+
+  // Accept the consumed marker format written by the previous implementation.
+  if (record?.status === 'consumed' || (record?.consumedAt && record?.accountId && !record?.status)) return;
+  if (record?.status !== 'provisioning' || !isBootstrapJournalUser(record.user)) {
+    throw new Error('Bootstrap recovery state is invalid.');
+  }
+
+  const users = readBootstrapUsers();
+  if (!users) throw new Error('Bootstrap account data is invalid.');
+  const existing = users.find(item => item.id === record.user.id);
+  if (existing) {
+    if (normalizeUsername(existing.username) !== normalizeUsername(record.user.username)) {
+      throw new Error('Bootstrap account does not match its recovery state.');
+    }
+  } else {
+    if (users.length) throw new Error('Bootstrap recovery conflicts with existing accounts.');
+    writeUserState(record.user, record.user.state || {});
+    users.push(record.user);
+    writeUsers(users);
+  }
+
+  writeJson(ADMIN_BOOTSTRAP_STATE_FILE, {
+    status: 'consumed',
+    consumedAt: new Date().toISOString(),
+    accountId: record.user.id
+  });
+}
+function bootstrapRateLimited(ip) {
+  const now = Date.now();
+  for (const [key, entry] of bootstrapAttempts) if (entry.resetAt <= now) bootstrapAttempts.delete(key);
+  return (bootstrapAttempts.get(String(ip))?.count || 0) >= BOOTSTRAP_MAX_ATTEMPTS;
+}
+function recordBootstrapFailure(ip) {
+  const key = String(ip);
+  const entry = bootstrapAttempts.get(key);
+  if (!entry || entry.resetAt <= Date.now()) bootstrapAttempts.set(key, { count: 1, resetAt: Date.now() + BOOTSTRAP_WINDOW_MS });
+  else entry.count++;
+}
+// A pending journal is a write-ahead record. Complete it before resolving the
+// administrator ID so a crash during provisioning is recoverable on restart.
+try { recoverAdminBootstrap(); } catch {}
 // Resolve a stable account ID at startup so a later username change/reuse
 // cannot transfer administrator privileges to another account.
 const ADMIN_ACCOUNT_ID = normalizeUsername(ADMIN_USERNAME)
@@ -329,6 +400,74 @@ app.delete('/api/admin/users/:id',(req,res)=>{
   if(fs.existsSync(stateFile))fs.unlinkSync(stateFile);
   res.json({ok:true});
 });
+// Provision the first administrator only. This endpoint is deliberately not
+// exposed in the UI and becomes permanently unavailable after first use.
+app.post('/api/bootstrap/admin', async (req, res) => {
+  if (process.env.NODE_ENV === 'production' && !req.secure) {
+    return res.status(426).json({ error: 'HTTPS é obrigatório para o provisionamento.' });
+  }
+  if (Buffer.byteLength(ADMIN_BOOTSTRAP_SECRET, 'utf8') < 32) return res.sendStatus(404);
+  const ip = req.ip || req.socket?.remoteAddress || 'unknown';
+  if (bootstrapRateLimited(ip)) return res.status(429).json({ error: 'Muitas tentativas. Tente novamente mais tarde.' });
+  const suppliedSecret = String(req.get('x-admin-bootstrap') || '');
+  if (!bootstrapSecretMatches(suppliedSecret, ADMIN_BOOTSTRAP_SECRET)) {
+    recordBootstrapFailure(ip);
+    return res.status(403).json({ error: 'Autorização de provisionamento inválida.' });
+  }
+  bootstrapAttempts.delete(String(ip));
+
+  if (fs.existsSync(ADMIN_BOOTSTRAP_STATE_FILE)) return res.status(410).json({ error: 'O provisionamento inicial já foi consumido.' });
+  let users = readBootstrapUsers();
+  if (!users) return res.status(503).json({ error: 'O arquivo de contas não pôde ser validado.' });
+  if (users.length) return res.status(409).json({ error: 'O provisionamento só está disponível antes da primeira conta.' });
+
+  const name = cleanText(req.body?.name, 60);
+  const rawUsername = cleanText(req.body?.username, 40);
+  const username = normalizeUsername(rawUsername);
+  const password = typeof req.body?.password === 'string' ? req.body.password : '';
+  if (!/^[a-zA-Z0-9_.]{3,30}$/.test(rawUsername) || !username) {
+    return res.status(400).json({ error: 'Informe um usuário de 3 a 30 caracteres: letras, números, ponto ou sublinhado.' });
+  }
+  if (!normalizeUsername(ADMIN_USERNAME) || username !== normalizeUsername(ADMIN_USERNAME)) {
+    return res.status(400).json({ error: 'O usuário deve corresponder à conta administradora configurada.' });
+  }
+  if (password.length < 8 || password.length > 128) return res.status(400).json({ error: 'A senha deve ter entre 8 e 128 caracteres.' });
+
+  try {
+    const passwordHash = await hashPassword(password);
+    // Recheck after the asynchronous scrypt operation so concurrent requests
+    // cannot create more than one account.
+    if (fs.existsSync(ADMIN_BOOTSTRAP_STATE_FILE)) return res.status(410).json({ error: 'O provisionamento inicial já foi consumido.' });
+    users = readBootstrapUsers();
+    if (!users) return res.status(503).json({ error: 'O arquivo de contas não pôde ser validado.' });
+    if (users.length) return res.status(409).json({ error: 'O provisionamento só está disponível antes da primeira conta.' });
+    if (users.some(user => normalizeUsername(user.username) === username)) return res.status(409).json({ error: 'Este usuário já está cadastrado.' });
+
+    const id = crypto.randomUUID();
+    const user = {
+      id,
+      name: name || username,
+      username,
+      email: '',
+      avatar: '',
+      password: passwordHash,
+      state: cleanState({}),
+      followers: [],
+      following: [],
+      createdAt: new Date().toISOString(),
+      blocked: false
+    };
+    // Commit the recovery journal first. If any following write fails or the
+    // process stops, bootstrap remains locked and startup can finish the same
+    // account creation from this hash-only record.
+    writeJson(ADMIN_BOOTSTRAP_STATE_FILE, { status: 'provisioning', user });
+    recoverAdminBootstrap();
+    return res.status(201).json({ ok: true, user: publicUser(user) });
+  } catch {
+    return res.status(500).json({ error: 'Não foi possível provisionar a conta administradora.' });
+  }
+});
+
 app.get('/api/auth/invite-availability',(req,res)=>res.status(410).json({valid:false,error:'O cadastro público está desativado. Solicite suas credenciais ao administrador.'}));
 app.post('/api/auth/register',(req,res)=>res.status(403).json({error:'O cadastro público está desativado. Solicite suas credenciais ao administrador.'}));
 function loginBucketKey(value) { return String(value || '').toLowerCase().slice(0, 180); }
