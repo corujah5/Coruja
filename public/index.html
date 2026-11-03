@@ -1,7 +1,8 @@
 <!doctype html>
 <html lang="pt-BR">
 <head>
-<link rel="icon" type="image/png" href="/logo.png">
+<link rel="icon" type="image/png" sizes="192x192" href="/icons/coruja-192.png">
+<link rel="icon" type="image/png" sizes="512x512" href="/icons/coruja-512.png">
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#0c0f0c">
@@ -32,7 +33,6 @@
 /* Tela de série - estilo mobile inspirado na referência, mantendo o visual CORUJA */
 .seriesContinue{background:#252525;border-radius:12px;padding:14px;margin:0 0 18px;border:1px solid #3a3a3a}.seriesContinueTitle{font-size:14px;font-weight:900;margin-bottom:10px;color:#fff}.seriesContinueCard{display:flex;align-items:center;gap:12px;background:#1b1b1b;border-radius:10px;padding:8px}.seriesContinueCard img{width:78px;height:58px;object-fit:cover;border-radius:6px;background:#333}.seriesContinueCard .scInfo{min-width:0;flex:1}.seriesContinueCard .scSeries{font-weight:900;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scCode{font-weight:900;color:#fff;font-size:12px;margin-top:3px}.seriesContinueCard .scName{color:#aaa;font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scPos{color:var(--yellow);font-size:11px;margin-top:5px}.seriesContinueCard .scBtn{border:0;background:var(--yellow);color:#111;border-radius:8px;padding:8px 10px;font-weight:900;white-space:nowrap}.seriesContinueActions{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:0 0 auto}.seriesContinueActions .positionEdit{width:32px;height:32px;padding:0}.seriesContinueActions .check{width:32px;height:32px;padding:0}.seasonListTitle{font-size:14px;font-weight:900;margin:8px 0 10px;color:#fff;background:#252525;border:1px solid #3a3a3a;border-left:3px solid var(--yellow);border-radius:7px;padding:8px 10px;box-sizing:border-box}.seasonRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#252525;border:1px solid #3a3a3a;border-radius:10px;padding:14px 12px;margin:8px 0;cursor:pointer;color:#fff}.seasonRow.active{border-color:var(--yellow)}.seasonRow .seasonLeft{display:flex;align-items:center;gap:7px;font-weight:900}.seasonRow .seasonArrow{color:#aaa}.seasonRow .seasonCount{color:#aaa;font-size:12px}.seasonRow .seasonDone{color:var(--yellow);font-weight:900}.seasonEpisodes{margin:0 0 16px;border-radius:10px;overflow:hidden;background:#1b1b1b;border:1px solid #333}.seasonEpisodes .episode{background:#1b1b1b}.seasonEpisodes .episode:hover{background:#222}.seasonEpisodes .episodeMain b{color:#fff}.seasonEpisodes .episodeMain p{color:#aaa}.seasonEpisodes .positionMini{color:#777}.seasonEpisodes .positionMini strong{color:#fff}.episodePositionEdit{flex:0 0 auto;background:#fff;color:#111;border-color:#ddd;width:32px;height:32px}
 .expectedEndTime{display:block;margin-top:4px;color:#98a397;font-size:11px;font-weight:650;line-height:1.3;font-variant-numeric:tabular-nums}
-.episodeFinishTime{display:block;margin-top:3px;color:#98a397;font-size:10px;font-weight:650;line-height:1.25;font-variant-numeric:tabular-nums}
 @media(max-width:650px){body{background:#f3f3f3}.top{height:58px;background:#111;color:#fff;border:0}.brand{font-size:20px}.brand i{width:28px;height:28px}.login{display:inline-flex}.page{padding:0 0 82px}.section{margin:26px 16px}.sectionHead h2{font-size:21px}.row{margin-right:-16px;padding-right:16px}.card{flex-basis:150px;width:150px;min-width:150px}.poster{width:150px;height:224px}.continue{padding:10px}.continueGrid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,150px);gap:10px}.grid .card{flex-basis:auto;width:150px;min-width:150px}.grid .poster{width:150px;height:224px}.detailHero{border-radius:0;min-height:330px}.detailHero>img{height:330px}.detailOverlay{padding:20px}.detailInfo h1{font-size:34px}.episode{grid-template-columns:92px 1fr 42px;gap:10px}.episode img{width:92px;height:62px}.episode b{font-size:15px}.episode p{font-size:12px}.episodeActions{justify-content:flex-start}.episodeActions .episodeOpen{font-size:11px;padding:8px}.profileHero{border-radius:0}.cover{height:105px}.profileBox{padding:18px 18px 22px;margin-top:0}.profileName{margin-top:6px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;height:68px;background:#111;color:#fff;z-index:80;padding-bottom:env(safe-area-inset-bottom)}.bottom button{border:0;background:none;color:#aaa;font-size:11px;font-weight:800}.bottom button.active{color:var(--yellow)}.bottom span{display:block;font-size:22px;margin-bottom:3px}.tmdb{padding:0 16px 20px}}
 
 /* Comunidade e estatísticas — experiência Coruja */
@@ -255,6 +255,10 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 .add:active,.favorite:active{transform:scale(.94)}
 .add:focus-visible,.favorite:focus-visible{outline:3px solid #fff;outline-offset:2px;z-index:3}
 @media(prefers-reduced-motion:reduce){.add,.favorite{transition:none}}
+.detailCollectionActions{position:absolute;top:15px;right:15px;z-index:4;display:flex;flex-direction:column;gap:8px}
+.detailCollectionActions .add,.detailCollectionActions .favorite{position:static;inset:auto;flex:0 0 38px}
+.detailCollectionActions .add:focus-visible,.detailCollectionActions .favorite:focus-visible{z-index:5}
+@media(max-width:650px){.detailCollectionActions{top:14px;right:14px;gap:7px}}
 .stars{color:#b8f34a;letter-spacing:.08em}
 .empty{background:#121713;border-color:#384239;color:#aeb8ad}
 .grid{grid-template-columns:repeat(auto-fill,minmax(184px,1fr));gap:24px 18px}
@@ -735,9 +739,12 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 
 
 /* Mesmo recuo interno da página de referência para igualar as larguras dos pôsteres. */
-#principais { padding: 16px 12px 90px; box-sizing: border-box; }
+#principais { padding: calc(var(--header-height) + 34px) 12px 90px; box-sizing: border-box; }
+@media (max-width: 900px) {
+  #principais { padding-top: calc(var(--header-height) + 24px); }
+}
 @media (max-width: 650px) {
-  #principais { padding: 14px 10px 90px; }
+  #principais { padding: calc(var(--header-height) + 12px + env(safe-area-inset-top)) 10px 90px; }
 }
 
 
@@ -1085,6 +1092,14 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   background: #0B0D0B;
   clip-path: polygon(0 50%, 42% 8%, 42% 35%, 100% 35%, 100% 65%, 42% 65%, 42% 92%);
 }
+#principais > .sectionHead > #principaisBack::before {
+  display: block;
+  flex: 0 0 20px;
+  width: 20px;
+  height: 20px;
+  background: #0B0D0B;
+  clip-path: polygon(0 50%, 42% 8%, 42% 35%, 100% 35%, 100% 65%, 42% 65%, 42% 92%);
+}
 #em-alta .catalogHead > button:hover,
 .catalogView .catalogHead > button:hover,
 #minha-lista > .sectionHead > button:hover,
@@ -1233,7 +1248,8 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   outline-offset: 3px;
 }
 .loadMoreBtn:active { transform: scale(.99); }
-#busca .searchPrincipalHead{display:grid;grid-template-columns:44px minmax(0,1fr) auto;align-items:center;justify-content:initial;gap:10px}
+#busca .searchPrincipalHead{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;justify-content:initial;gap:10px}
+#busca .searchPrincipalHead > .searchPrincipalBack{display:none!important}
 #busca .searchPrincipalHead h2{min-width:0;font-size:clamp(18px,4.8vw,22px);line-height:1.2}
 #busca .searchPrincipalHead>[data-route="principais"]{white-space:nowrap}
 .detailLoading {
@@ -1563,6 +1579,18 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 #detailEpisódios .seasonToggle:active{transform:scale(.94)}
 #detailEpisódios .seasonToggle:focus-visible{outline:2px solid #eff9e4;outline-offset:2px}
 @media(prefers-reduced-motion:reduce){#detailEpisódios .seasonToggle{transition:none}}
+
+#episodeFeed .empty::before{display:none}
+
+#admin:not(.classicAuthorized) .adminDashboard,#admin:not(.classicAuthorized) .adminInviteBox,#admin:not(.classicAuthorized) .adminRecent,#admin:not(.classicAuthorized) .adminUsers{display:none!important}
+#admin .adminClassicAccess{display:grid;gap:10px;margin:18px 0 22px;padding:18px;border:1px solid #354036;border-radius:14px;background:#141914;color:#edf2e9}
+#admin .adminClassicAccess label{font-size:14px;font-weight:800}
+#admin .adminClassicAccess input{box-sizing:border-box;width:100%;min-height:48px;padding:12px 14px;border:1px solid #465044;border-radius:10px;background:#0e120f;color:#f5f7f3;font:inherit}
+#admin .adminClassicAccess input:focus-visible{outline:2px solid var(--yellow);outline-offset:2px}
+#admin .adminClassicAccess .btn{min-height:46px}
+#admin .adminClassicAccessError{margin:0;color:#ff9b9b;font-size:14px;line-height:1.4}
+#admin .adminClassicAccessError[hidden]{display:none}
+#admin.classicAuthorized .adminClassicAccess{display:none}
 </style><link rel="stylesheet" href="/admin-mobile.css">
 </head>
 <body class="booting">
@@ -1619,7 +1647,6 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   <div id="searchHomeSections">
     <section class="section"><div class="sectionHead searchPrincipalHead"><button type="button" class="searchPrincipalBack" id="searchPrincipalBack" aria-label="Voltar à tela anterior" title="Voltar à tela anterior"></button><h2>Principais para você</h2><button data-route="principais">Ver todas ›</button></div><div id="searchTopMatches" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Em alta</h2><button data-route="em-alta">Ver todas ›</button></div><div id="searchTrending" class="row"></div></section>
-    <section class="section"><div class="sectionHead"><h2>Continue assistindo</h2><button data-route="episodios">Ver episódios ›</button></div><div id="searchContinueGrid" class="continue"></div></section>
     <section class="section"><div class="sectionHead"><h2>Séries populares</h2><button data-route="series-populares">Explorar ›</button></div><div id="searchHomeSeries" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Filmes populares</h2><button data-route="filmes-populares">Explorar ›</button></div><div id="searchHomeMovies" class="row"></div></section>
   </div>
@@ -1667,15 +1694,24 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   <div id="communityPeople" class="peopleResults"></div>
 </section>
 <section id="perfil-publico" class="view"><div id="publicProfileContent"></div></section>
-<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
+<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><div id="detailCollectionActions" class="detailCollectionActions" aria-label="Ações da série"></div><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
 <section id="admin-mobile" class="view adminMobileView">
   <div class="adminMobileShell">
-    <header class="adminMobileHeader"><div class="adminMobileBrand"><img src="/logo.png" alt="CORUJA"><div><h1>Painel administrativo</h1><p>Crie credenciais individuais de acesso.</p></div></div><a class="adminMobileClassic" href="#admin">Painel clássico</a></header>
-    <section class="adminMobileCard" aria-labelledby="adminMobileCreateUserTitle">
+<header class="adminMobileHeader"><div class="adminMobileBrand"><img src="/logo.png" alt="CORUJA"><div><h1>Painel administrativo</h1><p>Crie credenciais individuais de acesso.</p></div></div><div class="adminMobileHeaderActions"><a class="adminMobileClassic" href="#admin-classic">Painel clássico</a><button type="button" id="adminMobileDisconnect" class="adminMobileButton secondary" hidden>Sair do painel</button></div></header>
+<section id="adminMobileAccessCard" class="adminMobileCard adminMobileAccess" aria-labelledby="adminMobileAccessTitle">
+<h2 id="adminMobileAccessTitle"><svg class="uiIcon"><use href="#i-shield-check"></use></svg>Acesso administrativo</h2>
+<p class="adminMobileHint">Informe a chave administrativa local para liberar as operações deste painel. A chave não fica salva no navegador.</p>
+<form id="adminMobileAccessForm" class="adminMobileAccessForm" autocomplete="off">
+<div class="adminMobileField"><label for="adminMobileAccessKey">Chave administrativa</label><input id="adminMobileAccessKey" type="password" autocomplete="off" required aria-describedby="adminMobileAccessError" placeholder="Digite a chave configurada localmente"></div>
+<button type="submit" id="adminMobileConnect" class="adminMobileButton">Acessar painel</button>
+<p id="adminMobileAccessError" class="adminMobileStatus" role="alert" hidden></p>
+</form>
+</section>
+<section class="adminMobileCard" data-admin-protected hidden aria-labelledby="adminMobileCreateUserTitle">
       <h2 id="adminMobileCreateUserTitle"><svg class="uiIcon"><use href="#i-user"></use></svg>Criar conta</h2>
       <p class="adminMobileHint">Informe as credenciais ou gere valores automaticamente. Cada conta entra com seu próprio usuário e senha.</p>
       <div class="adminMobileCreateUserForm">
-        
+
         <div class="adminMobileField"><label for="adminMobileCreateName">Nome para exibição</label><input id="adminMobileCreateName" type="text" maxlength="60" autocomplete="off" placeholder="Nome da pessoa"></div>
         <div class="adminMobileField"><label for="adminMobileCreateUsername">Usuário</label><input id="adminMobileCreateUsername" type="text" maxlength="30" autocomplete="off" placeholder="Gerado se ficar vazio"></div>
         <div class="adminMobileField"><label for="adminMobileCreatePassword">Senha</label><input id="adminMobileCreatePassword" type="text" maxlength="128" autocomplete="new-password" placeholder="Gerada se ficar vazia"></div>
@@ -1684,7 +1720,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       <p id="adminMobileCreateUserError" class="adminMobileStatus" data-state="error" role="alert" hidden></p>
       <div id="adminMobileCreateUserResult" class="adminMobileCredentialResult" aria-live="polite" hidden><strong>Conta criada. Copie e envie as credenciais:</strong><div><span>Usuário</span><code id="adminMobileCreatedUsername"></code></div><div><span>Senha</span><code id="adminMobileCreatedPassword"></code></div><button type="button" id="adminMobileCopyCredentials" class="adminMobileButton secondary">Copiar credenciais</button></div>
     </section>
-    <section class="adminMobileCard adminMobileAccounts" aria-labelledby="adminMobileAccountsTitle">
+<section class="adminMobileCard adminMobileAccounts" data-admin-protected hidden aria-labelledby="adminMobileAccountsTitle">
       <h2 id="adminMobileAccountsTitle"><svg class="uiIcon"><use href="#i-user"></use></svg>Contas cadastradas</h2>
       <p class="adminMobileHint">Pesquise por nome ou usuário, copie identificadores, redefina senhas ou exclua contas.</p>
       <p id="adminMobileAccountsLoading" class="adminMobileAccountsLoading" role="status" hidden>Carregando contas…</p>
@@ -1692,6 +1728,14 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       <div id="adminMobileAccountsBody" hidden>
         <div class="adminMobileField adminMobileAccountSearch"><label for="adminMobileAccountsSearch">Pesquisar por nome ou usuário</label><input id="adminMobileAccountsSearch" type="search" autocomplete="off" placeholder="Digite um nome ou usuário"></div>
         <div id="adminMobileAccountsList" class="adminMobileAccountsList" aria-live="polite"></div>
+        <div class="adminMobileAccountsPagination">
+          <div class="adminMobileAccountsPaginationMeta">
+            <label for="adminMobileAccountsPageSize">Mostrar por página</label>
+            <select id="adminMobileAccountsPageSize" aria-label="Usuários por página"><option value="10" selected>10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select>
+            <p id="adminMobileAccountsRange" role="status" aria-live="polite">Mostrando de 0 até 0 de 0 registros</p>
+          </div>
+          <nav id="adminMobileAccountsPager" class="adminMobileAccountsPager" aria-label="Paginação das contas"></nav>
+        </div>
       </div>
       <div id="adminMobileResetResult" class="adminMobileResetResult" aria-live="polite" hidden><strong>Senha temporária — copie e entregue agora</strong><p>Ela ficará visível até você copiar ou fechar este bloco.</p><code id="adminMobileTemporaryPassword"></code><div class="adminMobileResetActions"><button type="button" id="adminMobileCopyTemporaryPassword" class="adminMobileButton">Copiar senha</button><button type="button" id="adminMobileCloseTemporaryPassword" class="adminMobileButton secondary">Fechar</button></div></div>
     </section>
@@ -1701,7 +1745,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   </div>
 </section>
 </main>
-<section id="admin" class="view"><div class="detail"><div class="adminPanel"><div class="adminLogo"><img src="/logo.png" alt="CORUJA"></div><h1><svg class="uiIcon"><use href="#i-shield-check"></use></svg>Painel de administrador</h1><p>Gere códigos de convite e gerencie as contas do CORUJA.</p><a class="adminVersionSwitch" href="#admin-mobile">Abrir painel mobile-first</a><div class="adminDashboard"><div class="adminStat"><b id="adminStatUsers">0</b><span>Usuários</span></div><div class="adminStat"><b id="adminStatAvailable">0</b><span>Convites disponíveis</span></div><div class="adminStat"><b id="adminStatUsed">0</b><span>Convites usados</span></div><div class="adminStat"><b id="adminStatActive">0</b><span>Sessões ativas</span></div></div><div class="adminInviteBox"><div class="adminInviteCodeBox" id="adminInviteResult">A sessão administrativa permite gerenciar convites e contas.</div><div class="adminInviteActions"><button class="btn yellow" id="adminGenerate">Gerar código de convite</button><button class="btn outline" id="adminCopyLast" style="display:none">Copiar código</button></div></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Convites recentes</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminInvitePageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminInviteHistory" class="adminInviteList"></div><div id="adminInvitePager" class="adminPager"></div></div><div class="adminUsers"><div class="adminUsersHead"><h2>Usuários cadastrados</h2><button class="btn outline" id="adminLoadUsers" style="padding:9px 12px">Atualizar</button></div><div class="adminFilterBar"><input id="adminUsersSearch" class="adminUsersSearch" placeholder="Pesquisar por e-mail..." style="margin:0"><select id="adminUsersStatus"><option value="all">Todos</option><option value="active">Ativos</option><option value="blocked">Bloqueados</option></select></div><div class="adminTableControls"><label>Mostrar <select id="adminUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminUsersResult" class="publicEmpty">Carregando contas da sessão administrativa…</div><div id="adminUsersPager" class="adminPager"></div><div id="adminResetResult" class="adminResetResult" style="display:none"></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Últimos cadastros</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminRecentUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminRecentUsers" class="adminMiniList"></div><div id="adminRecentUsersPager" class="adminPager"></div></div></div></div></div></section>
+<section id="admin" class="view"><div class="detail"><div class="adminPanel"><div class="adminLogo"><img src="/logo.png" alt="CORUJA"></div><h1><svg class="uiIcon"><use href="#i-shield-check"></use></svg>Painel de administrador</h1><p>Gere códigos de convite e gerencie as contas do CORUJA.</p><form id="adminClassicAccessForm" class="adminClassicAccess" autocomplete="off"><label for="adminClassicKey">Chave administrativa</label><input id="adminClassicKey" type="password" autocomplete="off" required><button class="btn yellow" id="adminClassicConnect" type="submit">Acessar painel</button><p id="adminClassicAccessError" class="adminClassicAccessError" role="alert" hidden></p></form><a class="adminVersionSwitch" href="#admin-mobile">Abrir painel mobile-first</a><div class="adminDashboard"><div class="adminStat"><b id="adminStatUsers">0</b><span>Usuários</span></div><div class="adminStat"><b id="adminStatAvailable">0</b><span>Convites disponíveis</span></div><div class="adminStat"><b id="adminStatUsed">0</b><span>Convites usados</span></div><div class="adminStat"><b id="adminStatActive">0</b><span>Sessões ativas</span></div></div><div class="adminInviteBox"><div class="adminInviteCodeBox" id="adminInviteResult">A sessão administrativa permite gerenciar convites e contas.</div><div class="adminInviteActions"><button class="btn yellow" id="adminGenerate">Gerar código de convite</button><button class="btn outline" id="adminCopyLast" style="display:none">Copiar código</button></div></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Convites recentes</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminInvitePageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminInviteHistory" class="adminInviteList"></div><div id="adminInvitePager" class="adminPager"></div></div><div class="adminUsers"><div class="adminUsersHead"><h2>Usuários cadastrados</h2><button class="btn outline" id="adminLoadUsers" style="padding:9px 12px">Atualizar</button></div><div class="adminFilterBar"><input id="adminUsersSearch" class="adminUsersSearch" placeholder="Pesquisar por e-mail..." style="margin:0"><select id="adminUsersStatus"><option value="all">Todos</option><option value="active">Ativos</option><option value="blocked">Bloqueados</option></select></div><div class="adminTableControls"><label>Mostrar <select id="adminUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminUsersResult" class="publicEmpty">Carregando contas da sessão administrativa…</div><div id="adminUsersPager" class="adminPager"></div><div id="adminResetResult" class="adminResetResult" style="display:none"></div><div class="adminRecent"><div class="adminSectionHead"><h3 style="margin:0">Últimos cadastros</h3></div><div class="adminTableControls"><label>Mostrar <select id="adminRecentUsersPageSize" class="adminPageSize"><option value="10">10</option><option value="25">25</option><option value="50">50</option><option value="100">100</option></select> registros</label></div><div id="adminRecentUsers" class="adminMiniList"></div><div id="adminRecentUsersPager" class="adminPager"></div></div></div></div></div></section>
 
 
 
@@ -1874,8 +1918,8 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   save();
   const toast=m=>{let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}t.textContent=m;clearTimeout(window.tt);window.tt=setTimeout(()=>t.remove(),1800)};
   async function api(u){if(!user.sessionToken)throw Error('Entre na sua conta para continuar.');const r=await fetch(u,{credentials:'same-origin'});const d=await r.json();if(r.status===401){user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',comments:[],sessionToken:''};save();state.home=null;location.hash='';route()}if(!r.ok)throw Error(d.error||'Erro');return d}
-  const routeNames=['descobrir','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','perfil-colecao-series','perfil-colecao-series-favoritas','perfil-colecao-filmes','perfil-colecao-filmes-favoritos','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin','admin-mobile'];
-  const returnableRouteNames=new Set(routeNames.filter(name=>name!=='admin'&&name!=='admin-mobile'));
+  const routeNames=['descobrir','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','perfil-colecao-series','perfil-colecao-series-favoritas','perfil-colecao-filmes','perfil-colecao-filmes-favoritos','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin','admin-mobile','admin-classic'];
+  const returnableRouteNames=new Set(routeNames.filter(name=>name!=='admin'&&name!=='admin-mobile'&&name!=='admin-classic'));
   const routeHash=value=>{const name=String(value||'').replace(/^#/,'');return '#'+(name||'descobrir')};
   const isDetailRouteHash=value=>/^#(?:movie|tv)-\d+$/.test(value);
   const isReturnableRouteHash=value=>returnableRouteNames.has(String(value||'').replace(/^#/,''));
@@ -1909,7 +1953,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     const fallback='#episodios';pendingRouteScrollRestore={route:fallback,scrollY:routeScrollPositions.get(fallback)||0};detailBackInProgress=true;location.hash=fallback;
   }
   function returnToSearchFromPrincipais(){
-    const target='#busca';
+    const target=isReturnableRouteHash(previousRouteHash)&&previousRouteHash!=='#principais'?previousRouteHash:'#busca';
     pendingRouteScrollRestore={route:target,scrollY:routeScrollPositions.get(target)||0};
     if(previousRouteHash===target){history.back();return}
     location.hash=target;
@@ -1925,14 +1969,20 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     trackDetailRouteTransition();
     const valid=routeNames;
     let h=location.hash.replace(/^#/,'');
+    if(h!=='admin-classic'){window.CorujaClassicAdminAuth.clear();setClassicAdminAccess(false)}
     // O painel pode ser aberto sem revelar dados; operações exigem sessão de administrador.
     // A autorização é validada no servidor em cada chamada.
-    if(h==='admin'||h==='admin-mobile'){
+    if(h==='admin'){
+      history.replaceState(null,'','#admin-mobile');
+      currentRouteHash='#admin-mobile';
+      h='admin-mobile';
+    }
+    if(h==='admin-mobile'||h==='admin-classic'){
       $('#authModal')?.classList.remove('show','authGate');
       document.body.classList.remove('authGateActive');
       document.body.classList.remove('booting');
-      showView(h);
-      if(h==='admin'){loadAdminDashboard();loadAdminUsers()}
+      showView(h==='admin-classic'?'admin':'admin-mobile');
+      if(h==='admin-classic'){const authorized=window.CorujaClassicAdminAuth.isAuthorized();setClassicAdminAccess(authorized);if(authorized){loadAdminDashboard();loadAdminUsers()}}
       return;
     }
     // Nenhuma rota de catálogo ou conteúdo pessoal pode ser aberta antes do login.
@@ -2029,7 +2079,9 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   $('#profileEditSave').onclick=async()=>{const name=$('#profileEditName').value.trim();if(!name){$('#profileEditError').textContent='Preencha o nome.';return}try{const r=await fetch('/api/me/profile',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({name,avatar:'',state:{...user,avatar:''}}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível atualizar o perfil.');user.profile=d.user?.name||name;user.avatar='';save();$('#profileEditModal').classList.remove('show');renderProfile();toast('Perfil atualizado!')}catch(e){$('#profileEditError').textContent=e.message}};
   let adminUsers=[]; let adminLastCode=''; let adminAllInvites=[]; let adminAllRecentUsers=[]; let adminInvitePage=1; let adminUsersPage=1; let adminRecentUsersPage=1; let adminInvitePageSize=10; let adminUsersPageSize=10; let adminRecentUsersPageSize=10;
   const adminEscape=v=>String(v??'').replace(/[<>&"']/g,m=>({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[m]));
-  async function adminJson(url,options={}){const r=await fetch(url,{...options,credentials:"same-origin"});const d=await r.json();if(!r.ok)throw Error(d.error||"Não autorizado.");return d;}
+  function setClassicAdminAccess(authorized){const panel=$("#admin"),form=$("#adminClassicAccessForm");if(!panel||!form)return;panel.classList.toggle("classicAuthorized",Boolean(authorized));form.hidden=Boolean(authorized)}
+  $("#adminClassicAccessForm").addEventListener("submit",async event=>{event.preventDefault();const input=$("#adminClassicKey"),button=$("#adminClassicConnect"),error=$("#adminClassicAccessError"),candidate=input.value;input.value="";error.hidden=true;button.disabled=true;button.textContent="Validando…";try{await window.CorujaClassicAdminAuth.authorize(candidate);setClassicAdminAccess(true);await Promise.all([loadAdminDashboard(),loadAdminUsers()])}catch(e){setClassicAdminAccess(false);error.textContent=e.message||"Não foi possível autorizar o painel.";error.hidden=false}finally{button.disabled=false;button.textContent="Acessar painel"}});
+  async function adminJson(url,options={}){try{return await window.CorujaClassicAdminAuth.request(url,options)}catch(e){if(!window.CorujaClassicAdminAuth.isAuthorized())setClassicAdminAccess(false);throw e}}
   function setAdminInvite(code){adminLastCode=code||'';const box=$('#adminInviteResult');if(!code){box.textContent='A sessão administrativa permite gerenciar convites e contas.';$('#adminCopyLast').style.display='none';return}box.innerHTML=`<div><small>Código de convite</small><br><strong class="adminCode">${adminEscape(code)}</strong></div>`;$('#adminCopyLast').style.display='inline-block';}
   $('#adminCopyLast').onclick=async()=>{if(!adminLastCode)return;try{await navigator.clipboard.writeText(adminLastCode);toast('Código copiado!')}catch{toast('Não foi possível copiar automaticamente.')}};
   $('#adminGenerate').onclick=async()=>{try{const d=await adminJson('/api/admin/invites',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({amount:1})});setAdminInvite(d.invites?.[0]?.code||'');await loadAdminDashboard();await loadAdminUsers();toast('Código de convite gerado!')}catch(e){$('#adminInviteResult').textContent=e.message}};
@@ -2051,6 +2103,9 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 
   function mediaTypeOf(x){if(x?.media_type==='tv'||x?.media_type==='movie')return x.media_type;if(x?.name&&!x?.title)return 'tv';if(x?.title&&!x?.name)return 'movie';return x?.first_air_date?'tv':'movie'}
   function cardActionIcon(symbol){return `<svg class="uiIcon actionIcon" aria-hidden="true" focusable="false"><use href="#${symbol}"></use></svg>`}
+  function collectionMarkerState(id,type){const mediaId=Number(id),key=type==='tv'?'series':'movies';return{listed:(user.list||[]).some(item=>Number(item.id)===mediaId&&mediaTypeOf(item)===type),favorite:(user.favorites?.[key]||[]).some(item=>Number(item.id)===mediaId)}}
+  function detailCollectionActionsMarkup(item,type){const state=collectionMarkerState(item.id,type);const safeId=escapeHtml(String(item.id));const listLabel=state.listed?'Remover da minha lista':'Adicionar à minha lista';const favoriteLabel=state.favorite?'Remover dos favoritos':'Adicionar aos favoritos';return `<div class="detailCollectionActions" data-media-id="${safeId}" data-media-type="${type}" aria-label="Ações do título"><button type="button" class="add ${state.listed?'on':''}" aria-label="${listLabel}" aria-pressed="${state.listed}" title="${listLabel}">${cardActionIcon(state.listed?'i-check':'i-plus')}</button><button type="button" class="favorite ${state.favorite?'on':''}" aria-label="${favoriteLabel}" aria-pressed="${state.favorite}" title="${favoriteLabel}">${cardActionIcon('i-heart')}</button></div>`}
+  function bindDetailCollectionActions(root,item,type){const actions=$('.detailCollectionActions',root);if(!actions)return;const media={...item,media_type:type};$('.add',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleList(media)});$('.favorite',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFavorite(media)})}
   function card(x,options={}){const type=mediaTypeOf(x);const id=x.id;const watched=user.list.some(i=>Number(i.id)===Number(id)&&mediaTypeOf(i)===type);const favKey=type==='tv'?'series':'movies';const favorite=(user.favorites?.[favKey]||[]).some(i=>Number(i.id)===Number(id));const withSeriesProgress=type==='tv'&&options.seriesProgress===true;const title=x.name||x.title||'Sem título';const poster=safeImageUrl(x.poster_path);const el=document.createElement('article');el.className='card';el.dataset.mediaType=type;el.dataset.mediaId=String(id);if(withSeriesProgress){el.classList.add('hasSeriesProgress');el.dataset.seriesTitle=String(title);const knownTotal=Number(x.number_of_episodes)||0;if(knownTotal)el.dataset.totalEpisodes=String(knownTotal)}el.setAttribute('role','button');el.setAttribute('tabindex','0');el.style.cursor='pointer';el.innerHTML=`<div class="poster">${poster?`<img src="${escapeHtml(poster)}" loading="lazy" alt="${escapeHtml(title)}">`:`<div class="artFallback">${escapeHtml(title)}</div>`}<span class="score">${Math.round((x.vote_average||0)*10)}%</span>${withSeriesProgress?'<span class="seriesWatchStatus" hidden>Assistindo</span><span class="seriesProgressTrack" role="progressbar" aria-label="Episódios assistidos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></span>':''}<button type="button" class="add ${watched?'on':''}" aria-label="${watched?'Remover da minha lista':'Adicionar à minha lista'}" aria-pressed="${watched}" title="${watched?'Remover da minha lista':'Adicionar à minha lista'}">${cardActionIcon(watched?'i-check':'i-plus')}</button><button type="button" class="favorite ${favorite?'on':''}" aria-label="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}" aria-pressed="${favorite}" title="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}">${cardActionIcon('i-heart')}</button></div><h3>${escapeHtml(title)}</h3><small>${escapeHtml((x.first_air_date||x.release_date||'').slice(0,4)||'—')} · ${type==='tv'?'Série':'Filme'}</small><div class="stars">★★★★★</div>`;el.addEventListener('click',e=>{if(e.target.closest('.add,.favorite'))return;type==='tv'?location.hash='tv-'+id:location.hash='movie-'+id});const cardImage=el.querySelector('.poster>img');cardImage?.addEventListener('error',()=>{cardImage.style.display='none';cardImage.parentElement?.classList.add('posterFallbackVisible')},{once:true});$('.add',el).addEventListener('click',e=>{e.stopPropagation();toggleList({...x,media_type:type})});$('.favorite',el).addEventListener('click',e=>{e.stopPropagation();toggleFavorite({...x,media_type:type})});if(withSeriesProgress)updateSeriesProgressCard(el);return el}
   function seriesEpisodeKeyForShow(key,showId){
     const parts=String(key).split('-');
@@ -2118,7 +2173,11 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(!x||mediaTypeOf(x)!=='tv'||trendingIds.has(String(x.id))||recommended.some(y=>String(y.id)===String(x.id)))return;
       recommended.push({...x,media_type:'tv'});
     };
-    personal.forEach(add);
+    const appendPersonalRecommendation=x=>{
+      if(!x||mediaTypeOf(x)!=='tv'||recommended.some(y=>String(y.id)===String(x.id)))return;
+      recommended.push({...x,media_type:'tv'});
+    };
+    personal.forEach(appendPersonalRecommendation);
     (d.newTv?.results||[]).forEach(add);
     (d.popularTv?.results||[]).forEach(add);
     (d.tv?.results||[]).forEach(add);
@@ -2317,9 +2376,10 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(add){const label=listed?'Remover da minha lista':'Adicionar à minha lista';add.classList.toggle('on',listed);add.innerHTML=cardActionIcon(listed?'i-check':'i-plus');add.title=label;add.setAttribute('aria-label',label);add.setAttribute('aria-pressed',String(listed));}
       if(fav){const label=favorite?'Remover dos favoritos':'Adicionar aos favoritos';fav.classList.toggle('on',favorite);fav.innerHTML=cardActionIcon('i-heart');fav.title=label;fav.setAttribute('aria-label',label);fav.setAttribute('aria-pressed',String(favorite));}
     });
+    $$('.detailCollectionActions[data-media-id]').forEach(el=>{const type=el.dataset.mediaType,id=Number(el.dataset.mediaId),state=collectionMarkerState(id,type),add=$('.add',el),fav=$('.favorite',el);if(add){const label=state.listed?'Remover da minha lista':'Adicionar à minha lista';add.classList.toggle('on',state.listed);add.innerHTML=cardActionIcon(state.listed?'i-check':'i-plus');add.title=label;add.setAttribute('aria-label',label);add.setAttribute('aria-pressed',String(state.listed));}if(fav){const label=state.favorite?'Remover dos favoritos':'Adicionar aos favoritos';fav.classList.toggle('on',state.favorite);fav.innerHTML=cardActionIcon('i-heart');fav.title=label;fav.setAttribute('aria-label',label);fav.setAttribute('aria-pressed',String(state.favorite));}});
   }
-  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);toast('Removido da sua lista.')}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date});toast(type==='tv'?'Série adicionada à sua lista!':'Filme adicionado à sua lista!')}save();refreshPersonalMarkers();renderList();renderProfile()}
-  function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);toast(type==='tv'?'Removida das séries favoritas.':'Removido dos filmes favoritos.')}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average});toast(type==='tv'?'Série adicionada aos favoritos!':'Filme adicionado aos favoritos!')}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
+  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date});}save();refreshPersonalMarkers();renderList();renderProfile()}
+  function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average});}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
   function renderList(){
     const b=$('#listGrid');if(!b)return;b.innerHTML='';
     const items=Array.isArray(user.list)?user.list:[];
@@ -2575,12 +2635,6 @@ let profileOpenListId=null;
     const h=Math.floor(seconds/3600), m=Math.floor((seconds%3600)/60), sec=seconds%60;
     return h?`${h}:${String(m).padStart(2,'0')}:${String(sec).padStart(2,'0')}`:`${m}:${String(sec).padStart(2,'0')}`;
   }
-  function finishTimeText(runtimeMinutes,positionSeconds){
-    const runtime=Number(runtimeMinutes),position=Number(positionSeconds||0),remaining=runtime*60-position;
-    if(!Number.isFinite(runtime)||runtime<=0||!Number.isFinite(position)||position<=0||remaining<=0)return '';
-    const end=new Date(Date.now()+remaining*1000);
-    return `Termina às ${String(end.getHours()).padStart(2,'0')}:${String(end.getMinutes()).padStart(2,'0')}`;
-  }
   function parsePosition(value){
     const raw=String(value||'').trim(); if(!raw)return null;
     const parts=raw.split(':').map(x=>Number(x)); if(parts.some(x=>!Number.isFinite(x)||x<0))return null;
@@ -2610,7 +2664,7 @@ let profileOpenListId=null;
       const season=Number(modern?parts[2]:parts[1]);
       const episode=Number(modern?parts[3]:parts[2]);
       const watchKey=`${showId}-${season}-${episode}`;
-      if(watched[watchKey])continue;
+      if(watched[watchKey]||isContinueDismissed(positionKey(showId,season,episode)))continue;
       if(!entry || new Date(pos.updatedAt||0)>new Date(entry.pos.updatedAt||0))entry={season,episode,pos};
     }
     if(entry)return entry;
@@ -2635,12 +2689,19 @@ let profileOpenListId=null;
     const currentSeason=seasons.find(x=>Number(x.season_number)===lastWatched.season);
     const currentTotal=Number(currentSeason?.episode_count||0);
     for(let ep=lastWatched.episode+1;ep<=currentTotal;ep++){
-      if(!watched[`${showId}-${lastWatched.season}-${ep}`])return {season:lastWatched.season,episode:ep,pos:null};
+      if(!watched[`${showId}-${lastWatched.season}-${ep}`]){
+        if(isContinueDismissed(positionKey(showId,lastWatched.season,ep)))return null;
+        return {season:lastWatched.season,episode:ep,pos:null};
+      }
     }
     const nextSeason=seasons.find(x=>Number(x.season_number)>lastWatched.season);
     if(nextSeason){
       const total=Number(nextSeason.episode_count||0);
-      for(let ep=1;ep<=total;ep++)if(!watched[`${showId}-${Number(nextSeason.season_number)}-${ep}`])return {season:Number(nextSeason.season_number),episode:ep,pos:null};
+      const seasonNumber=Number(nextSeason.season_number);
+      for(let ep=1;ep<=total;ep++)if(!watched[`${showId}-${seasonNumber}-${ep}`]){
+        if(isContinueDismissed(positionKey(showId,seasonNumber,ep)))return null;
+        return {season:seasonNumber,episode:ep,pos:null};
+      }
     }
     return null;
   }
@@ -2719,6 +2780,11 @@ let profileOpenListId=null;
     const dismissed=user.continueDismissed||{},canonical=canonicalContinuePositionKey(key);
     return !!(dismissed[canonical]||dismissed[String(key||'')]);
   }
+  function isContinuePositionVisible(key,value){return validPositionEntry(key,value)&&!isContinueDismissed(key)}
+  function getVisibleEpisodePosition(tvId,season,episode){
+    const key=positionKey(tvId,season,episode);
+    return isContinueDismissed(key)?0:getPosition(tvId,season,episode);
+  }
   function clearContinueDismissal(key){
     if(!user.continueDismissed)return;
     delete user.continueDismissed[canonicalContinuePositionKey(key)];
@@ -2728,7 +2794,15 @@ let profileOpenListId=null;
     if(!validPositionEntry(key,{seconds:1}))return;
     user.continueDismissed=user.continueDismissed||{};
     user.continueDismissed[canonicalContinuePositionKey(key)]=true;
-    save();renderProfile();if(location.hash==='#busca')renderContinue('#searchContinueGrid');else renderContinue();renderEpisódiosFeed();toast('Removido da lista. O progresso foi mantido.');
+    save();renderProfile();if(location.hash!=='#busca')renderContinue();renderEpisódiosFeed();
+    const parts=canonicalContinuePositionKey(key).split('-');
+    const showId=parts[0]==='tv'?Number(parts[1]):parts.length===3?Number(parts[0]):0;
+    if(showId&&Number(state.current?.id)===showId&&location.hash===`#tv-${showId}`){
+      const detailEpisodes=$('#detailEpisódios');
+      detailEpisodes?.querySelectorAll('.seriesContinue').forEach(panel=>panel.remove());
+      const nextEntry=getSeriesContinueEntry(state.current);
+      if(nextEntry)loadTemporada(Number(state.season||nextEntry.season)).catch(()=>{});
+    }
   }
   function resumeContinuePosition(key){
     const parts=String(key||'').split('-');
@@ -2758,25 +2832,7 @@ let profileOpenListId=null;
     // O progresso do Continue Assistindo pertence somente à conta autenticada.
     // Não importar histórico global do navegador, pois isso poderia mostrar o progresso de outro usuário em uma conta nova.
     const entries=Object.entries(user.positions||{})
-      .filter(([key,v])=>{
-        if(!validPositionEntry(key,v))return false;
-        if(isContinueDismissed(key))return false;
-        const parts=String(key).split('-');
-        // Episódio já concluído nunca deve aparecer em Continue assistindo.
-        if(parts[0]==='tv' && parts.length>=4){
-          const watchedKey=`${parts[1]}-${parts[2]}-${parts[3]}`;
-          return !(user.watched||{})[watchedKey];
-        }
-        // Compatibilidade com posições antigas de séries.
-        if(parts.length===3 && parts.every(x=>/^\d+$/.test(x))){
-          return !(user.watched||{})[key];
-        }
-        // Filme finalizado também deve desaparecer daqui.
-        if(parts[0]==='movie' && parts.length>=2){
-          return !(user.watchedMovies||{})[parts[1]];
-        }
-        return true;
-      })
+      .filter(([key,value])=>isContinuePositionVisible(key,value))
       .sort((a,b)=>new Date(b[1].updatedAt||0)-new Date(a[1].updatedAt||0))
       .slice(0,6);
     if(renderSeq!==continueRenderSeq)return;
@@ -2800,8 +2856,7 @@ let profileOpenListId=null;
         try{const d=await api(`/api/tv/${tvId}/season/${season}`);const ep=(d.episodes||[]).find(x=>x.episode_number===episode);if(ep){subtitle=ep.name||`Episódio ${episode}`;runtime=Number(ep.runtime||0);poster=poster||d.poster_path;}}catch{}
         if(!subtitle)subtitle=`Episódio ${episode}`;
         const pct=runtime?Math.min(100,Math.round((Number(pos.seconds||0)/(runtime*60))*100)):0;
-        const finishAt=finishTimeText(runtime,pos.seconds);
-        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt=""><div class="continueBody"><b>${escapeHtml(title)} • T${String(season).padStart(2,'0')} E${String(episode).padStart(2,'0')}</b><h3>${escapeHtml(subtitle)}</h3>${finishAt?`<small class="expectedEndTime">${finishAt}</small>`:''}<div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg> Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button><button type="button" class="continueRemove">Remover</button></div></div>`;
+        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt=""><div class="continueBody"><b>${escapeHtml(title)} • T${String(season).padStart(2,'0')} E${String(episode).padStart(2,'0')}</b><h3>${escapeHtml(subtitle)}</h3><div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg> Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button><button type="button" class="continueRemove">Remover</button></div></div>`;
         el.querySelector('.positionEdit').onclick=e=>{e.stopPropagation();openPositionEditor(tvId,season,episode,runtime,renderContinue);};
         el.querySelector('.continueAction .btn.dark').onclick=()=>{location.hash=`tv-${tvId}`;setTimeout(()=>{$('#tabEpisodios')?.click();},150);};
         el.querySelector('.continueRemove').onclick=e=>{e.stopPropagation();removeContinuePosition(key)};
@@ -2814,8 +2869,7 @@ let profileOpenListId=null;
         if(renderSeq!==continueRenderSeq)return;
         title=d.title||title;poster=d.poster_path;subtitle='Filme';runtime=Number(d.runtime||0);
         const pct=runtime?Math.min(100,Math.round((Number(pos.seconds||0)/(runtime*60))*100)):0;
-        const finishAt=finishTimeText(runtime,pos.seconds);
-        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt=""><div class="continueBody"><b>FILME</b><h3>${escapeHtml(title)}</h3>${finishAt?`<small class="expectedEndTime">${finishAt}</small>`:''}<div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg> Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button><button type="button" class="continueRemove">Remover</button></div></div>`;
+        const el=document.createElement('article');el.className='continueItem';el.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt=""><div class="continueBody"><b>FILME</b><h3>${escapeHtml(title)}</h3><div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg> Parou em <strong>${formatPosition(pos.seconds)}</strong></span><button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div><div class="progress"><i style="width:${pct}%"></i></div><div class="continueAction"><button class="btn dark">Continuar</button><button type="button" class="continueRemove">Remover</button></div></div>`;
         el.querySelector('.positionEdit').onclick=e=>{e.stopPropagation();openMoviePositionEditor(movieId,runtime,()=>renderContinue());};
         el.querySelector('.continueAction .btn.dark').onclick=()=>{location.hash=`movie-${movieId}`};
         el.querySelector('.continueRemove').onclick=e=>{e.stopPropagation();removeContinuePosition(key)};
@@ -2866,6 +2920,7 @@ let profileOpenListId=null;
     $('#detailMeta').replaceChildren();
     $('#detailSinopse').textContent='';
     $('#detailActions').replaceChildren();
+    $('#detailCollectionActions').replaceChildren();
     $('#tabSobre').classList.add('active');
     $('#tabEpisodios').classList.remove('active');
     $('#detailAbout').style.display='block';
@@ -2893,9 +2948,8 @@ let profileOpenListId=null;
       const statusTag=situation==='Finalizada'||situation==='Renovada'?`<strong class="statusBadge ${situation==='Finalizada'?'finished':'renewed'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>${escapeHtml(situation)}</strong>`:`<strong class="statusBadge ${situation==='Cancelada'?'cancelled':''}">Situação: ${escapeHtml(situation)}</strong>`;
       $('#detailMeta').innerHTML=`<span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${year}</span><span class="dot">•</span><span>${genres||'Série'}</span><span class="dot">•</span><span>${(d.number_of_seasons||0)} temporada${d.number_of_seasons===1?'':'s'}</span>${statusTag}`;
       $('#detailSinopse').textContent=d.overview||'Sem sinopse disponível.';
-      const followed=user.list.some(x=>x.id===id&&x.media_type==='tv');
-      $('#detailActions').innerHTML=`<button class="btn yellow" id="followShow">${followed?'✓ Acompanhando série':'+ Acompanhar série'}</button>`;
-      $('#followShow').onclick=()=>{toggleList({...d,media_type:'tv'});openShow(id)};
+      $('#detailCollectionActions').innerHTML=detailCollectionActionsMarkup(d,'tv');
+      bindDetailCollectionActions(view,d,'tv');
       const cast=(d.credits?.cast||[]).slice(0,12).map(x=>x.name).join(', ');
       let providers='';
       try{
@@ -2958,7 +3012,7 @@ let profileOpenListId=null;
       if(episode===total && (state.current.status==='Ended'||state.current.status==='Canceled') && season===Number(state.current.number_of_seasons||season)){
         user.completedShows=user.completedShows||{}; user.completedShows[String(showId)]=new Date().toISOString();
       }
-      save(); await loadTemporada(season); renderProfile(); toast('Episódio concluído!');
+      save(); await loadTemporada(season); renderProfile();
     };
   }
 
@@ -3011,9 +3065,8 @@ let profileOpenListId=null;
       const expanded=sn===n;
       return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>Temporada ${sn}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle ${total>0&&count>=total?'done':''}" data-season-toggle="${sn}" aria-pressed="${total>0&&count>=total}" aria-label="${total>0&&count>=total?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${total>0&&count>=total?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}">${total>0&&count>=total?'<svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>':'○'}</button><span class="seasonProgress" role="progressbar" aria-label="Progresso da temporada ${sn}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${seasonNotice}${episodes.map(e=>{
         const key=`${state.current.id}-${n}-${e.episode_number}`;
-        const done=!!user.watched[key]; const runtime=Number(e.runtime||0); const pos=getPosition(state.current.id,n,e.episode_number);
-        const finishAt=done?'':finishTimeText(runtime,pos);
-         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${finishAt?`<small class="episodeFinishTime">${finishAt}</small>`:''}${pos?`<div class="positionMini"><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos)}</strong></div>`:''}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button><button class="check ${done?'done':''}" data-ep="${key}" title="${done?'Desmarcar como assistido':'Marcar como assistido'}">${done?'✓':'○'}</button></div></article>`
+        const done=!!user.watched[key]; const pos=getVisibleEpisodePosition(state.current.id,n,e.episode_number);
+         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${pos?`<div class="positionMini"><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos)}</strong></div>`:''}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button><button class="check ${done?'done':''}" data-ep="${key}" title="${done?'Desmarcar como assistido':'Marcar como assistido'}">${done?'✓':'○'}</button></div></article>`
       }).join('')}</div>`:''}`;
     }).join('');
 
@@ -3032,12 +3085,12 @@ let profileOpenListId=null;
       const runtime=Number(epData?.runtime||0);
       openPositionEditor(Number(state.current.id),n,ep,runtime,()=>loadTemporada(n));
     });
-    
+
     $$('.check[data-ep]',$('#detailEpisódios')).forEach(b=>b.onclick=async e=>{
       e.stopPropagation(); const key=b.dataset.ep; const episodeNumber=Number(key.split('-').pop()); const wasDone=!!user.watched[key];
-      if(wasDone){user.watched[key]=false;delete user.watchedAt[key];save();await loadTemporada(n);renderProfile();toast('Episódio desmarcado.');return;}
+      if(wasDone){user.watched[key]=false;delete user.watchedAt[key];save();await loadTemporada(n);renderProfile();return;}
       const isLastEpisódio=episodeNumber===episodes.length; const pendingPrevious=episodes.filter(ep=>ep.episode_number<episodeNumber&&!user.watched[`${state.current.id}-${n}-${ep.episode_number}`]).length;
-      const markCurrent=async markPrevious=>{user.watched[key]=true;user.watchedAt[key]=new Date().toISOString();user.watchDurations=user.watchDurations||{episodes:{},movies:{}};user.watchDurations.episodes=user.watchDurations.episodes||{};user.watchDurations.episodes[key]=Number(episodes.find(ep=>Number(ep.episode_number)===episodeNumber)?.runtime||0)||Number(user.watchDurations.episodes[key]||0)||45;user.positions=user.positions||{};delete user.positions[positionKey(Number(state.current.id),n,episodeNumber)];delete user.positions[`${state.current.id}-${n}-${episodeNumber}`];if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;delete user.positions[positionKey(Number(state.current.id),n,ep.episode_number)];delete user.positions[k];}})}if(!user.list.some(x=>x.id===state.current.id&&x.media_type==='tv'))user.list.push({id:state.current.id,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;user.watched[k]=true;user.watchedAt[k]=new Date().toISOString();}})}if(isLastEpisódio){user.completedShows=user.completedShows||{};if((state.current.status==='Ended'||state.current.status==='Canceled')&&n===Number(state.current.number_of_seasons||n))user.completedShows[String(state.current.id)]=new Date().toISOString();}save();await loadTemporada(n);renderProfile();toast(markPrevious?'Temporada marcada como assistida!':'Episódio concluído!');};
+      const markCurrent=async markPrevious=>{user.watched[key]=true;user.watchedAt[key]=new Date().toISOString();user.watchDurations=user.watchDurations||{episodes:{},movies:{}};user.watchDurations.episodes=user.watchDurations.episodes||{};user.watchDurations.episodes[key]=Number(episodes.find(ep=>Number(ep.episode_number)===episodeNumber)?.runtime||0)||Number(user.watchDurations.episodes[key]||0)||45;user.positions=user.positions||{};delete user.positions[positionKey(Number(state.current.id),n,episodeNumber)];delete user.positions[`${state.current.id}-${n}-${episodeNumber}`];if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;delete user.positions[positionKey(Number(state.current.id),n,ep.episode_number)];delete user.positions[k];}})}if(!user.list.some(x=>x.id===state.current.id&&x.media_type==='tv'))user.list.push({id:state.current.id,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});if(markPrevious){episodes.forEach(ep=>{if(ep.episode_number<=episodeNumber){const k=`${state.current.id}-${n}-${ep.episode_number}`;user.watched[k]=true;user.watchedAt[k]=new Date().toISOString();}})}if(isLastEpisódio){user.completedShows=user.completedShows||{};if((state.current.status==='Ended'||state.current.status==='Canceled')&&n===Number(state.current.number_of_seasons||n))user.completedShows[String(state.current.id)]=new Date().toISOString();}save();await loadTemporada(n);renderProfile();};
       if(isLastEpisódio&&pendingPrevious>0&&shouldPromptPreviousEpisódios(state.current.id)){promptPreviousEpisódios(state.current.name||state.current.title||'esta série',n,episodeNumber,pendingPrevious,choice=>markCurrent(choice==='yes'));}else{await markCurrent(false);}
     });
     $$('.episode[data-episode-open]',$('#detailEpisódios')).forEach(article=>{
@@ -3047,7 +3100,7 @@ let profileOpenListId=null;
         if(!ep || !state.current)return;
         recordEpisodeStart(Number(state.current.id),n,ep,state.current);
         await loadTemporada(n);
-        renderProfile(); toast('Episódio salvo em Continue assistindo.'); await renderContinue('#continueGrid'); await renderEpisódiosFeed();
+        renderProfile(); ; await renderContinue('#continueGrid'); await renderEpisódiosFeed();
       });
     });
   }
@@ -3066,7 +3119,7 @@ let profileOpenListId=null;
       if((show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp}
     }
     if(wasDone&&(show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)&&user.completedShows)delete user.completedShows[String(showId)];
-    save();renderProfile();toast(wasDone?'Temporada desmarcada.':'Temporada marcada como assistida!');if(afterUpdate)await afterUpdate(season);
+    save();renderProfile();if(afterUpdate)await afterUpdate(season);
   }
   function bindSeasonToggleButtons(container,afterUpdate){
     $$('.seasonToggle',container).forEach(button=>button.onclick=async event=>{event.stopPropagation();const season=Number(button.dataset.seasonToggle),total=Number((state.current?.seasons||[]).find(item=>Number(item.season_number)===season)?.episode_count||0);await toggleSeasonWatched(season,total,afterUpdate)});
@@ -3113,6 +3166,7 @@ let profileOpenListId=null;
       box.innerHTML=`<div class="movieDetailPage">
         <div class="movieDetailHero">
           <button class="movieBack" id="movieBack" aria-label="Voltar">←</button>
+          ${detailCollectionActionsMarkup(d,'movie')}
         ${safeBackdropUrl(d.backdrop_path)?`<img src="${escapeHtml(safeBackdropUrl(d.backdrop_path))}" alt="">`:''}
           <div class="movieDetailOverlay"><div class="movieDetailInfo">
             <h1>${escapeHtml(d.title||'Filme')}</h1>
@@ -3128,6 +3182,7 @@ let profileOpenListId=null;
       box.removeAttribute('aria-busy');
       showView('movieDetail');
       $('#movieBack').onclick=returnFromDetail;
+      bindDetailCollectionActions(box,d,'movie');
       renderMovieCompletion(id,d.title||'Filme',runtime);
     }catch(e){
       if(!isCurrentDetailRoute(routeHash,box))return;
@@ -3184,18 +3239,7 @@ let profileOpenListId=null;
       if(!previous || new Date(value.updatedAt||0)>=new Date(previous.value.updatedAt||0)) uniquePositions.set(canonical,{key:canonical,value});
     }
     const entries=Array.from(uniquePositions.values())
-      .filter(x=>{
-        const parts=String(x.key||'').split('-');
-        if(isContinueDismissed(x.key))return false;
-        if(parts[0]==='tv' && parts.length>=4){
-          const watchedKey=`${parts[1]}-${parts[2]}-${parts[3]}`;
-          return !(user.watched||{})[watchedKey];
-        }
-        if(parts.length===3 && parts.every(v=>/^\d+$/.test(v))){
-          return !(user.watched||{})[x.key];
-        }
-        return parts[0]!=='movie' || !(user.watchedMovies||{})[parts[1]];
-      })
+        .filter(x=>isContinuePositionVisible(x.key,x.value))
       .sort((a,b)=>new Date(b.value.updatedAt||0)-new Date(a.value.updatedAt||0))
       .slice(0,12)
       .map(x=>[x.key,x.value]);
@@ -3214,10 +3258,18 @@ let profileOpenListId=null;
       let title='Título',subtitle='',runtime=0,poster='';
       if(isMovie){
         const movieId=Number(p[1]);
-        try{
-          const d=await api(`/api/movie/${movieId}`);
-          title=d.title||'Filme'; subtitle='FILME'; runtime=Number(d.runtime||0); poster=d.poster_path||'';
-        }catch{continue}
+        const listed=(user.list||[]).find(item=>Number(item?.id)===movieId&&mediaTypeOf(item)==='movie')||{};
+        const catalog=Object.values(state.home||{}).flatMap(category=>Array.isArray(category?.results)?category.results:[]);
+        const cached=catalog.find(item=>Number(item?.id)===movieId&&mediaTypeOf(item)==='movie')||{};
+        let details=null;
+        try{details=await api(`/api/movie/${movieId}`)}catch{}
+        if(renderSeq!==episodeFeedRenderSeq||!user.sessionToken)return;
+        // A posição salva continua válida mesmo se a consulta de detalhes falhar.
+        // Reaproveita metadados locais e mantém o item retomável em vez de descartá-lo.
+        title=details?.title||details?.original_title||listed.title||listed.name||cached.title||cached.original_title||'Filme';
+        subtitle='FILME';
+        runtime=Number(details?.runtime||listed.runtime||cached.runtime||0);
+        poster=details?.poster_path||listed.poster_path||cached.poster_path||'';
       }else{
         const tvId=Number(isTv?p[1]:p[0]);
         const season=Number(isTv?p[2]:p[1]);
@@ -3250,14 +3302,12 @@ let profileOpenListId=null;
         subtitle=`T${String(season).padStart(2,'0')} | E${String(episode).padStart(2,'0')} • ${ep?.name||'Episódio'}`;
       }
       const progressMarkup=continueProgressMarkup(pos.seconds,runtime,isMovie?'o filme':'o episódio');
-      const finishAt=finishTimeText(runtime,pos.seconds);
       const item=document.createElement('article');
       item.className='episodeFeedItem';
       item.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt="">
         <div class="episodeFeedBody">
           <button class="episodeFeedTitleLink" type="button">${escapeHtml(title)}</button>
           <span>${escapeHtml(subtitle)}</span>
-          ${finishAt?`<small class="expectedEndTime">${finishAt}</small>`:''}
           <div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos.seconds)}</strong></span>
             <button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div>
           ${progressMarkup}
@@ -3297,11 +3347,10 @@ let profileOpenListId=null;
   function renderPublicProfile(person,st){const box=$('#publicProfileContent');const list=Array.isArray(st.list)?st.list:[];const watchedMovies=Object.keys(st.watchedMovies||{}).filter(k=>st.watchedMovies[k]);const positions=Object.entries(st.positions||{}).filter(([,v])=>Number(v?.seconds||0)>0);const completed=Object.keys(st.completedShows||{}).filter(k=>st.completedShows[k]);box.innerHTML=`<div class="publicHero"><div class="publicTop"><div class="publicAvatar">${escapeHtml(initials(person.name))}</div><div><h1 class="publicName">${escapeHtml(person.name||'Coruja')}</h1><div style="color:#aaa">@${escapeHtml(person.username||'coruja')} • ${person.followers||0} seguidores • ${person.following||0} seguindo</div></div><button class="followBtn ${person.following?'following':''}" id="publicFollowBtn" style="margin-left:auto">${person.following?'✓ Seguindo':'Seguir'}</button></div></div><div class="publicTabs"><button class="publicTab active" data-public-tab="assistindo"><svg class="uiIcon"><use href="#i-play-circle"></use></svg>Assistindo</button><button class="publicTab" data-public-tab="finalizados"><svg class="uiIcon"><use href="#i-check-circle"></use></svg>Finalizados</button><button class="publicTab" data-public-tab="lista"><svg class="uiIcon"><use href="#i-bookmark"></use></svg>Minha lista</button></div><div id="publicTabContent"></div>`;$('#publicFollowBtn').onclick=async()=>{if(!user.sessionToken){openAuth('login');return}const following=person.following;const r=await fetch('/api/users/'+encodeURIComponent(person.id)+'/follow',{method:following?'DELETE':'POST',credentials:'same-origin'});const d=await r.json();if(!r.ok){toast(d.error||'Não foi possível alterar o seguimento.');return}person.following=!following;$('#publicFollowBtn').textContent=person.following?'✓ Seguindo':'Seguir';$('#publicFollowBtn').classList.toggle('following',person.following);user.followingCount=Math.max(0,Number(user.followingCount||0)+(person.following?1:-1));save()};const renderTab=tab=>{const c=$('#publicTabContent');c.innerHTML='';if(tab==='lista'){renderPublicItems(c,list);return}if(tab==='finalizados'){const items=list.filter(x=>x.media_type==='movie'&&watchedMovies.includes(String(x.id))).concat(list.filter(x=>x.media_type==='tv'&&completed.includes(String(x.id))));renderPublicItems(c,items,'Essa pessoa ainda não finalizou nenhum título.');return}const items=list.filter(x=>x.media_type==='tv'&&!completed.includes(String(x.id))).concat(list.filter(x=>x.media_type==='movie'&&!watchedMovies.includes(String(x.id))));renderPublicItems(c,items,'Essa pessoa não tem nada em andamento no momento.');};$$('.publicTab',box).forEach(b=>b.onclick=()=>{$$('.publicTab',box).forEach(x=>x.classList.remove('active'));b.classList.add('active');renderTab(b.dataset.publicTab)});renderTab('assistindo')}
   function renderPublicItems(c,items,empty='Nenhum item nesta seção.'){const sec=document.createElement('div');sec.className='publicSection';if(!items.length){sec.innerHTML=`<div class="publicEmpty">${empty}</div>`;c.appendChild(sec);return}const grid=document.createElement('div');grid.id='publicProfileItemsGrid';grid.className='publicGrid';sec.appendChild(grid);c.appendChild(sec);renderProgressiveGrid(grid,items)}
   function renderSearchHome(){
-    const d=state.home;if(!d){renderContinue('#searchContinueGrid');return;}
+    const d=state.home;if(!d)return;
     const normalize=(items,type='')=>(Array.isArray(items)?items:[]).filter(x=>x&&x.id).map(x=>({...x,media_type:x.media_type||type})).filter(x=>x.media_type==='tv'||x.media_type==='movie');
-    const topCandidates=normalize(d.trending?.results).filter(x=>x.media_type==='tv');
-    const topMatches=[];const used=new Set();
-    for(const item of topCandidates){const key=`${item.media_type}:${item.id}`;if(used.has(key))continue;used.add(key);topMatches.push(item);if(topMatches.length===8)break;}
+    const topMatches=getRecommendedForHome().slice(0,8);
+    const used=new Set(topMatches.map(item=>`${item.media_type}:${item.id}`));
     const trendCandidates=[...normalize(d.trending?.results),...normalize(d.trendingDay?.results),...normalize(d.tv?.results,'tv'),...normalize(d.movies?.results,'movie')];
     const trending=[];
     for(const item of trendCandidates){const key=`${item.media_type}:${item.id}`;if(used.has(key))continue;used.add(key);trending.push(item);if(trending.length===12)break;}
@@ -3309,7 +3358,6 @@ let profileOpenListId=null;
     fill('#searchTrending',trending);
     fill('#searchHomeSeries',normalize(d.tv?.results,'tv').slice(0,12));
     fill('#searchHomeMovies',normalize(d.movies?.results,'movie').slice(0,12));
-    renderContinue('#searchContinueGrid');
   }
   let timer,searchRequestId=0,searchResultsState=null;
 function updateSearchLoadControl(){const wrap=$('#searchResultsLoad'),button=$('#loadMoreSearch'),state=searchResultsState;if(!wrap||!button)return;wrap.hidden=!state||(state.shown>=state.items.length&&state.page>=state.totalPages);button.disabled=!!state?.loading;button.textContent=state?.loading?'Carregando...':'Carregar mais'}
@@ -3353,7 +3401,7 @@ function doSearch(q){
 }
   $('#bigSearch').addEventListener('input',e=>doSearch(e.target.value));
   let trendMode='day';
-  function formatTrendDate(x){const raw=x?.first_air_date||x?.release_date||'';if(!raw)return '';const d=new Date(raw+'T00:00:00');if(Number.isNaN(d.getTime()))return '';return d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'});} 
+  function formatTrendDate(x){const raw=x?.first_air_date||x?.release_date||'';if(!raw)return '';const d=new Date(raw+'T00:00:00');if(Number.isNaN(d.getTime()))return '';return d.toLocaleDateString('pt-BR',{day:'numeric',month:'long',year:'numeric'});}
   function renderTrendingHome(d){
     const box=$('#homeTrending');if(!box)return;
     const source=trendMode==='day'?(d.trendingDay?.results||[]):(d.trending?.results||[]);
@@ -3455,6 +3503,7 @@ function doSearch(q){
 
 
 
+<script src="/admin-classic-auth.js"></script>
 <script src="/admin-mobile.js"></script>
 <script>
 if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.hostname === 'localhost' || location.hostname === '127.0.0.1')) {
@@ -3463,13 +3512,3 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-

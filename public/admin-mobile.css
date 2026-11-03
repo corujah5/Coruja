@@ -91,3 +91,28 @@ body:has(#admin-mobile.active) .bottom{display:none!important}
  #admin-mobile .adminMobileResetActions,#admin-mobile .adminMobileDialogActions{grid-template-columns:minmax(0,1fr)}
 }
 @media(prefers-reduced-motion:reduce){#admin-mobile .adminMobileButton{transition:none}}
+
+/* Acesso ao painel: a chave é digitada e enviada apenas à validação do servidor. */
+#admin-mobile .adminMobileHeaderActions{display:flex;align-items:center;gap:9px;flex-wrap:wrap;justify-content:flex-end}
+#admin-mobile .adminMobileAccessForm{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:end;gap:12px}
+#admin-mobile .adminMobileAccessForm .adminMobileStatus{grid-column:1/-1}
+#admin-mobile .adminMobileAccessForm .adminMobileButton{min-width:150px}
+@media(max-width:650px){
+ #admin-mobile .adminMobileHeaderActions{width:100%;justify-content:flex-start}
+ #admin-mobile .adminMobileAccessForm{grid-template-columns:minmax(0,1fr)}
+ #admin-mobile .adminMobileAccessForm .adminMobileButton{width:100%}
+}
+#admin-mobile .adminMobileAccountsPagination{display:grid;gap:11px;margin-top:13px;padding-top:12px;border-top:1px solid #2a342b}
+#admin-mobile .adminMobileAccountsPaginationMeta{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+#admin-mobile .adminMobileAccountsPaginationMeta label{color:#cbd4c8;font-size:13px;font-weight:800}
+#admin-mobile .adminMobileAccountsPaginationMeta select{min-height:40px;padding:7px 30px 7px 10px;border:1px solid #3a463b;border-radius:10px;background:#0d120e;color:#eef3eb;font:inherit;font-size:14px}
+#admin-mobile .adminMobileAccountsPaginationMeta select:focus-visible{outline:3px solid #b8f34a;outline-offset:2px}
+#admin-mobile .adminMobileAccountsPaginationMeta p{margin:0 0 0 auto;color:#aab5a7;font-size:13px}
+#admin-mobile .adminMobileAccountsPager{display:flex;align-items:center;justify-content:center;gap:6px;flex-wrap:wrap}
+#admin-mobile .adminMobileAccountPageButton{display:inline-flex;min-width:40px;min-height:40px;align-items:center;justify-content:center;padding:8px 11px;border:1px solid #394439;border-radius:10px;background:#151c16;color:#e2eadf;font:inherit;font-size:13px;font-weight:850;cursor:pointer;touch-action:manipulation}
+#admin-mobile .adminMobileAccountPageButton:hover:not(:disabled){border-color:#9ccc50;background:#1b241b}
+#admin-mobile .adminMobileAccountPageButton:focus-visible{outline:3px solid #b8f34a;outline-offset:2px}
+#admin-mobile .adminMobileAccountPageButton[aria-current="page"]{border-color:#b8f34a;background:#b8f34a;color:#10150d}
+#admin-mobile .adminMobileAccountPageButton:disabled{opacity:.45;cursor:not-allowed}
+#admin-mobile .adminMobileAccountPageEllipsis{padding:0 2px;color:#aab5a7}
+@media(max-width:650px){#admin-mobile .adminMobileAccountsPaginationMeta{gap:8px}#admin-mobile .adminMobileAccountsPaginationMeta p{flex-basis:100%;margin:0}#admin-mobile .adminMobileAccountsPager{gap:5px}#admin-mobile .adminMobileAccountPageButton{min-width:38px;min-height:40px;padding:8px 10px}}

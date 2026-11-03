@@ -1,12 +1,13 @@
 /* Cache somente do shell público do aplicativo. Dados de conta e API ficam sempre na rede. */
-const CACHE_NAME = 'coruja-app-shell-v1';
+const CACHE_NAME = 'coruja-app-shell-v2';
 const SHELL_ASSETS = [
   '/',
   '/manifest.webmanifest',
   '/logo.png',
   '/icons/coruja-180.png',
   '/icons/coruja-192.png',
-  '/icons/coruja-512.png'
+  '/icons/coruja-512.png',
+  '/icons/coruja-512-maskable.png'
 ];
 const SHELL_PATHS = new Set(SHELL_ASSETS.slice(1));
 
