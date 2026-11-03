@@ -6,7 +6,7 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const app = express();
 const PORT = process.env.PORT || 3000;
-const TOKEN = process.env.TMDB_TOKEN;
+const TOKEN = process.env.TMDB_READ_ACCESS_TOKEN || process.env.TMDB_TOKEN;
 const scryptAsync = promisify(crypto.scrypt);
 const SESSION_COOKIE = 'coruja_session';
 const SESSION_TTL_MS = 7 * 24 * 60 * 60 * 1000;
@@ -25,6 +25,8 @@ const INVITES_FILE = path.join(DATA_DIR, 'invites.json');
 const STATES_DIR = path.join(DATA_DIR, 'states');
 const ADMIN_USERNAME = String(process.env.ADMIN_USERNAME || '').trim();
 const ADMIN_BOOTSTRAP_SECRET = String(process.env.ADMIN_BOOTSTRAP_SECRET || '');
+const ADMIN_KEY = String(process.env.ADMIN_KEY || '');
+const ADMIN_KEY_HEADER = 'x-admin-key';
 const ADMIN_BOOTSTRAP_STATE_FILE = path.join(DATA_DIR, 'admin-bootstrap.json');
 const bootstrapAttempts = new Map();
 const BOOTSTRAP_MAX_ATTEMPTS = 5;
@@ -228,10 +230,18 @@ function requireAdminAccount(req, res, next) {
   req.isAdmin = true;
   next();
 }
-app.use('/api/admin', requireAccount, requireAdminAccount, (req, res, next) => {
+function adminKeyMatches(candidate) {
+  const digest = value => crypto.createHash('sha256').update(String(value || ''), 'utf8').digest();
+  return crypto.timingSafeEqual(digest(candidate), digest(ADMIN_KEY));
+}
+function requireAdminKey(req, res, next) {
   res.setHeader('Cache-Control', 'no-store');
+  if (Buffer.byteLength(ADMIN_KEY, 'utf8') < 16) return res.status(503).json({ error: 'A administração local não está configurada.' });
+  const suppliedKey = String(req.get(ADMIN_KEY_HEADER) || '');
+  if (!adminKeyMatches(suppliedKey)) return res.status(401).json({ error: 'Acesso ao painel não autorizado.' });
   next();
-});
+}
+app.use('/api/admin', requireAdminKey);
 function makeUsername(name,id=''){
   const base=String(name||'coruja').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().replace(/[^a-z0-9_]/g,'').slice(0,24)||'coruja';
   return `${base}${String(id).replace(/-/g,'').slice(0,5)}`.slice(0,30);
@@ -359,7 +369,7 @@ function cleanState(input){
 function readInvites(){ return readJson(INVITES_FILE, []); }
 function writeInvites(items){ writeJson(INVITES_FILE, items); }
 function makeInviteCode(){ let code=''; const chars='ABCDEFGHJKLMNPQRSTUVWXYZ23456789'; do{code='CORUJA-'+Array.from({length:8},()=>chars[Math.floor(Math.random()*chars.length)]).join('')}while(readInvites().some(x=>x.code===code)); return code; }
-app.get('/api/admin/session',(req,res)=>res.json({authorized:true,user:{id:req.account.id,username:req.account.username,name:req.account.name||'Coruja'}}));
+app.get('/api/admin/session',(req,res)=>res.json({authorized:true}));
 app.get('/api/admin/invites',(req,res)=>res.json({invites:readInvites()}));
 app.post('/api/admin/invites',(req,res)=>{const invites=readInvites(),amount=Math.min(50,Math.max(1,Number(req.body?.amount||1))),created=[];for(let i=0;i<amount;i++){const item={code:makeInviteCode(),used:false,createdAt:new Date().toISOString(),usedAt:null,usedBy:null};invites.push(item);created.push(item)}writeInvites(invites);res.status(201).json({invites:created});});
 app.get('/api/admin/users',(req,res)=>{const users=migrateUsers().map(u=>({id:u.id,name:u.name||'Coruja',username:u.username||'',email:u.email||'',createdAt:u.createdAt||null,passwordConfigured:!!(u.password&&u.password.hash&&u.password.salt),blocked:!!u.blocked,blockedAt:u.blockedAt||null})).sort((a,b)=>String(b.createdAt||'').localeCompare(String(a.createdAt||'')));res.json({users});});
@@ -573,7 +583,7 @@ app.delete('/api/users/:id/follow',(req,res)=>{
 });
 
 async function tmdb(endpoint, params={}) {
-  if (!TOKEN) throw new Error('Configure TMDB_TOKEN no arquivo .env');
+  if (!TOKEN) throw new Error('Configure TMDB_READ_ACCESS_TOKEN no arquivo .env');
   const u = new URL('https://api.themoviedb.org/3' + endpoint);
   for (const [k,v] of Object.entries(params)) if (v !== undefined && v !== '') u.searchParams.set(k,v);
   const r = await fetch(u, {headers:{Authorization:`Bearer ${TOKEN}`, accept:'application/json'}});

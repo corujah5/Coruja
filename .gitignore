@@ -7,14 +7,12 @@
 node_modules/
 
 # Dados privados e persistentes
-data/*.json
-data/states/
-public/uploads/
+data/
+uploads/
 
 # Cópias e temporários de segurança
 backups/
 .backup/
-data/backups/
 *.tmp
 
 # Sistema
