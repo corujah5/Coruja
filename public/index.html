@@ -605,7 +605,6 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
   gap: 14px;
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
-  touch-action: pan-x;
 }
 #perfil .profileCarousel .card {
   flex: 0 0 184px;
@@ -752,12 +751,12 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 @media(max-width:650px){.catalogView{padding:14px 10px 90px}.catalogHead{margin-bottom:14px}.catalogHead h2{font-size:20px}.catalogView .grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:15px 8px}}
 
 
-.profileDashboard{max-width:1240px;margin:0 auto;padding:clamp(18px,3vw,34px);background:#111;color:#f4f5f2;border-radius:18px;min-height:70vh}.profileDashboardHead,.profileSectionHead{display:flex;align-items:center;justify-content:space-between;gap:14px}.profileDashboardHead{margin-bottom:28px}.profileDashboardHead h1{margin:0;font-size:clamp(26px,3vw,36px)}.profileDashboard .profileLogout{position:static;margin:0}.profileSection{margin:0 0 32px}.profileSectionHead{margin-bottom:14px}.profileSectionHead h2{margin:0;font-size:clamp(19px,2vw,24px);display:flex;align-items:center;gap:9px}.profileMetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.profileMetric{min-width:0;min-height:142px;padding:18px;border:1px solid #2c332b;border-radius:14px;background:linear-gradient(145deg,#1c211c,#151815);display:flex;flex-direction:column;gap:8px}.profileMetric>.uiIcon{width:22px;height:22px;color:#a6e744}.profileMetric strong{font-size:clamp(23px,2.3vw,32px);color:#a6e744;line-height:1.1}.profileMetric span{font-size:13px;font-weight:800;color:#e4e8e1}.profileMetric small{font-size:11px;color:#879083}.profileCreateList,.profileSeeMore{border:1px solid #3a4b31;border-radius:9px;background:#192117;color:#b4ef56;padding:10px 14px;font-weight:850;white-space:nowrap}.profileCreateList:hover,.profileSeeMore:hover{background:#25351c}.profileCustomLists{display:grid;gap:10px}.profileEmpty{padding:20px;border:1px dashed #3b4539;border-radius:12px;color:#939a91;background:#171b17;min-width:250px}.profileCustomList{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid #303730;border-radius:12px;background:#191d19}.profileCustomListOpen{display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left;border:0;background:transparent;color:#f3f5f2}.profileCustomListOpen strong{overflow:hidden;text-overflow:ellipsis}.profileCustomListOpen small{color:#929a90}.profileListActions{display:flex;gap:8px;flex:0 0 auto}.profileListActions button,.profileListBack,.profileListRemove{border:1px solid #414941;border-radius:8px;background:#202520;color:#d8ded4;padding:8px 10px;font-weight:750}.profileListActions button:last-child,.profileListRemove{color:#f2a4a4}.profileCustomListDetail{padding:16px;border:1px solid #303730;border-radius:14px;background:#171b17}.profileCustomListDetailHead{display:flex;align-items:center;gap:12px;margin-bottom:14px}.profileCustomListDetailHead h3{margin:0;overflow-wrap:anywhere}.profileListPicker{display:flex;gap:9px;margin-bottom:16px}.profileListPicker select{min-width:0;flex:1;padding:10px 12px;border:1px solid #384038;border-radius:9px;background:#101310;color:#f2f4f0}.profileListPicker button:disabled{opacity:.45;cursor:not-allowed}.profileCustomListItems{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}.profileCustomListItem{min-width:0}.profileCustomListItem .card{width:100%}.profileListRemove{margin-top:8px;width:100%}.profileCollection .profileSectionHead{margin-bottom:10px}.profileCarousel{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:3px 2px 14px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#526346 transparent;-webkit-overflow-scrolling:touch;touch-action:pan-x}.profileCarousel .card{flex:0 0 166px;width:166px;min-width:0;scroll-snap-align:start}.profileCarousel .poster{width:100%;height:auto;aspect-ratio:2/3}.profileCarousel .card h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profileCollectionGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:16px}.profileCollectionEmpty{grid-column:1/-1}.profileCollectionPage{max-width:1240px;margin:0 auto;padding:24px;background:#111;color:#f4f5f2;border-radius:16px;min-height:70vh}.profileCollectionPage .catalogHead{margin-bottom:22px}.profileCollectionPage .catalogHead h2{color:#f3f5f2}.profileCollectionPage .catalogHead button{color:#b4ef56}.profileCollectionPage .profileCollectionGrid .card{width:100%;min-width:0}.profileCollectionPage .profileCollectionGrid .poster{width:100%;height:auto;aspect-ratio:2/3}
+.profileDashboard{max-width:1240px;margin:0 auto;padding:clamp(18px,3vw,34px);background:#111;color:#f4f5f2;border-radius:18px;min-height:70vh}.profileDashboardHead,.profileSectionHead{display:flex;align-items:center;justify-content:space-between;gap:14px}.profileDashboardHead{margin-bottom:28px}.profileDashboardHead h1{margin:0;font-size:clamp(26px,3vw,36px)}.profileDashboard .profileLogout{position:static;margin:0}.profileSection{margin:0 0 32px}.profileSectionHead{margin-bottom:14px}.profileSectionHead h2{margin:0;font-size:clamp(19px,2vw,24px);display:flex;align-items:center;gap:9px}.profileMetrics{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}.profileMetric{min-width:0;min-height:142px;padding:18px;border:1px solid #2c332b;border-radius:14px;background:linear-gradient(145deg,#1c211c,#151815);display:flex;flex-direction:column;gap:8px}.profileMetric>.uiIcon{width:22px;height:22px;color:#a6e744}.profileMetric strong{font-size:clamp(23px,2.3vw,32px);color:#a6e744;line-height:1.1}.profileMetric span{font-size:13px;font-weight:800;color:#e4e8e1}.profileMetric small{font-size:11px;color:#879083}.profileCreateList,.profileSeeMore{border:1px solid #3a4b31;border-radius:9px;background:#192117;color:#b4ef56;padding:10px 14px;font-weight:850;white-space:nowrap}.profileCreateList:hover,.profileSeeMore:hover{background:#25351c}.profileCustomLists{display:grid;gap:10px}.profileEmpty{padding:20px;border:1px dashed #3b4539;border-radius:12px;color:#939a91;background:#171b17;min-width:250px}.profileCustomList{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:13px 15px;border:1px solid #303730;border-radius:12px;background:#191d19}.profileCustomListOpen{display:flex;flex-direction:column;gap:4px;min-width:0;text-align:left;border:0;background:transparent;color:#f3f5f2}.profileCustomListOpen strong{overflow:hidden;text-overflow:ellipsis}.profileCustomListOpen small{color:#929a90}.profileListActions{display:flex;gap:8px;flex:0 0 auto}.profileListActions button,.profileListBack,.profileListRemove{border:1px solid #414941;border-radius:8px;background:#202520;color:#d8ded4;padding:8px 10px;font-weight:750}.profileListActions button:last-child,.profileListRemove{color:#f2a4a4}.profileCustomListDetail{padding:16px;border:1px solid #303730;border-radius:14px;background:#171b17}.profileCustomListDetailHead{display:flex;align-items:center;gap:12px;margin-bottom:14px}.profileCustomListDetailHead h3{margin:0;overflow-wrap:anywhere}.profileListPicker{display:flex;gap:9px;margin-bottom:16px}.profileListPicker select{min-width:0;flex:1;padding:10px 12px;border:1px solid #384038;border-radius:9px;background:#101310;color:#f2f4f0}.profileListPicker button:disabled{opacity:.45;cursor:not-allowed}.profileCustomListItems{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:12px}.profileCustomListItem{min-width:0}.profileCustomListItem .card{width:100%}.profileListRemove{margin-top:8px;width:100%}.profileCollection .profileSectionHead{margin-bottom:10px}.profileCarousel{display:flex;gap:14px;overflow-x:auto;overflow-y:hidden;padding:3px 2px 14px;scroll-snap-type:x proximity;scrollbar-width:thin;scrollbar-color:#526346 transparent;-webkit-overflow-scrolling:touch}.profileCarousel .card{flex:0 0 166px;width:166px;min-width:0;scroll-snap-align:start}.profileCarousel .poster{width:100%;height:auto;aspect-ratio:2/3}.profileCarousel .card h3{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.profileCollectionGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:16px}.profileCollectionEmpty{grid-column:1/-1}.profileCollectionPage{max-width:1240px;margin:0 auto;padding:24px;background:#111;color:#f4f5f2;border-radius:16px;min-height:70vh}.profileCollectionPage .catalogHead{margin-bottom:22px}.profileCollectionPage .catalogHead h2{color:#f3f5f2}.profileCollectionPage .catalogHead button{color:#b4ef56}.profileCollectionPage .profileCollectionGrid .card{width:100%;min-width:0}.profileCollectionPage .profileCollectionGrid .poster{width:100%;height:auto;aspect-ratio:2/3}
 @media(max-width:700px){.profileDashboard{padding:18px 14px 90px;border-radius:0}.profileDashboardHead{margin-bottom:22px}.profileMetrics{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}.profileMetric{padding:14px;min-height:132px}.profileMetric span{font-size:12px}.profileCarousel{gap:11px;margin-right:-14px;padding-right:14px}.profileCarousel .card{flex-basis:128px;width:128px}.profileSection{margin-bottom:26px}.profileSectionHead{align-items:flex-start}.profileSectionHead h2{font-size:18px}.profileSeeMore,.profileCreateList{padding:9px 10px;font-size:12px}.profileCustomList{align-items:flex-start;flex-direction:column}.profileListActions{width:100%}.profileListActions button{flex:1}.profileCustomListDetail{padding:12px}.profileListPicker{align-items:stretch;flex-direction:column}.profileListPicker button{width:100%}.profileCustomListItems{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.profileCollectionPage{padding:18px 12px 90px;border-radius:0}.profileCollectionGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}}
 
 
 /* Cartões do Perfil: pôsteres proporcionais, títulos legíveis e trilhos por toque. */
-.profileCarousel{min-width:0;margin-right:0;padding:4px 2px 14px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch;touch-action:pan-x}
+.profileCarousel{min-width:0;margin-right:0;padding:4px 2px 14px;overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scroll-snap-type:x proximity;-webkit-overflow-scrolling:touch}
 .profileCarousel .card{flex:0 0 166px;width:166px;min-width:0;scroll-snap-align:start}
 .profileCarousel .poster{position:relative;width:100%;height:auto;aspect-ratio:2/3;background:#171b17}
 .profileCarousel .poster img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
@@ -1768,6 +1767,16 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   let user=loadState();
   const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
   const safeImageUrl=value=>{const raw=String(value||'');if(/^\/[a-z0-9/_-]+\.(png|jpe?g|webp)$/i.test(raw))return img(raw);try{const url=new URL(raw);return url.protocol==='https:'&&url.hostname==='image.tmdb.org'&&/^\/t\/p\//.test(url.pathname)?url.href:''}catch{return ''}};
+  function posterImageMarkup(path,title){
+    const safe=safeImageUrl(path);
+    if(!safe)return `<div class="artFallback">${escapeHtml(title)}</div>`;
+    let src=safe,srcset='';
+    try{
+      const url=new URL(safe),match=url.hostname==='image.tmdb.org'&&url.pathname.match(/^\/t\/p\/[^/]+(\/.*)$/);
+      if(match){const posterPath=match[1],sizes=['w185','w342','w500'];src=`https://image.tmdb.org/t/p/w342${posterPath}`;srcset=sizes.map(size=>`https://image.tmdb.org/t/p/${size}${posterPath} ${parseInt(size.slice(1),10)}w`).join(', ')}
+    }catch{}
+    return `<img src="${escapeHtml(src)}"${srcset?` srcset="${escapeHtml(srcset)}" sizes="(max-width: 650px) 32vw, 150px"`:''} width="342" height="513" loading="lazy" decoding="async" fetchpriority="low" alt="${escapeHtml(title)}">`;
+  }
   const safeBackdropUrl=value=>{const raw=String(value||'');const safe=safeImageUrl(raw);return safe?(raw.startsWith('/')?back(raw):safe):''};
   function mergePositionStates(localPositions,serverPositions){
     const local=localPositions&&typeof localPositions==='object'?localPositions:{};
@@ -1924,7 +1933,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   const isDetailRouteHash=value=>/^#(?:movie|tv)-\d+$/.test(value);
   const isReturnableRouteHash=value=>returnableRouteNames.has(String(value||'').replace(/^#/,''));
   const routeScrollPositions=new Map();
-  let currentRouteHash=routeHash(location.hash),previousRouteHash=null,detailReturnPoint=null,pendingRouteScrollRestore=null,detailBackInProgress=false;
+  let currentRouteHash=routeHash(location.hash),previousRouteHash=null,detailReturnPoint=null,pendingRouteScrollRestore=null,detailBackInProgress=false,activeShowLoad={route:'',promise:null};
   function rememberCurrentRoutePosition(){if(!isDetailRouteHash(currentRouteHash)&&isReturnableRouteHash(currentRouteHash))routeScrollPositions.set(currentRouteHash,window.scrollY||0)}
   window.addEventListener('scroll',rememberCurrentRoutePosition,{passive:true});
   document.addEventListener('click',rememberCurrentRoutePosition,true);
@@ -1942,11 +1951,13 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     currentRouteHash=next;
   }
   function restoreRouteScroll(snapshot){
-    const started=performance.now(),target=Math.max(0,Number(snapshot.scrollY)||0);
-    const apply=()=>{if(routeHash(location.hash)!==snapshot.route)return;window.scrollTo(0,target);if(Math.abs((window.scrollY||0)-target)>2&&performance.now()-started<1800)requestAnimationFrame(apply)};
-    requestAnimationFrame(()=>requestAnimationFrame(apply));
+    const target=Math.max(0,Number(snapshot.scrollY)||0),intentVersion=scrollIntentVersion;
+    requestAnimationFrame(()=>requestAnimationFrame(()=>{
+      if(routeHash(location.hash)!==snapshot.route||scrollIntentVersion!==intentVersion)return;
+      scrollToWithoutAnimation(target);
+    }));
   }
-  function showView(id){$$('.view').forEach(v=>v.classList.remove('active'));const v=$('#'+id);if(v)v.classList.add('active');$$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route===id));window.scrollTo(0,0);if(pendingRouteScrollRestore){const snapshot=pendingRouteScrollRestore;pendingRouteScrollRestore=null;restoreRouteScroll(snapshot)}}
+  function showView(id){$$('.view').forEach(v=>v.classList.remove('active'));const v=$('#'+id);if(v)v.classList.add('active');$$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route===id));scrollToWithoutAnimation(0);if(pendingRouteScrollRestore){const snapshot=pendingRouteScrollRestore;pendingRouteScrollRestore=null;restoreRouteScroll(snapshot)}}
   function returnFromDetail(){
     if(detailBackInProgress)return;
     if(detailReturnPoint&&isReturnableRouteHash(detailReturnPoint.route)){detailBackInProgress=true;history.back();return}
@@ -1996,7 +2007,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     }
     if(h==='login'||h==='callback'||h==='portal'){h='descobrir';history.replaceState(null,'','#descobrir');currentRouteHash='#descobrir';}
     if(h.startsWith('perfil-colecao-')){document.body.classList.remove('booting');showView('perfil-colecao');$$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route==='perfil'));renderProfileCollectionPage(h.slice('perfil-colecao-'.length));return}
-    if(h.startsWith('tv-')){document.body.classList.remove('booting');openShow(Number(h.slice(3)));return}
+    if(h.startsWith('tv-')){document.body.classList.remove('booting');const id=Number(h.slice(3)),showRoute=`#tv-${id}`,promise=openShow(id);activeShowLoad={route:showRoute,promise};const clear=()=>{if(activeShowLoad.promise===promise)activeShowLoad={route:'',promise:null}};promise.then(clear,clear);return}
     if(h.startsWith('movie-')){document.body.classList.remove('booting');openMovie(Number(h.slice(6)));return}
     if(valid.includes(h)){
       document.body.classList.remove('booting');
@@ -2106,7 +2117,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   function collectionMarkerState(id,type){const mediaId=Number(id),key=type==='tv'?'series':'movies';return{listed:(user.list||[]).some(item=>Number(item.id)===mediaId&&mediaTypeOf(item)===type),favorite:(user.favorites?.[key]||[]).some(item=>Number(item.id)===mediaId)}}
   function detailCollectionActionsMarkup(item,type){const state=collectionMarkerState(item.id,type);const safeId=escapeHtml(String(item.id));const listLabel=state.listed?'Remover da minha lista':'Adicionar à minha lista';const favoriteLabel=state.favorite?'Remover dos favoritos':'Adicionar aos favoritos';return `<div class="detailCollectionActions" data-media-id="${safeId}" data-media-type="${type}" aria-label="Ações do título"><button type="button" class="add ${state.listed?'on':''}" aria-label="${listLabel}" aria-pressed="${state.listed}" title="${listLabel}">${cardActionIcon(state.listed?'i-check':'i-plus')}</button><button type="button" class="favorite ${state.favorite?'on':''}" aria-label="${favoriteLabel}" aria-pressed="${state.favorite}" title="${favoriteLabel}">${cardActionIcon('i-heart')}</button></div>`}
   function bindDetailCollectionActions(root,item,type){const actions=$('.detailCollectionActions',root);if(!actions)return;const media={...item,media_type:type};$('.add',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleList(media)});$('.favorite',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFavorite(media)})}
-  function card(x,options={}){const type=mediaTypeOf(x);const id=x.id;const watched=user.list.some(i=>Number(i.id)===Number(id)&&mediaTypeOf(i)===type);const favKey=type==='tv'?'series':'movies';const favorite=(user.favorites?.[favKey]||[]).some(i=>Number(i.id)===Number(id));const withSeriesProgress=type==='tv'&&options.seriesProgress===true;const title=x.name||x.title||'Sem título';const poster=safeImageUrl(x.poster_path);const el=document.createElement('article');el.className='card';el.dataset.mediaType=type;el.dataset.mediaId=String(id);if(withSeriesProgress){el.classList.add('hasSeriesProgress');el.dataset.seriesTitle=String(title);const knownTotal=Number(x.number_of_episodes)||0;if(knownTotal)el.dataset.totalEpisodes=String(knownTotal)}el.setAttribute('role','button');el.setAttribute('tabindex','0');el.style.cursor='pointer';el.innerHTML=`<div class="poster">${poster?`<img src="${escapeHtml(poster)}" loading="lazy" alt="${escapeHtml(title)}">`:`<div class="artFallback">${escapeHtml(title)}</div>`}<span class="score">${Math.round((x.vote_average||0)*10)}%</span>${withSeriesProgress?'<span class="seriesWatchStatus" hidden>Assistindo</span><span class="seriesProgressTrack" role="progressbar" aria-label="Episódios assistidos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></span>':''}<button type="button" class="add ${watched?'on':''}" aria-label="${watched?'Remover da minha lista':'Adicionar à minha lista'}" aria-pressed="${watched}" title="${watched?'Remover da minha lista':'Adicionar à minha lista'}">${cardActionIcon(watched?'i-check':'i-plus')}</button><button type="button" class="favorite ${favorite?'on':''}" aria-label="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}" aria-pressed="${favorite}" title="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}">${cardActionIcon('i-heart')}</button></div><h3>${escapeHtml(title)}</h3><small>${escapeHtml((x.first_air_date||x.release_date||'').slice(0,4)||'—')} · ${type==='tv'?'Série':'Filme'}</small><div class="stars">★★★★★</div>`;el.addEventListener('click',e=>{if(e.target.closest('.add,.favorite'))return;type==='tv'?location.hash='tv-'+id:location.hash='movie-'+id});const cardImage=el.querySelector('.poster>img');cardImage?.addEventListener('error',()=>{cardImage.style.display='none';cardImage.parentElement?.classList.add('posterFallbackVisible')},{once:true});$('.add',el).addEventListener('click',e=>{e.stopPropagation();toggleList({...x,media_type:type})});$('.favorite',el).addEventListener('click',e=>{e.stopPropagation();toggleFavorite({...x,media_type:type})});if(withSeriesProgress)updateSeriesProgressCard(el);return el}
+  function card(x,options={}){const type=mediaTypeOf(x);const id=x.id;const watched=user.list.some(i=>Number(i.id)===Number(id)&&mediaTypeOf(i)===type);const favKey=type==='tv'?'series':'movies';const favorite=(user.favorites?.[favKey]||[]).some(i=>Number(i.id)===Number(id));const withSeriesProgress=type==='tv'&&options.seriesProgress===true;const title=x.name||x.title||'Sem título';const el=document.createElement('article');el.className='card';el.dataset.mediaType=type;el.dataset.mediaId=String(id);if(withSeriesProgress){el.classList.add('hasSeriesProgress');el.dataset.seriesTitle=String(title);const knownTotal=Number(x.number_of_episodes)||0;if(knownTotal)el.dataset.totalEpisodes=String(knownTotal)}el.setAttribute('role','button');el.setAttribute('tabindex','0');el.style.cursor='pointer';el.innerHTML=`<div class="poster">${posterImageMarkup(x.poster_path,title)}<span class="score">${Math.round((x.vote_average||0)*10)}%</span>${withSeriesProgress?'<span class="seriesWatchStatus" hidden>Assistindo</span><span class="seriesProgressTrack" role="progressbar" aria-label="Episódios assistidos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></span>':''}<button type="button" class="add ${watched?'on':''}" aria-label="${watched?'Remover da minha lista':'Adicionar à minha lista'}" aria-pressed="${watched}" title="${watched?'Remover da minha lista':'Adicionar à minha lista'}">${cardActionIcon(watched?'i-check':'i-plus')}</button><button type="button" class="favorite ${favorite?'on':''}" aria-label="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}" aria-pressed="${favorite}" title="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}">${cardActionIcon('i-heart')}</button></div><h3>${escapeHtml(title)}</h3><small>${escapeHtml((x.first_air_date||x.release_date||'').slice(0,4)||'—')} · ${type==='tv'?'Série':'Filme'}</small><div class="stars">★★★★★</div>`;el.addEventListener('click',e=>{if(e.target.closest('.add,.favorite'))return;type==='tv'?location.hash='tv-'+id:location.hash='movie-'+id});const cardImage=el.querySelector('.poster>img');cardImage?.addEventListener('error',()=>{cardImage.style.display='none';cardImage.parentElement?.classList.add('posterFallbackVisible')},{once:true});$('.add',el).addEventListener('click',e=>{e.stopPropagation();toggleList({...x,media_type:type})});$('.favorite',el).addEventListener('click',e=>{e.stopPropagation();toggleFavorite({...x,media_type:type})});if(withSeriesProgress)updateSeriesProgressCard(el);return el}
   function seriesEpisodeKeyForShow(key,showId){
     const parts=String(key).split('-');
     if(parts[0]==='tv'&&parts.length>=4&&Number(parts[1])===Number(showId))return `${Number(parts[2])}-${Number(parts[3])}`;
@@ -2229,8 +2240,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));
       topRatedSeriesPage=next;
       topRatedSeriesTotalPages=Number(d.total_pages||next);
-      const seen=new Set($$('#topRatedSeriesGrid .card').map(el=>el.dataset.mediaId));
-      items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});
+      appendCardsPreservingScroll(box,items);
       if(loadBox)loadBox.style.display=topRatedSeriesPage<topRatedSeriesTotalPages?'block':'none';
     }catch(e){
       if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries mais bem avaliadas agora.</div>';
@@ -2240,7 +2250,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(btn){btn.disabled=false;btn.textContent='Carregar mais';}
     }
   }
-  function renderTopRatedSeriesPage(){loadTopRatedSeries(true)}
+  function renderTopRatedSeriesPage(){if(topRatedSeriesPage>0||topRatedSeriesLoading)return;loadTopRatedSeries(true)}
   document.addEventListener('click',e=>{if(e.target&&e.target.id==='loadMoreTopRatedSeries')loadTopRatedSeries(false)});
   let nowPlayingMoviesPage=0;
   let nowPlayingMoviesLoading=false;
@@ -2261,8 +2271,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path).map(x=>({...x,media_type:'movie'}));
       nowPlayingMoviesPage=next;
       nowPlayingMoviesTotalPages=Number(d.total_pages||next);
-      const seen=new Set($$('#nowPlayingMoviesGrid .card').map(el=>el.dataset.mediaId));
-      items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});
+      appendCardsPreservingScroll(box,items);
       if(loadBox)loadBox.style.display=nowPlayingMoviesPage<nowPlayingMoviesTotalPages?'block':'none';
     }catch(e){
       if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes em cartaz agora.</div>';
@@ -2272,7 +2281,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(btn){btn.disabled=false;btn.textContent='Carregar mais';}
     }
   }
-  function renderNowPlayingMoviesPage(){loadNowPlayingMovies(true)}
+  function renderNowPlayingMoviesPage(){if(nowPlayingMoviesPage>0||nowPlayingMoviesLoading)return;loadNowPlayingMovies(true)}
   document.addEventListener('click',e=>{if(e.target&&e.target.id==='loadMoreNowPlayingMovies')loadNowPlayingMovies(false)});
 
 
@@ -2286,25 +2295,25 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     const box=$('#popularMoviesGrid'),loadBox=$('#popularMoviesLoad'),btn=$('#loadMorePopularMovies');if(!box||popularMoviesLoading)return;
     if(reset){popularMoviesPage=0;popularMoviesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
     if(popularMoviesPage>=popularMoviesTotalPages)return;popularMoviesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
-    try{const next=popularMoviesPage+1,d=await api('/api/movies/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'movie'}));popularMoviesPage=next;popularMoviesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#popularMoviesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=popularMoviesPage<popularMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+    try{const next=popularMoviesPage+1,d=await api('/api/movies/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'movie'}));popularMoviesPage=next;popularMoviesTotalPages=Number(d.total_pages||next);appendCardsPreservingScroll(box,items);if(loadBox)loadBox.style.display=popularMoviesPage<popularMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
   }
-  function renderPopularMoviesPage(){loadPopularMovies(true)}
+  function renderPopularMoviesPage(){if(popularMoviesPage>0||popularMoviesLoading)return;loadPopularMovies(true)}
   let popularSeriesPage=0,popularSeriesLoading=false,popularSeriesTotalPages=1;
   async function loadPopularSeries(reset=false){
     const box=$('#popularSeriesGrid'),loadBox=$('#popularSeriesLoad'),btn=$('#loadMorePopularSeries');if(!box||popularSeriesLoading)return;
     if(reset){popularSeriesPage=0;popularSeriesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
     if(popularSeriesPage>=popularSeriesTotalPages)return;popularSeriesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
-    try{const next=popularSeriesPage+1,d=await api('/api/series/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));popularSeriesPage=next;popularSeriesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#popularSeriesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=popularSeriesPage<popularSeriesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularSeriesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+    try{const next=popularSeriesPage+1,d=await api('/api/series/popular?page='+next);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));popularSeriesPage=next;popularSeriesTotalPages=Number(d.total_pages||next);appendCardsPreservingScroll(box,items);if(loadBox)loadBox.style.display=popularSeriesPage<popularSeriesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries populares agora.</div>';if(loadBox)loadBox.style.display='none';}finally{popularSeriesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
   }
-  function renderPopularSeriesPage(){loadPopularSeries(true)}
+  function renderPopularSeriesPage(){if(popularSeriesPage>0||popularSeriesLoading)return;loadPopularSeries(true)}
   let upcomingMoviesPage=0,upcomingMoviesLoading=false,upcomingMoviesTotalPages=1;
   async function loadUpcomingMovies(reset=false){
     const box=$('#upcomingMoviesGrid'),loadBox=$('#upcomingMoviesLoad'),btn=$('#loadMoreUpcomingMovies');if(!box||upcomingMoviesLoading)return;
     if(reset){upcomingMoviesPage=0;upcomingMoviesTotalPages=1;box.innerHTML='';if(loadBox)loadBox.style.display='none';}
     if(upcomingMoviesPage>=upcomingMoviesTotalPages)return;upcomingMoviesLoading=true;if(btn){btn.disabled=true;btn.textContent='Carregando...';}
-    try{const next=upcomingMoviesPage+1,d=await api('/api/movies/upcoming?page='+next);const today=new Date().toISOString().slice(0,10);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path&&String(x.release_date||'')>=today).map(x=>({...x,media_type:'movie'}));upcomingMoviesPage=next;upcomingMoviesTotalPages=Number(d.total_pages||next);const seen=new Set($$('#upcomingMoviesGrid .card').map(el=>el.dataset.mediaId));items.forEach(x=>{if(!seen.has(String(x.id))){box.appendChild(card(x));seen.add(String(x.id));}});if(loadBox)loadBox.style.display=upcomingMoviesPage<upcomingMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os próximos lançamentos agora.</div>';if(loadBox)loadBox.style.display='none';}finally{upcomingMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
+    try{const next=upcomingMoviesPage+1,d=await api('/api/movies/upcoming?page='+next);const today=new Date().toISOString().slice(0,10);const items=(d.results||[]).filter(x=>x?.id&&x.poster_path&&String(x.release_date||'')>=today).map(x=>({...x,media_type:'movie'}));upcomingMoviesPage=next;upcomingMoviesTotalPages=Number(d.total_pages||next);appendCardsPreservingScroll(box,items);if(loadBox)loadBox.style.display=upcomingMoviesPage<upcomingMoviesTotalPages?'block':'none';}catch{if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os próximos lançamentos agora.</div>';if(loadBox)loadBox.style.display='none';}finally{upcomingMoviesLoading=false;if(btn){btn.disabled=false;btn.textContent='Carregar mais';}}
   }
-  function renderUpcomingMoviesPage(){loadUpcomingMovies(true)}
+  function renderUpcomingMoviesPage(){if(upcomingMoviesPage>0||upcomingMoviesLoading)return;loadUpcomingMovies(true)}
   document.addEventListener('click',e=>{if(e.target?.id==='loadMorePopularMovies')loadPopularMovies(false);if(e.target?.id==='loadMorePopularSeries')loadPopularSeries(false);if(e.target?.id==='loadMoreUpcomingMovies')loadUpcomingMovies(false)});
 
   function renderSeriesNovasPage(){
@@ -2340,6 +2349,23 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   function homeFallback(){const series=[['Reacher','2022'],['O Mentalista','2008'],['Lioness','2023'],['Silo','2023'],['Ted Lasso','2020'],['Lanternas','2026'],['Os Simpsons','1989'],['O Novato','2018']].map((x,i)=>({id:900000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8.0-(i%4)*.2,media_type:'tv'}));const movies=[['Homem-Aranha: Um Novo Dia','2026'],['A Odisseia','2026'],['Código: Vingança','2026'],['La Captura','2026'],['O Último Nascer do Sol','2026'],['Tóxico','2026'],['Obsessão','2026'],['Toy Story 5','2026']].map((x,i)=>({id:910000+i,title:x[0],release_date:x[1]+'-01-01',vote_average:7.8-(i%5)*.2,media_type:'movie'}));const trendingSeries=series.slice(0,4);const recommended=series.slice(4,8);fill('#topMatches',recommended);fill('#trending',[...trendingSeries,...movies.slice(0,4)]);fill('#newSeries',series.slice(0,6));fill('#newMovies',movies.slice(0,6));fill('#homeSeries',series);fill('#homeMovies',movies);['#providerNetflix','#providerPrime','#providerDisney','#providerMax','#providerParamount'].forEach((sel,i)=>fill(sel,series.slice(i, i+6)));renderSearchHome();renderProgressiveGrid('seriesGrid',series,item=>card(item,{seriesProgress:true}));renderProgressiveGrid('moviesGrid',movies);renderList();renderProfile();renderEpisódiosFeed();renderContinue();renderPrincipaisPage();}
   const progressiveGridStates=new Map();
   const progressiveGridBatchSize=18;
+  let scrollIntentVersion=0;
+  ['wheel','touchstart','pointerdown','keydown'].forEach(type=>window.addEventListener(type,()=>{scrollIntentVersion++},{capture:true,passive:true}));
+  function scrollToWithoutAnimation(top){const root=document.documentElement,previous=root.style.scrollBehavior;root.style.scrollBehavior='auto';window.scrollTo(0,Math.max(0,Number(top)||0));root.style.scrollBehavior=previous}
+  function appendDomPreservingScroll(container,nodes){
+    if(!container||!nodes?.childNodes?.length)return;
+    const route=routeHash(location.hash),top=window.scrollY||0,intentVersion=scrollIntentVersion,focused=document.activeElement;
+    container.appendChild(nodes);
+    if(focused?.isConnected&&focused.matches('.loadMoreBtn')){try{focused.focus({preventScroll:true})}catch{focused.focus()}}
+    requestAnimationFrame(()=>{if(routeHash(location.hash)!==route||scrollIntentVersion!==intentVersion)return;if(Math.abs((window.scrollY||0)-top)>1)scrollToWithoutAnimation(top)});
+  }
+  function appendCardsPreservingScroll(container,items){
+    if(!container)return 0;
+    const seen=new Set($$('.card',container).map(element=>`${element.dataset.mediaType}:${element.dataset.mediaId}`)),fragment=document.createDocumentFragment();let added=0;
+    (Array.isArray(items)?items:[]).forEach(item=>{if(!item||item.id==null)return;const key=`${mediaTypeOf(item)}:${String(item.id)}`;if(seen.has(key))return;seen.add(key);fragment.appendChild(card(item));added++});
+    if(added)appendDomPreservingScroll(container,fragment);
+    return added;
+  }
   function ensureProgressiveLoadControl(box){
     const id=`${box.id}Load`;
     let wrap=$('#'+id);
@@ -2350,15 +2376,24 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     const box=typeof id==='string'?$('#'+id):id;if(!box)return;
     const unique=[],seen=new Set();
     (Array.isArray(items)?items:[]).filter(item=>item&&item.id!=null).forEach(item=>{const key=`${mediaTypeOf(item)}:${String(item.id)}`;if(seen.has(key))return;seen.add(key);unique.push(item)});
+    const keys=unique.map(item=>`${mediaTypeOf(item)}:${String(item.id)}`),previous=progressiveGridStates.get(box.id);
+    const renderedKeys=Array.from(box.children).filter(element=>element.matches('.card[data-media-id]')).map(element=>`${element.dataset.mediaType}:${element.dataset.mediaId}`);
+    const renderedStateMatches=previous&&renderedKeys.length===previous.shown&&renderedKeys.every((key,index)=>key===previous.keys[index]);
+    if(previous&&previous.container===box&&renderedStateMatches&&previous.keys.length<=keys.length&&previous.keys.every((key,index)=>key===keys[index])){
+      previous.items=unique;previous.keys=keys;previous.renderItem=renderItem;
+      const wrap=ensureProgressiveLoadControl(box);wrap.hidden=previous.shown>=unique.length;
+      if(previous.shown===0&&unique.length)appendProgressiveGridBatch(box.id);
+      return;
+    }
     box.replaceChildren();
-    progressiveGridStates.set(box.id,{items:unique,shown:0,renderItem});
+    progressiveGridStates.set(box.id,{container:box,items:unique,keys,shown:0,renderItem});
     appendProgressiveGridBatch(box.id);
   }
   function appendProgressiveGridBatch(id){
     const box=$('#'+id),state=progressiveGridStates.get(id);if(!box||!state)return;
     const next=state.items.slice(state.shown,state.shown+progressiveGridBatchSize),fragment=document.createDocumentFragment();
     next.forEach(item=>{const element=state.renderItem(item);if(element)fragment.appendChild(element)});
-    box.appendChild(fragment);state.shown+=next.length;
+    appendDomPreservingScroll(box,fragment);state.shown+=next.length;
     const wrap=ensureProgressiveLoadControl(box);wrap.hidden=state.shown>=state.items.length;
   }
   document.addEventListener('click',e=>{const button=e.target.closest('[data-load-more-grid]');if(button)appendProgressiveGridBatch(button.dataset.loadMoreGrid)});
@@ -2459,6 +2494,24 @@ let profileOpenListId=null;
     const catalog=Object.values(state.home||{}).flatMap(category=>Array.isArray(category?.results)?category.results:[]);
     return catalog.find(item=>String(item?.id)===String(id)&&mediaTypeOf(item)===type)||{};
   }
+  function updateRenderedProfileMetadata(type,id,metadata){
+    const safePoster=safeImageUrl(metadata?.poster_path),mediaId=String(id);
+    $$('.profileProgressCard').filter(cardEl=>cardEl.dataset.mediaType===type&&cardEl.dataset.mediaId===mediaId).forEach(cardEl=>{
+      const poster=$('.poster',cardEl),fallback=$('.profilePosterFallback',poster),title=$('h3',cardEl)?.textContent||'Pôster';
+      if(safePoster){
+        let image=$('img',poster);
+        if(!image){image=document.createElement('img');poster.insertBefore(image,fallback||poster.firstChild)}
+        const template=document.createElement('template');template.innerHTML=posterImageMarkup(metadata.poster_path,title);
+        const responsiveImage=template.content.querySelector('img');
+        if(responsiveImage){image.src=responsiveImage.getAttribute('src')||safePoster;image.srcset=responsiveImage.getAttribute('srcset')||'';image.sizes=responsiveImage.getAttribute('sizes')||'';image.width=342;image.height=513;image.loading='lazy';image.decoding='async';image.fetchPriority='low'}
+        image.alt=title;image.style.display='';image.onerror=()=>{image.style.display='none';fallback?.classList.add('is-visible')};
+        fallback?.classList.remove('is-visible');
+      }
+      if(Number(metadata?.runtime)>0)cardEl.dataset.runtime=String(Number(metadata.runtime));
+      if(Number(metadata?.number_of_episodes)>0)cardEl.dataset.totalEpisodes=String(Number(metadata.number_of_episodes));
+      updateProfileProgressCard(cardEl,{...metadata,id:Number(id),media_type:type});
+    });
+  }
   function requestProfileMetadata(item,type){
     if(!user.sessionToken||!item?.id)return;
     const key=`${type}:${item.id}`;
@@ -2467,7 +2520,7 @@ let profileOpenListId=null;
     api(type==='tv'?`/api/tv/${encodeURIComponent(item.id)}`:`/api/movie/${encodeURIComponent(item.id)}`).then(metadata=>{
       if(!metadata||typeof metadata!=='object')return;
       profileMetadataCache.set(key,metadata);
-      if(location.hash==='#perfil'||location.hash.startsWith('#perfil-colecao-'))renderProfile();
+      updateRenderedProfileMetadata(type,item.id,metadata);
     }).catch(()=>{});
   }
   function profileCard(item,options={}){
@@ -2810,11 +2863,28 @@ let profileOpenListId=null;
     const isModern=parts[0]==='tv'&&parts.length>=4,isLegacy=parts.length===3&&parts.every(part=>/^\d+$/.test(part));
     if(!isModern&&!isLegacy)return;
     const tvId=Number(isModern?parts[1]:parts[0]),season=Number(isModern?parts[2]:parts[1]),episode=Number(isModern?parts[3]:parts[2]);
-    location.hash=`tv-${tvId}`;
-    setTimeout(async()=>{
+    if(!Number.isInteger(tvId)||tvId<=0||!Number.isInteger(season)||season<0||!Number.isInteger(episode)||episode<=0)return;
+    const showRoute=`#tv-${tvId}`;
+    if(location.hash!==showRoute)location.hash=showRoute;
+    (async()=>{
+      const ready=await waitForShowDetails(tvId,showRoute);
+      if(!ready)return;
       await loadTemporada(season);
+      await new Promise(resolve=>requestAnimationFrame(resolve));
+      if(location.hash!==showRoute)return;
       document.querySelector(`[data-episode-open="${episode}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});
-    },200);
+    })().catch(()=>{});
+  }
+  async function waitForShowDetails(tvId,showRoute,timeoutMs=15000){
+    const deadline=performance.now()+timeoutMs;
+    while(performance.now()<deadline){
+      if(location.hash!==showRoute)return false;
+      const pending=activeShowLoad;
+      if(pending.route===showRoute&&pending.promise){await pending.promise;return location.hash===showRoute&&Number(state.current?.id)===tvId&&$('#detalhe')?.classList.contains('active')&&!$('#detalhe')?.hasAttribute('aria-busy')}
+      if(Number(state.current?.id)===tvId&&$('#detalhe')?.classList.contains('active')&&!$('#detalhe')?.hasAttribute('aria-busy'))return true;
+      await new Promise(resolve=>requestAnimationFrame(resolve));
+    }
+    return false;
   }
   function continueProgressMarkup(seconds,runtime,kind){
     const duration=Number(runtime)*60,position=Math.max(0,Number(seconds)||0);
@@ -3361,7 +3431,7 @@ let profileOpenListId=null;
   }
   let timer,searchRequestId=0,searchResultsState=null;
 function updateSearchLoadControl(){const wrap=$('#searchResultsLoad'),button=$('#loadMoreSearch'),state=searchResultsState;if(!wrap||!button)return;wrap.hidden=!state||(state.shown>=state.items.length&&state.page>=state.totalPages);button.disabled=!!state?.loading;button.textContent=state?.loading?'Carregando...':'Carregar mais'}
-function appendSearchResultsBatch(){const state=searchResultsState,box=$('#searchGrid');if(!state||!box)return;const next=state.items.slice(state.shown,state.shown+progressiveGridBatchSize);next.forEach(item=>box.appendChild(card(item)));state.shown+=next.length;updateSearchLoadControl()}
+function appendSearchResultsBatch(){const state=searchResultsState,box=$('#searchGrid');if(!state||!box)return;const next=state.items.slice(state.shown,state.shown+progressiveGridBatchSize),fragment=document.createDocumentFragment();next.forEach(item=>fragment.appendChild(card(item)));appendDomPreservingScroll(box,fragment);state.shown+=next.length;updateSearchLoadControl()}
 async function loadMoreSearchResults(){const state=searchResultsState;if(!state||state.loading)return;if(state.shown<state.items.length){appendSearchResultsBatch();return}if(state.page>=state.totalPages){updateSearchLoadControl();return}state.loading=true;updateSearchLoadControl();const requestId=state.requestId;try{const nextPage=state.page+1,d=await api('/api/search?q='+encodeURIComponent(state.query)+'&page='+nextPage);if(!searchResultsState||searchResultsState.requestId!==requestId)return;state.page=nextPage;state.totalPages=Math.max(nextPage,Number(d.total_pages)||nextPage);(d.results||[]).filter(x=>x&&(x.media_type==='tv'||x.media_type==='movie')&&x.id!=null).forEach(item=>{const key=`${item.media_type}:${item.id}`;if(state.seen.has(key))return;state.seen.add(key);state.items.push(item)});appendSearchResultsBatch()}catch{if(searchResultsState?.requestId===requestId)toast('Não foi possível carregar mais resultados agora. Tente novamente.')}finally{if(searchResultsState?.requestId===requestId){state.loading=false;updateSearchLoadControl()}}}
 $('#loadMoreSearch').addEventListener('click',loadMoreSearchResults);
 function showSearchFeedback(message,{loading=false,error=false,retryQuery=''}={}){
