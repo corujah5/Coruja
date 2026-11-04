@@ -2446,8 +2446,8 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     });
     $$('.detailCollectionActions[data-media-id]').forEach(el=>{const type=el.dataset.mediaType,id=Number(el.dataset.mediaId),state=collectionMarkerState(id,type),add=$('.add',el),fav=$('.favorite',el);if(add){const label=state.listed?'Remover da minha lista':'Adicionar à minha lista';add.classList.toggle('on',state.listed);add.innerHTML=cardActionIcon(state.listed?'i-check':'i-plus');add.title=label;add.setAttribute('aria-label',label);add.setAttribute('aria-pressed',String(state.listed));}if(fav){const label=state.favorite?'Remover dos favoritos':'Adicionar aos favoritos';fav.classList.toggle('on',state.favorite);fav.innerHTML=cardActionIcon('i-heart');fav.title=label;fav.setAttribute('aria-label',label);fav.setAttribute('aria-pressed',String(state.favorite));}});
   }
-  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date});}save();refreshPersonalMarkers();renderList();renderProfile()}
-  function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average});}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
+  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,addedAt:new Date().toISOString()});}save();refreshPersonalMarkers();renderList();renderProfile()}
+  function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average,addedAt:new Date().toISOString()});}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
   function renderList(){
     const b=$('#listGrid');if(!b)return;b.innerHTML='';
     const items=Array.isArray(user.list)?user.list:[];
@@ -2612,6 +2612,7 @@ let profileOpenListId=null;
   }
   function profileLibraryFor(type){return profileItemsFrom(type,(user.list||[]).filter(item=>mediaTypeOf(item)===type))}
   function profileFavoritesFor(type){return profileItemsFrom(type,type==='tv'?(user.favorites?.series||[]):(user.favorites?.movies||[]))}
+  function profileItemsByNewestAddition(items){return items.map((item,index)=>{const value=item?.addedAt,time=typeof value==='number'?value:Date.parse(value||'');return{item,index,time:Number.isFinite(time)?time:null}}).sort((a,b)=>{if(a.time===null)return b.time===null?a.index-b.index:1;if(b.time===null)return-1;return b.time-a.time||a.index-b.index}).map(entry=>entry.item)}
   function profileCombinedFor(type){return profileItemsFrom(type,(user.list||[]).filter(item=>mediaTypeOf(item)===type).concat(type==='tv'?(user.favorites?.series||[]):(user.favorites?.movies||[])))}
   function formatProfileDuration(minutes){const n=Math.floor(Number(minutes)||0);if(n<=0)return '—';const hours=Math.floor(n/60),rest=n%60;return hours?`${hours}h ${rest} min`:`${rest} min`}
   function renderProfileCollectionPage(kind){
@@ -2678,10 +2679,10 @@ let profileOpenListId=null;
   function renderProfile(){
     const c=$('#profileContent');if(!c)return;c.innerHTML='';
     const sections=[
-      {title:'Séries',kind:'series',items:profileLibraryFor('tv'),icon:'i-tv',empty:'As séries adicionadas à sua Minha Lista aparecerão aqui.'},
-      {title:'Séries favoritas',kind:'series-favoritas',items:profileFavoritesFor('tv'),icon:'i-heart',empty:'Você ainda não favoritou séries.'},
-      {title:'Filmes',kind:'filmes',items:profileLibraryFor('movie'),icon:'i-film',empty:'Os filmes adicionados à sua Minha Lista aparecerão aqui.'},
-      {title:'Filmes favoritos',kind:'filmes-favoritos',items:profileFavoritesFor('movie'),icon:'i-heart',empty:'Você ainda não favoritou filmes.'}
+      {title:'Séries',kind:'series',items:profileItemsByNewestAddition(profileLibraryFor('tv')),icon:'i-tv',empty:'As séries adicionadas à sua Minha Lista aparecerão aqui.'},
+      {title:'Séries favoritas',kind:'series-favoritas',items:profileItemsByNewestAddition(profileFavoritesFor('tv')),icon:'i-heart',empty:'Você ainda não favoritou séries.'},
+      {title:'Filmes',kind:'filmes',items:profileItemsByNewestAddition(profileLibraryFor('movie')),icon:'i-film',empty:'Os filmes adicionados à sua Minha Lista aparecerão aqui.'},
+      {title:'Filmes favoritos',kind:'filmes-favoritos',items:profileItemsByNewestAddition(profileFavoritesFor('movie')),icon:'i-heart',empty:'Você ainda não favoritou filmes.'}
     ];
     sections.forEach(section=>{
       const block=document.createElement('section');block.className='profileSection profileCollection';
