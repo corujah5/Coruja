@@ -943,6 +943,38 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   line-height: 1.25;
   min-height: 2.5em;
 }
+/* Galeria de Filmes: abas espelhadas no acompanhamento de Séries. */
+#filmes.moviesGalleryScreen{box-sizing:border-box;min-width:0;padding:calc(var(--header-height) + 34px) clamp(14px,3vw,34px) 28px}
+#filmes .moviesGalleryTabs{display:grid;grid-template-columns:1fr 1fr;max-width:1040px;margin:0 auto 10px;border-bottom:1px solid #303a31}
+#filmes .moviesGalleryTab{position:relative;min-width:0;min-height:46px;padding:10px 12px;border:0;background:transparent;color:#9da79b;font-size:13px;font-weight:800;letter-spacing:.045em;text-transform:uppercase}
+#filmes .moviesGalleryTab::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;border-radius:3px 3px 0 0;background:transparent;content:""}
+#filmes .moviesGalleryTab.active{color:#c8f875}
+#filmes .moviesGalleryTab.active::after{background:#b8f34a}
+#filmes .moviesGalleryTab:focus-visible,#filmes .moviesGalleryBrowse:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#filmes .moviesPosterGrid{grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:4px;padding:0;align-items:start}
+#filmes .moviesPosterCard{width:100%;min-width:0;cursor:pointer}
+#filmes .moviesPosterCard .poster{width:100%;height:auto;aspect-ratio:2/3;border-radius:2px;background:#171d18}
+#filmes .moviesPosterCard .poster img{display:block;width:100%;height:100%;object-fit:cover}
+#filmes .moviesPosterCard .score,#filmes .moviesPosterCard h3,#filmes .moviesPosterCard small,#filmes .moviesPosterCard .stars{display:none!important}
+#filmes .moviesPosterGrid>.moviesGalleryEmpty{grid-column:1/-1;margin:14px 0;padding:16px;border:1px dashed #39453a;border-radius:10px;background:#141a15;color:#aeb9a9;text-align:center}
+#filmes .moviesUpcomingLoad{display:flex;flex-direction:column;align-items:center;gap:8px;margin:22px auto 0;text-align:center}
+#filmes .moviesUpcomingLoad[hidden]{display:none}
+#filmes .moviesUpcomingLoad button{min-height:44px;padding:10px 18px;border:1px solid #485842;border-radius:999px;background:#171e18;color:#c8f875;font-size:12px;font-weight:850;letter-spacing:.035em}
+#filmes .moviesUpcomingLoad button:hover:not(:disabled){border-color:#b8f34a;background:#20291f;color:#e4ffb6}
+#filmes .moviesUpcomingLoad button:disabled{cursor:wait;opacity:.7}
+#filmes .moviesUpcomingEnd{margin:0;color:#8f998d;font-size:12px;line-height:1.4}
+#filmes .moviesGalleryBrowse{display:flex;align-items:center;justify-content:center;width:min(320px,100%);min-height:46px;margin:26px auto 12px;padding:11px 18px;border:1px solid #485842;border-radius:999px;background:#171e18;color:#c8f875;font-size:13px;font-weight:850;letter-spacing:.035em}
+#filmes .moviesGalleryBrowse:hover{border-color:#b8f34a;background:#20291f;color:#e4ffb6}
+@media(max-width:650px){
+  #filmes.moviesGalleryScreen{padding:calc(var(--header-height) + 12px + env(safe-area-inset-top)) 14px calc(30px + env(safe-area-inset-bottom))}
+  #filmes .moviesGalleryTabs{margin-bottom:8px}
+  #filmes .moviesGalleryTab{min-height:43px;padding:8px;font-size:11px}
+  #filmes .moviesPosterGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;padding:0}
+  #filmes .moviesPosterCard .poster{border-radius:2px}
+  #filmes .moviesGalleryBrowse{margin:24px auto 10px}
+}
+@media(prefers-reduced-motion:reduce){#filmes .moviesGalleryTab::after{transition:none}}
+
 @media (max-width: 650px) {
   #series .grid,
   #filmes .grid {
@@ -1979,7 +2011,18 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 <section id="series-novas" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries novas</h2></div><div id="seriesNovasGrid" class="grid"></div></section>
 <section id="filmes-novos" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes novos</h2></div><div id="filmesNovosGrid" class="grid"></div></section>
 <section id="series" class="view"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries</h2></div><div id="seriesGrid" class="grid"></div></section>
-<section id="filmes" class="view"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes</h2></div><div id="moviesGrid" class="grid"></div></section>
+<section id="filmes" class="view moviesGalleryScreen">
+  <div class="moviesGalleryTabs" role="tablist" aria-label="Categorias de filmes">
+    <button type="button" class="moviesGalleryTab" id="moviesListTab" role="tab" aria-selected="true" aria-controls="moviesGrid" data-movies-tab="list">MINHA LISTA</button>
+    <button type="button" class="moviesGalleryTab" id="moviesUpcomingTab" role="tab" aria-selected="false" aria-controls="moviesGrid" data-movies-tab="upcoming">EM BREVE</button>
+  </div>
+  <div id="moviesGrid" class="grid moviesPosterGrid" role="tabpanel" aria-labelledby="moviesListTab"></div>
+  <div id="moviesUpcomingLoad" class="moviesUpcomingLoad" hidden>
+    <button type="button" id="loadMoreMoviesUpcoming">CARREGAR MAIS FILMES</button>
+    <p id="moviesUpcomingEnd" class="moviesUpcomingEnd" role="status" hidden>Não há mais filmes disponíveis no catálogo.</p>
+  </div>
+  <button type="button" class="moviesGalleryBrowse" id="moviesBrowse">NAVEGAR POR FILMES</button>
+</section>
 <section id="movieDetail" class="view"><div id="movieDetailContent"></div></section>
 <section id="busca" class="view searchView">
   <div class="sectionHead"><h2>Pesquisar</h2></div>
@@ -2405,6 +2448,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       }
       document.body.classList.remove('favoritesOnly');
       showView(h);
+      if(h==='filmes')renderMoviesPage();
       if(h==='perfil'){
         // Perfil normal: Minha Lista e Favoritos, sem misturar as coleções.
         renderProfile();
@@ -2425,6 +2469,11 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     if(categoryRoutes.has(nextRoute))catalogReturnRoute=location.hash.replace(/^#/,'')||'descobrir';
     location.hash=b.hasAttribute('data-catalog-back')?catalogReturnRoute:nextRoute;
   }));
+  document.addEventListener('click',e=>{
+    const tab=e.target?.closest?.('[data-movies-tab]');
+    if(tab){moviesGalleryTab=tab.dataset.moviesTab==='upcoming'?'upcoming':'list';renderMoviesPage();return}
+    if(e.target?.closest?.('#moviesBrowse')){catalogReturnRoute='filmes';location.hash='filmes-populares'}
+  });
   $('#bottomSearch').addEventListener('click',()=>{
     location.hash='busca';
     route();
@@ -2662,6 +2711,125 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     fill('#homePopularSeries',(d.tv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,6));
     fill('#homeUpcomingMovies',(d.upcomingMovies?.results||[]).map(x=>({...x,media_type:'movie'})).slice(0,6));
   }
+  let moviesGalleryTab='list',moviesGalleryRenderId=0;
+  let moviesGalleryUpcomingSource=null,moviesGalleryUpcomingItems=[],moviesGalleryUpcomingSeen=new Set(),moviesGalleryUpcomingPage=0,moviesGalleryUpcomingTotalPages=1,moviesGalleryUpcomingLoading=false,moviesGalleryUpcomingError='';
+  const moviesGalleryPosterRequests=new Map();
+  function moviesGalleryCatalogPoster(id){
+    const pools=[state.home?.movies?.results,state.home?.popularMovies?.results,state.home?.upcomingMovies?.results,state.home?.newMovies?.results];
+    for(const pool of pools){const match=(Array.isArray(pool)?pool:[]).find(movie=>String(movie?.id)===String(id)&&safeImageUrl(movie?.poster_path));if(match)return match.poster_path}
+    return '';
+  }
+  function moviesGalleryCard(item){
+    const title=item.title||item.name||'Filme',el=card(item);
+    el.classList.add('moviesPosterCard');el.setAttribute('aria-label',`${title}: abrir detalhes`);
+    el.querySelectorAll('.add,.favorite').forEach(button=>button.remove());
+    el.querySelector('h3')?.remove();el.querySelector('small')?.remove();el.querySelector('.stars')?.remove();el.querySelector('.score')?.remove();
+    const initialFallback=el.querySelector('.poster>.artFallback');
+    if(initialFallback){initialFallback.textContent='Pôster indisponível';initialFallback.setAttribute('role','img');initialFallback.setAttribute('aria-label',`Pôster indisponível: ${title}`)}
+    const image=el.querySelector('.poster>img');
+    image?.addEventListener('error',async()=>{
+      if(!item.moviesGalleryPosterRetried){
+        const details=await loadMoviesGalleryDetails(item.id);
+        const alternatives=[details?.poster_path,details?.backdrop_path].filter(path=>safeImageUrl(path)&&path!==item.poster_path);
+        if(alternatives.length&&el.isConnected){el.replaceWith(moviesGalleryCard({...item,poster_path:alternatives[0],moviesGalleryPosterRetried:true}));return}
+      }
+      const poster=el.querySelector('.poster');if(!poster||poster.querySelector('.artFallback'))return;
+      const fallback=document.createElement('div');fallback.className='artFallback';fallback.setAttribute('role','img');fallback.setAttribute('aria-label',`Pôster indisponível: ${title}`);fallback.textContent='Pôster indisponível';poster.appendChild(fallback);
+    },{once:true});
+    return el;
+  }
+  function loadMoviesGalleryDetails(id){
+    const key=String(id);let request=moviesGalleryPosterRequests.get(key);
+    if(!request){request=api('/api/movie/'+encodeURIComponent(key));moviesGalleryPosterRequests.set(key,request);request.catch(()=>moviesGalleryPosterRequests.delete(key))}
+    return request;
+  }
+  async function hydrateMoviesGalleryPosters(items,renderId){
+    let cursor=0;const box=$('#moviesGrid');
+    const worker=async()=>{while(cursor<items.length){const item=items[cursor++];let recoveredPath=moviesGalleryCatalogPoster(item.id);
+      if(!recoveredPath){
+        try{
+          const details=await loadMoviesGalleryDetails(item.id);recoveredPath=safeImageUrl(details?.poster_path)?details.poster_path:(safeImageUrl(details?.backdrop_path)?details.backdrop_path:'');
+        }catch{}
+      }
+      if(!recoveredPath||renderId!==moviesGalleryRenderId||location.hash!=='#filmes'||!box)continue;
+      const current=[...box.querySelectorAll('.moviesPosterCard')].find(cardEl=>String(cardEl.dataset.mediaId)===String(item.id));if(!current)continue;
+      current.replaceWith(moviesGalleryCard({...item,poster_path:recoveredPath,media_type:'movie'}));
+    }};
+    await Promise.all(Array.from({length:Math.min(4,items.length)},worker));
+  }
+  function localDateKey(){const date=new Date();return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
+  function normalizeUpcomingMovie(item,todayKey=localDateKey()){
+    const releaseDate=String(item?.release_date||'');
+    return item?.id&&/^\d{4}-\d{2}-\d{2}$/.test(releaseDate)&&releaseDate>=todayKey?{...item,media_type:'movie'}:null;
+  }
+  function resetMoviesGalleryUpcoming(source){
+    moviesGalleryUpcomingSource=source;moviesGalleryUpcomingItems=[];moviesGalleryUpcomingSeen=new Set();moviesGalleryUpcomingError='';
+    moviesGalleryUpcomingPage=Number(source?.page)||1;moviesGalleryUpcomingTotalPages=Math.max(moviesGalleryUpcomingPage,Number(source?.total_pages)||1);
+    (Array.isArray(source?.results)?source.results:[]).forEach(item=>{const normalized=normalizeUpcomingMovie(item);if(!normalized)return;const key=String(normalized.id);if(moviesGalleryUpcomingSeen.has(key))return;moviesGalleryUpcomingSeen.add(key);moviesGalleryUpcomingItems.push(normalized)});
+    moviesGalleryUpcomingItems.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
+  }
+  function appendMoviesGalleryUpcoming(items,renderId){
+    const box=$('#moviesGrid');if(!box||!items.length)return;
+    box.querySelector('.moviesGalleryEmpty')?.remove();
+    const fragment=document.createDocumentFragment(),missingPosters=[];
+    items.forEach(item=>{const catalogPoster=moviesGalleryCatalogPoster(item.id),posterPath=safeImageUrl(item.poster_path)?item.poster_path:catalogPoster,galleryItem={...item,poster_path:posterPath||item.poster_path,media_type:'movie'};fragment.appendChild(moviesGalleryCard(galleryItem));if(!posterPath)missingPosters.push(item)});
+    appendDomPreservingScroll(box,fragment);if(missingPosters.length)hydrateMoviesGalleryPosters(missingPosters,renderId);
+  }
+  function updateMoviesGalleryUpcomingControls(hasItems){
+    const controls=$('#moviesUpcomingLoad'),button=$('#loadMoreMoviesUpcoming'),end=$('#moviesUpcomingEnd');if(!controls||!button||!end)return;
+    const hasMore=moviesGalleryUpcomingPage<moviesGalleryUpcomingTotalPages;
+    controls.hidden=moviesGalleryTab!=='upcoming'||(!hasMore&&!hasItems&&!moviesGalleryUpcomingError);
+    button.hidden=!hasMore;button.disabled=moviesGalleryUpcomingLoading;button.textContent=moviesGalleryUpcomingLoading?'CARREGANDO...':'CARREGAR MAIS FILMES';
+    end.hidden=moviesGalleryTab!=='upcoming'||moviesGalleryUpcomingLoading||(!moviesGalleryUpcomingError&&(hasMore||!hasItems));
+    end.textContent=moviesGalleryUpcomingError||'Não há mais filmes disponíveis no catálogo.';
+  }
+  async function loadMoreMoviesGalleryUpcoming(){
+    if(moviesGalleryUpcomingLoading||moviesGalleryUpcomingPage>=moviesGalleryUpcomingTotalPages)return;
+    moviesGalleryUpcomingLoading=true;moviesGalleryUpcomingError='';updateMoviesGalleryUpcomingControls(moviesGalleryUpcomingItems.length>0);
+    const renderId=moviesGalleryRenderId;
+    try{
+      const nextPage=moviesGalleryUpcomingPage+1,data=await api('/api/movies/upcoming?page='+nextPage);
+      if(location.hash!=='#filmes'||moviesGalleryTab!=='upcoming')return;
+      moviesGalleryUpcomingPage=nextPage;moviesGalleryUpcomingTotalPages=Math.max(nextPage,Number(data?.total_pages)||nextPage);
+      const additions=[],todayKey=localDateKey();
+      (Array.isArray(data?.results)?data.results:[]).forEach(item=>{const normalized=normalizeUpcomingMovie(item,todayKey);if(!normalized)return;const key=String(normalized.id);if(moviesGalleryUpcomingSeen.has(key))return;moviesGalleryUpcomingSeen.add(key);additions.push(normalized)});
+      additions.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
+      moviesGalleryUpcomingItems.push(...additions);appendMoviesGalleryUpcoming(additions,renderId);
+    }catch{moviesGalleryUpcomingError='Não foi possível carregar mais filmes agora. Tente novamente.'}
+    finally{moviesGalleryUpcomingLoading=false;updateMoviesGalleryUpcomingControls(moviesGalleryUpcomingItems.length>0)}
+  }
+  function renderMoviesPage(){
+    const box=$('#moviesGrid');if(!box)return;
+    const renderId=++moviesGalleryRenderId;
+    const listTab=$('#moviesListTab'),upcomingTab=$('#moviesUpcomingTab');
+    const upcoming=moviesGalleryTab==='upcoming';
+    listTab?.classList.toggle('active',!upcoming);
+    upcomingTab?.classList.toggle('active',upcoming);
+    listTab?.setAttribute('aria-selected',String(!upcoming));
+    upcomingTab?.setAttribute('aria-selected',String(upcoming));
+    box.setAttribute('aria-labelledby',upcoming?'moviesUpcomingTab':'moviesListTab');
+    const upcomingSource=state.home?.upcomingMovies||null;
+    if(upcomingSource!==moviesGalleryUpcomingSource)resetMoviesGalleryUpcoming(upcomingSource);
+    const source=upcoming?moviesGalleryUpcomingItems:(Array.isArray(user.list)?user.list:[]).filter(x=>x?.id&&mediaTypeOf(x)==='movie').map(x=>({...x,media_type:'movie'}));
+    const seen=new Set(),items=source.filter(x=>{const id=String(x.id);if(seen.has(id))return false;seen.add(id);return true});
+    if(upcoming)items.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
+    box.replaceChildren();
+    if(!items.length){
+      const empty=document.createElement('div');empty.className='moviesGalleryEmpty';empty.setAttribute('role','status');
+      empty.textContent=upcoming?(moviesGalleryUpcomingPage<moviesGalleryUpcomingTotalPages?'Não há lançamentos nesta página. Carregue mais para consultar o catálogo.':'Não há filmes com data de lançamento futura disponíveis no momento.'):'Sua lista de filmes está vazia. Adicione filmes usando o botão + nos pôsteres.';
+      box.appendChild(empty);
+    }
+    const missingPosters=[];
+    items.forEach(item=>{
+      const catalogPoster=moviesGalleryCatalogPoster(item.id),posterPath=safeImageUrl(item.poster_path)?item.poster_path:catalogPoster;
+      const galleryItem={...item,poster_path:posterPath||item.poster_path,media_type:'movie'};
+      box.appendChild(moviesGalleryCard(galleryItem));
+      if(!posterPath)missingPosters.push(item);
+    });
+    if(missingPosters.length)hydrateMoviesGalleryPosters(missingPosters,renderId);
+    updateMoviesGalleryUpcomingControls(items.length>0);
+  }
+  $('#loadMoreMoviesUpcoming')?.addEventListener('click',loadMoreMoviesGalleryUpcoming);
   let popularMoviesPage=0,popularMoviesLoading=false,popularMoviesTotalPages=1;
   async function loadPopularMovies(reset=false){
     const box=$('#popularMoviesGrid'),loadBox=$('#popularMoviesLoad'),btn=$('#loadMorePopularMovies');if(!box||popularMoviesLoading)return;
@@ -2718,7 +2886,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     }
     renderProgressiveGrid('principaisGrid',items);
   }
-  function homeFallback(){const series=[['Reacher','2022'],['O Mentalista','2008'],['Lioness','2023'],['Silo','2023'],['Ted Lasso','2020'],['Lanternas','2026'],['Os Simpsons','1989'],['O Novato','2018']].map((x,i)=>({id:900000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8.0-(i%4)*.2,media_type:'tv'}));const movies=[['Homem-Aranha: Um Novo Dia','2026'],['A Odisseia','2026'],['Código: Vingança','2026'],['La Captura','2026'],['O Último Nascer do Sol','2026'],['Tóxico','2026'],['Obsessão','2026'],['Toy Story 5','2026']].map((x,i)=>({id:910000+i,title:x[0],release_date:x[1]+'-01-01',vote_average:7.8-(i%5)*.2,media_type:'movie'}));const trendingSeries=series.slice(0,4);const recommended=series.slice(4,8);fill('#topMatches',recommended);fill('#trending',[...trendingSeries,...movies.slice(0,4)]);fill('#newSeries',series.slice(0,6));fill('#newMovies',movies.slice(0,6));fill('#homeSeries',series);fill('#homeMovies',movies);['#providerNetflix','#providerPrime','#providerDisney','#providerMax','#providerParamount'].forEach((sel,i)=>fill(sel,series.slice(i, i+6)));renderSearchHome();renderProgressiveGrid('seriesGrid',series,item=>card(item,{seriesProgress:true}));renderProgressiveGrid('moviesGrid',movies);renderList();renderProfile();renderEpisódiosFeed();renderContinue();renderPrincipaisPage();}
+  function homeFallback(){const series=[['Reacher','2022'],['O Mentalista','2008'],['Lioness','2023'],['Silo','2023'],['Ted Lasso','2020'],['Lanternas','2026'],['Os Simpsons','1989'],['O Novato','2018']].map((x,i)=>({id:900000+i,name:x[0],first_air_date:x[1]+'-01-01',vote_average:8.0-(i%4)*.2,media_type:'tv'}));const movies=[['Homem-Aranha: Um Novo Dia','2026'],['A Odisseia','2026'],['Código: Vingança','2026'],['La Captura','2026'],['O Último Nascer do Sol','2026'],['Tóxico','2026'],['Obsessão','2026'],['Toy Story 5','2026']].map((x,i)=>({id:910000+i,title:x[0],release_date:x[1]+'-01-01',vote_average:7.8-(i%5)*.2,media_type:'movie'}));const trendingSeries=series.slice(0,4);const recommended=series.slice(4,8);fill('#topMatches',recommended);fill('#trending',[...trendingSeries,...movies.slice(0,4)]);fill('#newSeries',series.slice(0,6));fill('#newMovies',movies.slice(0,6));fill('#homeSeries',series);fill('#homeMovies',movies);['#providerNetflix','#providerPrime','#providerDisney','#providerMax','#providerParamount'].forEach((sel,i)=>fill(sel,series.slice(i, i+6)));renderSearchHome();renderProgressiveGrid('seriesGrid',series,item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue();renderPrincipaisPage();}
   const progressiveGridStates=new Map();
   const progressiveGridBatchSize=18;
   let scrollIntentVersion=0;
@@ -3973,7 +4141,7 @@ function doSearch(q){
     fill('#homeTopRatedSeries',(d.topRatedTv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,12));
     fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
   }
-  async function home(){if(!user.sessionToken)return;try{const d=await api('/api/home');state.home=d;renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderProgressiveGrid('moviesGrid',(d.movies?.results||[]).concat(d.popularMovies?.results||[]).map(x=>({...x,media_type:'movie'})));renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
+  async function home(){if(!user.sessionToken)return;try{const d=await api('/api/home');state.home=d;renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
   async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();const localPositions=user.positions||{};user={...(d.state||{}),profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:d.user?.id||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};user.positions=mergePositionStates(localPositions,user.positions);save();updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
   async function bootstrapAuth(){
     // Decide a tela antes de carregar o catálogo para nunca mostrar a página
