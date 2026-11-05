@@ -1663,6 +1663,206 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   }
 }
 
+/* Refinamento visual da página de detalhes de filmes. */
+.movieDetailPage {
+  max-width: 1050px;
+  margin: auto;
+}
+.movieDetailPage .movieDetailHero {
+  min-height: 300px;
+  border-radius: 16px;
+}
+.movieDetailPage .movieDetailHero > img {
+  height: 300px;
+  object-position: center 35%;
+}
+.movieDetailPage .movieDetailOverlay {
+  padding: 26px 72px 24px 28px;
+  background: linear-gradient(180deg, rgba(5,8,6,.06) 10%, rgba(5,8,6,.58) 58%, rgba(5,8,6,.97));
+}
+.movieDetailPage .movieDetailInfo {
+  width: min(100%, 860px);
+  max-width: 860px;
+}
+.movieDetailPage .movieDetailInfo h1 {
+  margin: 0 0 8px;
+  font-size: clamp(30px, 4vw, 42px);
+  line-height: 1.08;
+  overflow-wrap: anywhere;
+}
+.movieDetailPage .movieDetailInfo .detailMeta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 4px 8px;
+  margin: 0;
+  color: #dce5d8;
+  font-size: 13px;
+  line-height: 1.4;
+}
+.movieDetailPage .movieDetailInfo .detailMeta > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+.movieDetailPage .movieDetailInfo .detailMeta .dot {
+  color: #b8f34a;
+}
+.movieDetailPage .movieBack {
+  top: 16px;
+  left: 16px;
+  width: 44px;
+  height: 44px;
+}
+.movieDetailPage .detailCollectionActions {
+  top: 16px;
+  right: 16px;
+  gap: 8px;
+}
+.movieDetailPage .detailCollectionActions .add,
+.movieDetailPage .detailCollectionActions .favorite {
+  flex: 0 0 40px;
+  width: 40px;
+  height: 40px;
+  min-width: 40px;
+}
+.movieDetailPage .movieDetailBody {
+  padding: 14px 0 16px;
+}
+.movieDetailPage .movieDetailBody h2 {
+  margin: 0 0 8px;
+  font-size: 19px;
+  line-height: 1.2;
+}
+.movieDetailPage .movieOverview {
+  margin: 0 0 8px;
+  color: #d0d6ce;
+  font-size: 16px;
+  line-height: 1.5;
+  overflow-wrap: anywhere;
+}
+.movieDetailPage .castSection {
+  margin-top: 14px;
+}
+.movieDetailPage .castSection h3 {
+  margin: 0 0 9px;
+}
+.movieDetailPage .castCards {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 1px 7px;
+  margin-inline: -1px;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+.movieDetailPage .castCards::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+.movieDetailPage .castCard {
+  flex: 0 0 118px;
+  min-width: 0;
+  width: 118px;
+}
+.movieDetailPage .castPortrait {
+  aspect-ratio: 3 / 4;
+}
+.movieDetailPage .movieDetailActions {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-items: stretch;
+  gap: 10px;
+  margin-top: 18px;
+}
+.movieDetailPage .movieDetailActions > .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 0;
+  min-height: 52px;
+  padding: 10px 12px;
+  text-align: center;
+  line-height: 1.25;
+  white-space: normal;
+}
+.movieDetailPage .movieDetailActions > .finishMovieBtn {
+  border: 1px solid #b8f34a;
+  background: #b8f34a;
+  color: #11170d;
+}
+.movieDetailPage .movieDetailActions > .moviePositionButton {
+  border: 1px solid #b8f34a;
+  background: #1c241a;
+  color: #b8f34a;
+}
+.movieDetailPage .movieDetailActions > .moviePositionButton:hover {
+  background: #283424;
+}
+@media (max-width: 650px) {
+  .movieDetailPage .movieDetailHero {
+    min-height: 244px;
+    border-radius: 0;
+  }
+  .movieDetailPage .movieDetailHero > img {
+    height: 244px;
+  }
+  .movieDetailPage .movieDetailOverlay {
+    padding: 18px 16px;
+  }
+  .movieDetailPage .movieDetailInfo {
+    width: 100%;
+    max-width: 100%;
+  }
+  .movieDetailPage .movieDetailInfo h1 {
+    margin-bottom: 6px;
+    font-size: clamp(26px, 7.2vw, 32px);
+  }
+  .movieDetailPage .movieDetailInfo .detailMeta {
+    gap: 3px 6px;
+    font-size: 12px;
+    line-height: 1.4;
+  }
+  .movieDetailPage .movieBack {
+    top: 12px;
+    left: 12px;
+  }
+  .movieDetailPage .detailCollectionActions {
+    top: 12px;
+    right: 12px;
+    gap: 6px;
+  }
+  .movieDetailPage .movieDetailBody {
+    padding: 12px 10px 14px;
+  }
+  .movieDetailPage .movieDetailBody h2 {
+    margin-bottom: 8px;
+    font-size: 19px;
+  }
+  .movieDetailPage .movieOverview {
+    font-size: 16px;
+    line-height: 1.5;
+  }
+  .movieDetailPage .castSection {
+    margin-top: 14px;
+  }
+  .movieDetailPage .castCards {
+    gap: 10px;
+  }
+  .movieDetailPage .castCard {
+    flex-basis: 108px;
+    width: 108px;
+  }
+  .movieDetailPage .movieDetailActions {
+    gap: 8px;
+    margin-top: 16px;
+  }
+}
+
 </style><link rel="stylesheet" href="/admin-mobile.css">
 </head>
 <body class="booting">
