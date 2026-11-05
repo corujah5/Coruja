@@ -1602,6 +1602,67 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 .castCardCharacter{display:block;padding:0 8px 9px;color:#9ca69a;font-size:11px;line-height:1.3;overflow-wrap:anywhere}
 .castEmpty{margin:0;color:#929b90;font-size:13px}
 @media(max-width:420px){.castCards{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}.castCardName{padding:7px 6px 2px;font-size:11px}.castCardCharacter{padding:0 6px 8px;font-size:10px}}
+
+/* Aba Sobre: carrossel compacto de elenco e espaçamento mais próximo. */
+#detalhe #detailAbout.detailSection {
+  padding-top: 14px;
+  padding-bottom: 16px;
+}
+#detalhe #detailAbout > h3 {
+  margin: 0 0 8px;
+}
+#detalhe #detailAbout > p {
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+#detalhe #detailAbout > .chips {
+  gap: 7px;
+  margin-top: 6px;
+  margin-bottom: 0;
+}
+#detalhe #detailAbout .castSection {
+  margin-top: 14px;
+}
+#detalhe #detailAbout .castSection h3 {
+  margin: 0 0 9px;
+}
+#detalhe #detailAbout .castCards {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: flex-start;
+  gap: 10px;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding: 2px 1px 7px;
+  margin-inline: -1px;
+  overscroll-behavior-x: contain;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
+}
+#detalhe #detailAbout .castCards::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+}
+#detalhe #detailAbout .castCard {
+  flex: 0 0 118px;
+  width: 118px;
+}
+#detalhe #detailAbout .castPortrait {
+  aspect-ratio: 3 / 4;
+}
+@media (max-width: 650px) {
+  #detalhe #detailAbout.detailSection {
+    padding-top: 12px;
+    padding-bottom: 14px;
+    padding-inline: 10px;
+  }
+  #detalhe #detailAbout .castCard {
+    flex-basis: 108px;
+    width: 108px;
+  }
+}
+
 </style><link rel="stylesheet" href="/admin-mobile.css">
 </head>
 <body class="booting">
