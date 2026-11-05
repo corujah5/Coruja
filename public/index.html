@@ -3372,7 +3372,6 @@ let profileOpenListId=null;
         await syncStateNow();
         renderProfile();
         renderMovieCompletion(movieId,title,runtime);
-        toast('Filme desmarcado como assistido.');
         return;
       }
       user.watchedMovies[String(movieId)]=new Date().toISOString();
@@ -3386,7 +3385,6 @@ let profileOpenListId=null;
       renderMovieCompletion(movieId,title,runtime);
       await renderContinue('#continueGrid');
       await renderEpisódiosFeed();
-      toast('Filme marcado como assistido.');
     };
   }
 
