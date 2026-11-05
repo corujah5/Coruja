@@ -2344,7 +2344,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   async function api(u){if(!user.sessionToken)throw Error('Entre na sua conta para continuar.');const r=await fetch(u,{credentials:'same-origin'});const d=await r.json();if(r.status===401){user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',comments:[],sessionToken:''};save();state.home=null;location.hash='';route()}if(!r.ok)throw Error(d.error||'Erro');return d}
   const routeNames=['descobrir','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','perfil-colecao-series','perfil-colecao-series-favoritas','perfil-colecao-filmes','perfil-colecao-filmes-favoritos','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin','admin-mobile','admin-classic'];
   const returnableRouteNames=new Set(routeNames.filter(name=>name!=='admin'&&name!=='admin-mobile'&&name!=='admin-classic'));
-  const routeHash=value=>{const name=String(value||'').replace(/^#/,'');return '#'+(name||'descobrir')};
+  const routeHash=value=>{const name=String(value||'').replace(/^#/,'');return '#'+(name||'episodios')};
   const isDetailRouteHash=value=>/^#(?:movie|tv)-\d+$/.test(value);
   const isReturnableRouteHash=value=>returnableRouteNames.has(String(value||'').replace(/^#/,''));
   const routeScrollPositions=new Map();
@@ -2395,7 +2395,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     trackDetailRouteTransition();
     const valid=routeNames;
     let h=location.hash.replace(/^#/,'');
-    if(h!=='admin-classic'){window.CorujaClassicAdminAuth.clear();setClassicAdminAccess(false)}
+    if(h!=='admin-classic'){window.CorujaClassicAdminAuth?.clear?.();setClassicAdminAccess(false)}
     // O painel pode ser aberto sem revelar dados; operações exigem sessão de administrador.
     // A autorização é validada no servidor em cada chamada.
     if(h==='admin'){
@@ -2418,9 +2418,9 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       return;
     }
     if(!h){
-      h='descobrir';
+      h='episodios';
     }
-    if(h==='login'||h==='callback'||h==='portal'){h='descobrir';history.replaceState(null,'','#descobrir');currentRouteHash='#descobrir';}
+    if(h==='login'||h==='callback'||h==='portal'){h='episodios';history.replaceState(null,'','#episodios');currentRouteHash='#episodios';}
     if(h.startsWith('perfil-colecao-')){document.body.classList.remove('booting');showView('perfil-colecao');$$('.bottom button').forEach(b=>b.classList.toggle('active',b.dataset.route==='perfil'));renderProfileCollectionPage(h.slice('perfil-colecao-'.length));return}
     if(h.startsWith('tv-')){document.body.classList.remove('booting');const id=Number(h.slice(3)),showRoute=`#tv-${id}`,promise=openShow(id);activeShowLoad={route:showRoute,promise};const clear=()=>{if(activeShowLoad.promise===promise)activeShowLoad={route:'',promise:null}};promise.then(clear,clear);return}
     if(h.startsWith('movie-')){document.body.classList.remove('booting');openMovie(Number(h.slice(6)));return}
@@ -2457,7 +2457,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(h==='series-avaliadas')setTimeout(renderTopRatedSeriesPage,0);if(h==='filmes-cartaz')setTimeout(renderNowPlayingMoviesPage,0);if(h==='filmes-populares')setTimeout(renderPopularMoviesPage,0);if(h==='series-populares')setTimeout(renderPopularSeriesPage,0);if(h==='filmes-breve')setTimeout(renderUpcomingMoviesPage,0);if(h==='series-novas')setTimeout(renderSeriesNovasPage,0);if(h==='filmes-novos')setTimeout(renderFilmesNovosPage,0);if(h==='principais')setTimeout(renderPrincipaisPage,0);if(h==='em-alta')setTimeout(renderEmAltaPage,0);
       return;
     }
-    location.hash='descobrir';
+    location.hash='episodios';
   }
   window.addEventListener('hashchange',route);
   $('#principaisBack').addEventListener('click',returnToSearchFromPrincipais);
@@ -2497,7 +2497,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     save();
     updateLoginButton();$('#profileEditModal')?.classList.remove('show');$('#peopleModal')?.classList.remove('show');$('#logoutModal')?.classList.remove('show');state.home=null;location.replace('/')}
   function closeAuthModal(){if(!user.sessionToken){openAuth('login',true);return}const modal=$('#authModal');modal.classList.remove('show','authGate','registerMode');document.body.classList.remove('authGateActive')}$('#authClose').onclick=closeAuthModal;
-  $('#authForm').onsubmit=async e=>{e.preventDefault();const identifier=$('#authIdentifier').value.trim();const password=$('#authPassword').value;$('#authError').textContent='';try{if(!identifier)throw Error('Digite seu usuário.');if(!password)throw Error('Digite sua senha.');const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({identifier,password}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível entrar.');const guestState=!user.sessionToken?JSON.parse(JSON.stringify(user)):null;const accountId=d.user?.id||'';const pendingState=readPendingAccountMerge(accountId);let mergedState=d.state||{};if(pendingState)mergedState=mergeAccountAndGuestState(mergedState,pendingState);if(guestState)mergedState=mergeAccountAndGuestState(mergedState,guestState);user={...mergedState,profile:d.user?.name||'Coruja',username:d.user?.username||'',avatar:d.user?.avatar||'',userId:accountId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};const loginSyncResult=await syncMergedAccountState(accountId);$('#authModal').classList.remove('show','authGate','registerMode');document.body.classList.remove('authGateActive');updateLoginButton();await home();renderProfile();renderList();renderContinue();location.hash='descobrir';toast(loginSyncResult?.synced?'Conta carregada!':loginSyncResult?.pendingSaved?'Conta carregada, mas a sincronização falhou. Os dados mesclados foram mantidos neste dispositivo.':'Conta carregada, mas a sincronização falhou. Mantenha esta sessão aberta e tente novamente.')}catch(err){$('#authError').textContent=err.message}};  function updateLoginButton(){const b=$('#loginBtn');if(!b)return;b.textContent=user.sessionToken?'Sair':'Entrar'}
+  $('#authForm').onsubmit=async e=>{e.preventDefault();const identifier=$('#authIdentifier').value.trim();const password=$('#authPassword').value;$('#authError').textContent='';try{if(!identifier)throw Error('Digite seu usuário.');if(!password)throw Error('Digite sua senha.');const r=await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({identifier,password}),credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error(d.error||'Não foi possível entrar.');const guestState=!user.sessionToken?JSON.parse(JSON.stringify(user)):null;const accountId=d.user?.id||'';const pendingState=readPendingAccountMerge(accountId);let mergedState=d.state||{};if(pendingState)mergedState=mergeAccountAndGuestState(mergedState,pendingState);if(guestState)mergedState=mergeAccountAndGuestState(mergedState,guestState);user={...mergedState,profile:d.user?.name||'Coruja',username:d.user?.username||'',avatar:d.user?.avatar||'',userId:accountId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};const loginSyncResult=await syncMergedAccountState(accountId);$('#authModal').classList.remove('show','authGate','registerMode');document.body.classList.remove('authGateActive');updateLoginButton();await home();renderProfile();renderList();renderContinue();history.replaceState(null,'','#episodios');route();toast(loginSyncResult?.synced?'Conta carregada!':loginSyncResult?.pendingSaved?'Conta carregada, mas a sincronização falhou. Os dados mesclados foram mantidos neste dispositivo.':'Conta carregada, mas a sincronização falhou. Mantenha esta sessão aberta e tente novamente.')}catch(err){$('#authError').textContent=err.message}};  function updateLoginButton(){const b=$('#loginBtn');if(!b)return;b.textContent=user.sessionToken?'Sair':'Entrar'}
   $('#editProfile')?.addEventListener('click',()=>{if(!user.sessionToken){openAuth('login');return}$('#profileEditName').value=user.profile||'Coruja';$('#profileEditError').textContent='';$('#profileEditModal').classList.add('show')});
   const logoutModal=$('#logoutModal');
   function openLogoutModal(){logoutModal?.classList.add('show');document.body.classList.add('authGateActive');setTimeout(()=>$('#logoutConfirm')?.focus(),30)}
@@ -4169,6 +4169,11 @@ function doSearch(q){
     }
     authReady=true;
     updateLoginButton();
+    const initialRoute=location.hash.replace(/^#/,'');
+    if(!initialRoute||initialRoute==='descobrir'||initialRoute==='login'||initialRoute==='callback'||initialRoute==='portal'){
+      history.replaceState(null,'','#episodios');
+      currentRouteHash='#episodios';
+    }
     route();
     const currentHash=location.hash.replace(/^#/,'');
     if(currentHash==='admin' || !user.sessionToken) return;
