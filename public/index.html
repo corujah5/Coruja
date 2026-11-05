@@ -1863,6 +1863,74 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   }
 }
 
+/* Séries: lista de episódios acompanhados e próximas estreias. */
+#episodios.seriesTrackerScreen{box-sizing:border-box;min-width:0;padding:calc(var(--header-height) + 34px) clamp(14px,3vw,34px) 28px}
+#episodios .seriesTrackerHeader{max-width:1040px;margin:0 auto 10px}
+#episodios .seriesTrackerHeader h1{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+#episodios .seriesTrackerTabs{display:grid;grid-template-columns:1fr 1fr;border-bottom:1px solid #303a31}
+#episodios .seriesTrackerTabs button{position:relative;min-width:0;min-height:46px;padding:10px 12px;border:0;background:transparent;color:#9da79b;font-size:13px;font-weight:800;letter-spacing:.045em;text-transform:uppercase}
+#episodios .seriesTrackerTabs button::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;border-radius:3px 3px 0 0;background:transparent;content:""}
+#episodios .seriesTrackerTabs button.active{color:#c8f875}
+#episodios .seriesTrackerTabs button.active::after{background:#b8f34a}
+#episodios .seriesTrackerTabs button:focus-visible{outline:2px solid #b8f34a;outline-offset:-3px;border-radius:7px}
+#episodeFeed.seriesTrackerContent{display:grid;width:100%;max-width:1040px;min-width:0;gap:9px;margin:0 auto}
+#episodeFeed .seriesTrackerGroup{min-width:0}
+#episodeFeed .seriesTrackerGroup>h2{display:flex;align-items:center;justify-content:center;gap:6px;width:max-content;max-width:100%;margin:0 auto 4px;padding:5px 12px;border:1px solid #29332a;border-radius:999px;background:#171d18;color:#aeb8aa;font-size:11px;font-weight:800;letter-spacing:.055em;line-height:1.2;text-align:center;text-transform:uppercase}
+#episodeFeed .seriesTrackerGroup>h2::before{display:none}
+#episodeFeed .seriesTrackerGroup>h2>span{color:#798576;font-size:10px;font-variant-numeric:tabular-nums;letter-spacing:0}
+#episodeFeed .seriesTrackerGroup:has(.seriesTrackerEmpty){margin-bottom:-5px}
+#episodeFeed .seriesTrackerGroup:has(.seriesTrackerEmpty)>h2{margin-bottom:0}
+#episodeFeed .seriesTrackerList{min-width:0}
+#episodeFeed .seriesTrackerItem{display:grid;grid-template-columns:clamp(88px,12vw,124px) minmax(0,1fr) 42px;align-items:center;gap:12px;min-width:0;margin-bottom:4px;padding:6px;border:1px solid #293229;border-radius:8px;background:#131814}
+#episodeFeed .seriesTrackerThumb{display:block;width:100%;aspect-ratio:1.2;overflow:hidden;border:1px solid #333e34;border-radius:6px;background:#171d18;object-fit:cover}
+#episodeFeed .seriesTrackerInfo{display:grid;justify-items:start;gap:5px;min-width:0}
+#episodeFeed .seriesTrackerShow{display:inline-flex;align-items:center;gap:5px;max-width:100%;min-height:25px;padding:3px 9px;overflow:hidden;border:1px solid #465144;border-radius:999px;background:#171d18;color:#c6d0c2;font-size:10px;font-weight:800;letter-spacing:.035em;text-overflow:ellipsis;white-space:nowrap}
+#episodeFeed .seriesTrackerShow::after{flex:0 0 auto;color:#b8f34a;content:"›";font-size:15px;line-height:1}
+#episodeFeed .seriesTrackerShow:hover{border-color:#b8f34a;color:#eff8e8}
+#episodeFeed .seriesTrackerShow:focus-visible{outline:2px solid #b8f34a;outline-offset:2px}
+#episodeFeed .seriesTrackerMeta{display:flex;align-items:center;flex-wrap:wrap;gap:6px;min-width:0;color:#f0f3ed;font-size:14px;line-height:1.3}
+#episodeFeed .seriesTrackerMeta strong{font-weight:850;font-variant-numeric:tabular-nums;white-space:nowrap}
+#episodeFeed .seriesTrackerExtraEpisodes{color:#899587;font-size:10px;font-weight:700;white-space:nowrap}
+#episodeFeed .seriesTrackerDate{color:#aeb9a9;font-size:11px;font-weight:650}
+#episodeFeed .seriesTrackerTitle{max-width:100%;overflow:hidden;color:#abb5a8;font-size:13px;line-height:1.35;text-overflow:ellipsis;white-space:nowrap}
+#episodeFeed .seriesTrackerCheck{display:grid;place-items:center;width:40px;height:40px;padding:0;border:1px solid #526149;border-radius:50%;background:#171d18;color:#c0cbb9;font-size:19px;font-weight:800;line-height:1;transition:background .16s ease,border-color .16s ease,color .16s ease,transform .16s ease}
+#episodeFeed .seriesTrackerCheck:hover{border-color:#b8f34a;color:#dfffac;transform:scale(1.04)}
+#episodeFeed .seriesTrackerCheck.isDone{border-color:#b8f34a;background:#b8f34a;color:#12170d}
+#episodeFeed .seriesTrackerCheck:focus-visible{outline:3px solid #fff;outline-offset:2px}
+#episodeFeed .seriesTrackerEmpty{margin:0;padding:6px 0;color:#849082;font-size:13px;line-height:1.4}
+#episodeFeed .seriesTrackerEmptyUpcoming{margin:0;padding:8px 0;color:#849082;font-size:13px;line-height:1.45}
+#episodios .seriesTrackerLoading{max-width:1040px;margin:0 auto;padding:20px 0;color:#9ca797;font-size:13px}
+#episodios .seriesTrackerBrowse{display:flex;align-items:center;justify-content:center;width:min(360px,100%);min-height:48px;margin:16px auto 10px;padding:12px 18px;border:1px solid #485842;border-radius:999px;background:#171e18;color:#c8f875;font-size:13px;font-weight:850;letter-spacing:.04em}
+#episodios .seriesTrackerBrowse:hover{border-color:#b8f34a;background:#20291f;color:#e4ffb6}
+#episodios .seriesTrackerBrowse:focus-visible{outline:3px solid #fff;outline-offset:3px}
+#episodios .seriesTrackerBrowse[hidden]{display:none}
+@media(max-width:650px){
+  #episodios.seriesTrackerScreen{padding:calc(var(--header-height) + 12px + env(safe-area-inset-top)) 14px calc(30px + env(safe-area-inset-bottom))}
+  #episodios .seriesTrackerHeader{margin-bottom:8px}
+  #episodios .seriesTrackerTabs button{min-height:43px;padding:8px;font-size:11px}
+  #episodeFeed.seriesTrackerContent{gap:7px}
+  #episodeFeed .seriesTrackerGroup>h2{margin-bottom:3px;padding:4px 10px;font-size:10px}
+  #episodeFeed .seriesTrackerGroup:has(.seriesTrackerEmpty){margin-bottom:-4px}
+  #episodeFeed .seriesTrackerEmpty{padding:5px 0;font-size:12px}
+  #episodeFeed .seriesTrackerEmptyUpcoming{padding:7px 0;font-size:12px}
+  #episodeFeed .seriesTrackerItem{grid-template-columns:clamp(82px,27vw,110px) minmax(0,1fr) 36px;gap:9px;padding:5px}
+  #episodeFeed .seriesTrackerThumb{border-radius:7px}
+  #episodeFeed .seriesTrackerInfo{gap:3px}
+  #episodeFeed .seriesTrackerShow{min-height:23px;padding:2px 7px;font-size:9px}
+  #episodeFeed .seriesTrackerMeta{gap:4px;font-size:12px}
+  #episodeFeed .seriesTrackerExtraEpisodes{font-size:9px}
+  #episodeFeed .seriesTrackerDate{font-size:10px}
+  #episodeFeed .seriesTrackerTitle{font-size:12px}
+  #episodeFeed .seriesTrackerCheck{width:33px;height:33px;font-size:17px}
+  #episodios .seriesTrackerBrowse{min-height:44px;margin:13px auto 8px;font-size:12px}
+}
+@media(max-width:360px){
+  #episodios.seriesTrackerScreen{padding-right:11px;padding-left:11px}
+  #episodeFeed .seriesTrackerItem{grid-template-columns:76px minmax(0,1fr) 32px;gap:7px}
+  #episodeFeed .seriesTrackerShow{max-width:100%;font-size:8px}
+  #episodeFeed .seriesTrackerCheck{width:30px;height:30px}
+}
+@media(prefers-reduced-motion:reduce){#episodeFeed .seriesTrackerCheck{transition:none}}
 </style><link rel="stylesheet" href="/admin-mobile.css">
 </head>
 <body class="booting">
@@ -1932,7 +2000,17 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 <section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2></div><p class="providerPageDesc">As séries mais populares no TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="minha-lista" class="view"><div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-bookmark"></use></svg>Minha lista</h2></div><div id="listGrid" class="grid"></div></section>
-<section id="episodios" class="view"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-play-circle"></use></svg>Continue assistindo</h2><button data-route="descobrir">Voltar ao início ›</button></div><p style="color:#777;margin-top:-8px">Seus episódios em andamento, com o ponto exato onde você parou.</p><div id="episodeFeed"></div></section>
+<section id="episodios" class="view seriesTrackerScreen">
+  <header class="seriesTrackerHeader">
+    <h1><svg class="uiIcon" aria-hidden="true"><use href="#i-tv"></use></svg>Séries</h1>
+    <div class="seriesTrackerTabs" role="tablist" aria-label="Acompanhamento de séries">
+      <button id="seriesTrackerListTab" class="active" type="button" role="tab" aria-selected="true" aria-controls="episodeFeed">Minha lista</button>
+      <button id="seriesTrackerUpcomingTab" type="button" role="tab" aria-selected="false" aria-controls="episodeFeed">Em breve</button>
+    </div>
+  </header>
+  <div id="episodeFeed" class="seriesTrackerContent" role="tabpanel" aria-live="polite"></div>
+  <button id="seriesTrackerBrowse" class="seriesTrackerBrowse" type="button" data-route="series">Navegar por séries</button>
+</section>
 
 <section id="perfil" class="view"><div class="profileDashboard"><div class="profileDashboardHead"><h1>Perfil</h1><button class="profileLogout" id="profileLogout">Sair da conta</button></div><div id="profileContent"></div></div></section>
 <section id="perfil-colecao" class="view catalogView"><div class="profileCollectionPage"><div class="catalogHead"><button data-route="perfil">‹ Voltar</button><h2 id="profileCollectionTitle">Itens</h2></div><div id="profileCollectionGrid" class="profileCollectionGrid"></div></div></section>
@@ -2021,7 +2099,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 
 
 
-<nav class="bottom" aria-label="Navegação principal"><button type="button" data-route="episodios"><svg class="uiIcon"><use href="#i-play-circle"></use></svg><span>Episódios</span></button><button type="button" data-route="descobrir" class="active"><svg class="uiIcon"><use href="#i-compass"></use></svg><span>Descobrir</span></button><button type="button" id="bottomSearch" data-route="busca"><svg class="uiIcon"><use href="#i-search"></use></svg><span>Pesquisar</span></button><button type="button" data-route="perfil"><svg class="uiIcon"><use href="#i-user"></use></svg><span>Perfil</span></button></nav>
+<nav class="bottom" aria-label="Navegação principal"><button type="button" data-route="episodios"><svg class="uiIcon"><use href="#i-tv"></use></svg><span>Séries</span></button><button type="button" data-route="descobrir" class="active"><svg class="uiIcon"><use href="#i-compass"></use></svg><span>Descobrir</span></button><button type="button" id="bottomSearch" data-route="busca"><svg class="uiIcon"><use href="#i-search"></use></svg><span>Pesquisar</span></button><button type="button" data-route="perfil"><svg class="uiIcon"><use href="#i-user"></use></svg><span>Perfil</span></button></nav>
 
 
 <div class="authModal" id="authModal"><div class="authCard"><button class="movieModalClose" id="authClose" aria-label="Fechar">×</button><div class="authBrand"><img src="/logo.png" alt="CORUJA"></div><h2 id="authTitle"></h2><p id="authSubtitle">Use o usuário e a senha fornecidos pelo administrador.</p><form id="authForm"><div class="authField"><label for="authIdentifier">Usuário</label><input id="authIdentifier" type="text" required autocomplete="username" placeholder="Seu usuário"></div><div class="authField"><label for="authPassword">Senha</label><input id="authPassword" type="password" required autocomplete="current-password" placeholder="Sua senha"></div><div class="authError" id="authError" role="alert"></div><div class="authActions"><button type="submit" class="btn yellow" id="authSubmit">Entrar</button></div></form></div></div>
@@ -3588,118 +3666,188 @@ let profileOpenListId=null;
     };
   }
 
-  let episodeFeedRenderSeq=0;
-  async function renderEpisódiosFeed(){
-    const box=$('#episodeFeed'); if(!box)return;
-    const renderSeq=++episodeFeedRenderSeq;
-    cleanupDuplicatePositions();
-    // Normaliza e elimina qualquer chave duplicada que represente o mesmo item.
-    cleanupDuplicatePositions();
-    const uniquePositions=new Map();
+  let seriesTrackerRenderSeq=0,seriesTrackerActiveTab='list';
+  const seriesTrackerShowCache=new Map(),seriesTrackerSeasonCache=new Map();
+  function seriesTrackerCachedRequest(cache,key,url){
+    if(!cache.has(key))cache.set(key,api(url).catch(error=>{cache.delete(key);throw error}));
+    return cache.get(key);
+  }
+  async function seriesTrackerMapLimit(items,worker,limit=4){
+    const result=new Array(items.length);let cursor=0;
+    await Promise.all(Array.from({length:Math.min(limit,items.length)},async()=>{
+      while(true){const index=cursor++;if(index>=items.length)return;try{result[index]=await worker(items[index])}catch{result[index]=null}}
+    }));
+    return result.filter(Boolean);
+  }
+  function seriesTrackerWatchedEpisodes(showId){
+    const result=[];
+    for(const [key,value] of Object.entries(user.watched||{})){
+      if(!value)continue;
+      const match=/^(\d+)-(\d+)-(\d+)$/.exec(key);
+      if(!match||Number(match[1])!==Number(showId))continue;
+      const season=Number(match[2]),episode=Number(match[3]);
+      if(!season||!episode)continue;
+      result.push({key,season,episode,watchedAt:user.watchedAt?.[key]||''});
+    }
+    return result;
+  }
+  function seriesTrackerLastActivity(showId,watchedEpisodes){
+    let latest=0;
+    watchedEpisodes.forEach(item=>{const stamp=Date.parse(item.watchedAt||'');if(Number.isFinite(stamp))latest=Math.max(latest,stamp)});
     for(const [key,value] of Object.entries(user.positions||{})){
-      if(!validPositionEntry(key,value)) continue;
+      if(!validPositionEntry(key,value))continue;
       const parts=key.split('-');
-      let canonical=key;
-      if(parts.length===3 && parts.every(x=>/^\d+$/.test(x))) canonical=positionKey(Number(parts[0]),Number(parts[1]),Number(parts[2]));
-      const previous=uniquePositions.get(canonical);
-      if(!previous || new Date(value.updatedAt||0)>=new Date(previous.value.updatedAt||0)) uniquePositions.set(canonical,{key:canonical,value});
+      const id=parts[0]==='tv'?Number(parts[1]):parts.length===3?Number(parts[0]):0;
+      if(id!==Number(showId))continue;
+      const stamp=Date.parse(value.updatedAt||'');if(Number.isFinite(stamp))latest=Math.max(latest,stamp);
     }
-    const entries=Array.from(uniquePositions.values())
-        .filter(x=>isContinuePositionVisible(x.key,x.value))
-      .sort((a,b)=>new Date(b.value.updatedAt||0)-new Date(a.value.updatedAt||0))
-      .slice(0,12)
-      .map(x=>[x.key,x.value]);
-    box.innerHTML='';
-    if(!entries.length){
-      box.innerHTML='<div class="empty episodeFeedEmpty" role="status"><svg class="uiIcon" aria-hidden="true"><use href="#i-play-circle"></use></svg><p>Quando você salvar onde parou, seus filmes e episódios aparecerão aqui.</p><a class="emptyAction" href="#descobrir">Descobrir títulos</a></div>';
-      return;
+    return latest||0;
+  }
+  function seriesTrackerEpisodeKey(showId,season,episode){return `${Number(showId)}-${Number(season)}-${Number(episode)}`}
+  function seriesTrackerEpisodeIsFuture(episode){return !!episode?.air_date&&String(episode.air_date)>new Date().toISOString().slice(0,10)}
+  async function seriesTrackerBuildContext(item){
+    const id=Number(item?.id);if(!id)return null;
+    const listed=item;
+    let detail=null;
+    try{detail=await seriesTrackerCachedRequest(seriesTrackerShowCache,String(id),`/api/tv/${id}`)}catch{}
+    const title=detail?.name||detail?.original_name||listed?.name||listed?.title||'';
+    const show={id,title,poster_path:detail?.poster_path||listed?.poster_path||'',status:detail?.status||'',number_of_seasons:Number(detail?.number_of_seasons)||0};
+    const seasons=(detail?.seasons||[]).filter(season=>Number(season.season_number)>0).sort((a,b)=>Number(a.season_number)-Number(b.season_number));
+    const watched=seriesTrackerWatchedEpisodes(id);
+    const anchorList=[...watched].sort((a,b)=>a.season-b.season||a.episode-b.episode);
+    const anchor=anchorList.length?anchorList[anchorList.length-1]:null;
+    let nextEpisode=null;
+    for(const seasonInfo of seasons){
+      const season=Number(seasonInfo.season_number);
+      if(anchor&&season<anchor.season)continue;
+      const firstEpisode=anchor&&season===anchor.season?anchor.episode+1:1;
+      if(Number(seasonInfo.episode_count)>0&&firstEpisode>Number(seasonInfo.episode_count))continue;
+      let seasonData=null;
+      try{seasonData=await seriesTrackerCachedRequest(seriesTrackerSeasonCache,`${id}-${season}`,`/api/tv/${id}/season/${season}`)}catch{continue}
+      const episodes=(seasonData?.episodes||[]).slice().sort((a,b)=>Number(a.episode_number)-Number(b.episode_number));
+      const candidate=episodes.find(episode=>Number(episode.episode_number)>=firstEpisode&&!user.watched[seriesTrackerEpisodeKey(id,season,episode.episode_number)]);
+      if(candidate){nextEpisode={...candidate,season_number:season,season_episode_count:Number(seasonInfo.episode_count)||episodes.length};break}
     }
-    for(const [key,pos] of entries){
-      const p=key.split('-');
-      const isTv=p[0]==='tv'&&p.length>=4;
-      const isMovie=p[0]==='movie'&&p.length>=2;
-      const isLegacyTv=p.length===3&&p.every(x=>/^\d+$/.test(x));
-      if(!isTv&&!isMovie&&!isLegacyTv)continue;
-
-      let title='Título',subtitle='',runtime=0,poster='';
-      if(isMovie){
-        const movieId=Number(p[1]);
-        const listed=(user.list||[]).find(item=>Number(item?.id)===movieId&&mediaTypeOf(item)==='movie')||{};
-        const catalog=Object.values(state.home||{}).flatMap(category=>Array.isArray(category?.results)?category.results:[]);
-        const cached=catalog.find(item=>Number(item?.id)===movieId&&mediaTypeOf(item)==='movie')||{};
-        let details=null;
-        try{details=await api(`/api/movie/${movieId}`)}catch{}
-        if(renderSeq!==episodeFeedRenderSeq||!user.sessionToken)return;
-        // A posição salva continua válida mesmo se a consulta de detalhes falhar.
-        // Reaproveita metadados locais e mantém o item retomável em vez de descartá-lo.
-        title=details?.title||details?.original_title||listed.title||listed.name||cached.title||cached.original_title||'Filme';
-        subtitle='FILME';
-        runtime=Number(details?.runtime||listed.runtime||cached.runtime||0);
-        poster=details?.poster_path||listed.poster_path||cached.poster_path||'';
-      }else{
-        const tvId=Number(isTv?p[1]:p[0]);
-        const season=Number(isTv?p[2]:p[1]);
-        const episode=Number(isTv?p[3]:p[2]);
-        const listed=user.list.find(x=>Number(x.id)===tvId&&x.media_type==='tv');
-        // Nunca usar 'Série' como nome definitivo: o título deve vir do TMDB.
-        // Isso corrige registros antigos que foram salvos com name='Série'.
-        title=listed?.name||listed?.title||'Série';
-        poster=listed?.poster_path||'';
-        let ep=null;
-        try{
-          const show=await api(`/api/tv/${tvId}`);
-          const tmdbTitle=show?.name||show?.original_name||'';
-          if(tmdbTitle) title=tmdbTitle;
-          poster=poster||show?.poster_path||'';
-          // Atualiza o registro salvo com o nome correto para as próximas vezes.
-          if(listed && tmdbTitle && (listed.name!==tmdbTitle || listed.title!==tmdbTitle || !listed.poster_path)){
-            listed.name=tmdbTitle;
-            listed.title=tmdbTitle;
-            if(!listed.poster_path && show?.poster_path) listed.poster_path=show.poster_path;
-            save();
-          }
-        }catch{}
-        try{
-          const d=await api(`/api/tv/${tvId}/season/${season}`);
-          ep=(d.episodes||[]).find(x=>x.episode_number===episode)||null;
-          runtime=Number(ep?.runtime||0);
-          poster=poster||d.poster_path||'';
-        }catch{}
-        subtitle=`T${String(season).padStart(2,'0')} | E${String(episode).padStart(2,'0')} • ${ep?.name||'Episódio'}`;
+    const today=new Date().toISOString().slice(0,10);
+    const detailUpcoming=detail?.next_episode_to_air;
+    let upcomingEpisode=detailUpcoming&&String(detailUpcoming.air_date||'')>today?{...detailUpcoming,season_episode_count:Number(seasons.find(s=>Number(s.season_number)===Number(detailUpcoming.season_number))?.episode_count)||0}:null;
+    if(upcomingEpisode&&user.watched[seriesTrackerEpisodeKey(id,upcomingEpisode.season_number,upcomingEpisode.episode_number)])upcomingEpisode=null;
+    if(!upcomingEpisode&&nextEpisode&&seriesTrackerEpisodeIsFuture(nextEpisode))upcomingEpisode=nextEpisode;
+    const lastActivity=seriesTrackerLastActivity(id,watched);
+    return{show,detail,seasons,watched,nextEpisode,upcomingEpisode,lastActivity,listed};
+  }
+  function seriesTrackerDate(value){
+    const raw=String(value||'');if(!/^\d{4}-\d{2}-\d{2}$/.test(raw))return '';
+    const date=new Date(`${raw}T12:00:00`);return Number.isNaN(date.getTime())?'':date.toLocaleDateString('pt-BR',{day:'numeric',month:'short',year:'numeric'});
+  }
+  function seriesTrackerRowMarkup(record){
+    const show=record.show,episode=record.episode;
+    const season=Number(episode.season_number),number=Number(episode.episode_number),key=seriesTrackerEpisodeKey(show.id,season,number);
+    const done=!!user.watched[key],episodeTitle=String(episode.name||'');
+    const code=`S${String(season).padStart(2,'0')} | E${String(number).padStart(2,'0')}`;
+    const additionalEpisodes=Math.max(0,Number(episode.season_episode_count||0)-number);
+    const date=record.showDate?seriesTrackerDate(episode.air_date):'';
+    const showStatus=String(show.status||'');
+    const imageFallback=episode.still_path&&show.poster_path?safeImageUrl(show.poster_path):'';
+    return `<article class="seriesTrackerItem"><img class="seriesTrackerThumb" src="${escapeHtml(safeImageUrl(episode.still_path||show.poster_path))}" data-tracker-fallback="${escapeHtml(imageFallback)}" alt="" loading="lazy"><div class="seriesTrackerInfo"><button class="seriesTrackerShow" type="button" data-tracker-show="${show.id}" title="Abrir ${escapeHtml(show.title)}">${escapeHtml(show.title||'Série')}</button><div class="seriesTrackerMeta"><strong>${code}</strong>${additionalEpisodes?`<span class="seriesTrackerExtraEpisodes" aria-label="${additionalEpisodes} episódios adicionais">+${additionalEpisodes}</span>`:''}${date?`<span class="seriesTrackerDate">${escapeHtml(date)}</span>`:''}</div>${episodeTitle?`<div class="seriesTrackerTitle">${escapeHtml(episodeTitle)}</div>`:''}</div><button class="seriesTrackerCheck ${done?'isDone':''}" type="button" data-tracker-show-id="${show.id}" data-tracker-season="${season}" data-tracker-episode="${number}" data-tracker-runtime="${Number(episode.runtime)||0}" data-tracker-season-total="${Number(episode.season_episode_count)||0}" data-tracker-season-count="${show.number_of_seasons}" data-tracker-show-status="${escapeHtml(showStatus)}" aria-label="${done?'Desmarcar como assistido':'Marcar como assistido'}: ${escapeHtml(show.title)} ${code}" aria-pressed="${done}" title="${done?'Desmarcar como assistido':'Marcar como assistido'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></article>`;
+  }
+  function seriesTrackerGroupMarkup(title,records,emptyMessage){
+    return `<section class="seriesTrackerGroup"><h2>${escapeHtml(title)}<span>${records.length}</span></h2><div class="seriesTrackerList">${records.length?records.map(seriesTrackerRowMarkup).join(''):`<p class="seriesTrackerEmpty">${escapeHtml(emptyMessage)}</p>`}</div></section>`;
+  }
+  async function seriesTrackerHistory(contexts){
+    const events=contexts.flatMap(context=>context.watched.map(watched=>({context,watched}))).sort((a,b)=>{
+      const aDate=Date.parse(a.watched.watchedAt||'')||0,bDate=Date.parse(b.watched.watchedAt||'')||0;return bDate-aDate;
+    });
+    return seriesTrackerMapLimit(events,async event=>{
+      const {context,watched}=event;
+      const seasonInfo=context.seasons.find(season=>Number(season.season_number)===watched.season);
+      let seasonData=null;
+      try{seasonData=await seriesTrackerCachedRequest(seriesTrackerSeasonCache,`${context.show.id}-${watched.season}`,`/api/tv/${context.show.id}/season/${watched.season}`)}catch{return null}
+      const episode=(seasonData?.episodes||[]).find(item=>Number(item.episode_number)===watched.episode);
+      if(!episode)return null;
+      return{show:context.show,episode:{...episode,season_number:watched.season,season_episode_count:Number(seasonInfo?.episode_count)||(seasonData.episodes||[]).length},watchedAt:watched.watchedAt};
+    },4);
+  }
+  function bindSeriesTrackerRows(box){
+    $$('.seriesTrackerShow',box).forEach(button=>button.onclick=()=>{location.hash=`tv-${Number(button.dataset.trackerShow)}`});
+    $$('.seriesTrackerCheck',box).forEach(button=>button.onclick=async event=>{
+      event.stopPropagation();
+      const showId=Number(button.dataset.trackerShowId),season=Number(button.dataset.trackerSeason),episode=Number(button.dataset.trackerEpisode);
+      if(!showId||!season||!episode)return;
+      const key=seriesTrackerEpisodeKey(showId,season,episode),wasDone=!!user.watched?.[key],now=new Date().toISOString();
+      user.watched=user.watched||{};user.watchedAt=user.watchedAt||{};user.positions=user.positions||{};
+      if(wasDone){user.watched[key]=false;delete user.watchedAt[key]}
+      else{
+        user.watched[key]=true;user.watchedAt[key]=now;
+        delete user.positions[positionKey(showId,season,episode)];delete user.positions[key];
+        const runtime=Number(button.dataset.trackerRuntime)||0;
+        if(runtime>0){user.watchDurations=user.watchDurations||{episodes:{},movies:{}};user.watchDurations.episodes=user.watchDurations.episodes||{};user.watchDurations.episodes[key]=runtime}
       }
-      const progressMarkup=continueProgressMarkup(pos.seconds,runtime,isMovie?'o filme':'o episódio');
-      const item=document.createElement('article');
-      item.className='episodeFeedItem';
-      item.innerHTML=`<img src="${escapeHtml(safeImageUrl(poster))}" alt="">
-        <div class="episodeFeedBody">
-          <button class="episodeFeedTitleLink" type="button">${escapeHtml(title)}</button>
-          <span>${escapeHtml(subtitle)}</span>
-          <div class="positionLine"><span><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos.seconds)}</strong></span>
-            <button class="positionEdit" title="Editar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button></div>
-          ${progressMarkup}
-        </div>
-        <div class="episodeFeedActions"><button class="btn dark episodeFeedOpen" type="button">Continuar</button><button class="continueRemove episodeFeedRemove" type="button">Remover</button></div>`;
-      const posterLink=item.querySelector('img');posterLink.tabIndex=0;posterLink.setAttribute('role','link');posterLink.setAttribute('aria-label',`Retomar ${title} em ${formatPosition(pos.seconds)}`);
-      posterLink.onclick=()=>resumeContinuePosition(key);
-      posterLink.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();resumeContinuePosition(key)}};
-      item.querySelector('.episodeFeedTitleLink').onclick=()=>resumeContinuePosition(key);
-      item.querySelector('.positionEdit').onclick=e=>{
-        e.stopPropagation();
-        if(isMovie){
-          const movieId=Number(p[1]); openMoviePositionEditor(movieId,runtime,renderEpisódiosFeed);
-        }else{
-          const tvId=Number(isTv?p[1]:p[0]);
-          const season=Number(isTv?p[2]:p[1]);
-          const episode=Number(isTv?p[3]:p[2]);
-          openPositionEditor(tvId,season,episode,runtime,renderEpisódiosFeed);
-        }
-      };
-      item.querySelector('.episodeFeedRemove').onclick=()=>removeContinuePosition(key);
-      item.querySelector('.episodeFeedOpen').onclick=()=>resumeContinuePosition(key);
-      if(renderSeq!==episodeFeedRenderSeq)return;
-      box.appendChild(item);
+      const seasonTotal=Number(button.dataset.trackerSeasonTotal)||0,seasonCount=Number(button.dataset.trackerSeasonCount)||0;
+      const status=button.dataset.trackerShowStatus||'';
+      if(seasonTotal&&seasonCount&&season===seasonCount&&episode===seasonTotal&&(status==='Ended'||status==='Canceled')){
+        user.completedShows=user.completedShows||{};
+        if(wasDone)delete user.completedShows[String(showId)];else user.completedShows[String(showId)]=now;
+      }
+      save();renderProfile();await renderEpisódiosFeed();
+    });
+    $$('img.seriesTrackerThumb',box).forEach(image=>setImageFallback(image,image.dataset.trackerFallback||''));
+  }
+  function setSeriesTrackerTab(tab){
+    seriesTrackerActiveTab=tab==='upcoming'?'upcoming':'list';
+    const listTab=$('#seriesTrackerListTab'),upcomingTab=$('#seriesTrackerUpcomingTab'),browse=$('#seriesTrackerBrowse'),feed=$('#episodeFeed');
+    listTab?.classList.toggle('active',seriesTrackerActiveTab==='list');upcomingTab?.classList.toggle('active',seriesTrackerActiveTab==='upcoming');
+    listTab?.setAttribute('aria-selected',String(seriesTrackerActiveTab==='list'));upcomingTab?.setAttribute('aria-selected',String(seriesTrackerActiveTab==='upcoming'));
+    if(feed)feed.setAttribute('aria-labelledby',seriesTrackerActiveTab==='list'?'seriesTrackerListTab':'seriesTrackerUpcomingTab');
+    if(browse)browse.hidden=seriesTrackerActiveTab!=='list';
+    renderEpisódiosFeed();
+  }
+  $('#seriesTrackerListTab')?.addEventListener('click',()=>setSeriesTrackerTab('list'));
+  $('#seriesTrackerUpcomingTab')?.addEventListener('click',()=>setSeriesTrackerTab('upcoming'));
+  async function renderSeriesTracker(){
+    const box=$('#episodeFeed');if(!box||!$('#episodios')?.classList.contains('active'))return;
+    const renderSeq=++seriesTrackerRenderSeq;
+    const browse=$('#seriesTrackerBrowse');if(browse)browse.hidden=seriesTrackerActiveTab!=='list';
+    const series=[];const seen=new Set();
+    (user.list||[]).forEach(item=>{if(mediaTypeOf(item)!=='tv'||!item?.id||seen.has(Number(item.id)))return;seen.add(Number(item.id));series.push(item)});
+    if(!series.length){box.innerHTML='<div class="seriesTrackerEmptyMain" role="status">Adicione séries à sua lista para acompanhar episódios e estreias.</div>';return}
+    box.innerHTML='<p class="seriesTrackerLoading" role="status">Carregando suas séries…</p>';
+    const contexts=await seriesTrackerMapLimit(series,seriesTrackerBuildContext,4);
+    if(renderSeq!==seriesTrackerRenderSeq||!$('#episodios')?.classList.contains('active'))return;
+    if(seriesTrackerActiveTab==='upcoming'){
+      const upcoming=[];const added=new Set();
+      contexts.forEach(context=>{
+        const episode=context.upcomingEpisode;if(!episode)return;
+        const key=seriesTrackerEpisodeKey(context.show.id,episode.season_number,episode.episode_number);
+        if(added.has(key)||user.watched?.[key])return;added.add(key);
+        upcoming.push({show:context.show,episode,showDate:true});
+      });
+      upcoming.sort((a,b)=>String(a.episode.air_date||'').localeCompare(String(b.episode.air_date||'')));
+      box.innerHTML=upcoming.length?seriesTrackerGroupMarkup('Próximas estreias',upcoming,''): '<p class="seriesTrackerEmptyUpcoming" role="status">Nenhuma próxima estreia encontrada para as séries da sua lista.</p>';
+    }else{
+      const today=Date.now(),staleThreshold=today-30*24*60*60*1000;
+      const follow=[],stale=[],notStarted=[];
+      contexts.forEach(context=>{
+        const episode=context.nextEpisode;if(!episode||seriesTrackerEpisodeIsFuture(episode))return;
+        const record={show:context.show,episode};
+        if(!context.watched.length){notStarted.push(record);return}
+        if(context.lastActivity&&context.lastActivity<staleThreshold)stale.push(record);else follow.push(record);
+      });
+      const history=await seriesTrackerHistory(contexts);
+      if(renderSeq!==seriesTrackerRenderSeq||!$('#episodios')?.classList.contains('active'))return;
+      const historyRecords=history.map(record=>({...record,showDate:false}));
+      box.innerHTML=[
+        seriesTrackerGroupMarkup('Assistir a seguir',follow,'Nenhum episódio pendente para assistir agora.'),
+        seriesTrackerGroupMarkup('Histórico de assistidos',historyRecords,'Os episódios marcados como assistidos aparecerão aqui.'),
+        seriesTrackerGroupMarkup('Não assistidas já faz um tempo',stale,'Nenhuma série acompanhada está parada há mais de 30 dias.'),
+        seriesTrackerGroupMarkup('Não iniciadas',notStarted,'Todas as séries da sua lista já foram iniciadas.')
+      ].join('');
     }
-    if(renderSeq===episodeFeedRenderSeq && !box.children.length)box.innerHTML='<div class="empty episodeFeedEmpty" role="status"><svg class="uiIcon" aria-hidden="true"><use href="#i-play-circle"></use></svg><p>Quando você salvar onde parou, seus filmes e episódios aparecerão aqui.</p><a class="emptyAction" href="#descobrir">Descobrir títulos</a></div>';
+    bindSeriesTrackerRows(box);
+  }
+  async function renderEpisódiosFeed(){
+    if(!$('#episodios')?.classList.contains('active'))return;
+    return renderSeriesTracker();
   }
 
 
