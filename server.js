@@ -4,6 +4,8 @@ const path = require('path');
 const fs = require('fs');
 const crypto = require('crypto');
 const { promisify } = require('util');
+const { mergeCandidateSources, rankSimilarSeries } = require('./lib/similar-series');
+const { rankSimilarMovies } = require('./lib/similar-movies');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.TMDB_READ_ACCESS_TOKEN || process.env.TMDB_TOKEN;
@@ -591,6 +593,127 @@ async function tmdb(endpoint, params={}) {
   return r.json();
 }
 
+const tvKeywordsCache = new Map();
+const TV_KEYWORDS_CACHE_TTL_MS = 30 * 60 * 1000;
+async function getTvKeywords(id) {
+  const key = String(id);
+  const cached = tvKeywordsCache.get(key);
+  if (cached && cached.expiresAt > Date.now()) return cached.promise;
+  const promise = tmdb(`/tv/${encodeURIComponent(key)}/keywords`).then(data => {
+    const keywords = Array.isArray(data?.results) ? data.results : [];
+    tvKeywordsCache.set(key, { promise: Promise.resolve(keywords), expiresAt: Date.now() + TV_KEYWORDS_CACHE_TTL_MS });
+    while (tvKeywordsCache.size > 300) tvKeywordsCache.delete(tvKeywordsCache.keys().next().value);
+    return keywords;
+  }).catch(error => {
+    tvKeywordsCache.delete(key);
+    throw error;
+  });
+  tvKeywordsCache.set(key, { promise, expiresAt: Date.now() + TV_KEYWORDS_CACHE_TTL_MS });
+  return promise;
+}
+
+const movieKeywordsCache = new Map();
+const MOVIE_KEYWORDS_CACHE_TTL_MS = 30 * 60 * 1000;
+async function getMovieKeywords(id) {
+  const key = String(id);
+  const cached = movieKeywordsCache.get(key);
+  if (cached && cached.expiresAt > Date.now()) return cached.promise;
+  const promise = tmdb(`/movie/${encodeURIComponent(key)}/keywords`).then(data => {
+    const keywords = Array.isArray(data?.keywords) ? data.keywords : [];
+    movieKeywordsCache.set(key, { promise: Promise.resolve(keywords), expiresAt: Date.now() + MOVIE_KEYWORDS_CACHE_TTL_MS });
+    while (movieKeywordsCache.size > 300) movieKeywordsCache.delete(movieKeywordsCache.keys().next().value);
+    return keywords;
+  }).catch(error => {
+    movieKeywordsCache.delete(key);
+    throw error;
+  });
+  movieKeywordsCache.set(key, { promise, expiresAt: Date.now() + MOVIE_KEYWORDS_CACHE_TTL_MS });
+  return promise;
+}
+
+function hasSharedTvGenre(current, candidate) {
+  const currentIds = new Set((current?.genres || []).map(item => String(item?.id ?? '')).filter(Boolean));
+  const candidateIds = Array.isArray(candidate?.genre_ids)
+    ? candidate.genre_ids.map(String)
+    : (candidate?.genres || []).map(item => String(item?.id ?? '')).filter(Boolean);
+  return candidateIds.some(id => currentIds.has(id));
+}
+
+async function loadSimilarTvRecommendations(current, similarResponse, currentKeywords, recommendationResponse) {
+  const candidates = mergeCandidateSources(similarResponse, recommendationResponse, 20);
+  const currentId = Number(current?.id);
+  const seen = new Set(Number.isSafeInteger(currentId) ? [currentId] : []);
+  const eligible = candidates.filter(candidate => {
+    const id = Number(candidate?.id);
+    if (!Number.isSafeInteger(id) || id <= 0 || seen.has(id) || !hasSharedTvGenre(current, candidate)) return false;
+    seen.add(id);
+    return true;
+  }).slice(0, 20);
+
+  const keywordMap = new Map();
+  let nextIndex = 0;
+  const workers = Array.from({ length: Math.min(4, eligible.length) }, async () => {
+    while (nextIndex < eligible.length) {
+      const candidate = eligible[nextIndex++];
+      const id = Number(candidate.id);
+      try { keywordMap.set(id, await getTvKeywords(id)); }
+      catch { keywordMap.set(id, []); }
+    }
+  });
+  await Promise.all(workers);
+
+  let resolvedCurrentKeywords = Array.isArray(currentKeywords?.results) ? currentKeywords.results : currentKeywords;
+  if (!Array.isArray(resolvedCurrentKeywords) || !resolvedCurrentKeywords.length) {
+    try { resolvedCurrentKeywords = await getTvKeywords(currentId); }
+    catch { resolvedCurrentKeywords = []; }
+  }
+
+  return rankSimilarSeries({
+    current,
+    candidates,
+    currentKeywords: resolvedCurrentKeywords,
+    keywordsById: keywordMap,
+    limit: 10
+  });
+}
+
+async function loadSimilarMovieRecommendations(current, similarResponse, currentKeywords, recommendationResponse) {
+  const candidates = mergeCandidateSources(similarResponse, recommendationResponse, 20).filter(candidate =>
+    !candidate?.media_type || candidate.media_type === 'movie'
+  );
+  const currentId = Number(current?.id);
+  const eligible = candidates.filter(candidate => {
+    const id = Number(candidate?.id);
+    return Number.isSafeInteger(id) && id > 0 && id !== currentId && (candidate?.title || candidate?.original_title);
+  }).slice(0, 20);
+
+  const keywordMap = new Map();
+  let nextIndex = 0;
+  const workers = Array.from({ length: Math.min(4, eligible.length) }, async () => {
+    while (nextIndex < eligible.length) {
+      const candidate = eligible[nextIndex++];
+      const id = Number(candidate.id);
+      try { keywordMap.set(id, await getMovieKeywords(id)); }
+      catch { keywordMap.set(id, []); }
+    }
+  });
+  await Promise.all(workers);
+
+  let resolvedCurrentKeywords = Array.isArray(currentKeywords?.keywords) ? currentKeywords.keywords : currentKeywords;
+  if (!Array.isArray(resolvedCurrentKeywords) || !resolvedCurrentKeywords.length) {
+    try { resolvedCurrentKeywords = await getMovieKeywords(currentId); }
+    catch { resolvedCurrentKeywords = []; }
+  }
+
+  return rankSimilarMovies({
+    current,
+    candidates,
+    currentKeywords: resolvedCurrentKeywords,
+    keywordsById: keywordMap,
+    limit: 10
+  });
+}
+
 app.get('/api/test', async (_,res)=>{
   try { const d=await tmdb('/movie/popular',{language:'pt-BR',region:'BR',page:1}); res.json({ok:true,total_results:d.total_results,primeiro:d.results?.[0]?.title||null}); }
   catch(e){res.status(500).json({ok:false,error:e.message});}
@@ -676,7 +799,14 @@ app.get('/api/search', async (req,res)=>{
 });
 
 app.get('/api/tv/:id', async (req,res)=>{
-  try { res.json(await tmdb(`/tv/${req.params.id}`,{language:'pt-BR',append_to_response:'credits,videos,images,recommendations,similar'})); }
+  try {
+    const detail = await tmdb(`/tv/${req.params.id}`,{language:'pt-BR',append_to_response:'credits,videos,images,recommendations,similar,keywords'});
+    detail.similar = {
+      ...(detail.similar || {}),
+      results: await loadSimilarTvRecommendations(detail, detail.similar, detail.keywords, detail.recommendations)
+    };
+    res.json(detail);
+  }
   catch(e){res.status(500).json({error:e.message});}
 });
 
@@ -691,7 +821,14 @@ app.get('/api/tv/:id/providers', async (req,res)=>{
 });
 
 app.get('/api/movie/:id', async (req,res)=>{
-  try { res.json(await tmdb(`/movie/${req.params.id}`,{language:'pt-BR',append_to_response:'credits,videos,images,recommendations,similar'})); }
+  try {
+    const detail = await tmdb(`/movie/${req.params.id}`,{language:'pt-BR',append_to_response:'credits,videos,images,recommendations,similar,keywords'});
+    detail.similar = {
+      ...(detail.similar || {}),
+      results: await loadSimilarMovieRecommendations(detail, detail.similar, detail.keywords, detail.recommendations)
+    };
+    res.json(detail);
+  }
   catch(e){res.status(500).json({error:e.message});}
 });
 
