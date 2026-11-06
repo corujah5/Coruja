@@ -6,6 +6,7 @@ const crypto = require('crypto');
 const { promisify } = require('util');
 const { mergeCandidateSources, rankSimilarSeries } = require('./lib/similar-series');
 const { rankSimilarMovies } = require('./lib/similar-movies');
+const { localDateKey: discoverDateKey, normalizeDiscoverQuery, buildDiscoverRequest, filterUpcomingPayload } = require('./lib/discover-catalog');
 const app = express();
 const PORT = process.env.PORT || 3000;
 const TOKEN = process.env.TMDB_READ_ACCESS_TOKEN || process.env.TMDB_TOKEN;
@@ -213,7 +214,7 @@ function requireAccount(req,res,next){
 // Catálogo, busca, perfis e comentários só são servidos a uma sessão válida.
 // As rotas de autenticação e administração mantêm seus próprios controles.
 app.use([
-  '/api/test','/api/home','/api/movies','/api/series','/api/search',
+  '/api/test','/api/home','/api/movies','/api/series','/api/search','/api/discover',
   '/api/tv','/api/movie','/api/users','/api/comments'
 ],requireAccount);
 app.get('/uploads/:filename', requireAccount, (req, res) => {
@@ -788,6 +789,86 @@ app.get('/api/series/top-rated', async (req,res)=>{
     const d=await tmdb('/tv/top_rated',{language:'pt-BR',page});
     res.json(d);
   } catch(e){res.status(500).json({error:e.message});}
+});
+
+const discoverCatalogCache = new Map();
+const discoverGenreCache = new Map();
+const discoverItemCache = new Map();
+const discoverCatalogInFlight = new Map();
+const discoverGenreInFlight = new Map();
+const DISCOVER_CACHE_TTL_MS = 10 * 60 * 1000;
+app.get('/api/discover', async (req,res)=>{
+  let filters;
+  try { filters = normalizeDiscoverQuery(req.query, discoverDateKey()); }
+  catch (error) { return res.status(400).json({ error: error.message }); }
+  const request = buildDiscoverRequest(filters);
+  const cacheKey = `${request.endpoint}?${new URLSearchParams(request.params).toString()}`;
+  const cached = discoverCatalogCache.get(cacheKey);
+  if (cached && cached.expires > Date.now()) return res.json({ ...cached.data, _cacheExpiresAt: cached.expires });
+  let pending = discoverCatalogInFlight.get(cacheKey);
+  if (!pending) {
+    pending = (async()=>{
+      const response = await tmdb(request.endpoint, request.params);
+      const data = filters.source === 'upcoming' ? filterUpcomingPayload(response, filters.today) : response;
+      const entry = { data, expires: Date.now() + DISCOVER_CACHE_TTL_MS };
+      discoverCatalogCache.set(cacheKey, entry);
+      if (discoverCatalogCache.size > 150) {
+        for (const [key,value] of discoverCatalogCache) if (value.expires <= Date.now()) discoverCatalogCache.delete(key);
+        while (discoverCatalogCache.size > 150) discoverCatalogCache.delete(discoverCatalogCache.keys().next().value);
+      }
+      return entry;
+    })();
+    discoverCatalogInFlight.set(cacheKey, pending);
+  }
+  try {
+    const entry = await pending;
+    return res.json({ ...entry.data, _cacheExpiresAt: entry.expires });
+  } catch {
+    return res.status(502).json({ error: 'Não foi possível carregar este catálogo agora.' });
+  } finally {
+    if (discoverCatalogInFlight.get(cacheKey) === pending) discoverCatalogInFlight.delete(cacheKey);
+  }
+});
+
+app.get('/api/discover/genres', async (req,res)=>{
+  const mediaType = String(req.query.type || '').toLowerCase();
+  if (!['movie','tv'].includes(mediaType)) return res.status(400).json({ error: 'Tipo de catálogo inválido.' });
+  const cached = discoverGenreCache.get(mediaType);
+  if (cached && cached.expires > Date.now()) return res.json({ ...cached.data, _cacheExpiresAt: cached.expires });
+  let pending = discoverGenreInFlight.get(mediaType);
+  if (!pending) {
+    pending = (async()=>{
+      const data = await tmdb(`/genre/${mediaType}/list`, { language: 'pt-BR' });
+      const entry = { data, expires: Date.now() + 24 * 60 * 60 * 1000 };
+      discoverGenreCache.set(mediaType, entry);
+      return entry;
+    })();
+    discoverGenreInFlight.set(mediaType, pending);
+  }
+  try {
+    const entry = await pending;
+    return res.json({ ...entry.data, _cacheExpiresAt: entry.expires });
+  } catch {
+    return res.status(502).json({ error: 'Não foi possível carregar os gêneros agora.' });
+  } finally {
+    if (discoverGenreInFlight.get(mediaType) === pending) discoverGenreInFlight.delete(mediaType);
+  }
+});
+
+app.get('/api/discover/item/:type/:id', async (req,res)=>{
+  const mediaType = String(req.params.type || '').toLowerCase();
+  const id = String(req.params.id || '');
+  if (!['movie','tv'].includes(mediaType) || !/^\d{1,12}$/.test(id) || Number(id) <= 0) return res.status(400).json({ error: 'Título inválido.' });
+  const cacheKey = `${mediaType}:${id}`;
+  const cached = discoverItemCache.get(cacheKey);
+  if (cached && cached.expires > Date.now()) return res.json(cached.data);
+  try {
+    const data = await tmdb(`/${mediaType}/${id}`, { language: 'pt-BR' });
+    discoverItemCache.set(cacheKey, { data, expires: Date.now() + 24 * 60 * 60 * 1000 });
+    return res.json(data);
+  } catch {
+    return res.status(502).json({ error: 'Não foi possível carregar os detalhes deste título.' });
+  }
 });
 
 app.get('/api/search', async (req,res)=>{

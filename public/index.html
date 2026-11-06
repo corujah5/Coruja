@@ -957,6 +957,12 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 #filmes .moviesPosterCard .poster img{display:block;width:100%;height:100%;object-fit:cover}
 #filmes .moviesPosterCard .score,#filmes .moviesPosterCard h3,#filmes .moviesPosterCard small,#filmes .moviesPosterCard .stars{display:none!important}
 #filmes .moviesPosterGrid>.moviesGalleryEmpty{grid-column:1/-1;margin:14px 0;padding:16px;border:1px dashed #39453a;border-radius:10px;background:#141a15;color:#aeb9a9;text-align:center}
+#filmes .moviesPosterGrid>.moviesGalleryEmpty.moviesUpcomingEmptyState{display:flex;min-height:min(58vh,520px);flex-direction:column;align-items:center;justify-content:center;gap:10px;margin:0;padding:22px 12px;border:0;border-radius:0;background:#090b0a;color:#f1f4ef;text-align:center}
+.moviesUpcomingEmptyState h2{margin:0;color:#f1f4ef;font-size:clamp(17px,4vw,21px);font-weight:850}
+.moviesUpcomingEmptyState p{margin:0;color:#aeb8aa;font-size:13px;line-height:1.4}
+.moviesUpcomingPopcorn{display:block;width:min(190px,52vw);height:auto;margin:4px 0}
+.moviesUpcomingEmptyState button{min-height:44px;margin-top:5px;padding:11px 19px;border:1px solid #c9ec4c;border-radius:999px;background:#c8f34a;color:#11170c;font-size:12px;font-weight:900;letter-spacing:.04em}
+.moviesUpcomingEmptyState button:hover{background:#d8ff74}
 #filmes .moviesUpcomingLoad{display:flex;flex-direction:column;align-items:center;gap:8px;margin:22px auto 0;text-align:center}
 #filmes .moviesUpcomingLoad[hidden]{display:none}
 #filmes .moviesUpcomingLoad button{min-height:44px;padding:10px 18px;border:1px solid #485842;border-radius:999px;background:#171e18;color:#c8f875;font-size:12px;font-weight:850;letter-spacing:.035em}
@@ -965,6 +971,8 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 #filmes .moviesUpcomingEnd{margin:0;color:#8f998d;font-size:12px;line-height:1.4}
 #filmes .moviesGalleryBrowse{display:flex;align-items:center;justify-content:center;width:min(320px,100%);min-height:46px;margin:26px auto 12px;padding:11px 18px;border:1px solid #485842;border-radius:999px;background:#171e18;color:#c8f875;font-size:13px;font-weight:850;letter-spacing:.035em}
 #filmes .moviesGalleryBrowse:hover{border-color:#b8f34a;background:#20291f;color:#e4ffb6}
+#filmes .moviesGalleryBrowse[hidden]{display:none}
+#filmes .moviesGalleryLoading{grid-column:1/-1;min-height:34vh;display:grid;place-items:center;color:#8f998d;text-align:center;font-size:13px}
 @media(max-width:650px){
   #filmes.moviesGalleryScreen{padding:calc(var(--header-height) + 12px + env(safe-area-inset-top)) 14px calc(30px + env(safe-area-inset-bottom))}
   #filmes .moviesGalleryTabs{margin-bottom:8px}
@@ -974,6 +982,108 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   #filmes .moviesGalleryBrowse{margin:24px auto 10px}
 }
 @media(prefers-reduced-motion:reduce){#filmes .moviesGalleryTab::after{transition:none}}
+
+/* Descobrir mais: catálogo real do TMDB, cards de fundo e filtros responsivos. */
+.discoverMoreEntry{display:block;margin:12px 0 0 auto;padding:8px 12px;border:1px solid #354334;border-radius:999px;background:#151a15;color:#c8f875;font-size:12px;font-weight:850}
+.discoverMoreEntry:hover{border-color:#b8f34a;background:#20291f}
+#descobrir-mais.discoverMoreScreen{box-sizing:border-box;min-width:0;padding:calc(var(--header-height) + 8px) clamp(12px,3vw,30px) 190px}
+.discoverMoreHeader{display:grid;grid-template-columns:42px minmax(0,1fr) 42px;align-items:center;gap:10px;max-width:1240px;margin:0 auto;border-bottom:1px solid #2d352d;padding:5px 0 12px}
+.discoverMoreHeader h1{margin:0;text-align:center;color:#f1f4ef;font-size:clamp(17px,2vw,21px);font-weight:800;letter-spacing:.01em}
+.discoverMoreBack{display:grid;place-items:center;width:40px;height:40px;padding:0;border:0;border-radius:50%;background:transparent;color:#f2f5ef}
+.discoverMoreBack:hover{background:#1a211a;color:#c8f875}
+.discoverMoreBack .uiIcon{width:23px;height:23px;margin:0}
+.discoverMoreBack:focus-visible,.discoverMoreTabs button:focus-visible{outline:2px solid #b8f34a;outline-offset:2px}
+.discoverMoreTabs{display:grid;grid-template-columns:1fr 1fr;width:100%;max-width:1240px;margin:0 auto 10px;border-bottom:1px solid #303a31}
+.discoverMoreTabs button{position:relative;min-height:43px;padding:9px 10px;border:0;background:transparent;color:#9da79b;font-size:12px;font-weight:850;letter-spacing:.05em}
+.discoverMoreTabs button::after{position:absolute;right:0;bottom:-1px;left:0;height:3px;border-radius:3px 3px 0 0;background:transparent;content:""}
+.discoverMoreTabs button[aria-selected="true"]{color:#c8f875}
+.discoverMoreTabs button[aria-selected="true"]::after{background:#b8f34a}
+.discoverMoreGrid{display:grid;grid-template-columns:minmax(0,1fr);gap:14px;width:100%;max-width:1240px;margin:0 auto;min-width:0}
+.discoverMoreCard{position:relative;display:block;flex:0 0 auto;width:100%;max-width:none;min-width:0;overflow:hidden;border:1px solid #29332a;border-radius:12px;background:#111611;cursor:pointer;isolation:isolate;transition:transform .18s ease,border-color .18s ease}
+.discoverMoreCard:hover{transform:translateY(-2px);border-color:#526549}
+.discoverMoreCard .poster{position:relative;width:100%;height:auto;aspect-ratio:1.85/1;overflow:hidden;border:0;border-radius:0;background:#131813}
+.discoverMoreCard .poster>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.78;transition:transform .3s ease,opacity .3s ease}
+.discoverMorePosterFallback{position:absolute;inset:0;display:grid;place-items:center;padding:18px;background:radial-gradient(ellipse at center,#34432e,#111611 75%);color:#d1e1c3;text-align:center;font-size:16px;font-weight:850}
+.discoverMoreCard:hover .poster>img{transform:scale(1.025);opacity:.9}
+.discoverMoreCard .poster::after{position:absolute;inset:0;z-index:1;background:linear-gradient(180deg,rgba(4,7,5,.08) 20%,rgba(4,7,5,.25) 48%,rgba(4,7,5,.92) 100%);content:"";pointer-events:none}
+.discoverMoreCard .score,.discoverMoreCard .favorite,.discoverMoreCard>h3,.discoverMoreCard>small,.discoverMoreCard>.stars{display:none!important}
+.discoverMoreCard .poster .add{position:absolute;top:12px;right:12px;z-index:3;display:grid;place-items:center;width:40px;height:40px;margin:0;padding:0;border:1px solid #b8f34a;border-radius:9px;background:#b8f34a;color:#11170c;box-shadow:0 4px 16px #0007}
+.discoverMoreCard .poster .add:hover{background:#d1ff78;border-color:#d1ff78;transform:scale(1.04)}
+.discoverMoreCard .poster .add .uiIcon{width:21px;height:21px;margin:0}
+.discoverMoreCard .discoverMoreInfo{position:absolute;right:15px;bottom:13px;left:15px;z-index:2;display:grid;gap:4px;min-width:0;text-shadow:0 2px 7px #000}
+.discoverMoreCard .discoverMoreInfo strong{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;color:#fff;font-size:clamp(16px,2vw,20px);font-weight:900;line-height:1.15;text-overflow:ellipsis;white-space:normal}
+.discoverMoreCard .discoverMoreInfo small{display:-webkit-box;overflow:hidden;-webkit-box-orient:vertical;-webkit-line-clamp:2;color:#e2e8de;font-size:12px;font-weight:650;line-height:1.35;text-overflow:ellipsis;white-space:normal}
+.discoverMoreStatus{max-width:980px;margin:16px auto;color:#aab4a6;text-align:center;font-size:13px;line-height:1.45}
+.discoverMoreStatus[hidden]{display:none}
+.discoverMoreLoadWrap{display:flex;justify-content:center;max-width:980px;margin:14px auto}
+.discoverMoreLoad{min-height:42px;padding:9px 17px;border:1px solid #465642;border-radius:999px;background:#171e18;color:#c8f875;font-size:12px;font-weight:850}
+.discoverMoreLoad:hover:not(:disabled){border-color:#b8f34a;background:#20291f}
+.discoverMoreLoad:disabled{opacity:.65;cursor:wait}
+.discoverMoreLoad[hidden]{display:none}
+.discoverMoreDock{position:fixed;left:50%;bottom:94px;z-index:79;display:flex;flex-direction:column;align-items:center;gap:8px;width:min(100% - 24px,960px);transform:translateX(-50%);pointer-events:none}
+.discoverMoreActiveFilters{display:flex;max-width:100%;gap:7px;overflow-x:auto;padding:1px 2px;scrollbar-width:none;pointer-events:auto}
+.discoverMoreActiveFilters::-webkit-scrollbar{display:none}
+.discoverMoreActiveFilters[hidden]{display:none}
+.discoverMoreFilterChip{display:inline-flex;align-items:center;gap:7px;flex:0 0 auto;min-height:30px;padding:5px 10px;border:1px solid #a4d83c;border-radius:999px;background:#c6f455;color:#11170c;font-size:11px;font-weight:850;white-space:nowrap}
+.discoverMoreFilterChip button{display:grid;place-items:center;width:18px;height:18px;padding:0;border:0;border-radius:50%;background:#26331a;color:#efffd5;font-size:15px;line-height:1}
+.discoverMoreFilterButton{display:flex;align-items:center;justify-content:center;gap:8px;min-height:43px;padding:9px 19px;border:1px solid #d5bd00;border-radius:999px;background:#f2da00;color:#151500;font-size:12px;font-weight:900;letter-spacing:.035em;box-shadow:0 6px 22px #0008;pointer-events:auto}
+.discoverMoreFilterButton:hover{background:#ffeb28}
+.discoverMoreFilterButton .uiIcon{width:17px;height:17px;margin:0}
+.discoverMoreFilterModal{position:fixed;inset:0;z-index:900;display:flex;align-items:flex-end;justify-content:center}
+.discoverMoreFilterModal[hidden]{display:none}
+.discoverMoreFilterScrim{position:absolute;inset:0;border:0;background:rgba(0,0,0,.72);backdrop-filter:blur(3px)}
+.discoverMoreFilterSheet{position:relative;z-index:1;display:flex;flex-direction:column;width:min(760px,100%);max-height:min(90dvh,900px);overflow:hidden;border:1px solid #3b443b;border-bottom:0;border-radius:18px 18px 0 0;background:#171a18;color:#f3f5f2;box-shadow:0 -16px 50px #0009}
+.discoverMoreFilterHeader{display:flex;align-items:center;justify-content:space-between;flex:0 0 auto;padding:14px 18px;border-bottom:1px solid #333a34}
+.discoverMoreFilterHeader h2{margin:0;font-size:18px}
+.discoverMoreFilterHeader button{width:34px;height:34px;border:0;border-radius:50%;background:#292e2a;color:#f4f7f2;font-size:24px;line-height:1}
+.discoverMoreFilterContent{min-height:0;overflow:auto;padding:4px 18px 14px;overscroll-behavior:contain;-webkit-overflow-scrolling:touch}
+.discoverMoreFilterGroup{padding:15px 0;border-bottom:1px solid #353b36}
+.discoverMoreFilterGroup h3{margin:0 0 10px;color:#f0f3ef;font-size:14px;font-weight:800}
+.discoverMoreSortOptions{display:flex;gap:8px;overflow-x:auto;padding:2px 1px 5px;scrollbar-width:none}
+.discoverMoreSortOptions::-webkit-scrollbar,.discoverMoreGenreGrid::-webkit-scrollbar{display:none}
+.discoverMoreChoice{flex:0 0 auto;min-height:38px;padding:8px 14px;border:1px solid #48504a;border-radius:999px;background:#e6e8eb;color:#34383a;font-size:12px;font-weight:750;white-space:nowrap}
+.discoverMoreChoice[aria-pressed="true"]{border-color:#d7c600;background:#f3df00;color:#171800}
+.discoverMoreGenreGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:7px}
+.discoverMoreGenre{position:relative;display:grid;place-items:center;min-height:68px;overflow:hidden;padding:8px;border:1px solid #424944;border-radius:8px;background:linear-gradient(135deg,#323b31,#161a17);background-size:cover;background-position:center;color:#fff;text-align:center;font-size:12px;font-weight:850;text-shadow:0 2px 5px #000;isolation:isolate}
+.discoverMoreGenre::before{position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,#050706b8,#05070666);content:""}
+.discoverMoreGenre[aria-pressed="true"]{outline:2px solid #b8f34a;outline-offset:-3px;color:#d8ff89}
+.discoverMoreYear{display:flex;align-items:center;gap:12px;color:#c4cbc0;font-size:13px}
+.discoverMoreYear select{min-width:120px;min-height:40px;padding:8px 12px;border:1px solid #48504a;border-radius:9px;background:#111411;color:#f5f7f3;font:inherit}
+.discoverMoreStatusOptions{display:grid;gap:0}
+.discoverMoreStatusOptions button{min-height:44px;padding:10px 2px;border:0;border-bottom:1px solid #333a34;background:transparent;color:#dce1d9;text-align:left;font-size:13px}
+.discoverMoreStatusOptions button[aria-pressed="true"]{color:#c8f875;font-weight:850}
+.discoverMoreInclude{display:flex;align-items:center;justify-content:space-between;gap:12px;color:#cfd5cc;font-size:13px}
+.discoverMoreInclude input{width:20px;height:20px;accent-color:#b8f34a}
+.discoverMoreFilterActions{display:grid;grid-template-columns:1fr 1fr;gap:10px;flex:0 0 auto;padding:12px 16px calc(12px + env(safe-area-inset-bottom));border-top:1px solid #343b35;background:#171a18}
+.discoverMoreFilterActions button{min-height:46px;border:1px solid #c9d0c7;border-radius:999px;background:transparent;color:#f0f3ef;font-size:12px;font-weight:900;letter-spacing:.04em;text-transform:uppercase}
+.discoverMoreFilterActions button:last-child{border-color:#e3d000;background:#f2df00;color:#171800}
+.discoverMoreFilterActions button:focus-visible,.discoverMoreLoad:focus-visible,.discoverMoreFilterButton:focus-visible{outline:2px solid #fff;outline-offset:2px}
+body.discoverMoreFilterOpen{overflow:hidden}
+@media(max-width:650px){
+  #descobrir-mais.discoverMoreScreen{padding:calc(var(--header-height) + 4px + env(safe-area-inset-top)) 12px calc(160px + env(safe-area-inset-bottom))}
+  .discoverMoreHeader{padding:2px 0 9px}
+  .discoverMoreHeader h1{font-size:16px}
+  .discoverMoreTabs{margin-bottom:9px}
+  .discoverMoreTabs button{min-height:41px;font-size:11px}
+  .discoverMoreGrid{gap:10px}
+  .discoverMoreCard{border-radius:9px}
+  .discoverMoreCard .poster{aspect-ratio:1.55/1}
+  .discoverMoreCard .poster>img{opacity:.82}
+  .discoverMoreCard .poster .add{top:10px;right:10px;width:37px;height:37px}
+  .discoverMoreCard .discoverMoreInfo{right:12px;bottom:11px;left:12px;gap:3px}
+  .discoverMoreCard .discoverMoreInfo strong{font-size:15px}
+  .discoverMoreCard .discoverMoreInfo small{font-size:10px}
+  .discoverMoreDock{bottom:calc(68px + env(safe-area-inset-bottom) + 8px);gap:6px}
+  .discoverMoreFilterButton{min-height:40px;padding:8px 17px}
+  .discoverMoreFilterSheet{max-height:92dvh;border-radius:16px 16px 0 0}
+  .discoverMoreFilterContent{padding:2px 14px 10px}
+  .discoverMoreFilterGroup{padding:12px 0}
+  .discoverMoreGenreGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
+  .discoverMoreGenre{min-height:60px;padding:6px;font-size:11px}
+  .discoverMoreFilterActions{padding:10px 12px calc(10px + env(safe-area-inset-bottom))}
+}
+@media(max-width:360px){.discoverMoreCard .discoverMoreInfo strong{font-size:13px}.discoverMoreGenre{min-height:54px;font-size:10px}.discoverMoreFilterChip{padding-inline:8px}}
+@media(prefers-reduced-motion:reduce){.discoverMoreCard,.discoverMoreCard .poster>img{transition:none}}
 
 @media (max-width: 650px) {
   #series .grid,
@@ -2199,12 +2309,12 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 </header>
 
 <main class="page">
-<section id="descobrir" class="view active">
+<section id="descobrir" class="view">
   <section class="section trendsSection"><div class="sectionHead trendsHead"><h2><svg class="uiIcon"><use href="#i-sparkles"></use></svg>Tendências</h2><div class="trendTabs"><button id="trendToday" class="trendTab active">Hoje</button><button id="trendWeek" class="trendTab">Nesta Semana</button></div></div><div id="homeTrending" class="row trendRow"></div></section>
   <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-star"></use></svg>Séries mais bem avaliadas</h2><button data-route="series-avaliadas">Ver todas ›</button></div><div id="homeTopRatedSeries" class="row"></div></section>
   <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes em cartaz</h2><button data-route="filmes-cartaz">Ver todos ›</button></div><p style="color:#777;margin-top:-8px">Atualmente nos cinemas</p><div id="homeNowPlayingMovies" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div><button type="button" class="discoverMoreEntry" data-discover-more-entry="movie">Descobrir mais filmes ›</button></section>
+  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div><button type="button" class="discoverMoreEntry" data-discover-more-entry="tv">Descobrir mais séries ›</button></section>
   <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2><button data-route="filmes-breve">Ver todos ›</button></div><div id="homeUpcomingMovies" class="row"></div></section>
 </section>
 
@@ -2217,11 +2327,25 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     <button type="button" class="moviesGalleryTab" id="moviesUpcomingTab" role="tab" aria-selected="false" aria-controls="moviesGrid" data-movies-tab="upcoming">EM BREVE</button>
   </div>
   <div id="moviesGrid" class="grid moviesPosterGrid" role="tabpanel" aria-labelledby="moviesListTab"></div>
-  <div id="moviesUpcomingLoad" class="moviesUpcomingLoad" hidden>
-    <button type="button" id="loadMoreMoviesUpcoming">CARREGAR MAIS FILMES</button>
-    <p id="moviesUpcomingEnd" class="moviesUpcomingEnd" role="status" hidden>Não há mais filmes disponíveis no catálogo.</p>
-  </div>
   <button type="button" class="moviesGalleryBrowse" id="moviesBrowse">NAVEGAR POR FILMES</button>
+</section>
+<section id="descobrir-mais" class="view discoverMoreScreen" aria-label="Descobrir mais">
+  <header class="discoverMoreHeader">
+    <button type="button" class="discoverMoreBack" id="discoverMoreBack" aria-label="Voltar"><svg class="uiIcon" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h12"/></svg></button>
+    <h1>Descobrir mais</h1>
+    <span aria-hidden="true"></span>
+  </header>
+  <div class="discoverMoreTabs" role="tablist" aria-label="Tipo de catálogo">
+    <button type="button" id="discoverMoreTvTab" role="tab" aria-selected="false" aria-controls="discoverMoreGrid" data-discover-more-tab="tv">SÉRIES</button>
+    <button type="button" id="discoverMoreMovieTab" role="tab" aria-selected="true" aria-controls="discoverMoreGrid" data-discover-more-tab="movie">FILMES</button>
+  </div>
+  <div id="discoverMoreGrid" class="discoverMoreGrid" role="tabpanel" aria-live="polite"></div>
+  <p id="discoverMoreStatus" class="discoverMoreStatus" role="status" aria-live="polite" hidden></p>
+  <div class="discoverMoreLoadWrap"><button type="button" id="discoverMoreLoad" class="discoverMoreLoad" hidden>Carregar mais</button></div>
+  <div class="discoverMoreDock" id="discoverMoreDock">
+    <div class="discoverMoreActiveFilters" id="discoverMoreActiveFilters" aria-label="Filtros ativos" hidden></div>
+    <button type="button" class="discoverMoreFilterButton" id="discoverMoreOpenFilters"><svg class="uiIcon" aria-hidden="true"><path d="M4 7h16M7 12h10m-7 5h4"/><circle cx="8" cy="7" r="1.5"/><circle cx="15" cy="12" r="1.5"/><circle cx="12" cy="17" r="1.5"/></svg>FILTROS</button>
+  </div>
 </section>
 <section id="movieDetail" class="view"><div id="movieDetailContent"></div></section>
 <section id="busca" class="view searchView">
@@ -2243,7 +2367,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 <section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2></div><p class="providerPageDesc">As séries mais populares no TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="minha-lista" class="view"><div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-bookmark"></use></svg>Minha lista</h2></div><div id="listGrid" class="grid"></div></section>
-<section id="episodios" class="view seriesTrackerScreen">
+<section id="episodios" class="view active seriesTrackerScreen">
   <header class="seriesTrackerHeader">
     <h1><svg class="uiIcon" aria-hidden="true"><use href="#i-tv"></use></svg>Séries</h1>
     <div class="seriesTrackerTabs" role="tablist" aria-label="Acompanhamento de séries">
@@ -2342,6 +2466,14 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
 
 
 
+<div id="discoverMoreFilterModal" class="discoverMoreFilterModal" hidden>
+  <button type="button" class="discoverMoreFilterScrim" data-discover-filter-close aria-label="Fechar filtros"></button>
+  <section class="discoverMoreFilterSheet" role="dialog" aria-modal="true" aria-labelledby="discoverMoreFilterTitle">
+    <header class="discoverMoreFilterHeader"><h2 id="discoverMoreFilterTitle">Filtros</h2><button type="button" data-discover-filter-close aria-label="Fechar filtros">×</button></header>
+    <div id="discoverMoreFilterContent" class="discoverMoreFilterContent"></div>
+    <footer class="discoverMoreFilterActions"><button type="button" id="discoverMoreReset">Redefinir</button><button type="button" id="discoverMoreApply">Aplicar</button></footer>
+  </section>
+</div>
 <nav class="bottom" aria-label="Navegação principal"><button type="button" data-route="episodios"><svg class="uiIcon"><use href="#i-tv"></use></svg><span>Séries</span></button><button type="button" data-route="filmes"><svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 8h18v13H3z"/><path d="m2 4 18 3.5-.8 3.5L1.2 7.5z"/><path d="m7 4.9-2 3.4m7-2.3-2 3.4m7-2.3-2 3.4"/></svg><span>Filmes</span></button><button type="button" id="bottomSearch" data-route="busca"><svg class="uiIcon"><use href="#i-search"></use></svg><span>Pesquisar</span></button><button type="button" data-route="perfil"><svg class="uiIcon"><use href="#i-user"></use></svg><span>Perfil</span></button></nav>
 
 
@@ -2355,6 +2487,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   const img=p=>{if(!p)return ''; const v=String(p); return /^https?:\/\//i.test(v)?v:`https://image.tmdb.org/t/p/w500${v.startsWith('/')?v:'/'+v}`}; const back=p=>{if(!p)return ''; const v=String(p); return /^https?:\/\//i.test(v)?v:`https://image.tmdb.org/t/p/w1280${v.startsWith('/')?v:'/'+v}`};
   function setImageFallback(el,fallback){if(!el)return; el.addEventListener('error',()=>{const safe=safeImageUrl(fallback);if(safe && el.dataset.fallbackApplied!=='1'){el.dataset.fallbackApplied='1';el.src=safe;return;} el.style.display='none'; const holder=el.parentElement; if(holder && !holder.querySelector('.imageFallback')){const d=document.createElement('div');d.className='imageFallback';d.textContent='CORUJA';holder.appendChild(d)}});}
   const state={home:null,current:null,season:1};
+  let moviesHomeCatalogStatus='loading';
   const seriesEpisodeTotals=new Map(),seriesEpisodeTotalRequests=new Map(),seriesEpisodeTotalRetryAfter=new Map();
   const KEY='coruja_time_state_v2';
   const loadState=()=>{try{return JSON.parse(localStorage.getItem(KEY)||'{"list":[],"watched":{},"profile":"Coruja","seasonPromptNever":{}}')}catch{return {list:[],watched:{},profile:'Coruja',seasonPromptNever:{}}}};
@@ -2602,7 +2735,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   save();
   const toast=m=>{let t=$('.toast');if(!t){t=document.createElement('div');t.className='toast';document.body.appendChild(t)}t.textContent=m;clearTimeout(window.tt);window.tt=setTimeout(()=>t.remove(),1800)};
   async function api(u){if(!user.sessionToken)throw Error('Entre na sua conta para continuar.');const r=await fetch(u,{credentials:'same-origin'});const d=await r.json();if(r.status===401){user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},watchDurations:{episodes:{},movies:{}},profile:'Coruja',comments:[],sessionToken:''};save();state.home=null;location.hash='';route()}if(!r.ok)throw Error(d.error||'Erro');return d}
-  const routeNames=['descobrir','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','perfil-colecao-series','perfil-colecao-series-favoritas','perfil-colecao-filmes','perfil-colecao-filmes-favoritos','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin','admin-mobile','admin-classic'];
+  const routeNames=['descobrir','descobrir-mais','series','filmes','series-novas','filmes-novos','busca','principais','em-alta','series-avaliadas','filmes-cartaz','filmes-populares','series-populares','filmes-breve','minha-lista','episodios','perfil','perfil-colecao-series','perfil-colecao-series-favoritas','perfil-colecao-filmes','perfil-colecao-filmes-favoritos','favoritos','favoritos-series','favoritos-filmes','perfil-publico','admin','admin-mobile','admin-classic'];
   const returnableRouteNames=new Set(routeNames.filter(name=>name!=='admin'&&name!=='admin-mobile'&&name!=='admin-classic'));
   const routeHash=value=>{const name=String(value||'').replace(/^#/,'');return '#'+(name||'episodios')};
   const isDetailRouteHash=value=>/^#(?:movie|tv)-\d+$/.test(value);
@@ -2655,6 +2788,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     trackDetailRouteTransition();
     const valid=routeNames;
     let h=location.hash.replace(/^#/,'');
+    if(h!=='descobrir-mais')stopDiscoverMoreAutoRefresh();
     if(h!=='admin-classic'){window.CorujaClassicAdminAuth?.clear?.();setClassicAdminAccess(false)}
     // O painel pode ser aberto sem revelar dados; operações exigem sessão de administrador.
     // A autorização é validada no servidor em cada chamada.
@@ -2708,7 +2842,13 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       }
       document.body.classList.remove('favoritesOnly');
       showView(h);
-      if(h==='filmes')renderMoviesPage();
+      if(h==='descobrir-mais'){renderDiscoverMore(discoverMoreTab);startDiscoverMoreAutoRefresh();refreshDiscoverMoreOnEntry();return}
+      if(h==='filmes'){
+         const savedMoviesTab=readMoviesGalleryTab();
+         if(savedMoviesTab==='list'||savedMoviesTab==='upcoming')moviesGalleryTab=savedMoviesTab;
+         persistMoviesGalleryTab();
+         renderMoviesPage();
+       }
       if(h==='perfil'){
         // Perfil normal: Minha Lista e Favoritos, sem misturar as coleções.
         renderProfile();
@@ -2731,9 +2871,20 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   }));
   document.addEventListener('click',e=>{
     const tab=e.target?.closest?.('[data-movies-tab]');
-    if(tab){moviesGalleryTab=tab.dataset.moviesTab==='upcoming'?'upcoming':'list';renderMoviesPage();return}
-    if(e.target?.closest?.('#moviesBrowse')){catalogReturnRoute='filmes';location.hash='filmes-populares'}
+    if(tab){moviesGalleryTab=tab.dataset.moviesTab==='upcoming'?'upcoming':'list';persistMoviesGalleryTab();renderMoviesPage();return}
+    const discoverEntry=e.target?.closest?.('[data-discover-more-entry]');
+    if(discoverEntry){openDiscoverMore(discoverEntry.dataset.discoverMoreEntry);return}
+    const discoverTab=e.target?.closest?.('[data-discover-more-tab]');
+    if(discoverTab){setDiscoverMoreTab(discoverTab.dataset.discoverMoreTab);return}
+    if(e.target?.closest?.('#moviesBrowse')||e.target?.closest?.('#moviesUpcomingDiscoverAll')){openDiscoverMore('movie')}
   });
+  $('#discoverMoreBack')?.addEventListener('click',returnFromDiscoverMore);
+  $('#discoverMoreOpenFilters')?.addEventListener('click',openDiscoverMoreFilters);
+  $('#discoverMoreReset')?.addEventListener('click',resetDiscoverMoreDraft);
+  $('#discoverMoreApply')?.addEventListener('click',applyDiscoverMoreFilters);
+  document.addEventListener('click',e=>{if(e.target?.closest?.('[data-discover-filter-close]'))closeDiscoverMoreFilters()});
+  $('#discoverMoreFilterContent')?.addEventListener('click',handleDiscoverMoreFilterClick);
+  $('#discoverMoreFilterContent')?.addEventListener('change',handleDiscoverMoreFilterChange);
   $('#bottomSearch').addEventListener('click',()=>{
     location.hash='busca';
     route();
@@ -2971,8 +3122,20 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     fill('#homePopularSeries',(d.tv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,6));
     fill('#homeUpcomingMovies',(d.upcomingMovies?.results||[]).map(x=>({...x,media_type:'movie'})).slice(0,6));
   }
-  let moviesGalleryTab='list',moviesGalleryRenderId=0;
-  let moviesGalleryUpcomingSource=null,moviesGalleryUpcomingItems=[],moviesGalleryUpcomingSeen=new Set(),moviesGalleryUpcomingPage=0,moviesGalleryUpcomingTotalPages=1,moviesGalleryUpcomingLoading=false,moviesGalleryUpcomingError='';
+  const MOVIES_GALLERY_HISTORY_KEY='corujaMoviesGalleryTab';
+  const MOVIES_GALLERY_SESSION_KEY='coruja.moviesGalleryTab';
+  function readMoviesGalleryTab(){
+    const historyTab=history.state?.[MOVIES_GALLERY_HISTORY_KEY];if(historyTab==='list'||historyTab==='upcoming')return historyTab;
+    try{const saved=sessionStorage.getItem(MOVIES_GALLERY_SESSION_KEY);if(saved==='list'||saved==='upcoming')return saved}catch{}
+    return 'list';
+  }
+  let moviesGalleryTab=readMoviesGalleryTab(),moviesGalleryRenderId=0;
+  function persistMoviesGalleryTab(){
+    try{sessionStorage.setItem(MOVIES_GALLERY_SESSION_KEY,moviesGalleryTab)}catch{}
+    const currentState=history.state&&typeof history.state==='object'?history.state:{};
+    try{history.replaceState({...currentState,[MOVIES_GALLERY_HISTORY_KEY]:moviesGalleryTab},'',location.href)}catch{}
+  }
+  let moviesGalleryUpcomingItems=[],moviesGalleryUpcomingStatus='idle',moviesGalleryUpcomingError='',moviesGalleryUpcomingRequestId=0;
   const moviesGalleryPosterRequests=new Map();
   function moviesGalleryCatalogPoster(id){
     const pools=[state.home?.movies?.results,state.home?.popularMovies?.results,state.home?.upcomingMovies?.results,state.home?.newMovies?.results];
@@ -3000,7 +3163,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
   }
   function loadMoviesGalleryDetails(id){
     const key=String(id);let request=moviesGalleryPosterRequests.get(key);
-    if(!request){request=api('/api/movie/'+encodeURIComponent(key));moviesGalleryPosterRequests.set(key,request);request.catch(()=>moviesGalleryPosterRequests.delete(key))}
+    if(!request){request=fetch('/api/movie/'+encodeURIComponent(key),{credentials:'same-origin'}).then(async response=>{const details=await response.json().catch(()=>({}));if(!response.ok)throw new Error('Não foi possível carregar os detalhes do filme.');return details});moviesGalleryPosterRequests.set(key,request);request.catch(()=>moviesGalleryPosterRequests.delete(key))}
     return request;
   }
   async function hydrateMoviesGalleryPosters(items,renderId){
@@ -3018,45 +3181,28 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     await Promise.all(Array.from({length:Math.min(4,items.length)},worker));
   }
   function localDateKey(){const date=new Date();return [date.getFullYear(),String(date.getMonth()+1).padStart(2,'0'),String(date.getDate()).padStart(2,'0')].join('-')}
-  function normalizeUpcomingMovie(item,todayKey=localDateKey()){
-    const releaseDate=String(item?.release_date||'');
-    return item?.id&&/^\d{4}-\d{2}-\d{2}$/.test(releaseDate)&&releaseDate>=todayKey?{...item,media_type:'movie'}:null;
+  function discoverMoreLocalDateKey(date=new Date()){
+    const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date),values=Object.fromEntries(parts.map(part=>[part.type,part.value]));
+    return `${values.year}-${values.month}-${values.day}`;
   }
-  function resetMoviesGalleryUpcoming(source){
-    moviesGalleryUpcomingSource=source;moviesGalleryUpcomingItems=[];moviesGalleryUpcomingSeen=new Set();moviesGalleryUpcomingError='';
-    moviesGalleryUpcomingPage=Number(source?.page)||1;moviesGalleryUpcomingTotalPages=Math.max(moviesGalleryUpcomingPage,Number(source?.total_pages)||1);
-    (Array.isArray(source?.results)?source.results:[]).forEach(item=>{const normalized=normalizeUpcomingMovie(item);if(!normalized)return;const key=String(normalized.id);if(moviesGalleryUpcomingSeen.has(key))return;moviesGalleryUpcomingSeen.add(key);moviesGalleryUpcomingItems.push(normalized)});
-    moviesGalleryUpcomingItems.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
-  }
-  function appendMoviesGalleryUpcoming(items,renderId){
-    const box=$('#moviesGrid');if(!box||!items.length)return;
-    box.querySelector('.moviesGalleryEmpty')?.remove();
-    const fragment=document.createDocumentFragment(),missingPosters=[];
-    items.forEach(item=>{const catalogPoster=moviesGalleryCatalogPoster(item.id),posterPath=safeImageUrl(item.poster_path)?item.poster_path:catalogPoster,galleryItem={...item,poster_path:posterPath||item.poster_path,media_type:'movie'};fragment.appendChild(moviesGalleryCard(galleryItem));if(!posterPath)missingPosters.push(item)});
-    appendDomPreservingScroll(box,fragment);if(missingPosters.length)hydrateMoviesGalleryPosters(missingPosters,renderId);
-  }
-  function updateMoviesGalleryUpcomingControls(hasItems){
-    const controls=$('#moviesUpcomingLoad'),button=$('#loadMoreMoviesUpcoming'),end=$('#moviesUpcomingEnd');if(!controls||!button||!end)return;
-    const hasMore=moviesGalleryUpcomingPage<moviesGalleryUpcomingTotalPages;
-    controls.hidden=moviesGalleryTab!=='upcoming'||(!hasMore&&!hasItems&&!moviesGalleryUpcomingError);
-    button.hidden=!hasMore;button.disabled=moviesGalleryUpcomingLoading;button.textContent=moviesGalleryUpcomingLoading?'CARREGANDO...':'CARREGAR MAIS FILMES';
-    end.hidden=moviesGalleryTab!=='upcoming'||moviesGalleryUpcomingLoading||(!moviesGalleryUpcomingError&&(hasMore||!hasItems));
-    end.textContent=moviesGalleryUpcomingError||'Não há mais filmes disponíveis no catálogo.';
-  }
-  async function loadMoreMoviesGalleryUpcoming(){
-    if(moviesGalleryUpcomingLoading||moviesGalleryUpcomingPage>=moviesGalleryUpcomingTotalPages)return;
-    moviesGalleryUpcomingLoading=true;moviesGalleryUpcomingError='';updateMoviesGalleryUpcomingControls(moviesGalleryUpcomingItems.length>0);
-    const renderId=moviesGalleryRenderId;
-    try{
-      const nextPage=moviesGalleryUpcomingPage+1,data=await api('/api/movies/upcoming?page='+nextPage);
-      if(location.hash!=='#filmes'||moviesGalleryTab!=='upcoming')return;
-      moviesGalleryUpcomingPage=nextPage;moviesGalleryUpcomingTotalPages=Math.max(nextPage,Number(data?.total_pages)||nextPage);
-      const additions=[],todayKey=localDateKey();
-      (Array.isArray(data?.results)?data.results:[]).forEach(item=>{const normalized=normalizeUpcomingMovie(item,todayKey);if(!normalized)return;const key=String(normalized.id);if(moviesGalleryUpcomingSeen.has(key))return;moviesGalleryUpcomingSeen.add(key);additions.push(normalized)});
-      additions.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
-      moviesGalleryUpcomingItems.push(...additions);appendMoviesGalleryUpcoming(additions,renderId);
-    }catch{moviesGalleryUpcomingError='Não foi possível carregar mais filmes agora. Tente novamente.'}
-    finally{moviesGalleryUpcomingLoading=false;updateMoviesGalleryUpcomingControls(moviesGalleryUpcomingItems.length>0)}
+  function isValidMovieReleaseDate(value){const match=/^(\d{4})-(\d{2})-(\d{2})$/.exec(String(value||''));if(!match)return false;const year=Number(match[1]),month=Number(match[2]),day=Number(match[3]),date=new Date(year,month-1,day);return date.getFullYear()===year&&date.getMonth()===month-1&&date.getDate()===day}
+  function invalidateMoviesGalleryUpcoming(){moviesGalleryUpcomingRequestId++;moviesGalleryUpcomingStatus='idle';moviesGalleryUpcomingItems=[];moviesGalleryUpcomingError=''}
+  async function loadSavedMoviesUpcoming(){
+    if(moviesGalleryUpcomingStatus==='loading')return;
+    const requestId=++moviesGalleryUpcomingRequestId,todayKey=localDateKey(),seen=new Set();
+    const savedMovies=(Array.isArray(user.list)?user.list:[]).filter(item=>item?.id&&mediaTypeOf(item)==='movie').filter(item=>{const key=String(item.id);if(seen.has(key))return false;seen.add(key);return true});
+    moviesGalleryUpcomingStatus='loading';moviesGalleryUpcomingError='';
+    let cursor=0,failedLookups=0;const upcoming=[];
+    const worker=async()=>{while(cursor<savedMovies.length){const item=savedMovies[cursor++];let releaseDate=String(item.release_date||'');
+      if(!isValidMovieReleaseDate(releaseDate)){try{const details=await loadMoviesGalleryDetails(item.id);releaseDate=String(details?.release_date||'')}catch{failedLookups++;continue}}
+      if(isValidMovieReleaseDate(releaseDate)&&releaseDate>todayKey)upcoming.push({...item,release_date:releaseDate,media_type:'movie'});
+    }};
+    await Promise.all(Array.from({length:Math.min(4,savedMovies.length)},worker));
+    if(requestId!==moviesGalleryUpcomingRequestId)return;
+    moviesGalleryUpcomingItems=upcoming.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
+    moviesGalleryUpcomingError=failedLookups?'Não foi possível confirmar a data de lançamento de alguns filmes. Tente novamente.':'';
+    moviesGalleryUpcomingStatus='ready';
+    if(location.hash==='#filmes'&&moviesGalleryTab==='upcoming')renderMoviesPage();
   }
   function renderMoviesPage(){
     const box=$('#moviesGrid');if(!box)return;
@@ -3068,15 +3214,27 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
     listTab?.setAttribute('aria-selected',String(!upcoming));
     upcomingTab?.setAttribute('aria-selected',String(upcoming));
     box.setAttribute('aria-labelledby',upcoming?'moviesUpcomingTab':'moviesListTab');
-    const upcomingSource=state.home?.upcomingMovies||null;
-    if(upcomingSource!==moviesGalleryUpcomingSource)resetMoviesGalleryUpcoming(upcomingSource);
+    if(upcoming&&moviesGalleryUpcomingStatus==='idle')loadSavedMoviesUpcoming();
+    if(upcoming&&moviesGalleryUpcomingStatus!=='ready'){
+      box.replaceChildren();
+      const notice=document.createElement('div');notice.className='moviesGalleryEmpty moviesGalleryLoading';notice.setAttribute('role','status');
+      notice.textContent='Carregando seus filmes em breve…';
+      box.appendChild(notice);
+      const browse=$('#moviesBrowse');if(browse)browse.hidden=true;
+      return;
+    }
     const source=upcoming?moviesGalleryUpcomingItems:(Array.isArray(user.list)?user.list:[]).filter(x=>x?.id&&mediaTypeOf(x)==='movie').map(x=>({...x,media_type:'movie'}));
     const seen=new Set(),items=source.filter(x=>{const id=String(x.id);if(seen.has(id))return false;seen.add(id);return true});
     if(upcoming)items.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
     box.replaceChildren();
     if(!items.length){
       const empty=document.createElement('div');empty.className='moviesGalleryEmpty';empty.setAttribute('role','status');
-      empty.textContent=upcoming?(moviesGalleryUpcomingPage<moviesGalleryUpcomingTotalPages?'Não há lançamentos nesta página. Carregue mais para consultar o catálogo.':'Não há filmes com data de lançamento futura disponíveis no momento.'):'Sua lista de filmes está vazia. Adicione filmes usando o botão + nos pôsteres.';
+      if(upcoming&&moviesGalleryUpcomingError){
+        empty.textContent=moviesGalleryUpcomingError;
+      }else if(upcoming){
+        empty.classList.add('moviesUpcomingEmptyState');
+        empty.innerHTML=`<svg class="moviesUpcomingPopcorn" viewBox="0 0 200 160" role="img" aria-label="Pipoca em um balde"><circle cx="100" cy="83" r="58" fill="#9bea43"/><path d="M62 75h76l-10 67H72L62 75Z" fill="#f4f3e8" stroke="#211f1c" stroke-width="5"/><path d="m76 77 3 64m20-64v64m20-64-3 64" stroke="#ef3a35" stroke-width="13"/><path d="M60 76c-7-14 4-23 16-17 0-13 14-17 23-7 8-13 23-9 24 4 13-7 24 5 17 18-6 7-14 9-23 6H77c-8 2-13 1-17-4Z" fill="#fff1a1" stroke="#2b261d" stroke-width="4"/><path d="M47 52l-7-8m112 8 9-7M52 110l-11 2m111-1 11 4M99 16l2-11" stroke="#f5ca2a" stroke-width="5" stroke-linecap="round"/><circle cx="36" cy="76" r="4" fill="#a24bf2"/><circle cx="166" cy="70" r="4" fill="#a24bf2"/><path d="m49 32 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Zm103 77 3 7 7 3-7 3-3 7-3-7-7-3 7-3 3-7Z" fill="#f3cc24"/></svg><h2>Sua lista 'Em breve' está vazia!</h2><p>Adicione filmes que você quer assistir.</p><button type="button" id="moviesUpcomingDiscoverAll">VER TODOS OS FILMES</button>`;
+      }else empty.textContent='Sua lista de filmes está vazia. Adicione filmes usando o botão + nos pôsteres.';
       box.appendChild(empty);
     }
     const missingPosters=[];
@@ -3087,9 +3245,223 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       if(!posterPath)missingPosters.push(item);
     });
     if(missingPosters.length)hydrateMoviesGalleryPosters(missingPosters,renderId);
-    updateMoviesGalleryUpcomingControls(items.length>0);
+    const browse=$('#moviesBrowse');if(browse)browse.hidden=upcoming&&!items.length;
   }
-  $('#loadMoreMoviesUpcoming')?.addEventListener('click',loadMoreMoviesGalleryUpcoming);
+  const discoverMoreDefaults=()=>({source:'trending',genreIds:[],year:'',status:'all',includeAdded:true});
+  const discoverMoreCatalogs={movie:createDiscoverMoreCatalog(),tv:createDiscoverMoreCatalog()};
+  function createDiscoverMoreCatalog(){return{items:[],seen:new Set(),page:0,totalPages:1,pageItems:new Map(),loading:false,loaded:false,error:'',refreshError:'',refreshPromise:null,cacheExpiresAt:0,lastUpdatedAt:0,lastDateKey:'',autoLoadReady:true,filters:discoverMoreDefaults(),draft:discoverMoreDefaults(),genres:[],genresLoaded:false,genresLoading:false,genresExpiresAt:0,genreImages:new Map(),genreImageExpires:new Map(),genreImagesLoading:false,requestId:0,details:new Map()}}
+  let discoverMoreTab='movie',discoverMoreReturnHash='#filmes',discoverMoreGenreObserver=null,discoverMoreAutoRefreshTimer=0,discoverMoreDayCheckTimer=0,discoverMoreObservedDate=discoverMoreLocalDateKey();
+  function refreshDiscoverMoreAll(reason='automatic'){
+    ['movie','tv'].forEach(type=>{const catalog=discoverMoreCatalog(type);if(catalog.loaded)refreshDiscoverMoreCatalog(type,reason);else if(!catalog.loading)loadDiscoverMorePage(type,true);if(catalog.genresLoaded)loadDiscoverMoreGenres(type)});
+  }
+  function checkDiscoverMoreLocalDay(){
+    const today=discoverMoreLocalDateKey();if(today===discoverMoreObservedDate)return;discoverMoreObservedDate=today;const movies=discoverMoreCatalog('movie');if(movies.filters.source==='upcoming'){if(movies.loaded)refreshDiscoverMoreCatalog('movie','day-change');else if(!movies.loading)loadDiscoverMorePage('movie',true)}
+  }
+  function startDiscoverMoreAutoRefresh(){
+    stopDiscoverMoreAutoRefresh();discoverMoreObservedDate=discoverMoreLocalDateKey();discoverMoreAutoRefreshTimer=setInterval(()=>{if(location.hash==='#descobrir-mais'&&document.visibilityState==='visible')refreshDiscoverMoreAll('interval')},10*60*1000);discoverMoreDayCheckTimer=setInterval(()=>{if(location.hash==='#descobrir-mais'&&document.visibilityState==='visible')checkDiscoverMoreLocalDay()},30*1000);
+  }
+  function stopDiscoverMoreAutoRefresh(){if(discoverMoreAutoRefreshTimer){clearInterval(discoverMoreAutoRefreshTimer);discoverMoreAutoRefreshTimer=0}if(discoverMoreDayCheckTimer){clearInterval(discoverMoreDayCheckTimer);discoverMoreDayCheckTimer=0}}
+  function refreshDiscoverMoreOnEntry(){discoverMoreObservedDate=discoverMoreLocalDateKey();refreshDiscoverMoreAll('entry')}
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState!=='visible'||location.hash!=='#descobrir-mais')return;checkDiscoverMoreLocalDay();refreshDiscoverMoreAll('tab-visible')});
+  const discoverMoreSourceLabels={trending:'Em alta',popular:'Populares',top_rated:'Mais bem avaliados',upcoming:'Próximos lançamentos'};
+  function discoverMoreCatalog(type=discoverMoreTab){return discoverMoreCatalogs[type==='tv'?'tv':'movie']}
+  function openDiscoverMore(type='movie'){
+    discoverMoreReturnHash=routeHash(location.hash||'#filmes');
+    discoverMoreTab=type==='tv'?'tv':'movie';
+    if(location.hash==='#descobrir-mais'){renderDiscoverMore(discoverMoreTab);return}
+    location.hash='descobrir-mais';
+  }
+  function returnFromDiscoverMore(){
+    const target=isReturnableRouteHash(discoverMoreReturnHash)?discoverMoreReturnHash:'#filmes';
+    pendingRouteScrollRestore={route:target,scrollY:routeScrollPositions.get(target)||0};
+    if(previousRouteHash===target){history.back();return}
+    location.hash=target;
+  }
+  function setDiscoverMoreTab(type){
+    const next=type==='tv'?'tv':'movie';if(next===discoverMoreTab)return;
+    discoverMoreTab=next;scrollToWithoutAnimation(0);renderDiscoverMore(next);
+    const catalog=discoverMoreCatalog(next);if(!catalog.loaded&&!catalog.loading)loadDiscoverMorePage(next,true);else if(catalog.loaded&&catalog.cacheExpiresAt<=Date.now())refreshDiscoverMoreCatalog(next,'category-switch');
+  }
+  function discoverMoreSummary(type,item){
+    const year=String(item?.release_date||item?.first_air_date||'').slice(0,4);
+    const catalog=discoverMoreCatalog(type),genreNames=(item?.genre_ids||[]).map(id=>catalog.genres.find(genre=>Number(genre.id)===Number(id))?.name||genreNamePt({id})).filter(Boolean);
+    const labels=[year,...genreNames.slice(0,3)].filter(Boolean);
+    return labels.join(' · ')|| (type==='tv'?'Série':'Filme');
+  }
+  function createDiscoverMoreCard(type,item){
+    const id=Number(item?.id),title=String(item?.name||item?.title||'Título sem nome'),catalog=discoverMoreCatalog(type);
+    const element=document.createElement('article');element.className='card discoverMoreCard';element.dataset.mediaId=String(id);element.dataset.mediaType=type;element.setAttribute('role','button');element.setAttribute('tabindex','0');element.setAttribute('aria-label',`${title}: abrir detalhes`);
+    const poster=document.createElement('div');poster.className='poster';
+    const image=document.createElement('img');image.alt='';image.loading='lazy';image.decoding='async';image.dataset.fallback=item?.poster_path||'';
+    const initialPath=safeImageUrl(item?.backdrop_path)?item.backdrop_path:item?.poster_path;
+    const initialUrl=safeImageUrl(initialPath);
+    const showPosterFallback=()=>{image.remove();if(!poster.querySelector('.discoverMorePosterFallback')){const placeholder=document.createElement('div');placeholder.className='discoverMorePosterFallback';placeholder.textContent=title;poster.prepend(placeholder)}};
+    if(initialUrl){image.src=initialUrl;image.addEventListener('error',()=>{const fallback=safeImageUrl(image.dataset.fallback);if(fallback&&image.dataset.fallbackTried!=='1'){image.dataset.fallbackTried='1';image.src=fallback;return}showPosterFallback()},{once:false});poster.appendChild(image)}else showPosterFallback();
+    const add=document.createElement('button');add.type='button';add.className='add discoverMoreAdd';add.innerHTML=cardActionIcon('i-plus');add.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();const current=discoverMoreCatalog(type).items.find(entry=>Number(entry.id)===id)||item;toggleList({...current,media_type:type})});
+    poster.appendChild(add);
+    const info=document.createElement('div');info.className='discoverMoreInfo';
+    const titleElement=document.createElement('strong');titleElement.textContent=title;
+    const meta=document.createElement('small');meta.className='discoverMoreMeta';meta.textContent=discoverMoreSummary(type,item);
+    const extra=document.createElement('small');extra.className='discoverMoreExtra';extra.dataset.discoverExtra=String(id);extra.textContent=type==='movie'?'Duração carregando…':'Carregando informações…';
+    info.append(titleElement,meta,extra);poster.appendChild(info);element.appendChild(poster);
+    element.addEventListener('click',event=>{if(event.target?.closest?.('.add'))return;location.hash=(type==='tv'?'tv-':'movie-')+id});
+    element.addEventListener('keydown',event=>{if(event.target!==element)return;if(event.key==='Enter'||event.key===' '){event.preventDefault();location.hash=(type==='tv'?'tv-':'movie-')+id}});
+    element.dataset.discoverSignature=discoverMoreCardSignature(item);const alreadyListed=(user.list||[]).some(entry=>Number(entry.id)===id&&mediaTypeOf(entry)===type);const label=alreadyListed?'Remover da minha lista':'Adicionar à minha lista';add.classList.toggle('on',alreadyListed);add.title=label;add.setAttribute('aria-label',label);add.setAttribute('aria-pressed',String(alreadyListed));
+    if(discoverMoreGenreObserver)discoverMoreGenreObserver.observe(element);else setTimeout(()=>hydrateDiscoverMoreCard(element,type,id,catalog.requestId),0);
+    return element;
+  }
+  const discoverMoreDetailRequests=new Map();
+  function hydrateDiscoverMoreCard(element,type,id,requestId){
+    if(!element?.isConnected)return;
+    const key=`${type}:${id}`;const catalog=discoverMoreCatalog(type);let request=discoverMoreDetailRequests.get(key);
+    if(!request){request=api(`/api/discover/item/${type}/${encodeURIComponent(id)}`);discoverMoreDetailRequests.set(key,request);request.catch(()=>discoverMoreDetailRequests.delete(key))}
+    request.then(detail=>{
+      if(!element.isConnected||catalog.requestId!==requestId)return;
+      const extra=$(`[data-discover-extra="${id}"]`,element);if(!extra)return;
+      if(type==='movie'){
+        const runtime=Number(detail?.runtime)||0;
+        extra.textContent=runtime?`${Math.floor(runtime/60)}h ${runtime%60}min`:'Duração não informada';
+      }else{
+        const statusMap={'Returning Series':'Em andamento','In Production':'Em produção','Ended':'Encerrada','Canceled':'Cancelada','Cancelled':'Cancelada','Planned':'Planejada'};
+        const status=statusMap[String(detail?.status||'')]||'Status não informado';
+        const seasons=Number(detail?.number_of_seasons)||0;
+        extra.textContent=seasons?`${status} · ${seasons} temporada${seasons===1?'':'s'}`:status;
+      }
+    }).catch(()=>{if(element.isConnected){const extra=$(`[data-discover-extra="${id}"]`,element);if(extra)extra.textContent=type==='movie'?'Duração não informada':'Informações não disponíveis'}});
+  }
+  if('IntersectionObserver' in window){
+    discoverMoreGenreObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{if(!entry.isIntersecting)return;discoverMoreGenreObserver.unobserve(entry.target);const type=entry.target.dataset.mediaType,id=Number(entry.target.dataset.mediaId);hydrateDiscoverMoreCard(entry.target,type,id,discoverMoreCatalog(type).requestId)}),{rootMargin:'280px 0px'});
+  }
+  function discoverMoreCardSignature(item){return JSON.stringify([item?.id,item?.title,item?.name,item?.poster_path,item?.backdrop_path,item?.release_date,item?.first_air_date,item?.genre_ids,item?.overview])}
+  function discoverMoreStatusMessage(catalog){if(catalog.refreshError&&catalog.items.length)return catalog.refreshError;if(catalog.error)return catalog.error;if(!catalog.items.length)return catalog.loaded?'Nenhum título encontrado com esses critérios.':'Carregando títulos reais do TMDB…';return''}
+  function renderDiscoverMoreGrid(type){
+    const box=$('#discoverMoreGrid'),status=$('#discoverMoreStatus');if(!box||type!==discoverMoreTab)return;
+    const catalog=discoverMoreCatalog(type),alreadyThisType=box.children.length&&[...box.children].every(element=>element.dataset.mediaType===type);
+    if(alreadyThisType&&catalog.items.length)reconcileDiscoverMoreGrid(type,catalog.items);
+    else{box.querySelectorAll('.discoverMoreCard').forEach(element=>discoverMoreGenreObserver?.unobserve(element));box.replaceChildren();catalog.items.forEach(item=>box.appendChild(createDiscoverMoreCard(type,item)))}
+    if(status){status.hidden=!!catalog.items.length?!catalog.refreshError:false;status.textContent=discoverMoreStatusMessage(catalog)}
+    updateDiscoverMoreCatalogControls(type);
+    renderDiscoverMoreActiveFilters(type);
+  }
+  function updateDiscoverMoreCatalogControls(type=discoverMoreTab){
+    const catalog=discoverMoreCatalog(type),status=$('#discoverMoreStatus'),load=$('#discoverMoreLoad');
+    if(status){status.hidden=!!catalog.items.length?!catalog.refreshError:false;status.textContent=discoverMoreStatusMessage(catalog)}
+    if(load){const hasMore=catalog.page<catalog.totalPages;load.hidden=!hasMore&&!catalog.error;load.disabled=catalog.loading||!!catalog.refreshPromise;load.textContent=catalog.loading?'Carregando…':catalog.error?'Tentar novamente':'Carregar mais títulos'}
+  }
+  function renderDiscoverMore(type=discoverMoreTab){
+    discoverMoreTab=type==='tv'?'tv':'movie';
+    const tvTab=$('#discoverMoreTvTab'),movieTab=$('#discoverMoreMovieTab'),grid=$('#discoverMoreGrid');
+    tvTab?.setAttribute('aria-selected',String(discoverMoreTab==='tv'));movieTab?.setAttribute('aria-selected',String(discoverMoreTab==='movie'));
+    if(grid)grid.setAttribute('aria-labelledby',discoverMoreTab==='tv'?'discoverMoreTvTab':'discoverMoreMovieTab');
+    $$('.bottom button').forEach(button=>button.classList.toggle('active',button.dataset.route===(discoverMoreTab==='tv'?'episodios':'filmes')));
+    renderDiscoverMoreGrid(discoverMoreTab);
+    const catalog=discoverMoreCatalog(discoverMoreTab);if(!catalog.loaded&&!catalog.loading)loadDiscoverMorePage(discoverMoreTab,true);
+  }
+  function discoverMoreRequestParams(type,filters,page){const params=new URLSearchParams({type,source:filters.source,page:String(page)});if(filters.genreIds.length)params.set('genres',filters.genreIds.join(','));if(filters.year)params.set('year',filters.year);if(type==='tv'&&filters.status!=='all')params.set('status',filters.status);return params}
+  function filterDiscoverMorePage(type,data,filters,seen=new Set()){
+    const today=discoverMoreLocalDateKey(),listIds=new Set((user.list||[]).filter(item=>mediaTypeOf(item)===type).map(item=>String(item.id))),items=[];
+    (Array.isArray(data?.results)?data.results:[]).forEach(item=>{const id=Number(item?.id);if(!Number.isSafeInteger(id)||id<=0)return;if(filters.source==='upcoming'&&(!/^\d{4}-\d{2}-\d{2}$/.test(String(item.release_date||''))||item.release_date<today))return;if(!filters.includeAdded&&listIds.has(String(id)))return;const key=String(id);if(seen.has(key))return;seen.add(key);items.push({...item,media_type:type})});return items;
+  }
+  async function loadDiscoverMorePage(type=discoverMoreTab,reset=false){
+    const catalog=discoverMoreCatalog(type);if(catalog.loading||(catalog.refreshPromise&&!reset))return;
+    if(reset){catalog.requestId++;catalog.items=[];catalog.seen.clear();catalog.pageItems.clear();catalog.page=0;catalog.totalPages=1;catalog.loaded=false;catalog.error='';catalog.refreshError='';catalog.autoLoadReady=true}
+    if(catalog.page>=catalog.totalPages&&catalog.loaded&&!reset)return;
+    catalog.loading=true;catalog.error='';const requestId=catalog.requestId,nextPage=catalog.page+1;let additions=[];
+    if(type===discoverMoreTab){if(reset)renderDiscoverMoreGrid(type);else{const status=$('#discoverMoreStatus'),load=$('#discoverMoreLoad');if(status&&!catalog.items.length){status.hidden=false;status.textContent='Carregando títulos reais do TMDB…'}if(load){load.disabled=true;load.textContent='Carregando…'}}}
+    const filters=discoverMoreCopyFilters(catalog.filters),params=discoverMoreRequestParams(type,filters,nextPage);
+    try{
+      const data=await api(`/api/discover?${params.toString()}`);if(requestId!==catalog.requestId)return;
+      additions=filterDiscoverMorePage(type,data,filters,catalog.seen);
+      catalog.items.push(...additions);catalog.page=Number(data?.page)||nextPage;catalog.totalPages=Math.max(catalog.page,Number(data?.total_pages)||catalog.page);catalog.pageItems.set(catalog.page,additions);catalog.cacheExpiresAt=Number(data?._cacheExpiresAt)||Date.now()+10*60*1000;catalog.lastUpdatedAt=Date.now();catalog.lastDateKey=discoverMoreLocalDateKey();catalog.loaded=true;catalog.refreshError='';catalog.autoLoadReady=additions.length>0;
+    }catch{if(requestId===catalog.requestId){catalog.error='Não foi possível carregar o catálogo agora. Verifique sua conexão e tente novamente.';catalog.loaded=true;catalog.autoLoadReady=false}}
+    finally{if(requestId===catalog.requestId){catalog.loading=false;if(type===discoverMoreTab){const box=$('#discoverMoreGrid');if(reset){renderDiscoverMoreGrid(type)}else if(box){additions.forEach(item=>box.appendChild(createDiscoverMoreCard(type,item)));updateDiscoverMoreCatalogControls(type);renderDiscoverMoreActiveFilters(type)}}}}
+  }
+  function reconcileDiscoverMoreGrid(type,items){
+    if(type!==discoverMoreTab)return;const box=$('#discoverMoreGrid');if(!box)return;
+    const current=[...box.querySelectorAll('.discoverMoreCard')],anchor=current.find(card=>card.getBoundingClientRect().bottom>0),anchorTop=anchor?.getBoundingClientRect().top;
+    const existing=new Map(current.map(card=>[`${card.dataset.mediaType}:${card.dataset.mediaId}`,card])),wanted=new Set();
+    items.forEach(item=>{const key=`${type}:${item.id}`;wanted.add(key);const signature=discoverMoreCardSignature(item);let card=existing.get(key);if(!card||card.dataset.discoverSignature!==signature){const replacement=createDiscoverMoreCard(type,item);if(card){discoverMoreGenreObserver?.unobserve(card);card.replaceWith(replacement)}card=replacement}else{const button=card.querySelector('.discoverMoreAdd'),listed=(user.list||[]).some(entry=>Number(entry.id)===Number(item.id)&&mediaTypeOf(entry)===type),label=listed?'Remover da minha lista':'Adicionar à minha lista';button?.classList.toggle('on',listed);if(button){button.title=label;button.setAttribute('aria-label',label);button.setAttribute('aria-pressed',String(listed))}}
+      box.appendChild(card);
+    });
+    existing.forEach((card,key)=>{if(!wanted.has(key)){discoverMoreGenreObserver?.unobserve(card);card.remove()}});
+    if(anchor&&anchor.isConnected&&Number.isFinite(anchorTop)){const delta=anchor.getBoundingClientRect().top-anchorTop;if(Math.abs(delta)>0.5)window.scrollTo(window.scrollX,Math.max(0,window.scrollY+delta))}
+    updateDiscoverMoreCatalogControls(type);renderDiscoverMoreActiveFilters(type);
+  }
+  async function refreshDiscoverMoreCatalog(type,reason='automatic'){
+    const catalog=discoverMoreCatalog(type);if(!catalog.loaded)return loadDiscoverMorePage(type,true);if(catalog.loading)return;if(catalog.refreshPromise)return catalog.refreshPromise;
+    const filters=discoverMoreCopyFilters(catalog.filters),filterKey=JSON.stringify(filters),requestId=catalog.requestId,loadedPage=Math.max(1,catalog.page),params=discoverMoreRequestParams(type,filters,1);catalog.refreshError='';catalog.refreshPromise=(async()=>{
+      try{
+        const data=await api(`/api/discover?${params.toString()}`);if(requestId!==catalog.requestId||filterKey!==JSON.stringify(catalog.filters))return;
+        const nextPage=Number(data?.page)||1,totalPages=Math.max(nextPage,Number(data?.total_pages)||nextPage),merged=[],seen=new Set(),pages=new Map();
+        const first=filterDiscoverMorePage(type,data,filters,seen);pages.set(1,first);merged.push(...first);
+        for(let page=2;page<=Math.min(loadedPage,totalPages);page++){const previous=catalog.pageItems.get(page)||[],clean=filterDiscoverMorePage(type,{results:previous},filters,seen);pages.set(page,clean);merged.push(...clean)}
+        catalog.items=merged;catalog.seen=seen;catalog.pageItems=pages;catalog.page=Math.min(loadedPage,totalPages);catalog.totalPages=totalPages;catalog.loaded=true;catalog.cacheExpiresAt=Number(data?._cacheExpiresAt)||Date.now()+10*60*1000;catalog.lastUpdatedAt=Date.now();catalog.lastDateKey=discoverMoreLocalDateKey();catalog.error='';catalog.refreshError='';catalog.autoLoadReady=merged.length>0;
+        reconcileDiscoverMoreGrid(type,merged);
+      }catch{if(requestId===catalog.requestId){catalog.refreshError='Não foi possível atualizar agora; os títulos carregados continuam disponíveis.';if(type===discoverMoreTab)updateDiscoverMoreCatalogControls(type)}}
+      finally{catalog.refreshPromise=null;if(type===discoverMoreTab)updateDiscoverMoreCatalogControls(type)}
+    })();if(type===discoverMoreTab)updateDiscoverMoreCatalogControls(type);return catalog.refreshPromise;
+  }
+  async function loadDiscoverMoreGenres(type=discoverMoreTab){
+    const catalog=discoverMoreCatalog(type);if(catalog.genresLoading)return;
+    if(catalog.genresLoaded&&catalog.genresExpiresAt>Date.now()){loadDiscoverMoreGenreImages(type);return}
+    catalog.genresLoading=true;
+    try{const result=await api(`/api/discover/genres?type=${type}`);catalog.genres=Array.isArray(result?.genres)?result.genres:catalog.genres;catalog.genresLoaded=true;catalog.genresExpiresAt=Number(result?._cacheExpiresAt)||Date.now()+24*60*60*1000}
+    catch{if(!catalog.genresLoaded){catalog.genres=[];catalog.genresLoaded=true}catalog.genresExpiresAt=Date.now()+60*1000}
+    finally{catalog.genresLoading=false;if(!$('#discoverMoreFilterModal')?.hidden&&type===discoverMoreTab)renderDiscoverMoreFilterContent();loadDiscoverMoreGenreImages(type)}
+  }
+  async function loadDiscoverMoreGenreImages(type=discoverMoreTab){
+    const catalog=discoverMoreCatalog(type);if(!catalog.genresLoaded||catalog.genreImagesLoading||!catalog.genres.length)return;
+    catalog.items.forEach(item=>{const path=safeImageUrl(item?.backdrop_path)?item.backdrop_path:item?.poster_path,image=safeImageUrl(path);if(!image)return;(item.genre_ids||[]).forEach(id=>{const key=String(id);if(!catalog.genreImages.has(key)){catalog.genreImages.set(key,image);catalog.genreImageExpires.set(key,0)}})});
+    const now=Date.now(),targets=catalog.genres.filter(genre=>genre?.id&&(!catalog.genreImages.has(String(genre.id))||(catalog.genreImageExpires.get(String(genre.id))||0)<=now));if(!targets.length)return;
+    catalog.genreImagesLoading=true;let cursor=0,earliest=Number.POSITIVE_INFINITY;
+    const worker=async()=>{while(cursor<targets.length){const genre=targets[cursor++],id=String(genre.id);try{const params=new URLSearchParams({type,source:'popular',genres:id,page:'1'}),data=await api(`/api/discover?${params.toString()}`),results=Array.isArray(data?.results)?data.results:[];const match=results.find(item=>(item.genre_ids||[]).some(value=>String(value)===id)&&(safeImageUrl(item.backdrop_path)||safeImageUrl(item.poster_path)));const path=match&&(safeImageUrl(match.backdrop_path)?match.backdrop_path:match.poster_path),image=safeImageUrl(path),expires=Number(data?._cacheExpiresAt)||Date.now()+10*60*1000;earliest=Math.min(earliest,expires);if(image){catalog.genreImages.set(id,image);catalog.genreImageExpires.set(id,expires)}else catalog.genreImageExpires.set(id,expires)}catch{catalog.genreImageExpires.set(id,Date.now()+60*1000)}}
+    };
+    try{await Promise.all(Array.from({length:Math.min(4,targets.length)},worker));if(Number.isFinite(earliest))catalog.genreImagesExpiresAt=earliest}
+    finally{catalog.genreImagesLoading=false;if(!$('#discoverMoreFilterModal')?.hidden&&type===discoverMoreTab)renderDiscoverMoreFilterContent()}
+  }
+  const discoverMoreGenreEnglishPt={'Action':'Ação','Adventure':'Aventura','Animation':'Animação','Comedy':'Comédia','Crime':'Crime','Documentary':'Documentário','Drama':'Drama','Family':'Família','Fantasy':'Fantasia','History':'História','Horror':'Terror','Music':'Música','Mystery':'Mistério','Romance':'Romance','Science Fiction':'Ficção científica','TV Movie':'Cinema TV','Thriller':'Suspense','War':'Guerra','Western':'Faroeste','Action & Adventure':'Ação e aventura','Kids':'Infantil','News':'Notícias','Reality':'Reality show','Sci-Fi & Fantasy':'Ficção científica e fantasia','Soap':'Novela','Talk':'Talk show','War & Politics':'Guerra e política'};
+  function discoverMoreGenreLabel(genre){const original=String(genre?.name||'').trim();return discoverMoreGenreEnglishPt[original]||genreNamePt(genre)||'Gênero'}
+  function discoverMoreCopyFilters(filters){return{source:filters.source,genreIds:[...filters.genreIds],year:filters.year,status:filters.status,includeAdded:filters.includeAdded}}
+  function renderDiscoverMoreFilterContent(){
+    const content=$('#discoverMoreFilterContent'),catalog=discoverMoreCatalog(discoverMoreTab);if(!content)return;
+    const filters=catalog.draft,sourceOptions=discoverMoreTab==='movie'?[['trending','Em alta'],['popular','Populares'],['top_rated','Mais bem avaliados'],['upcoming','Próximos lançamentos']]:[['trending','Em alta'],['popular','Populares'],['top_rated','Mais bem avaliadas']];
+    const sortButtons=sourceOptions.map(([value,label])=>`<button type="button" class="discoverMoreChoice" data-discover-source="${value}" aria-pressed="${filters.source===value}">${label}</button>`).join('');
+    const year=Number(discoverMoreLocalDateKey().slice(0,4)),yearOptions=['<option value="">Todos os anos</option>'];for(let value=year+5;value>=1900;value--)yearOptions.push(`<option value="${value}" ${filters.year===String(value)?'selected':''}>${value}</option>`);
+    let genresMarkup='<p class="discoverMoreFilterHint">Carregando gêneros do TMDB…</p>';
+    if(catalog.genresLoaded){
+      const images=new Map(catalog.genreImages);catalog.items.forEach(item=>(item.genre_ids||[]).forEach(id=>{const path=safeImageUrl(item?.backdrop_path)?item.backdrop_path:item?.poster_path;if(path&&!images.has(String(id)))images.set(String(id),safeImageUrl(path))}));
+      genresMarkup=catalog.genres.length?`<div class="discoverMoreGenreGrid">${catalog.genres.map(genre=>{const selected=filters.genreIds.includes(String(genre.id)),background=images.get(String(genre.id));return `<button type="button" class="discoverMoreGenre${background?' has-art':''}" data-discover-genre="${Number(genre.id)}" aria-pressed="${selected}" ${background?`style="background-image:url('${background}')"`:''}>${escapeHtml(discoverMoreGenreLabel(genre))}</button>`}).join('')}</div>`:'<p class="discoverMoreFilterHint">Não há gêneros disponíveis no momento.</p>';
+    }
+    const statusMarkup=discoverMoreTab==='tv'?`<section class="discoverMoreFilterGroup"><h3>Status</h3><div class="discoverMoreStatusOptions"><button type="button" data-discover-status="all" aria-pressed="${filters.status==='all'}">Tudo</button><button type="button" data-discover-status="ongoing" aria-pressed="${filters.status==='ongoing'}">Em andamento</button><button type="button" data-discover-status="ended" aria-pressed="${filters.status==='ended'}">Encerradas</button></div></section>`:'';
+    content.innerHTML=`<section class="discoverMoreFilterGroup"><h3>Ordenar por</h3><div class="discoverMoreSortOptions">${sortButtons}</div></section><section class="discoverMoreFilterGroup"><h3>Gêneros</h3>${genresMarkup}</section><section class="discoverMoreFilterGroup"><h3>${discoverMoreTab==='tv'?'Ano de estreia':'Ano de lançamento'}</h3><label class="discoverMoreYear"><span>Ano</span><select id="discoverMoreYear">${yearOptions.join('')}</select></label></section>${statusMarkup}<section class="discoverMoreFilterGroup"><label class="discoverMoreInclude"><span>Incluir títulos já adicionados</span><input type="checkbox" id="discoverMoreIncludeAdded" ${filters.includeAdded?'checked':''}></label></section>`;
+  }
+  function openDiscoverMoreFilters(){
+    const modal=$('#discoverMoreFilterModal');if(!modal)return;const catalog=discoverMoreCatalog(discoverMoreTab);catalog.draft=discoverMoreCopyFilters(catalog.filters);modal.hidden=false;document.body.classList.add('discoverMoreFilterOpen');renderDiscoverMoreFilterContent();loadDiscoverMoreGenres(discoverMoreTab);$('#discoverMoreOpenFilters')?.setAttribute('aria-expanded','true');
+  }
+  function closeDiscoverMoreFilters(){const modal=$('#discoverMoreFilterModal');if(!modal||modal.hidden)return;modal.hidden=true;document.body.classList.remove('discoverMoreFilterOpen');$('#discoverMoreOpenFilters')?.setAttribute('aria-expanded','false');$('#discoverMoreOpenFilters')?.focus()}
+  function resetDiscoverMoreDraft(){const catalog=discoverMoreCatalog(discoverMoreTab);catalog.draft=discoverMoreDefaults();renderDiscoverMoreFilterContent()}
+  function applyDiscoverMoreFilters(){const catalog=discoverMoreCatalog(discoverMoreTab);catalog.filters=discoverMoreCopyFilters(catalog.draft);closeDiscoverMoreFilters();scrollToWithoutAnimation(0);loadDiscoverMorePage(discoverMoreTab,true)}
+  function handleDiscoverMoreFilterClick(event){
+    const catalog=discoverMoreCatalog(discoverMoreTab),source=event.target.closest('[data-discover-source]'),genre=event.target.closest('[data-discover-genre]'),status=event.target.closest('[data-discover-status]');
+    if(source){catalog.draft.source=source.dataset.discoverSource;renderDiscoverMoreFilterContent();return}
+    if(genre){const id=String(genre.dataset.discoverGenre),ids=catalog.draft.genreIds;catalog.draft.genreIds=ids.includes(id)?ids.filter(value=>value!==id):[...ids,id];renderDiscoverMoreFilterContent();return}
+    if(status){catalog.draft.status=status.dataset.discoverStatus;renderDiscoverMoreFilterContent()}
+  }
+  function handleDiscoverMoreFilterChange(event){const catalog=discoverMoreCatalog(discoverMoreTab);if(event.target.id==='discoverMoreYear')catalog.draft.year=String(event.target.value||'');if(event.target.id==='discoverMoreIncludeAdded')catalog.draft.includeAdded=!!event.target.checked}
+  function renderDiscoverMoreActiveFilters(type=discoverMoreTab){
+    const box=$('#discoverMoreActiveFilters');if(!box)return;const filters=discoverMoreCatalog(type).filters,labels=[];
+    if(filters.source!=='trending')labels.push({key:'source',label:discoverMoreSourceLabels[filters.source]||filters.source});
+    filters.genreIds.forEach(id=>{const genre=discoverMoreCatalog(type).genres.find(item=>String(item.id)===id);labels.push({key:`genre:${id}`,label:genre?.name||`Gênero ${id}`})});
+    if(filters.year)labels.push({key:'year',label:filters.year});if(type==='tv'&&filters.status!=='all')labels.push({key:'status',label:filters.status==='ongoing'?'Em andamento':'Encerradas'});if(!filters.includeAdded)labels.push({key:'includeAdded',label:'Ocultar já adicionados'});
+    box.replaceChildren();labels.forEach(item=>{const chip=document.createElement('span');chip.className='discoverMoreFilterChip';chip.append(document.createTextNode(item.label));const remove=document.createElement('button');remove.type='button';remove.textContent='×';remove.setAttribute('aria-label',`Remover filtro ${item.label}`);remove.addEventListener('click',()=>removeDiscoverMoreFilter(type,item.key));chip.appendChild(remove);box.appendChild(chip)});box.hidden=!labels.length;
+  }
+  function removeDiscoverMoreFilter(type,key){
+    const catalog=discoverMoreCatalog(type),filters=discoverMoreCopyFilters(catalog.filters);
+    if(key==='source')filters.source='trending';else if(key==='year')filters.year='';else if(key==='status')filters.status='all';else if(key==='includeAdded')filters.includeAdded=true;else if(key.startsWith('genre:'))filters.genreIds=filters.genreIds.filter(id=>id!==key.slice(6));
+    catalog.filters=filters;scrollToWithoutAnimation(0);loadDiscoverMorePage(type,true);
+  }
+  $('#discoverMoreLoad')?.addEventListener('click',()=>{const catalog=discoverMoreCatalog(discoverMoreTab);if(catalog.error&&catalog.page>=catalog.totalPages){catalog.page=Math.max(0,catalog.page-1);catalog.totalPages=catalog.page+1}loadDiscoverMorePage(discoverMoreTab)});
+  if('IntersectionObserver' in window){const moreObserver=new IntersectionObserver(entries=>entries.forEach(entry=>{const catalog=discoverMoreCatalog(discoverMoreTab);if(entry.isIntersecting&&catalog.autoLoadReady&&location.hash==='#descobrir-mais')loadDiscoverMorePage(discoverMoreTab)}),{rootMargin:'360px 0px'});$('#discoverMoreLoad')&&moreObserver.observe($('#discoverMoreLoad'))}
   let popularMoviesPage=0,popularMoviesLoading=false,popularMoviesTotalPages=1;
   async function loadPopularMovies(reset=false){
     const box=$('#popularMoviesGrid'),loadBox=$('#popularMoviesLoad'),btn=$('#loadMorePopularMovies');if(!box||popularMoviesLoading)return;
@@ -3235,7 +3607,7 @@ body:has(#perfil.active,#perfil-colecao.active,#favoritos.active,#favoritos-seri
       button.setAttribute('aria-pressed',String(listed));
     });
   }
-  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,addedAt:new Date().toISOString()});}save();refreshPersonalMarkers();renderList();renderProfile()}
+  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,addedAt:new Date().toISOString()});}if(type==='movie'&&typeof invalidateMoviesGalleryUpcoming==='function')invalidateMoviesGalleryUpcoming();save();if(type==='movie'&&location.hash==='#filmes'&&moviesGalleryTab==='upcoming'&&typeof renderMoviesPage==='function')renderMoviesPage();refreshPersonalMarkers();renderList();renderProfile()}
   function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average,addedAt:new Date().toISOString()});}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else renderProfile()}
   function renderList(){
     const b=$('#listGrid');if(!b)return;b.innerHTML='';
@@ -4525,7 +4897,7 @@ function doSearch(q){
     fill('#homeTopRatedSeries',(d.topRatedTv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,12));
     fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
   }
-  async function home(){if(!user.sessionToken)return;try{const d=await api('/api/home');state.home=d;renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
+  async function home(){if(!user.sessionToken)return;invalidateMoviesGalleryUpcoming();moviesHomeCatalogStatus='loading';try{const d=await api('/api/home');state.home=d;moviesHomeCatalogStatus='ready';renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;moviesHomeCatalogStatus='error';homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
   async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();const localPositions=user.positions||{};user={...(d.state||{}),profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:d.user?.id||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};user.positions=mergePositionStates(localPositions,user.positions);save();updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
   async function bootstrapAuth(){
     // Decide a tela antes de carregar o catálogo para nunca mostrar a página
