@@ -162,3 +162,111 @@ test('profile metadata hydration updates rendered cards without rebuilding the p
   assert.match(request, /updateRenderedProfileMetadata\(type,item\.id,metadata\)/);
   assert.doesNotMatch(request, /renderProfile\(\)/);
 });
+
+test('profile favorite shelves use the connected account collections and open the full matching category', () => {
+  const profileStart = html.indexOf('  function renderProfile(){');
+  const profileEnd = html.indexOf('  }  function positionKey', profileStart);
+  const renderProfile = html.slice(profileStart, profileEnd);
+  assert.ok(renderProfile.includes("profileFavoritesFor('tv')"));
+  assert.match(renderProfile, /profileSeriesCollection/);
+  assert.ok(renderProfile.includes("more.onclick=()=>{location.hash='perfil-colecao-'+section.kind}"));
+  assert.ok(renderProfile.includes("more.textContent='›'"));
+  assert.match(renderProfile, /title:'Séries',kind:'series'/);
+  assert.match(html, /#perfil \.profileSeriesCollection\{margin:0 0 30px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none\}/);
+  assert.ok(renderProfile.includes("profileCard(item,{profileShelf:true,seriesStatusShelf:true})"));
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.profilePosterRule\{display:block;width:100%;height:4px/);
+  assert.match(html, /flex-basis:clamp\(92px,24vw,110px\);width:clamp\(92px,24vw,110px\)/);
+  assert.match(html, /profileSeriesCollection \.profileCarousel \.card h3/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card\{[^}]*border:0[^}]*background:transparent/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel\{[^}]*scroll-behavior:smooth;scrollbar-width:none/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card\{flex:0 0 176px;width:176px/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card h3\{[^}]*-webkit-line-clamp:2/);
+});
+
+test('profile section arrows are unboxed, visible, and retain the existing collection routes', () => {
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileSeeMore\{[^}]*border:0;border-radius:0;background:transparent;color:#b8f34a;font-size:40px/);
+  assert.doesNotMatch(html, /#perfil \.profileSeriesCollection \.profileSeeMore::after/);
+  assert.match(html, /#perfil \.profileSeriesCollection\{margin:0 0 30px/);
+  assert.match(html, /#perfil \.profileSeriesCollection\{margin-bottom:24px\}/);
+  const start = html.indexOf('  function renderProfile(){');
+  const end = html.indexOf('  }  function positionKey', start);
+  const renderProfile = html.slice(start, end);
+  assert.ok(renderProfile.includes("more.onclick=()=>{location.hash='perfil-colecao-'+section.kind}"));
+  assert.ok(renderProfile.includes("more.setAttribute('aria-label',isFavoriteSection?`Ver todos: ${section.title}`:`Ver mais: ${section.title}`)"));
+});
+
+test('profile shelf poster underline is decorative and has no progress semantics', () => {
+  const start = html.indexOf('  function profileCard(');
+  const end = html.indexOf('  function updateProfileProgressCard', start);
+  const profileCard = html.slice(start, end);
+  const ruleStart = profileCard.indexOf('if(profileShelf)');
+  const ruleEnd = profileCard.indexOf('el.classList.add(', ruleStart);
+  const ruleInsertion = profileCard.slice(ruleStart, ruleEnd);
+  assert.match(ruleInsertion, /profilePosterRule/);
+  assert.match(ruleInsertion, /rule\.setAttribute\('aria-hidden','true'\)/);
+  assert.doesNotMatch(ruleInsertion, /watched|positions|progress/i);
+  assert.ok(html.includes("profileCard(item,{profileShelf:true,seriesStatusShelf:true})"));
+});
+
+test('favorite profile cards show only the title below their poster and preserve overlays', () => {
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card small,\s*#perfil \.profileSeriesCollection \.profileCarousel \.card \.stars\{display:none!important\}/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card h3\{[^}]*-webkit-line-clamp:2/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.poster\{border-radius:14px\}/);
+  const cardStart = html.indexOf('  function card(');
+  const cardEnd = html.indexOf('\n', cardStart);
+  const cardSource = html.slice(cardStart, cardEnd);
+  assert.match(cardSource, /class="score"/);
+  assert.match(cardSource, /class="add /);
+  assert.match(cardSource, /class="favorite /);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card \.score,[\s\S]*?#perfil \.profileSeriesCollection \.profileCarousel \.card \.profileProgressPercent\{display:none!important\}/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card \.add/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card \.favorite/);
+  assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.card \.seriesProgressTrack/);
+});
+
+test('profile favorite toggle adds and removes series favorites and rerenders', () => {
+  const start = html.indexOf('  function toggleFavorite(');
+  const end = html.indexOf('\n', start);
+  assert.notEqual(start, -1);
+  const source = html.slice(start, end).trim();
+  const calls = { saves: 0, refreshes: 0, profileRenders: 0 };
+  const context = {
+    user: { favorites: { series: [], movies: [] } },
+    mediaTypeOf: item => item.media_type || 'movie',
+    save() { calls.saves++; },
+    refreshPersonalMarkers() { calls.refreshes++; },
+    location: { hash: '#perfil' },
+    renderProfile() { calls.profileRenders++; }
+  };
+  vm.createContext(context);
+  context.toggleFavorite = vm.runInContext('(' + source + ')', context);
+  context.toggleFavorite({ id: 41, media_type: 'tv', name: 'Série favorita' });
+  assert.deepEqual(Array.from(context.user.favorites.series, item => item.id), [41]);
+  context.toggleFavorite({ id: 41, media_type: 'tv', name: 'Série favorita' });
+  assert.equal(context.user.favorites.series.length, 0);
+  assert.equal(calls.saves, 2);
+  assert.equal(calls.refreshes, 2);
+  assert.equal(calls.profileRenders, 2);
+});
+
+test('series tracker visual polish keeps episode thumbnails, codes, titles, progress, and completion controls', () => {
+  const start = html.indexOf('  function seriesTrackerRowMarkup(');
+  const end = html.indexOf('\n  function seriesTrackerGroupMarkup(', start);
+  assert.notEqual(start, -1);
+  assert.notEqual(end, -1);
+  const markup = html.slice(start, end);
+  assert.match(markup, /class="seriesTrackerThumb"/);
+  assert.match(markup, /class="seriesTrackerMeta"/);
+  assert.match(markup, /const code=`S\$\{String\(season\)\.padStart\(2,'0'\)\} \| E\$\{String\(number\)\.padStart\(2,'0'\)\}`/);
+  assert.match(markup, /class="seriesTrackerTitle"/);
+  assert.match(markup, /class="seriesTrackerCheck/);
+  assert.match(markup, /data-tracker-season=/);
+  assert.match(markup, /data-tracker-episode=/);
+  assert.match(markup, /aria-pressed="\$\{done\}"/);
+  assert.match(html, /#episodeFeed \.seriesTrackerItem\{box-sizing:border-box;border-color:#273128;border-radius:10px;background:linear-gradient\(135deg,#151a16,#111512\)/);
+  assert.match(html, /#episodeFeed \.seriesTrackerThumb\{border-color:#2b352c;border-radius:8px\}/);
+  const trackerCssStart = html.indexOf('/* Acabamento do rastreador:');
+  const trackerCssEnd = html.indexOf('/* Listagem agrupada das coleções de Séries do Perfil. */', trackerCssStart);
+  assert.ok(trackerCssStart >= 0 && trackerCssEnd > trackerCssStart);
+  assert.doesNotMatch(html.slice(trackerCssStart, trackerCssEnd), /#perfil|#filmes/);
+});

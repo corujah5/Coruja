@@ -353,6 +353,8 @@ function cleanState(input){
   out.favorites.movies=Array.isArray(out.favorites.movies)?out.favorites.movies:[];
   out.watched=(out.watched&&typeof out.watched==='object')?out.watched:{};
   out.watchedAt=(out.watchedAt&&typeof out.watchedAt==='object')?out.watchedAt:{};
+  out.episodeWatchCounts=(out.episodeWatchCounts&&typeof out.episodeWatchCounts==='object')?out.episodeWatchCounts:{};
+  Object.entries(out.episodeWatchCounts).forEach(([key,value])=>{const count=Math.floor(Number(value));if(/^\d+-\d+-\d+$/.test(key)&&count>0&&Number.isFinite(count))out.episodeWatchCounts[key]=count;else delete out.episodeWatchCounts[key]});
   out.watchedMovies=(out.watchedMovies&&typeof out.watchedMovies==='object')?out.watchedMovies:{};
   out.positions=(out.positions&&typeof out.positions==='object')?out.positions:{};
   out.episodeRatings=(out.episodeRatings&&typeof out.episodeRatings==='object')?out.episodeRatings:{};
@@ -362,6 +364,8 @@ function cleanState(input){
   out.watchDurations=(out.watchDurations&&typeof out.watchDurations==='object')?out.watchDurations:{episodes:{},movies:{}};
   out.watchDurations.episodes=(out.watchDurations.episodes&&typeof out.watchDurations.episodes==='object')?out.watchDurations.episodes:{};
   out.watchDurations.movies=(out.watchDurations.movies&&typeof out.watchDurations.movies==='object')?out.watchDurations.movies:{};
+  out.watchDurations.episodeRewatches=(out.watchDurations.episodeRewatches&&typeof out.watchDurations.episodeRewatches==='object')?out.watchDurations.episodeRewatches:{};
+  Object.entries(out.watchDurations.episodeRewatches).forEach(([key,value])=>{const minutes=Number(value);if(/^\d+-\d+-\d+$/.test(key)&&Number.isFinite(minutes)&&minutes>0)out.watchDurations.episodeRewatches[key]=minutes;else delete out.watchDurations.episodeRewatches[key]});
   out.comments=Array.isArray(out.comments)?out.comments:[];
   out.commentCount=Number(out.commentCount||0);
   out.profile=cleanText(out.profile||'',60)||'Coruja';
