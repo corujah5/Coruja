@@ -4970,9 +4970,14 @@ return null}
       openPositionEditor(Number(state.current.id),n,ep,runtime,()=>loadTemporada(n));
     });
 
-    $$('.check[data-ep]',$('#detailEpisódios')).forEach(button=>button.onclick=event=>{
+    $$('.check[data-ep]',$('#detailEpisódios')).forEach(button=>button.onclick=async event=>{
       event.stopPropagation();
       const key=button.dataset.ep,episodeNumber=Number(key.split('-').pop()),episode=episodes.find(item=>Number(item.episode_number)===episodeNumber);
+      if(episodeWatchCount(key)===0){
+        const pending=episodes.filter(item=>Number(item.episode_number)<episodeNumber&&!user.watched?.[state.current.id+'-'+state.season+'-'+item.episode_number]).length;
+        if(episodeNumber===Number(episodes?.[episodes.length-1]?.episode_number)&&pending>0&&shouldPromptPreviousEpisódios(state.current.id)){promptPreviousEpisódios(state.current.name||state.current.title||'esta série',state.season,episodeNumber,pending,choice=>applyEpisodeWatchChoice(key,'rewatched',Number(episode?.runtime)||0,choice==='yes',episodes).catch(error=>toast(error.message)));return}
+        try{await applyEpisodeWatchChoice(key,'rewatched',Number(episode?.runtime)||0,false,episodes)}catch(error){toast(error.message||'Não foi possível atualizar o episódio.')}return
+      }
       openEpisodeWatchMenu(key,Number(episode?.runtime)||0,episodes);
     });
     $$('.episode[data-episode-open]',$('#detailEpisódios')).forEach(article=>{
