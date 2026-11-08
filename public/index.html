@@ -4923,17 +4923,6 @@ return null}
       return 0;
     };
     const currentWatched=episodes.filter(e=>user.watched[`${state.current.id}-${n}-${e.episode_number}`]).length;
-    const allTemporadaAssistired=episodes.length>0&&currentWatched===episodes.length;
-    const status=state.current.status||'';
-    const statusMap={'Returning Series':'Renovada','Canceled':'Cancelada','Ended':'Finalizada','In Production':'Em produção','Planned':'Planejada','Pilot':'Piloto','Returning':'Renovada'};
-    const situation=statusMap[status]||status||'Não informado';
-    let seasonNotice='';
-    if(allTemporadaAssistired){
-      if(situation==='Cancelada') seasonNotice=`<div class="seasonNotice cancelled"><strong>Série cancelada</strong><span>Você concluiu todos os episódios disponíveis.</span></div>`;
-      else if(situation==='Finalizada') seasonNotice=`<div class="seasonNotice finished"><strong>Série finalizada</strong><span>Você concluiu todos os episódios disponíveis.</span></div>`;
-      else seasonNotice=`<div class="seasonNotice upToDate"><strong>Em dia</strong><span>Você assistiu a todos os episódios desta temporada.</span></div>`;
-    }
-
     const continueSection=await buildSeriesContinueMarkup(state.current,n,d);
 
     const seasonRows=seasons.map(s=>{
@@ -4945,7 +4934,7 @@ return null}
       const expanded=sn===n;
       const done=total>0&&count>=total;
       const seasonLabel=sn===0?'Especiais':`Temporada ${sn}`;
-      return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${seasonNotice}${episodes.map(e=>{
+      return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${episodes.map(e=>{
         const key=`${state.current.id}-${n}-${e.episode_number}`;
         const done=!!user.watched[key]; const pos=getVisibleEpisodePosition(state.current.id,n,e.episode_number);
          return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${pos?`<div class="positionMini"><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos)}</strong></div>`:''}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
