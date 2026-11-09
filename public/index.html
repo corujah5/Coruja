@@ -7078,7 +7078,7 @@ return null}
   }
   window.addEventListener('wheel',event=>{if(event.deltaY>0)revealSeriesTrackerHistoryByUserScroll()},{passive:true});
   window.addEventListener('touchstart',event=>{seriesTrackerTouchStartY=event.touches?.[0]?.clientY??null},{passive:true});
-  window.addEventListener('touchmove',event=>{const nextY=event.touches?.[0]?.clientY;if(seriesTrackerTouchStartY!==null&&nextY!==undefined&&seriesTrackerTouchStartY-nextY>=18){seriesTrackerTouchStartY=null;revealSeriesTrackerHistoryByUserScroll()}},{passive:true});
+  window.addEventListener('touchmove',event=>{const nextY=event.touches?.[0]?.clientY;if(seriesTrackerTouchStartY!==null&&nextY!==undefined&&seriesTrackerTouchStartY-nextY>=48){seriesTrackerTouchStartY=null;revealSeriesTrackerHistoryByUserScroll()}},{passive:true});
   ['touchend','touchcancel'].forEach(type=>window.addEventListener(type,()=>{seriesTrackerTouchStartY=null},{passive:true}));
   window.addEventListener('keydown',event=>{if(['ArrowDown','PageDown'].includes(event.key))revealSeriesTrackerHistoryByUserScroll()});
   window.addEventListener('hashchange',()=>{seriesTrackerHistoryRevealed=false;seriesTrackerHistoryRenderSeq++;syncSeriesTrackerHistoryReveal()});
