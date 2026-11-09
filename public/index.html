@@ -6492,11 +6492,6 @@ return null}
   }
   function getSeriesContinueEntries(show){
     const showId=Number(show?.id||0);if(!showId)return[];
-    const watchedHistory=typeof seriesTrackerWatchedEpisodes==='function'?seriesTrackerWatchedEpisodes(showId):[];
-    if(watchedHistory.length){
-      watchedHistory.sort((a,b)=>seriesTrackerActivityTimestamp(b.watchedAt)-seriesTrackerActivityTimestamp(a.watchedAt)||b.season-a.season||b.episode-a.episode);
-      return watchedHistory.slice(0,8).map(entry=>({...entry,watched:true,pos:null}));
-    }
     const active=new Map();
     for(const [key,pos] of Object.entries(user.positions||{})){
       if(!validPositionEntry(key,pos))continue;
@@ -6547,11 +6542,8 @@ return null}
       const episode=(seasonCache.get(Number(entry.season))?.episodes||[]).find(item=>Number(item.episode_number)===Number(entry.episode));
       return{...entry,name:episode?.name||`Episódio ${entry.episode}`,poster:episode?.still_path||show.poster_path,runtime:Number(episode?.runtime||0)};
     });
-    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}</div><div class="scName">${escapeHtml(entry.name)}</div></div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck${entry.watched?' done isDone continueHistoryCheck':''}" type="button" ${entry.watched?'data-continue-next-index="'+index+'" aria-pressed="true" aria-label="Ir para o próximo episódio depois de T'+String(entry.season).padStart(2,'0')+' E'+String(entry.episode).padStart(2,'0')+'" title="Ir para o próximo episódio"':'data-continue-index="'+index+'" aria-label="Marcar T'+String(entry.season).padStart(2,'0')+' E'+String(entry.episode).padStart(2,'0')+' como assistido" title="Marcar como assistido"'}><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
-    const isHistory=hydrated.some(entry=>entry.watched);
-    const title=isHistory?'Continuar acompanhando':'Começar a acompanhar';
-    const ariaLabel=isHistory?'Histórico de episódios assistidos':'Episódios para começar a acompanhar';
-    const html=`<div class="seriesContinue"><div class="seriesContinueTitle">${title}</div><div class="seriesContinueRail" role="region" aria-label="${ariaLabel}" tabindex="0">${cards}</div></div>`;
+    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}</div><div class="scName">${escapeHtml(entry.name)}</div></div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck" type="button" data-continue-index="${index}" aria-label="Marcar T${String(entry.season).padStart(2,'0')} E${String(entry.episode).padStart(2,'0')} como assistido" title="Marcar como assistido"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
+    const html=`<div class="seriesContinue"><div class="seriesContinueTitle"><svg class="uiIcon"><use href="#i-play-circle"></use></svg>Continuar acompanhando</div><div class="seriesContinueRail" role="region" aria-label="Episódios para continuar acompanhando" tabindex="0">${cards}</div></div>`;
     return{html,entries:hydrated};
   }
   function bindSeriesContinueCarousel(container){
@@ -6864,15 +6856,6 @@ return null}
   function bindSeriesContinueActions(continueEntries){
     if(!Array.isArray(continueEntries)||!continueEntries.length||!state.current)return;
     const showId=Number(state.current.id);
-    $$('.continueHistoryCheck[data-continue-next-index]',$('#detailEpisódios')).forEach(button=>button.onclick=async event=>{
-      event.stopPropagation();
-      const entry=continueEntries[Number(button.dataset.continueNextIndex)];if(!entry)return;
-      const next=getNextSeriesEpisode(state.current,entry);
-      if(!next){toast('Não há próximo episódio disponível.');return;}
-      await loadTemporada(Number(next.season));
-      await new Promise(resolve=>requestAnimationFrame(resolve));
-      document.querySelector(`[data-episode-open="${Number(next.episode)}"]`)?.scrollIntoView({behavior:'smooth',block:'center'});
-    });
     $$('.continueCheck[data-continue-index]',$('#detailEpisódios')).forEach(button=>button.onclick=async event=>{
       event.stopPropagation();
       const entry=continueEntries[Number(button.dataset.continueIndex)];if(!entry)return;
