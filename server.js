@@ -228,11 +228,6 @@ app.get('/uploads/:filename', requireAccount, (req, res) => {
 function isAdminAccount(account) {
   return !!ADMIN_ACCOUNT_ID && String(account?.id || '') === String(ADMIN_ACCOUNT_ID);
 }
-function requireAdminAccount(req, res, next) {
-  if (!req.account || !isAdminAccount(req.account)) return res.status(403).json({ error: 'Acesso ao painel não autorizado.' });
-  req.isAdmin = true;
-  next();
-}
 function adminKeyMatches(candidate) {
   const digest = value => crypto.createHash('sha256').update(String(value || ''), 'utf8').digest();
   return crypto.timingSafeEqual(digest(candidate), digest(ADMIN_KEY));

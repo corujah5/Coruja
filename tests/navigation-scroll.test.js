@@ -171,7 +171,7 @@ test('profile favorite shelves use the connected account collections and open th
   assert.match(renderProfile, /profileSeriesCollection/);
   assert.ok(renderProfile.includes("more.onclick=()=>{location.hash='perfil-colecao-'+section.kind}"));
   assert.ok(renderProfile.includes("more.textContent='›'"));
-  assert.match(renderProfile, /title:'Séries',kind:'series'/);
+  assert.match(renderProfile, /title:'As Minhas Séries',kind:'series'/);
   assert.match(html, /#perfil \.profileSeriesCollection\{margin:0 0 30px;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none\}/);
   assert.ok(renderProfile.includes("profileCard(item,{profileShelf:true,seriesStatusShelf:true})"));
   assert.match(html, /#perfil \.profileSeriesCollection \.profileCarousel \.profilePosterRule\{display:block;width:100%;height:4px/);
@@ -288,18 +288,70 @@ test('favorite series manual order persists only favorite ids and preserves hidd
   assert.deepEqual(Array.from(reordered), ['33', '22', '11', '44']);
 });
 
-test('favorite series status groups reuse the shared classifier and omit the interrupted category', () => {
-  const context = { profileCollectionSeriesMainGroupKey: item => item.classifiedAs };
+test('favorite series status groups reuse the shared classifier and omit excluded categories', () => {
+  const progressById = new Map([
+    [1, { started: true, completed: false, watched: 3, total: 10, percent: 30 }],
+    [2, { started: false, completed: false, watched: 0, total: 10, percent: 0 }],
+    [3, { started: false, completed: false, watched: 0, total: 10, percent: 0 }],
+    [4, { started: true, completed: false, watched: 10, total: 10, percent: 100 }],
+    [5, { started: true, completed: false, watched: 10, total: 10, percent: 100 }],
+    [6, { started: true, completed: false, watched: 3, total: 10, percent: 30 }],
+    [7, { started: true, completed: false, watched: 3, total: 10, percent: 30 }]
+  ]);
+  const grid = {
+    children: [],
+    replaceChildren() { this.children = []; },
+    append(element) { this.children.push(element); }
+  };
+  const renderedItems = new Map();
+  const context = {
+    mediaTypeOf: item => item.media_type || 'tv',
+    profileMetadataCache: new Map([
+      ['tv:1', { status: 'Returning Series' }],
+      ['tv:4', { status: 'Returning Series' }],
+      ['tv:5', { status: 'Ended' }],
+      ['tv:7', { status: 'Canceled' }]
+    ]),
+    profileCollectionProgress: item => progressById.get(Number(item.id)),
+    profileCollectionLastActivity: () => 0,
+    profileCollectionWatchLaterIds: () => new Set(['tv:3']),
+    profileCollectionToday: () => '2026-11-09',
+    user: { watched: {}, favorites: { series: [] }, list: [], customLists: [], seriesStatuses: {}, profileSeriesStatuses: {} },
+    $: selector => selector === '#profileCollectionGrid' ? grid : null,
+    document: {
+      createElement() {
+        return { dataset: {}, children: [], append(...elements) { this.children.push(...elements); } };
+      }
+    },
+    profileCustomListItemKey: item => `tv:${item.id}`,
+    profileCollectionStatusCard: item => item,
+    renderProgressiveGrid(id, items, renderItem) { renderedItems.set(id, items.map(renderItem)); }
+  };
   vm.createContext(context);
+  vm.runInContext(extractFunction('profileCollectionHasExplicitInterruptedStatus', 'profileCollectionStatus'), context);
+  vm.runInContext(extractFunction('profileCollectionStatus', 'profileCollectionStatusGroupKey'), context);
+  vm.runInContext(extractFunction('profileCollectionSeriesMainGroupKey', 'profileCollectionRenderSeriesMainGroups'), context);
   vm.runInContext(extractFunction('profileCollectionFavoriteSeriesGroupKey', 'profileCollectionRenderFavoriteSeriesStatusGroups'), context);
-  assert.equal(context.profileCollectionFavoriteSeriesGroupKey({ status: 'Interrompida', classifiedAs: 'toWatch' }), 'toWatch');
-  assert.equal(context.profileCollectionFavoriteSeriesGroupKey({ classifiedAs: 'inDay' }), 'inDay');
-  assert.equal(context.profileCollectionFavoriteSeriesGroupKey({ classifiedAs: 'finished' }), 'finished');
+  vm.runInContext(extractFunction('profileCollectionRenderFavoriteSeriesStatusGroups', 'profileCollectionRenderFavoriteSeriesGrid'), context);
 
-  const groups = extractFunction('profileCollectionRenderFavoriteSeriesStatusGroups', 'profileCollectionRenderFavoriteSeriesReorder');
-  const labels = Array.from(groups.matchAll(/label:'([^']+)'/g), match => match[1]);
-  assert.deepEqual(labels, ['PARA VER', 'NÃO INICIADAS', 'EM DIA', 'TERMINADAS', 'CANCELADAS']);
-  assert.doesNotMatch(groups, /interrupted|INTERROMPIDAS|Interrompida/);
+  const items = [1, 2, 3, 4, 5, 6, 7].map(id => ({ id, media_type: 'tv' }));
+  assert.equal(context.profileCollectionFavoriteSeriesGroupKey({ id: 6, media_type: 'tv', status: 'Interrompida' }), 'interrupted');
+  assert.equal(context.profileCollectionFavoriteSeriesGroupKey(items[3]), 'inDay');
+  assert.equal(context.profileCollectionFavoriteSeriesGroupKey(items[4]), 'finished');
+  assert.equal(context.profileCollectionFavoriteSeriesGroupKey(items[2]), 'later');
+
+  context.profileCollectionRenderFavoriteSeriesStatusGroups({ query: '' }, items);
+  const groups = grid.children.map(section => ({
+    key: section.dataset.statusGroup,
+    label: section.children[0].textContent,
+    ids: Array.from(renderedItems.get(section.children[1].id) || [], item => item.id)
+  }));
+  assert.deepEqual(groups, [
+    { key: 'notStarted', label: 'NÃO INICIADAS', ids: [2] },
+    { key: 'later', label: 'VER MAIS TARDE', ids: [3] },
+    { key: 'inDay', label: 'EM DIA', ids: [4] },
+    { key: 'canceled', label: 'CANCELADAS', ids: [7] }
+  ]);
   assert.doesNotMatch(html, /seriesFavoritesCollectionPage \.profileCollectionStatusTrack\[data-status="interrupted"\]/);
 });
 
