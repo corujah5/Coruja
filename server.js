@@ -885,6 +885,7 @@ app.get('/api/search', async (req,res)=>{
 
 app.get('/api/tv/:id', async (req,res)=>{
   try {
+    if(req.query.tracker==='1') return res.json(await tmdb(`/tv/${req.params.id}`,{language:'pt-BR'}));
     const detail = await tmdb(`/tv/${req.params.id}`,{language:'pt-BR',append_to_response:'credits,videos,images,recommendations,similar,keywords'});
     detail.similar = {
       ...(detail.similar || {}),
@@ -896,7 +897,7 @@ app.get('/api/tv/:id', async (req,res)=>{
 });
 
 app.get('/api/tv/:id/season/:season', async (req,res)=>{
-  try { res.json(await tmdb(`/tv/${req.params.id}/season/${req.params.season}`,{language:'pt-BR',append_to_response:'credits,videos,images'})); }
+  try { res.json(await tmdb(`/tv/${req.params.id}/season/${req.params.season}`,req.query.tracker==='1'?{language:'pt-BR'}:{language:'pt-BR',append_to_response:'credits,videos,images'})); }
   catch(e){res.status(500).json({error:e.message});}
 });
 
