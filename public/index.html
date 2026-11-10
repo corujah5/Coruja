@@ -33,6 +33,8 @@
 /* Tela de série - estilo mobile inspirado na referência, mantendo o visual CORUJA */
 .seriesContinue{background:#252525;border-radius:12px;padding:14px;margin:0 0 18px;border:1px solid #3a3a3a}.seriesContinueTitle{font-size:14px;font-weight:900;margin-bottom:10px;color:#fff}.seriesContinueCard{display:flex;align-items:center;gap:12px;background:#1b1b1b;border-radius:10px;padding:8px}.seriesContinueCard img{width:78px;height:58px;object-fit:cover;border-radius:6px;background:#333}.seriesContinueCard .scInfo{min-width:0;flex:1}.seriesContinueCard .scSeries{font-weight:900;color:#fff;font-size:15px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scCode{font-weight:900;color:#fff;font-size:12px;margin-top:3px}.seriesContinueCard .scName{color:#aaa;font-size:12px;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.seriesContinueCard .scPos{color:var(--yellow);font-size:11px;margin-top:5px}.seriesContinueCard .scBtn{border:0;background:var(--yellow);color:#111;border-radius:8px;padding:8px 10px;font-weight:900;white-space:nowrap}.seriesContinueActions{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;flex:0 0 auto}.seriesContinueActions .positionEdit{width:32px;height:32px;padding:0}.seriesContinueActions .check{width:32px;height:32px;padding:0}.seasonListTitle{font-size:14px;font-weight:900;margin:8px 0 10px;color:#fff;background:#252525;border:1px solid #3a3a3a;border-left:3px solid var(--yellow);border-radius:7px;padding:8px 10px;box-sizing:border-box}.seasonRow{display:flex;align-items:center;justify-content:space-between;gap:8px;background:#252525;border:1px solid #3a3a3a;border-radius:10px;padding:14px 12px;margin:8px 0;cursor:pointer;color:#fff}.seasonRow.active{border-color:var(--yellow)}.seasonRow .seasonLeft{display:flex;align-items:center;gap:7px;font-weight:900}.seasonRow .seasonArrow{color:#aaa}.seasonRow .seasonCount{color:#aaa;font-size:12px}.seasonRow .seasonDone{color:var(--yellow);font-weight:900}.seasonEpisodes{margin:0 0 16px;border-radius:10px;overflow:hidden;background:#1b1b1b;border:1px solid #333}.seasonEpisodes .episode{background:#1b1b1b}.seasonEpisodes .episode:hover{background:#222}.seasonEpisodes .episodeMain b{color:#fff}.seasonEpisodes .episodeMain p{color:#aaa}.seasonEpisodes .positionMini{color:#777}.seasonEpisodes .positionMini strong{color:#fff}.episodePositionEdit{flex:0 0 auto;background:#fff;color:#111;border-color:#ddd;width:32px;height:32px}
 .expectedEndTime{display:block;margin-top:4px;color:#98a397;font-size:11px;font-weight:650;line-height:1.3;font-variant-numeric:tabular-nums}
+.episodeAirDate{display:flex;align-items:center;flex-wrap:wrap;gap:7px;margin:5px 0;color:#aeb8aa;font-size:12px;line-height:1.3}.episodeAirDate span{padding:2px 7px;border-radius:999px;background:#20291b;color:#b8f34a;font-weight:800}
+@media(max-width:650px){.episodeAirDate{gap:5px;font-size:11px}}
 @media(max-width:650px){body{background:#f3f3f3}.top{height:58px;background:#111;color:#fff;border:0}.brand{font-size:20px}.brand i{width:28px;height:28px}.login{display:inline-flex}.page{padding:0 0 82px}.section{margin:26px 16px}.sectionHead h2{font-size:21px}.row{margin-right:-16px;padding-right:16px}.card{flex-basis:150px;width:150px;min-width:150px}.poster{width:150px;height:224px}.continue{padding:10px}.continueGrid{grid-template-columns:1fr}.grid{grid-template-columns:repeat(3,150px);gap:10px}.grid .card{flex-basis:auto;width:150px;min-width:150px}.grid .poster{width:150px;height:224px}.detailHero{border-radius:0;min-height:330px}.detailHero>img{height:330px}.detailOverlay{padding:20px}.detailInfo h1{font-size:34px}.episode{grid-template-columns:92px 1fr 42px;gap:10px}.episode img{width:92px;height:62px}.episode b{font-size:15px}.episode p{font-size:12px}.episodeActions{justify-content:flex-start}.episodeActions .episodeOpen{font-size:11px;padding:8px}.profileHero{border-radius:0}.cover{height:105px}.profileBox{padding:18px 18px 22px;margin-top:0}.profileName{margin-top:6px}.bottom{display:grid;grid-template-columns:repeat(4,1fr);position:fixed;left:0;right:0;bottom:0;height:68px;background:#111;color:#fff;z-index:80;padding-bottom:env(safe-area-inset-bottom)}.bottom button{border:0;background:none;color:#aaa;font-size:11px;font-weight:800}.bottom button.active{color:var(--yellow)}.bottom span{display:block;font-size:22px;margin-bottom:3px}.tmdb{padding:0 16px 20px}}
 
 /* Comunidade e estatísticas — experiência Coruja */
@@ -257,6 +259,9 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 .detailMoreMenu>summary:hover{filter:brightness(1.1);transform:scale(1.06)}
 .detailMoreMenu>summary:focus-visible{outline:3px solid #fff;outline-offset:2px}
 .detailMorePanel{position:absolute;top:0;right:46px;z-index:8;width:min(260px,calc(100vw - 82px));padding:6px;border:1px solid #344032;border-radius:11px;background:#111512;box-shadow:0 10px 28px #000b}
+.movieDetailMorePanel{width:min(280px,calc(100vw - 82px))}
+.movieDetailMorePanel .movieDetailActions{display:grid;grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+.movieDetailMorePanel .finishMovieBtn{margin:0}
 .detailListAction{display:flex;align-items:center;gap:9px;width:100%;min-height:40px;padding:8px 10px;border:0;border-radius:7px;background:transparent;color:#f4f6f2;font:inherit;font-size:13px;font-weight:750;text-align:left;cursor:pointer}
 .detailListAction:hover,.detailListAction:focus-visible{outline:none;background:#202720;color:#b8f34a}
 .detailListAction .uiIcon{width:18px;height:18px;flex:none;color:#b8f34a}
@@ -484,8 +489,8 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 #descobrir .row:empty{display:flex;align-items:center;gap:11px;min-height:52px;padding:11px 13px;border:1px dashed #354036;border-radius:12px;background:rgba(7,10,8,.35);overflow:hidden}
 #descobrir .row:empty::before{content:"";width:19px;height:19px;flex:0 0 19px;background:var(--green);mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='4' width='18' height='16' rx='2'/%3E%3Cpath d='M7 4v16M17 4v16M3 9h4m-4 6h4m10-6h4m-4 6h4'/%3E%3C/svg%3E") center/contain no-repeat}
 #homeTrending:empty::after{content:"Tendências indisponíveis no momento"}
-#homeTopRatedSeries:empty::after{content:"Séries em destaque indisponíveis no momento"}
-#homeNowPlayingMovies:empty::after{content:"Filmes em cartaz indisponíveis no momento"}
+#homeTopRatedSeries:empty::after{content:"Novas séries indisponíveis no momento"}
+#homeNowPlayingMovies:empty::after{content:"Filmes nos cinemas indisponíveis no momento"}
 #homePopularMovies:empty::after{content:"Filmes populares indisponíveis no momento"}
 #homePopularSeries:empty::after{content:"Séries populares indisponíveis no momento"}
 #homeUpcomingMovies:empty::after{content:"Próximos lançamentos indisponíveis no momento"}
@@ -818,6 +823,8 @@ body.booting>.top,body.booting>.page,body.booting>.bottom{visibility:hidden}
 .customListModalForm p{margin:0 0 4px;color:#b1b9ae;font-size:14px;line-height:1.5}
 .customListModalForm label{color:#e8ece5;font-size:14px;font-weight:750}
 .customListNameInput{box-sizing:border-box;width:100%;min-width:0;min-height:48px;padding:11px 13px;border:1px solid #465044;border-radius:10px;background:#0d100d;color:#fff;font:inherit;font-size:16px}
+.customListTypeSelect{box-sizing:border-box;width:100%;min-height:48px;padding:10px 13px;border:1px solid #465044;border-radius:10px;background:#0d100d;color:#fff;font:inherit;font-size:16px}
+.customListTypeSelect:focus-visible{border-color:#b8f34a;outline:3px solid rgba(184,243,74,.28);outline-offset:1px}
 .customListNameInput::placeholder{color:#939c91}
 .customListNameInput:focus-visible{border-color:#b8f34a;outline:3px solid rgba(184,243,74,.28);outline-offset:1px}
 .customListNameInput[aria-invalid="true"]{border-color:#ff8686}
@@ -1201,7 +1208,6 @@ body.discoverMoreFilterOpen{overflow:hidden}
 #descobrir .trendsSection .sectionHead .trendTabs .trendTab:hover:not(.active){background:#273127;color:#fff}
 #descobrir .trendsSection .sectionHead .trendTabs .trendTab:focus-visible{outline:3px solid #fff;outline-offset:2px;z-index:1}
 @media(max-width:650px){#descobrir .trendsSection .sectionHead .trendTabs .trendTab{min-height:44px;padding:10px 16px;font-size:14px}}
-.movieDetailActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.movieDetailActions .btn{flex:1 1 175px;min-height:44px;padding:11px 14px;white-space:normal}.movieDetailActions .finishMovieBtn{margin-top:0}.movieDetailActions .moviePositionButton{border:1px solid var(--green);background:#1c241a;color:var(--green)}.movieDetailActions .moviePositionButton:hover{background:#283424}.movieDetailActions .moviePositionButton:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 
 
 /* Controles de retorno nas capas de detalhes. */
@@ -2025,19 +2031,6 @@ body.discoverMoreFilterOpen{overflow:hidden}
   line-height: 1.25;
   white-space: normal;
 }
-.movieDetailPage .movieDetailActions > .finishMovieBtn {
-  border: 1px solid #b8f34a;
-  background: #b8f34a;
-  color: #11170d;
-}
-.movieDetailPage .movieDetailActions > .moviePositionButton {
-  border: 1px solid #b8f34a;
-  background: #1c241a;
-  color: #b8f34a;
-}
-.movieDetailPage .movieDetailActions > .moviePositionButton:hover {
-  background: #283424;
-}
 @media (max-width: 650px) {
   .movieDetailPage .movieDetailHero {
     min-height: 244px;
@@ -2098,6 +2091,8 @@ body.discoverMoreFilterOpen{overflow:hidden}
   }
 }
 
+.movieDetailPage .movieDetailMorePanel .movieDetailActions{grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
+
 /* Séries: lista de episódios acompanhados e próximas estreias. */
 #episodios.seriesTrackerScreen{--series-tracker-tabs-height:51px;box-sizing:border-box;min-width:0;padding:calc(var(--header-height) + 34px) clamp(14px,3vw,34px) 120px}
 body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visible}
@@ -2111,9 +2106,7 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 #episodios .seriesTrackerTabs button:focus-visible{outline:2px solid #b8f34a;outline-offset:-3px;border-radius:7px}
 #episodeFeed.seriesTrackerContent{display:grid;width:100%;max-width:1040px;min-width:0;gap:9px;margin:0 auto;overflow-anchor:none}
 #episodeFeed .seriesTrackerGroup{min-width:0}
-#episodeFeed .seriesTrackerGroup[data-tracker-section="history"]{display:none}
 #episodeFeed .seriesTrackerGroup[data-tracker-section="history"].is-scroll-revealed{display:block;animation:seriesTrackerHistoryReveal .2s ease both}
-@keyframes seriesTrackerHistoryReveal{from{opacity:0;transform:translateY(-6px)}to{opacity:1;transform:translateY(0)}}
 #episodeFeed .seriesTrackerGroup>h2{display:flex;align-items:center;justify-content:center;gap:6px;width:max-content;max-width:100%;margin:0 auto 4px;padding:5px 12px;border:1px solid #29332a;border-radius:999px;background:#171d18;color:#aeb8aa;font-size:11px;font-weight:800;letter-spacing:.055em;line-height:1.2;text-align:center;text-transform:uppercase}
 #episodeFeed .seriesTrackerGroup[data-tracker-section]>h2{position:sticky;top:calc(var(--header-height) + var(--series-tracker-tabs-height,51px) + env(safe-area-inset-top));z-index:2;margin-bottom:22px}
 #episodeFeed .seriesTrackerGroup>h2::before{display:none}
@@ -3068,7 +3061,6 @@ body.discoverMoreFilterOpen{overflow:hidden}
 #descobrir .trendsSection .sectionHead .trendTabs .trendTab:hover:not(.active){background:#273127;color:#fff}
 #descobrir .trendsSection .sectionHead .trendTabs .trendTab:focus-visible{outline:3px solid #fff;outline-offset:2px;z-index:1}
 @media(max-width:650px){#descobrir .trendsSection .sectionHead .trendTabs .trendTab{min-height:44px;padding:10px 16px;font-size:14px}}
-.movieDetailActions{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}.movieDetailActions .btn{flex:1 1 175px;min-height:44px;padding:11px 14px;white-space:normal}.movieDetailActions .finishMovieBtn{margin-top:0}.movieDetailActions .moviePositionButton{border:1px solid var(--green);background:#1c241a;color:var(--green)}.movieDetailActions .moviePositionButton:hover{background:#283424}.movieDetailActions .moviePositionButton:focus-visible{outline:3px solid var(--green);outline-offset:2px}
 
 
 /* Controles de retorno nas capas de detalhes. */
@@ -3876,19 +3868,6 @@ body.discoverMoreFilterOpen{overflow:hidden}
   line-height: 1.25;
   white-space: normal;
 }
-.movieDetailPage .movieDetailActions > .finishMovieBtn {
-  border: 1px solid #b8f34a;
-  background: #b8f34a;
-  color: #11170d;
-}
-.movieDetailPage .movieDetailActions > .moviePositionButton {
-  border: 1px solid #b8f34a;
-  background: #1c241a;
-  color: #b8f34a;
-}
-.movieDetailPage .movieDetailActions > .moviePositionButton:hover {
-  background: #283424;
-}
 @media (max-width: 650px) {
   .movieDetailPage .movieDetailHero {
     min-height: 244px;
@@ -3948,6 +3927,8 @@ body.discoverMoreFilterOpen{overflow:hidden}
     margin-top: 16px;
   }
 }
+
+.movieDetailPage .movieDetailMorePanel .movieDetailActions{grid-template-columns:minmax(0,1fr);gap:2px;margin:0}
 
 /* Séries: lista de episódios acompanhados e próximas estreias. */
 #episodios.seriesTrackerScreen{box-sizing:border-box;min-width:0;padding:calc(var(--header-height) + 34px) clamp(14px,3vw,34px) 120px;touch-action:pan-y;-webkit-overflow-scrolling:touch;overscroll-behavior-y:auto}
@@ -4377,12 +4358,6 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 .profileListDeleteOverlay{z-index:1200;background:rgba(0,0,0,.72);padding:12px;backdrop-filter:blur(5px)}.profileListDeleteDialog{box-sizing:border-box;display:flex;flex-direction:column;width:min(492px,100%);min-height:336px;padding:36px 38px 28px;border:1px solid #343d34;border-radius:30px;background:#151915;color:#f3f5f1;box-shadow:0 24px 70px rgba(0,0,0,.62)}.profileListDeleteDialog h2{margin:0 0 24px;color:#b8f34a;font-size:27px;font-weight:750;line-height:1.2}.profileListDeleteDialog p{margin:0;color:#b1b9ae;font-size:23px;line-height:1.27}.profileListDeleteActions{display:flex;align-items:center;justify-content:flex-end;gap:34px;margin-top:auto;padding-top:30px}.profileListDeleteActions button{min-height:44px;padding:4px 0;border:0;background:transparent;font:inherit;font-size:25px;font-weight:800;cursor:pointer}.profileListDeleteCancel{color:#b8f34a}.profileListDeleteConfirm{color:#ef4b55}.profileListDeleteActions button:focus-visible{outline:3px solid currentColor;outline-offset:4px;border-radius:4px}@media(max-width:560px){.profileListDeleteDialog{width:min(492px,100%);min-height:300px;padding:30px 25px 22px;border-radius:26px}.profileListDeleteDialog h2{font-size:24px;margin-bottom:20px}.profileListDeleteDialog p{font-size:20px}.profileListDeleteActions{gap:28px;padding-top:26px}.profileListDeleteActions button{font-size:22px}}
 </style><link rel="stylesheet" href="/admin-mobile.css">
 <style id="profileCustomListStatusStyles">
-.profileCustomListItems.profileListGroupedByStatus{display:block}
-.profileListGroupedByStatus .profileCustomListStatusGroup{margin:0 0 24px}
-.profileListGroupedByStatus .profileCustomListStatusTitle{width:max-content;max-width:100%;margin:0 auto 16px;padding:7px 18px;border-radius:999px;background:#202320;color:#f0f3ed;font-size:14px;font-weight:850;line-height:1.2;text-align:center;text-transform:uppercase}
-.profileListGroupedByStatus .profileCustomListStatusGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px 12px}
-.profileListGroupedByStatus .profileCustomListStatusEmpty{grid-column:1/-1;margin:0;color:#8f9a8d;text-align:center;font-size:13px}
-@media(max-width:700px){.profileListGroupedByStatus .profileCustomListStatusGroup{margin-bottom:20px}.profileListGroupedByStatus .profileCustomListStatusTitle{margin-bottom:13px;font-size:13px}.profileListGroupedByStatus .profileCustomListStatusGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:16px 9px}}
 </style><style>
 .profileListReorderControls{display:flex;gap:8px;margin-top:7px}
 .profileListReorderControls button{width:36px;height:32px;border:1px solid #414941;border-radius:8px;background:#202520;color:#b8f34a;font-size:18px;font-weight:800;cursor:pointer}
@@ -4397,11 +4372,15 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 .profileListsSection .profileCustomListDot:focus-visible{outline:2px solid #b8f34a;outline-offset:3px}
 .profileListDetailPopover.profileListFilterMenu{position:absolute;z-index:30;top:calc(100% + 8px);right:8px;left:auto;bottom:auto;box-sizing:border-box;width:min(300px,calc(100vw - 32px));min-width:0;height:auto;max-height:min(70vh,560px);overflow:auto;padding:7px;border:1px solid #303a30;border-radius:14px;background:#111512;box-shadow:0 14px 34px #000b;scrollbar-width:thin;scrollbar-color:#526346 transparent}.profileListDetailPopover.profileListFilterMenu .profileListFilterHeading{display:none}.profileListDetailPopover.profileListFilterMenu .profileListFilterGroup{display:contents}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption{display:flex;align-items:center;justify-content:space-between;gap:14px;width:100%;min-height:40px;padding:8px 11px;border:0;border-radius:9px;background:transparent;color:#f4f6f2;text-align:left;font:inherit;font-size:14px;cursor:pointer}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption:hover,.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption:focus-visible{outline:none;background:#202720}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption[aria-checked="true"]{color:#b8f34a;font-weight:800}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption::before{display:none}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption::after{content:'✓';flex:none;color:transparent;font-size:16px;font-weight:900}.profileListDetailPopover.profileListFilterMenu button.profileListFilterOption[aria-checked="true"]::after{color:#b8f34a}</style><style id="seriesTrackerScrollLikeSuite">
 @media(max-width:650px){
-  body:has(#episodios.seriesTrackerScreen.active) .top{position:static}
-  #episodios.seriesTrackerScreen{padding-top:12px}
-  #episodios .seriesTrackerHeader{position:sticky;top:env(safe-area-inset-top);z-index:90;margin-bottom:8px;padding-top:4px;background:#090b0a}
-  #episodeFeed .seriesTrackerGroup[data-tracker-section]>h2{top:calc(48px + env(safe-area-inset-top))}
+  #episodios.seriesTrackerScreen{padding-top:calc(var(--header-height) + 12px + env(safe-area-inset-top))}
+  #episodios .seriesTrackerHeader{position:sticky;top:calc(var(--header-height) + env(safe-area-inset-top));z-index:90;margin-bottom:8px;padding-top:4px;background:#090b0a}
+  #episodeFeed .seriesTrackerGroup[data-tracker-section]>h2{top:calc(var(--header-height) + 48px + env(safe-area-inset-top))}
 }
+</style>
+<style id="seriesTrackerPosterTitlePlain">
+#episodeFeed .seriesTrackerPosterTitle,
+#episodeFeed .seriesTrackerPosterTitle:hover{min-height:0;padding:0;border:0;border-radius:0;background:transparent;color:#edf1e9;box-shadow:none}
+#episodeFeed .seriesTrackerPosterTitle::after{display:none;content:none}
 </style>
 <style id="seriesDetailListPickerFinalStyles">
 .customListModalOverlay.seriesDetailListPickerOverlay{display:flex;align-items:flex-end;justify-content:center;padding:0;background:rgba(0,0,0,.66);backdrop-filter:blur(3px)}
@@ -4422,6 +4401,45 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 .seriesDetailListPickerOverlay .seriesDetailListPickerNew{display:flex;align-items:center;gap:12px;min-height:52px;padding:0 4px;font-size:19px;font-weight:750}
 .seriesDetailListPickerOverlay .seriesDetailListPickerNew span{font-size:28px;line-height:1}
 @media(max-width:700px){.seriesDetailListPickerOverlay .seriesDetailListPickerSheet{width:calc(100% - 16px);height:min(98dvh,920px);max-height:98dvh;padding-right:22px;padding-left:22px}.seriesDetailListPickerOverlay .seriesDetailListPickerChoice{min-height:75px}}
+</style>
+<style id="moviePositionProgressStyles">
+.moviePositionProgress{display:grid;gap:5px;padding:8px 14px 7px;border-bottom:1px solid #29312b;background:#0d100d;color:#dce5d8}
+.moviePositionProgress[hidden]{display:none}
+.moviePositionProgressInfo{display:flex;align-items:center;justify-content:space-between;gap:8px;font-size:11px;line-height:1.25}
+.moviePositionProgressInfo strong,.moviePositionProgressInfo>span:last-child{color:#b8f34a;font-weight:800}
+.moviePositionProgressTrack{height:4px;overflow:hidden;border-radius:99px;background:#252b25}
+.moviePositionProgressTrack i{display:block;height:100%;border-radius:inherit;background:#b8f34a;transition:width .2s ease}
+@media(min-width:700px){.moviePositionProgress{padding-right:20px;padding-left:20px}}
+</style>
+<style id="episodePositionProgressStyles">
+#detailEpisódios .episodePositionProgress{display:grid;gap:4px;margin:5px 0 1px;color:#dce5d8}
+#detailEpisódios .episodePositionProgressInfo{display:flex;align-items:center;justify-content:space-between;gap:6px;font-size:10px;line-height:1.25}
+#detailEpisódios .episodePositionProgressInfo>span:first-child{display:flex;align-items:center;gap:4px;min-width:0;flex-wrap:wrap}
+#detailEpisódios .episodePositionProgressInfo .uiIcon{width:13px;height:13px;flex:none;color:#b8f34a}
+#detailEpisódios .episodePositionProgressInfo strong,#detailEpisódios .episodePositionProgressInfo>span:last-child{color:#b8f34a;font-weight:800}
+#detailEpisódios .episodePositionProgressTrack{height:4px;overflow:hidden;border-radius:99px;background:#252b25}
+#detailEpisódios .episodePositionProgressTrack i{display:block;height:100%;border-radius:inherit;background:#b8f34a;transition:width .2s ease}
+</style>
+<style id="discoverCarouselProfileStyles">
+#descobrir>.section:not(.trendsSection){border-color:transparent;background:transparent;box-shadow:none}
+#descobrir>.section .sectionHead h2>.uiIcon{display:none}
+#descobrir>.section:not(.trendsSection) .sectionHead>button[data-route]{display:grid;width:38px;height:38px;place-items:center;padding:0;border:0;border-radius:50%;background:transparent;color:transparent;font-size:0;box-shadow:none}
+#descobrir>.section:not(.trendsSection) .sectionHead>button[data-route]::after{content:"›";color:#b8f34a;font-size:32px;font-weight:600;line-height:1}
+#descobrir>.section:not(.trendsSection) .sectionHead>button[data-route]:hover{background:rgba(184,243,74,.09);text-decoration:none}
+#descobrir>.section:not(.trendsSection) .sectionHead>button[data-route]:focus-visible{outline:2px solid #b8f34a;outline-offset:2px}
+#descobrir .row{gap:12px;margin-right:0;padding:4px 2px 14px;scroll-behavior:smooth;scroll-snap-type:x proximity;scrollbar-width:none;overscroll-behavior-x:contain}
+#descobrir .row::-webkit-scrollbar{display:none}
+#descobrir .row>.card{flex:0 0 176px;width:176px;min-width:0;padding:0;border:0;border-radius:0;background:transparent;box-shadow:none;scroll-snap-align:start}
+#descobrir .row .poster{width:100%;height:auto;aspect-ratio:2/3;border-radius:14px}
+#descobrir .row .card h3{display:-webkit-box;min-height:2.5em;margin:0;color:#f4f6f2;font-size:13px;font-weight:850;line-height:1.25;overflow:hidden;text-overflow:ellipsis;white-space:normal;-webkit-box-orient:vertical;-webkit-line-clamp:2}
+#descobrir .row .card small{display:none!important}
+@media(max-width:700px){
+  #descobrir .row{gap:9px;padding-right:2px;scroll-padding-inline:2px}
+  #descobrir .row>.card{flex-basis:clamp(92px,24vw,110px);width:clamp(92px,24vw,110px)}
+  #descobrir .row .poster{border-radius:11px}
+  #descobrir .row .card h3{font-size:12px}
+}
+@media(prefers-reduced-motion:reduce){#descobrir .row{scroll-behavior:auto}}
 </style>
 </head>
 <body class="booting">
@@ -4460,17 +4478,26 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 <main class="page">
 <section id="descobrir" class="view">
   <div class="discoverSearchArea">
-    <input id="discoverSearch" class="searchBox" type="search" aria-label="Pesquisar filmes e séries" placeholder="Buscar filmes e séries..." autocomplete="off">
+    <input id="discoverSearch" class="searchBox" type="search" aria-label="Pesquisar filmes, séries e animes" placeholder="Buscar filmes, séries e animes..." autocomplete="off">
+    <p class="discoverSearchHint">Encontre títulos para organizar na sua lista e acompanhar o que quer assistir.</p>
     <div id="discoverSearchResults" class="discoverSearchResults" hidden>
+      <div id="discoverSearchToolbar" class="searchResultsToolbar" hidden>
+        <span id="discoverSearchSummary" class="searchResultSummary" aria-live="polite"></span>
+        <div class="searchTypeFilters" role="group" aria-label="Filtrar resultados por tipo">
+          <button type="button" class="searchTypeFilter active" data-search-type="all" aria-pressed="true">Tudo</button>
+          <button type="button" class="searchTypeFilter" data-search-type="movie" aria-pressed="false">Filmes</button>
+          <button type="button" class="searchTypeFilter" data-search-type="tv" aria-pressed="false">Séries e animes</button>
+        </div>
+      </div>
       <div id="discoverSearchGrid" class="grid"></div>
       <div id="discoverSearchResultsLoad" class="loadMoreWrap" hidden><button id="loadMoreDiscoverSearch" class="loadMoreBtn" type="button">Carregar mais</button></div>
     </div>
   </div>
 <section class="section trendsSection"><div class="sectionHead trendsHead"><h2><svg class="uiIcon"><use href="#i-sparkles"></use></svg>Tendências</h2><div class="trendTabs"><button id="trendToday" class="trendTab active">Hoje</button><button id="trendWeek" class="trendTab">Nesta Semana</button></div></div><div id="homeTrending" class="row trendRow"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-star"></use></svg>Séries mais bem avaliadas</h2><button data-route="series-avaliadas">Ver todas ›</button></div><div id="homeTopRatedSeries" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes em cartaz</h2><button data-route="filmes-cartaz">Ver todos ›</button></div><p style="color:#777;margin-top:-8px">Atualmente nos cinemas</p><div id="homeNowPlayingMovies" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div><button type="button" class="discoverMoreEntry" data-discover-more-entry="movie">Descobrir mais filmes ›</button></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div><button type="button" class="discoverMoreEntry" data-discover-more-entry="tv">Descobrir mais séries ›</button></section>
+  <section class="section"><div class="sectionHead"><h2>Novas séries</h2><button data-route="series-avaliadas" aria-label="Ver todas as novas séries">Ver todas ›</button></div><p style="color:#777;margin-top:-8px">Séries com estreia nos últimos 90 dias, ordenadas por popularidade.</p><div id="homeTopRatedSeries" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Nos cinemas</h2><button data-route="filmes-cartaz" aria-label="Ver todos os filmes nos cinemas">Ver todos ›</button></div><p style="color:#777;margin-top:-8px">Filmes atualmente em cartaz nos cinemas do Brasil.</p><div id="homeNowPlayingMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div></section>
   <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2><button data-route="filmes-breve">Ver todos ›</button></div><div id="homeUpcomingMovies" class="row"></div></section>
 </section>
 
@@ -4494,20 +4521,33 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 
 <section id="movieDetail" class="view"><div id="movieDetailContent"></div></section>
 <section id="busca" class="view searchView">
-  <div class="sectionHead"><h2>Pesquisar</h2></div>
- <input id="bigSearch" class="searchBox" aria-label="Pesquisar filmes e séries" placeholder="Buscar filmes e séries...">
+  <div class="searchIntro">
+    <span class="searchIntroKicker">ENCONTRE · ORGANIZE · ACOMPANHE</span>
+    <h1>O que você quer acompanhar?</h1>
+    <p>Pesquise filmes, séries e animes para adicionar à sua lista e acompanhar seu progresso.</p>
+    <div class="searchIntroNote"><span aria-hidden="true">ⓘ</span> O CORUJA não reproduz filmes ou séries: ele ajuda você a organizar o que quer assistir.</div>
+  </div>
+  <input id="bigSearch" class="searchBox" aria-label="Pesquisar filmes, séries e animes" placeholder="Buscar filmes, séries e animes..." autocomplete="off">
   <div id="searchHomeSections">
     <section class="section"><div class="sectionHead searchPrincipalHead"><button type="button" class="searchPrincipalBack" id="searchPrincipalBack" aria-label="Voltar à tela anterior" title="Voltar à tela anterior"></button><h2>Principais para você</h2><button data-route="principais">Ver todas ›</button></div><div id="searchTopMatches" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Em alta</h2><button data-route="em-alta">Ver todas ›</button></div><div id="searchTrending" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Séries populares</h2><button data-route="series-populares">Explorar ›</button></div><div id="searchHomeSeries" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Filmes populares</h2><button data-route="filmes-populares">Explorar ›</button></div><div id="searchHomeMovies" class="row"></div></section>
   </div>
+  <div id="searchResultsToolbar" class="searchResultsToolbar" hidden>
+    <span id="searchResultSummary" class="searchResultSummary" aria-live="polite"></span>
+    <div class="searchTypeFilters" role="group" aria-label="Filtrar resultados por tipo">
+      <button type="button" class="searchTypeFilter active" data-search-type="all" aria-pressed="true">Tudo</button>
+      <button type="button" class="searchTypeFilter" data-search-type="movie" aria-pressed="false">Filmes</button>
+      <button type="button" class="searchTypeFilter" data-search-type="tv" aria-pressed="false">Séries e animes</button>
+    </div>
+  </div>
   <div class="section"><div id="searchGrid" class="grid"></div><div id="searchResultsLoad" class="loadMoreWrap" hidden><button id="loadMoreSearch" class="loadMoreBtn" type="button">Carregar mais</button></div></div>
 </section>
 <section id="principais" class="view"><div class="sectionHead"><button type="button" id="principaisBack" aria-label="Voltar à Pesquisa">Voltar</button><h2>Principais para você</h2></div><p style="color:#777;margin-top:-8px">Sugestões escolhidas com base no que você acompanha e, quando ainda não há histórico, em títulos populares.</p><div id="principaisGrid" class="grid"></div></section>
 <section id="em-alta" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-chart"></use></svg>Em alta</h2></div><p class="providerPageDesc">Os títulos mais populares do momento no CORUJA.</p><div id="emAltaGrid" class="grid"></div></section>
-<section id="series-avaliadas" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-star"></use></svg>Séries mais bem avaliadas</h2></div><p class="providerPageDesc">As séries com as melhores avaliações no TMDB.</p><div id="topRatedSeriesGrid" class="grid"></div><div id="topRatedSeriesLoad" class="loadMoreWrap"><button id="loadMoreTopRatedSeries" class="loadMoreBtn">Carregar mais</button></div></section>
-<section id="filmes-cartaz" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes em cartaz</h2></div><p class="providerPageDesc">Atualmente nos cinemas no Brasil.</p><div id="nowPlayingMoviesGrid" class="grid"></div><div id="nowPlayingMoviesLoad" class="loadMoreWrap"><button id="loadMoreNowPlayingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="series-avaliadas" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2>Novas séries</h2></div><p class="providerPageDesc">Séries com estreia nos últimos 90 dias, ordenadas por popularidade.</p><div id="topRatedSeriesGrid" class="grid"></div><div id="topRatedSeriesLoad" class="loadMoreWrap"><button id="loadMoreTopRatedSeries" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-cartaz" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Nos cinemas</h2></div><p class="providerPageDesc">Filmes atualmente em cartaz nos cinemas do Brasil.</p><div id="nowPlayingMoviesGrid" class="grid"></div><div id="nowPlayingMoviesLoad" class="loadMoreWrap"><button id="loadMoreNowPlayingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="filmes-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2></div><p class="providerPageDesc">Os filmes mais populares do TMDB.</p><div id="popularMoviesGrid" class="grid"></div><div id="popularMoviesLoad" class="loadMoreWrap"><button id="loadMorePopularMovies" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2></div><p class="providerPageDesc">As séries mais populares no TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
@@ -4806,6 +4846,13 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   function readPendingAccountMerge(userId){if(!userId)return null;try{const value=JSON.parse(localStorage.getItem(pendingMergeKey(userId))||'null');return value&&typeof value==='object'?value:null}catch{return null}}
   function writePendingAccountMerge(userId,state){if(!userId)return false;try{const safeState={...state};delete safeState.sessionToken;localStorage.setItem(pendingMergeKey(userId),JSON.stringify(safeState));return true}catch{return false}}
   function clearPendingAccountMerge(userId){if(!userId)return;try{localStorage.removeItem(pendingMergeKey(userId))}catch{}}
+  function pendingCustomListOperationsKey(userId){return `${KEY}:pending-custom-list-operations:${encodeURIComponent(String(userId||''))}`}
+  function readPendingCustomListOperations(userId){if(!userId)return [];try{const value=JSON.parse(localStorage.getItem(pendingCustomListOperationsKey(userId))||'[]');return Array.isArray(value)?value.filter(operation=>operation&&typeof operation.id==='string'&&typeof operation.listId==='string'&&['add','remove'].includes(operation.action)&&(operation.action==='remove'?typeof operation.itemKey==='string':operation.item&&operation.item.id!=null&&(mediaTypeOf(operation.item)==='tv'||mediaTypeOf(operation.item)==='movie'))):[]}catch{return []}}
+  function enqueuePendingCustomListOperation(listId,action,item){if(!user.userId||!user.sessionToken)return null;const operations=readPendingCustomListOperations(user.userId),operation={id:`${Date.now()}-${Math.random().toString(36).slice(2,10)}`,listId:String(listId),action,createdAt:new Date().toISOString()};if(action==='add')operation.item={...item};else operation.itemKey=String(item);operations.push(operation);try{localStorage.setItem(pendingCustomListOperationsKey(user.userId),JSON.stringify(operations));return operation.id}catch{return null}}
+  function applyPendingCustomListOperations(accountState,userId){const operations=readPendingCustomListOperations(userId);if(!operations.length)return accountState;const source=accountState&&typeof accountState==='object'?accountState:{},customLists=Array.isArray(source.customLists)?source.customLists.map(list=>({...list,items:Array.isArray(list?.items)?[...list.items]:[]})):[];for(const operation of operations){const list=customLists.find(item=>String(item?.id)===operation.listId);if(!list)continue;const items=Array.isArray(list.items)?list.items:[];if(operation.action==='add'){const item=operation.item,type=mediaTypeOf(item),listType=profileCustomListMediaType(list),key=profileCustomListItemKey({...item,media_type:type});if(!key||(listType&&listType!=='mixed'&&listType!==type)||listType==='mixed'||items.some(existing=>profileCustomListItemKey(existing)===key))continue;if(!list.mediaType)list.mediaType=type;list.items=[...items,{...item,media_type:type}];list.updatedAt=operation.createdAt||list.updatedAt}else{list.items=items.filter(item=>profileCustomListItemKey(item)!==operation.itemKey);list.updatedAt=operation.createdAt||list.updatedAt}}return {...source,customLists}}
+  function customListOperationConfirmed(state,operation){const list=(Array.isArray(state?.customLists)?state.customLists:[]).find(item=>String(item?.id)===operation.listId);if(!list)return operation.action==='remove';const exists=(Array.isArray(list.items)?list.items:[]).some(item=>profileCustomListItemKey(item)===(operation.action==='add'?profileCustomListItemKey(operation.item):operation.itemKey));return operation.action==='add'?exists:!exists}
+  function clearPendingCustomListOperations(userId,confirmedIds){if(!userId)return;const confirmed=new Set(confirmedIds||[]),remaining=readPendingCustomListOperations(userId).filter(operation=>!confirmed.has(operation.id));try{if(remaining.length)localStorage.setItem(pendingCustomListOperationsKey(userId),JSON.stringify(remaining));else localStorage.removeItem(pendingCustomListOperationsKey(userId))}catch{}}
+  async function syncPendingCustomListOperations(){const userId=String(user.userId||''),operations=readPendingCustomListOperations(userId);if(!operations.length)return true;if(!user.sessionToken||!userId)return false;clearTimeout(syncTimer);syncTimer=null;const synced=await syncStateToServer();if(synced)clearPendingCustomListOperations(userId,operations.map(operation=>operation.id));return synced}
   async function syncMergedAccountState(userId){
     const pendingSaved=writePendingAccountMerge(userId,user);
     save();clearTimeout(syncTimer);syncTimer=null;
@@ -4817,13 +4864,16 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   async function syncStateToServer(){
     if(!user.sessionToken)return false;
     const syncUserId=user.userId;
+    const customListOperationIds=readPendingCustomListOperations(syncUserId).map(operation=>operation.id);
     try{
       const r=await fetch('/api/me/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({state:user,name:user.profile||'Coruja'}),keepalive:true,credentials:'same-origin'});
-      if(r.ok&&syncUserId)clearPendingAccountMerge(syncUserId);
-      return r.ok;
+      if(!r.ok)return false;
+      const result=await r.json().catch(()=>null);
+      if(syncUserId){clearPendingAccountMerge(syncUserId);const confirmed=readPendingCustomListOperations(syncUserId).filter(operation=>customListOperationIds.includes(operation.id)&&customListOperationConfirmed(result?.state,operation)).map(operation=>operation.id);clearPendingCustomListOperations(syncUserId,confirmed);if(confirmed.length!==customListOperationIds.length)return false}
+      return true;
     }catch{return false}
   }
-  const save=()=>{const persisted={...user};delete persisted.sessionToken;try{localStorage.setItem(KEY,JSON.stringify(persisted))}catch(e){try{const slim={...persisted,avatar:''};localStorage.setItem(KEY,JSON.stringify(slim))}catch{}}refreshSeriesProgressCards();if(user.sessionToken){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncStateToServer(),500)}};
+  const save=(options={})=>{const persisted={...user};delete persisted.sessionToken;try{localStorage.setItem(KEY,JSON.stringify(persisted))}catch(e){try{const slim={...persisted,avatar:''};localStorage.setItem(KEY,JSON.stringify(slim))}catch{}}refreshSeriesProgressCards();if(options.sync!==false&&user.sessionToken){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncStateToServer(),500)}};
   // Reforça o salvamento em PC e, principalmente, em celulares. Em fechamento/segundo aparelho,
   // sendBeacon é mais confiável que um fetch assíncrono que pode ser cancelado pelo navegador.
   function syncStateBeacon(){
@@ -5103,10 +5153,11 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   }
   function detailCollectionActionsMarkup(item,type){
 const state=collectionMarkerState(item.id,type),interrupted=type==='tv'&&profileCollectionHasExplicitInterruptedStatus(item),safeId=escapeHtml(String(item.id)),listLabel=state.listed?'Remover da minha lista':'Adicionar à minha lista',favoriteLabel=state.favorite?'Remover dos favoritos':'Adicionar aos favoritos';
-const moreMenu=type==='tv'?`<details class="detailMoreMenu"><summary class="detailMoreToggle" aria-label="Mais opções" aria-haspopup="menu" aria-expanded="false"><svg class="uiIcon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="12" cy="19" r="1.8"></circle></svg></summary><div class="detailMorePanel" role="menu"><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="mark-all">${cardActionIcon('i-check')}<span>Marcar tudo como visto</span></button><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="add-list">${cardActionIcon('i-bookmark')}<span>Adicionar a uma lista</span></button><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="watch-later">${cardActionIcon('i-clock')}<span>Ver mais tarde</span></button>${detailStopResumeActionMarkup(interrupted)}<button type="button" class="detailListAction danger" role="menuitem" data-series-detail-action="delete-history"><svg class="uiIcon" aria-hidden="true" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M10 11v6m4-6v6M6 7l1 14h10l1-14M9 7V4h6v3"></path></svg><span>Eliminar a série e o histórico</span></button></div></details>`:'';
+const moreMenu=type==='tv'?`<details class="detailMoreMenu"><summary class="detailMoreToggle" aria-label="Mais opções" aria-haspopup="menu" aria-expanded="false"><svg class="uiIcon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="12" cy="19" r="1.8"></circle></svg></summary><div class="detailMorePanel" role="menu"><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="mark-all">${cardActionIcon('i-check')}<span>Marcar tudo como visto</span></button><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="add-list">${cardActionIcon('i-bookmark')}<span>Adicionar a uma lista</span></button><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="watch-later">${cardActionIcon('i-clock')}<span>Ver mais tarde</span></button>${detailStopResumeActionMarkup(interrupted)}</div></details>`:'';
+const movieMoreMenu=type==='movie'?`<details class="detailMoreMenu movieDetailMoreMenu"><summary class="detailMoreToggle" aria-label="Mais opções" aria-haspopup="true" aria-expanded="false"><svg class="uiIcon" aria-hidden="true" focusable="false" viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.8"></circle><circle cx="12" cy="12" r="1.8"></circle><circle cx="12" cy="19" r="1.8"></circle></svg></summary><div class="detailMorePanel movieDetailMorePanel"><button type="button" class="detailListAction" role="menuitem" data-series-detail-action="add-list">${cardActionIcon('i-bookmark')}<span>Adicionar a uma lista</span></button><div id="movieCompletionArea"></div></div></details>`:'';
 const favoriteButton=`<button type="button" class="favorite ${state.favorite?'on':''}" aria-label="${favoriteLabel}" aria-pressed="${state.favorite}" title="${favoriteLabel}">${cardActionIcon('i-heart')}</button>`;
 const listButton=`<button type="button" class="add ${state.listed?'on':''}" aria-label="${listLabel}" aria-pressed="${state.listed}" title="${listLabel}">${cardActionIcon(state.listed?'i-check':'i-plus')}</button>`;
-const actions=type==='tv'?`${moreMenu}${favoriteButton}${listButton}`:`${listButton}${favoriteButton}`;
+const actions=type==='tv'?`${moreMenu}${favoriteButton}${listButton}`:`${movieMoreMenu}${listButton}${favoriteButton}`;
 return `<div class="detailCollectionActions" data-media-id="${safeId}" data-media-type="${type}" aria-label="Ações do título">${actions}</div>`
 }
   function toggleSeriesWatchLater(item){
@@ -5136,7 +5187,7 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
   function stopSeriesWatching(item){const id=Number(item?.id);if(!Number.isSafeInteger(id)||id<=0)return false;user.seriesStatuses={...(user.seriesStatuses||{}),[String(id)]:'interrompida'};save();return true}
   function resumeSeriesWatching(item){const id=Number(item?.id);if(!Number.isSafeInteger(id)||id<=0)return false;let changed=false;['seriesStatuses','profileSeriesStatuses'].forEach(key=>{const statuses={...(user[key]||{})},value=String(statuses[String(id)]||'').trim().toLocaleLowerCase('pt-BR');if(['interrupted','interrompida','interrompido'].includes(value)){delete statuses[String(id)];user[key]=statuses;changed=true}});if(!changed)return false;save();return true}
   function refreshDetailCollectionActions(root,item,type){const current=$('.detailCollectionActions',root);if(!current)return;current.outerHTML=detailCollectionActionsMarkup(item,type);bindDetailCollectionActions(root,item,type)}
-  function bindDetailCollectionActions(root,item,type){const actions=$('.detailCollectionActions',root);if(!actions)return;const media={...item,media_type:type};$('.add',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleList(media)});const moreMenu=$('.detailMoreMenu',actions),moreSummary=$('summary',moreMenu||actions);moreMenu?.addEventListener('toggle',()=>moreSummary?.setAttribute('aria-expanded',String(moreMenu.open)));moreMenu?.addEventListener('keydown',event=>{if(event.key==='Escape'){moreMenu.open=false;moreSummary?.focus()}});moreMenu?.querySelectorAll('[data-series-detail-action]').forEach(button=>button.addEventListener('click',async event=>{event.preventDefault();event.stopPropagation();const action=button.dataset.seriesDetailAction;moreMenu.open=false;if(action==='mark-all'){await toggleAllSeriesEpisodesWatched(async()=>{if(state.season===null)await renderSeasonListCollapsed();else await loadTemporada(state.season)});return}if(action==='add-list'){openSeriesDetailListPicker(item,moreSummary);return}if(action==='watch-later'){toggleSeriesWatchLater(item);return}if(action==='stop-watching'){if(stopSeriesWatching(item))refreshDetailCollectionActions(root,item,type);return}if(action==='resume-watching'){if(resumeSeriesWatching(item))refreshDetailCollectionActions(root,item,type);return}if(action==='delete-history')deleteSeriesAndHistory(item)}));$('.favorite',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFavorite(media)})}
+  function bindDetailCollectionActions(root,item,type){const actions=$('.detailCollectionActions',root);if(!actions)return;const media={...item,media_type:type};$('.add',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleList(media)});const moreMenu=$('.detailMoreMenu',actions),moreSummary=$('summary',moreMenu||actions);moreMenu?.addEventListener('toggle',()=>moreSummary?.setAttribute('aria-expanded',String(moreMenu.open)));moreMenu?.addEventListener('keydown',event=>{if(event.key==='Escape'){moreMenu.open=false;moreSummary?.focus()}});moreMenu?.querySelectorAll('[data-series-detail-action]').forEach(button=>button.addEventListener('click',async event=>{event.preventDefault();event.stopPropagation();const action=button.dataset.seriesDetailAction;moreMenu.open=false;if(action==='mark-all'){await toggleAllSeriesEpisodesWatched(async()=>{if(state.season===null)await renderSeasonListCollapsed();else await loadTemporada(state.season)});return}if(action==='add-list'){openSeriesDetailListPicker(media,moreSummary);return}if(action==='watch-later'){toggleSeriesWatchLater(item);return}if(action==='stop-watching'){if(stopSeriesWatching(item))refreshDetailCollectionActions(root,item,type);return}if(action==='resume-watching'){if(resumeSeriesWatching(item))refreshDetailCollectionActions(root,item,type);return}}));$('.favorite',actions)?.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();toggleFavorite(media)})}
   function card(x,options={}){const type=mediaTypeOf(x);const id=x.id;const watched=user.list.some(i=>Number(i.id)===Number(id)&&mediaTypeOf(i)===type);const favKey=type==='tv'?'series':'movies';const favorite=(user.favorites?.[favKey]||[]).some(i=>Number(i.id)===Number(id));const withSeriesProgress=type==='tv'&&options.seriesProgress===true;const title=x.name||x.title||'Sem título';const el=document.createElement('article');el.className='card';el.dataset.mediaType=type;el.dataset.mediaId=String(id);if(withSeriesProgress){el.classList.add('hasSeriesProgress');el.dataset.seriesTitle=String(title);const knownTotal=Number(x.number_of_episodes)||0;if(knownTotal)el.dataset.totalEpisodes=String(knownTotal)}el.setAttribute('role','button');el.setAttribute('tabindex','0');el.style.cursor='pointer';el.innerHTML=`<div class="poster">${posterImageMarkup(x.poster_path,title)}<span class="score">${Math.round((x.vote_average||0)*10)}%</span>${withSeriesProgress?'<span class="seriesWatchStatus" hidden>Assistindo</span><span class="seriesProgressTrack" role="progressbar" aria-label="Episódios assistidos" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i></i></span>':''}<button type="button" class="add ${watched?'on':''}" aria-label="${watched?'Remover da minha lista':'Adicionar à minha lista'}" aria-pressed="${watched}" title="${watched?'Remover da minha lista':'Adicionar à minha lista'}">${cardActionIcon(watched?'i-check':'i-plus')}</button><button type="button" class="favorite ${favorite?'on':''}" aria-label="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}" aria-pressed="${favorite}" title="${favorite?'Remover dos favoritos':'Adicionar aos favoritos'}">${cardActionIcon('i-heart')}</button></div><h3>${escapeHtml(title)}</h3><small>${escapeHtml((x.first_air_date||x.release_date||'').slice(0,4)||'—')} · ${type==='tv'?'Série':'Filme'}</small><div class="stars">★★★★★</div>`;el.addEventListener('click',e=>{if(e.target.closest('.add,.favorite'))return;type==='tv'?location.hash='tv-'+id:location.hash='movie-'+id});const cardImage=el.querySelector('.poster>img');cardImage?.addEventListener('error',()=>{cardImage.style.display='none';cardImage.parentElement?.classList.add('posterFallbackVisible')},{once:true});$('.add',el).addEventListener('click',e=>{e.stopPropagation();toggleList({...x,media_type:type})});$('.favorite',el).addEventListener('click',e=>{e.stopPropagation();toggleFavorite({...x,media_type:type})});if(withSeriesProgress)updateSeriesProgressCard(el);return el}
   function seriesEpisodeKeyForShow(key,showId){
     const parts=String(key).split('-');
@@ -5256,14 +5307,16 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
     if(btn){btn.disabled=true;btn.textContent='Carregando...';}
     try{
       const next=topRatedSeriesPage+1;
-      const d=await api('/api/series/top-rated?page='+next);
-      const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path).map(x=>({...x,media_type:'tv'}));
+      const d=await api('/api/series/new?page='+next);
+      const today=new Date().toISOString().slice(0,10);
+      const since90=new Date(Date.now()-90*24*60*60*1000).toISOString().slice(0,10);
+      const items=(d.results||[]).filter(x=>x&&x.id&&x.poster_path&&String(x.first_air_date||'')>=since90&&String(x.first_air_date||'')<=today).map(x=>({...x,media_type:'tv'}));
       topRatedSeriesPage=next;
       topRatedSeriesTotalPages=Number(d.total_pages||next);
       appendCardsPreservingScroll(box,items);
       if(loadBox)loadBox.style.display=topRatedSeriesPage<topRatedSeriesTotalPages?'block':'none';
     }catch(e){
-      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as séries mais bem avaliadas agora.</div>';
+      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar as novas séries agora.</div>';
       if(loadBox)loadBox.style.display='none';
     }finally{
       topRatedSeriesLoading=false;
@@ -5294,7 +5347,7 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
       appendCardsPreservingScroll(box,items);
       if(loadBox)loadBox.style.display=nowPlayingMoviesPage<nowPlayingMoviesTotalPages?'block':'none';
     }catch(e){
-      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes em cartaz agora.</div>';
+      if(!box.children.length)box.innerHTML='<div class="empty">Não foi possível carregar os filmes nos cinemas agora.</div>';
       if(loadBox)loadBox.style.display='none';
     }finally{
       nowPlayingMoviesLoading=false;
@@ -5334,7 +5387,28 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
     const title=item.title||item.name||'Filme',el=card(item),upcoming=moviesGalleryTab==='upcoming',rowView=upcoming?!moviesGalleryListView:moviesGalleryListView;
     el.classList.add('moviesPosterCard');el.setAttribute('aria-label',`${title}: abrir detalhes`);
     el.querySelector('.favorite')?.remove();
-    const addButton=el.querySelector('.add');
+    let addButton=el.querySelector('.add');
+    if(addButton&&!upcoming){
+      const markWatchedButton=addButton.cloneNode(true);
+      markWatchedButton.setAttribute('aria-label','Marcar filme como assistido');
+      markWatchedButton.setAttribute('aria-pressed','false');
+      markWatchedButton.title='Marcar filme como assistido';
+      markWatchedButton.addEventListener('click',async event=>{
+        event.preventDefault();event.stopPropagation();
+        const movieId=String(item.id);
+        if(user.watchedMovies?.[movieId])return;
+        user.watchedMovies=user.watchedMovies||{};
+        user.watchedMovies[movieId]=new Date().toISOString();
+        user.positions=user.positions||{};
+        delete user.positions[moviePositionKey(item.id)];
+        save();
+        await syncStateNow();
+        renderMoviesPage();
+        renderProfile();
+      });
+      addButton.replaceWith(markWatchedButton);
+      addButton=markWatchedButton;
+    }
     if(upcoming){
       el.classList.add('moviesPosterUpcomingCard');addButton?.remove();
       const meta=el.querySelector('small');if(meta){meta.className='moviesGalleryReleaseDate';meta.textContent=formatMoviesGalleryReleaseDate(item.release_date)}
@@ -5344,10 +5418,10 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
     }
     if(rowView){
       el.classList.add('moviesPosterListCard');
-      if(addButton&&!upcoming){el.appendChild(addButton);addButton.setAttribute('aria-label','Remover da minha lista');addButton.title='Remover da minha lista'}
+      if(addButton&&!upcoming)el.appendChild(addButton);
       const meta=el.querySelector('small');if(meta&&!upcoming){meta.className='moviesGalleryMeta';meta.textContent=String(item.release_date||'').slice(0,4)||'Ano indisponível';const runtime=Number(item.runtime);if(runtime>0)meta.textContent+=` · ${formatMoviesGalleryRuntime(runtime)}`}
     }else{
-      addButton?.remove();if(!upcoming){el.querySelector('h3')?.remove();el.querySelector('small')?.remove()}el.querySelector('.stars')?.remove();
+      if(upcoming)addButton?.remove();if(!upcoming){el.querySelector('h3')?.remove();el.querySelector('small')?.remove()}el.querySelector('.stars')?.remove();
     }
     el.querySelector('.score')?.remove();
     const initialFallback=el.querySelector('.poster>.artFallback');
@@ -5445,7 +5519,7 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
       const browse=$('#moviesBrowse');if(browse)browse.hidden=true;
       return;
     }
-    const source=upcoming?moviesGalleryUpcomingItems:(Array.isArray(user.list)?user.list:[]).filter(x=>x?.id&&mediaTypeOf(x)==='movie').map(x=>({...x,media_type:'movie'}));
+    const source=upcoming?moviesGalleryUpcomingItems:(Array.isArray(user.list)?user.list:[]).filter(x=>x?.id&&mediaTypeOf(x)==='movie'&&!user.watchedMovies?.[String(x.id)]).map(x=>({...x,media_type:'movie'}));
     const seen=new Set(),items=source.filter(x=>{const id=String(x.id);if(seen.has(id))return false;seen.add(id);return true});
     if(upcoming)items.sort((a,b)=>String(a.release_date).localeCompare(String(b.release_date)));
     if(upcoming&&status&&items.length)status.textContent=moviesGalleryMonthLabel(items[0].release_date);
@@ -5457,7 +5531,10 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
       }else if(upcoming){
         empty.classList.add('moviesUpcomingEmptyState');
         empty.innerHTML=`<svg class="moviesUpcomingEmptyIcon" viewBox="0 0 24 24" role="img" aria-label="Calendário"><rect x="4" y="5" width="16" height="16" rx="1.5"/><path d="M8 3v4m8-4v4M4 9h16M8 13h.01M12 13h.01M16 13h.01M8 17h.01M12 17h.01M16 17h.01"/></svg><h2>Nada por vir</h2><p>Os filmes por estrear que segues aparecerão aqui.</p>`;
-      }else empty.textContent='Sua lista de filmes está vazia. Adicione filmes usando o botão + nos pôsteres.';
+      }else {
+        const hasSavedMovies=(Array.isArray(user.list)?user.list:[]).some(x=>x?.id&&mediaTypeOf(x)==='movie');
+        empty.textContent=hasSavedMovies?'Você já marcou todos os filmes da sua lista como assistidos.':'Sua lista de filmes está vazia. Adicione filmes usando o botão + nos pôsteres.';
+      }
       box.appendChild(empty);
     }
     const missingPosters=[];
@@ -6126,6 +6203,19 @@ return null}
     const type=mediaTypeOf(item),id=String(item?.id??'').trim();
     return id&&(type==='tv'||type==='movie')?`${type}:${id}`:'';
   }
+  function profileCustomListMediaType(list){
+    const declared=String(list?.mediaType||list?.media_type||'').trim().toLowerCase();
+    if(declared==='movie'||declared==='tv')return declared;
+    const name=String(list?.name||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLocaleLowerCase('pt-BR');
+    const namesMovies=/\bfilmes?\b/.test(name),namesSeries=/\bseries?\b/.test(name);
+    if(namesMovies!==namesSeries)return namesMovies?'movie':'tv';
+    const types=new Set((Array.isArray(list?.items)?list.items:[]).map(mediaTypeOf));
+    return types.size===1?[...types][0]:types.size>1?'mixed':'';
+  }
+  function profileCustomListItemsForType(list){
+    const items=Array.isArray(list?.items)?list.items:[],type=profileCustomListMediaType(list);
+    return type==='movie'||type==='tv'?items.filter(item=>mediaTypeOf(item)===type):items;
+  }
   function profileCustomListById(id){return (Array.isArray(user.customLists)?user.customLists:[]).find(list=>String(list?.id)===String(id))||null}
   function profileCustomListTitle(item){return String(item?.name||item?.title||'Título sem nome')}
   function profileCustomListCandidates(){
@@ -6165,30 +6255,22 @@ return null}
     const status=profileCollectionStatus(item);
     return filter==='toWatch'?(status.toWatch||status.notStarted):filter==='finished'?(status.finished||status.watched):!!status[filter];
   }
-  function profileCustomListStatusGroups(){
-    return[
-      {key:'toWatch',label:'PARA VER',items:[]},
-      {key:'upcoming',label:'BREVEMENTE',items:[]},
-      {key:'notStarted',label:'NÃO INICIADAS',items:[]},
-      {key:'later',label:'VER MAIS TARDE',items:[]},
-      {key:'inDay',label:'EM DIA',items:[]},
-      {key:'finished',label:'TERMINADAS',items:[]},
-      {key:'canceled',label:'CANCELADAS',items:[]},
-      {key:'interrupted',label:'INTERROMPIDAS',items:[]}
-    ];
-  }
   function profileCustomListAdd(list,items){
     if(!list)return 0;
+    let listType=profileCustomListMediaType(list);
+    if(listType==='mixed')return 0;
     const existing=new Set((Array.isArray(list.items)?list.items:[]).map(profileCustomListItemKey).filter(Boolean));
     const added=[];
-    (items||[]).forEach(raw=>{const type=mediaTypeOf(raw),key=profileCustomListItemKey({...raw,media_type:type});if(!key||existing.has(key))return;existing.add(key);added.push({...raw,media_type:type,addedAt:new Date().toISOString()})});
-    if(added.length){list.items=[...(Array.isArray(list.items)?list.items:[]),...added];list.updatedAt=new Date().toISOString();save()}
+    (items||[]).forEach(raw=>{const type=mediaTypeOf(raw),key=profileCustomListItemKey({...raw,media_type:type});if(!key||existing.has(key)||(listType&&type!==listType))return;if(!listType)listType=type;existing.add(key);added.push({...raw,media_type:type,addedAt:new Date().toISOString()})});
+    if(added.length){if(!list.mediaType&&listType)list.mediaType=listType;list.items=[...(Array.isArray(list.items)?list.items:[]),...added];list.updatedAt=new Date().toISOString();added.forEach(item=>enqueuePendingCustomListOperation(list.id,'add',item));save()}
     return added.length;
   }
   function removeProfileCustomListItem(listId,itemKey){
     const list=profileCustomListById(listId);if(!list)return;
+    enqueuePendingCustomListOperation(list.id,'remove',itemKey);
     list.items=(Array.isArray(list.items)?list.items:[]).filter(item=>profileCustomListItemKey(item)!==itemKey);
     list.updatedAt=new Date().toISOString();save();renderProfile();
+    syncPendingCustomListOperations().then(synced=>{if(!synced)toast('O servidor não confirmou a remoção. Ela ficou guardada neste navegador e será reenviada.')});
   }
   function renameProfileCustomList(listId,name){
     const list=profileCustomListById(listId),clean=String(name||'').trim().slice(0,60);if(!list||!clean)return false;
@@ -6225,8 +6307,8 @@ return null}
   }
   function openSeriesDetailListPicker(item,trigger){
     user.customLists=Array.isArray(user.customLists)?user.customLists:[];
-    const media={...item,media_type:mediaTypeOf(item)||'tv'},mediaKey=profileCustomListItemKey(media),selected=new Set();
-    user.customLists.forEach(list=>{if((Array.isArray(list.items)?list.items:[]).some(existing=>profileCustomListItemKey(existing)===mediaKey))selected.add(String(list.id))});
+    const media={...item,media_type:mediaTypeOf(item)||'tv'},mediaKey=profileCustomListItemKey(media),selected=new Set(),mediaAddedText=media.media_type==='movie'?'filme adicionado':'série adicionada',mediaRemovedText=media.media_type==='movie'?'filme removido':'série removida';
+    user.customLists.forEach(list=>{if(profileCustomListMediaType(list)===media.media_type&&(Array.isArray(list.items)?list.items:[]).some(existing=>profileCustomListItemKey(existing)===mediaKey))selected.add(String(list.id))});
     const previousOverflow=document.body.style.overflow,wrap=document.createElement('div');
     wrap.className='customListModalOverlay seriesDetailListPickerOverlay';
     wrap.innerHTML='<section class="seriesDetailListPickerSheet" role="dialog" aria-modal="true" aria-labelledby="seriesDetailListPickerTitle"><div class="seriesDetailListPickerGrabber" aria-hidden="true"></div><header class="seriesDetailListPickerHeader"><h2 id="seriesDetailListPickerTitle">Adicionar a uma lista</h2><button type="button" class="seriesDetailListPickerOk">OK</button></header><div class="seriesDetailListPickerRows" role="list" aria-label="Suas listas"></div><footer class="seriesDetailListPickerFooter"><button type="button" class="seriesDetailListPickerNew"><span aria-hidden="true">+</span>Nova lista</button></footer></section>';
@@ -6235,26 +6317,27 @@ return null}
     function onKeydown(event){if(event.key==='Escape'){event.preventDefault();close();return}if(event.key!=='Tab')return;const nodes=[...$$('.seriesDetailListPickerChoice',wrap).filter(button=>!button.disabled),create,ok],index=nodes.indexOf(document.activeElement);if(event.shiftKey&&index<=0){event.preventDefault();nodes.at(-1)?.focus()}else if(!event.shiftKey&&(index===nodes.length-1||index<0)){event.preventDefault();nodes[0]?.focus()}}
     function render(){
       rows.replaceChildren();
-      const lists=profileCustomListSort(user.customLists,'manual');
-      if(!lists.length){const empty=document.createElement('p');empty.className='seriesDetailListPickerEmpty';empty.textContent='Você ainda não criou nenhuma lista.';rows.append(empty);return}
+      const lists=profileCustomListSort(user.customLists,'manual').filter(list=>{const type=profileCustomListMediaType(list);return type===media.media_type||(!type&&!(Array.isArray(list.items)?list.items:[]).length)});
+      if(!lists.length){const empty=document.createElement('p');empty.className='seriesDetailListPickerEmpty';empty.textContent=media.media_type==='movie'?'Você ainda não criou nenhuma lista de filmes.':'Você ainda não criou nenhuma lista de séries.';rows.append(empty);return}
       lists.forEach(list=>{
         const button=document.createElement('button');button.type='button';button.className='seriesDetailListPickerChoice';button.setAttribute('role','listitem');
         const exists=(Array.isArray(list.items)?list.items:[]).some(existing=>profileCustomListItemKey(existing)===mediaKey),isSelected=selected.has(String(list.id));
-        button.setAttribute('aria-pressed',String(isSelected));button.setAttribute('aria-label',String(list.name||'Lista sem nome')+(exists?(isSelected?', série adicionada, desmarcar para remover':', série removida'):(isSelected?', selecionada':', não selecionada')));
+        button.setAttribute('aria-pressed',String(isSelected));button.setAttribute('aria-label',String(list.name||'Lista sem nome')+(exists?(isSelected?', '+mediaAddedText+', desmarcar para remover':', '+mediaRemovedText):(isSelected?', selecionada':', não selecionada')));
         const name=document.createElement('span');name.className='seriesDetailListPickerChoiceName';name.textContent=String(list.name||'Lista sem nome');const mark=document.createElement('span');mark.className='seriesDetailListPickerChoiceMark';mark.setAttribute('aria-hidden','true');mark.textContent='✓';button.append(name,mark);
         button.addEventListener('click',()=>{const id=String(list.id);if(selected.has(id))selected.delete(id);else selected.add(id);render()});
         rows.append(button);
       });
     }
     wrap.addEventListener('click',event=>{if(event.target===wrap)close()});
-    create.addEventListener('click',()=>openCreateProfileListModal(created=>{if(created)selected.add(String(created.id));render()}));
-    ok.addEventListener('click',()=>{let removed=false;(user.customLists||[]).forEach(list=>{const exists=(Array.isArray(list.items)?list.items:[]).some(existing=>profileCustomListItemKey(existing)===mediaKey),isSelected=selected.has(String(list.id));if(isSelected&&!exists)profileCustomListAdd(list,[media]);else if(!isSelected&&exists){list.items=list.items.filter(existing=>profileCustomListItemKey(existing)!==mediaKey);list.updatedAt=new Date().toISOString();removed=true}});if(removed)save();close(false)});
+    create.addEventListener('click',()=>openCreateProfileListModal(created=>{if(created)selected.add(String(created.id));render()},media.media_type));
+    ok.addEventListener('click',async()=>{let removed=false,added=0;(user.customLists||[]).forEach(list=>{const items=Array.isArray(list.items)?list.items:[],type=profileCustomListMediaType(list),emptyUntyped=!type&&!items.length;if(type!==media.media_type&&!emptyUntyped)return;const exists=items.some(existing=>profileCustomListItemKey(existing)===mediaKey),isSelected=selected.has(String(list.id));if(isSelected&&!exists){if(emptyUntyped)list.mediaType=media.media_type;added+=profileCustomListAdd(list,[media])}else if(!isSelected&&exists){enqueuePendingCustomListOperation(list.id,'remove',mediaKey);list.items=items.filter(existing=>profileCustomListItemKey(existing)!==mediaKey);list.updatedAt=new Date().toISOString();removed=true}});if(removed)save();close(false);if(added||removed){const synced=await syncPendingCustomListOperations();if(!synced)toast('O servidor não confirmou a alteração. A lista foi mantida neste navegador e será reenviada.')}});
     document.body.append(wrap);document.body.style.overflow='hidden';document.addEventListener('keydown',onKeydown);render();ok.focus();
   }
   function openProfileListPicker(listId,trigger){
     const list=profileCustomListById(listId);if(!list)return;
+    const listType=profileCustomListMediaType(list);
     const previousOverflow=document.body.style.overflow,wrap=document.createElement('div');
-    let query='',results=profileCustomListCandidates(),selected=new Map(),requestId=0,debounce=0;
+    let query='',results=profileCustomListCandidates(),selected=new Map(),pendingType=listType==='movie'||listType==='tv'?listType:'',requestId=0,debounce=0;
     wrap.className='customListModalOverlay profileListPickerOverlay';
     wrap.innerHTML=`<section class="customListModal profileListPickerModal" role="dialog" aria-modal="true" aria-labelledby="profileListPickerTitle"><div class="customListModalForm profileListPickerForm"><div class="profileListPickerHandle" aria-hidden="true"><span></span></div><header class="profileListPickerHeader"><h2 id="profileListPickerTitle">Adicionar a uma lista</h2><button class="customListSubmit profileListPickerOk" type="button" disabled>OK</button></header><label class="srOnly" for="profileListPickerSearch">Pesquisar um título</label><div class="profileListPickerSearchWrap"><svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.8" cy="10.8" r="6.4"></circle><path d="m16 16 4.2 4.2"></path></svg><input id="profileListPickerSearch" class="profileListPickerSearch" type="search" placeholder="Pesquisar um título" autocomplete="off"></div><div class="profileListPickerResults" role="list" aria-live="polite"></div><div class="customListModalError profileListPickerError" aria-live="polite"></div></div></section>`;
     document.body.appendChild(wrap);document.body.style.overflow='hidden';
@@ -6263,7 +6346,7 @@ return null}
     function close(restoreFocus=true){clearTimeout(debounce);requestId++;document.removeEventListener('keydown',onKeydown);document.body.style.overflow=previousOverflow;wrap.remove();if(restoreFocus&&trigger?.isConnected)trigger.focus({preventScroll:true})}
     function onKeydown(event){if(event.key==='Escape'){event.preventDefault();close();return}if(event.key!=='Tab')return;const nodes=focusables(),index=nodes.indexOf(document.activeElement);if(event.shiftKey&&index<=0){event.preventDefault();nodes.at(-1)?.focus()}else if(!event.shiftKey&&(index===nodes.length-1||index<0)){event.preventDefault();nodes[0]?.focus()}}
     function renderResults(){
-      const matching=(results||[]).filter(item=>!query||profileCustomListTitle(item).toLocaleLowerCase('pt-BR').includes(query.toLocaleLowerCase('pt-BR')));
+      const matching=listType==='mixed'?[]:(results||[]).filter(item=>(!pendingType||mediaTypeOf(item)===pendingType)&&(!query||profileCustomListTitle(item).toLocaleLowerCase('pt-BR').includes(query.toLocaleLowerCase('pt-BR'))));
       box.replaceChildren();
       let total=0;
       [['tv','Séries'],['movie','Filmes']].forEach(([type,label])=>{
@@ -6273,15 +6356,15 @@ return null}
           const key=profileCustomListItemKey(item),already=(list.items||[]).some(existing=>profileCustomListItemKey(existing)===key),isSelected=selected.has(key),button=document.createElement('button');button.type='button';button.className='profileListPickerResult';button.setAttribute('role','listitem');button.setAttribute('aria-label',(already?'Já está na lista: ':'Adicionar ')+profileCustomListTitle(item));button.setAttribute('aria-pressed',String(isSelected||already));button.setAttribute('aria-disabled',String(already));
           const src=profileCustomListPoster(item);if(src){const image=document.createElement('img');image.src=src;image.alt='';image.loading='lazy';button.append(image)}else{const poster=document.createElement('span');poster.className='profileListPickerPoster';poster.setAttribute('aria-hidden','true');button.append(poster)}
           const name=document.createElement('strong');name.textContent=profileCustomListTitle(item);const mark=document.createElement('span');mark.className='profileListPickerResultMark';mark.setAttribute('aria-hidden','true');mark.textContent=already||isSelected?'✓':'+';button.append(name,mark);
-          if(already){button.disabled=true;button.title='Este título já está na lista'}else button.addEventListener('click',()=>{if(selected.has(key))selected.delete(key);else selected.set(key,{...item,media_type:type});renderResults()});group.append(button);
+          if(already){button.disabled=true;button.title='Este título já está na lista'}else button.addEventListener('click',()=>{if(selected.has(key)){selected.delete(key);if(!selected.size&&listType!=='movie'&&listType!=='tv')pendingType=''}else{if(!pendingType)pendingType=type;if(type!==pendingType)return;selected.set(key,{...item,media_type:type})}renderResults()});group.append(button);
         });box.append(group);
       });
-      if(!total){const status=document.createElement('div');status.className='profileListPickerStatus';status.textContent=query?'Nenhum título encontrado.':'Nenhum título disponível.';box.append(status)}
+      if(!total){const status=document.createElement('div');status.className='profileListPickerStatus';status.textContent=listType==='mixed'?'Esta lista antiga contém filmes e séries. Os títulos existentes foram preservados; crie uma lista por tipo para adicionar novos.':query?'Nenhum título encontrado.':'Nenhum título disponível.';box.append(status)}
       ok.disabled=selected.size===0;ok.title=selected.size?`${selected.size} título${selected.size===1?'':'s'} selecionado${selected.size===1?'':'s'}`:'Selecione títulos para adicionar';
     }
     function search(){clearTimeout(debounce);requestId++;query=input.value.trim();results=profileCustomListCandidates();error.textContent='';renderResults()}
     input.addEventListener('input',search);wrap.addEventListener('click',event=>{if(event.target===wrap)close()});
-    ok.addEventListener('click',()=>{if(ok.disabled)return;const added=profileCustomListAdd(list,[...selected.values()]);profileOpenListId=String(listId);close(false);renderProfile();requestAnimationFrame(()=>$('#profileCustomListDetail')?.scrollIntoView({block:'nearest',behavior:'smooth'}));if(added)toast(`${added} título${added===1?'':'s'} adicionado${added===1?'':'s'}.`)});
+    ok.addEventListener('click',async()=>{if(ok.disabled)return;if(!list.mediaType&&pendingType)list.mediaType=pendingType;const added=profileCustomListAdd(list,[...selected.values()]);profileOpenListId=String(listId);close(false);renderProfile();requestAnimationFrame(()=>$('#profileCustomListDetail')?.scrollIntoView({block:'nearest',behavior:'smooth'}));if(added){const synced=await syncPendingCustomListOperations();toast(synced?`${added} título${added===1?'':'s'} adicionado${added===1?'':'s'} e salvo.`:'O servidor não confirmou o salvamento. A lista foi mantida neste navegador e será reenviada.')}});
     document.addEventListener('keydown',onKeydown);renderResults();input.focus();
   }
   function renderProfileCustomLists(container){
@@ -6297,7 +6380,7 @@ return null}
     const create=document.createElement('button');create.type='button';create.id='createProfileList';create.className='profileListIconButton profileListAddButton';create.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.5"></circle><path d="M12 7v10M7 12h10"></path></svg>';create.title='Criar nova lista';create.setAttribute('aria-label','Criar nova lista');create.addEventListener('click',openCreateProfileListModal);
     const view=document.createElement('button');view.type='button';view.className='profileListIconButton profileListViewButton';view.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" stroke="none" d="M3 4h4v4H3zM9 4h12v4H9zM3 10h4v4H3zM9 10h12v4H9zM3 16h4v4H3zM9 16h12v4H9z"></path></svg>';view.title='Abrir lista selecionada';view.setAttribute('aria-label','Abrir lista selecionada');
     if(user.customLists.length)toolbar.append(sortWrap);toolbar.append(create,view);head.append(title,toolbar);
-      if(profileListsPageOpen){const back=document.createElement('button');back.type='button';back.className='profileListsPageBack';back.setAttribute('aria-label',openList?'Voltar a todas as listas':'Voltar ao Perfil');back.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h11"></path></svg>';back.addEventListener('click',()=>{if(openList){profileListsPageOpen=false;profileOpenListId=null;renderProfile();scrollToWithoutAnimation(profileListsScrollTop);return}profileListsPageOpen=false;profileOpenListId=null;renderProfile();scrollToWithoutAnimation(profileListsScrollTop)});head.replaceChildren(back,title);section.classList.add('profileListsFullPage');if(openList){const detailTools=document.createElement('div');detailTools.className='profileListDetailTools';const makeTool=(label,icon)=>{const button=document.createElement('button');button.type='button';button.className='profileListDetailTool';button.setAttribute('aria-label',label);button.title=label;button.innerHTML=icon;detailTools.append(button);return button};const sortBtn=makeTool(preferences.reordering?'Concluir reorganiza\u00e7\u00e3o':'Ordenar lista',preferences.reordering?'<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>':'<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16m0 0-4-4m4 4 4-4M16 20V4m0 0-4 4m4-4 4 4"></path></svg>'),filterBtn=makeTool('Filtrar títulos','<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 6h16M7 12h10M10 18h4"></path></svg>'),addBtn=makeTool('Adicionar títulos','<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 5v14M5 12h14"></path></svg>'),menuBtn=makeTool('Opções da lista','<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg>');filterBtn.hidden=!!preferences.reordering;addBtn.addEventListener('click',()=>openProfileListPicker(openList.id,addBtn));const pop=document.createElement('div');pop.className='profileListDetailPopover';pop.hidden=true;detailTools.append(pop);function showPopover(kind,trigger){pop.replaceChildren();pop.dataset.kind=kind;if(kind==='filter')pop.classList.add('profileListFilterMenu');else pop.classList.remove('profileListFilterMenu');if(kind==='menu'){const reorder=document.createElement('button');reorder.type='button';reorder.textContent='Reorganizar';reorder.hidden=!!preferences.reordering;reorder.addEventListener('click',()=>{preferences.reordering=true;preferences.detailSort='list';preferences.detailType='all';preferences.detailStatus='all';save();renderProfile()});const rename=document.createElement('button');rename.type='button';rename.textContent='Renomear lista';rename.addEventListener('click',()=>{const next=window.prompt('Novo nome da lista:',openList.name||'');if(next!==null)renameProfileCustomList(openList.id,next)});const del=document.createElement('button');del.type='button';del.textContent='Eliminar a lista';del.addEventListener('click',()=>deleteProfileCustomList(openList.id));pop.append(reorder,rename,del)}else if(kind==='filter'){for(const [value,text] of profileSeriesFilterOptions){const option=document.createElement('button');option.type='button';option.className='profileListFilterOption';option.textContent=text;option.setAttribute('role','menuitemradio');option.setAttribute('aria-checked',String((preferences.detailStatus||'all')===value));option.addEventListener('click',()=>{const selectedListId=String(openList.id);preferences.detailType='all';preferences.detailStatus=value;save();renderProfile();if(value==='inDay'){const pending=(openList.items||[]).filter(item=>mediaTypeOf(item)==='tv'&&!profileMetadataCache.has('tv:'+item.id));if(pending.length)profileCollectionMapLimit(pending,item=>profileCollectionMetadata(item,'tv'),4).then(()=>{if(profileListsPageOpen&&String(profileOpenListId)===selectedListId&&preferences.detailStatus===value)renderProfile()})}});pop.append(option)}}else{const options=[['list','Ordem da lista'],['seen','Vistos recentemente'],['name','Nome (A → Z)'],['progress','Progresso'],['added','Adicionado recentemente'],['status','Por estado']];options.forEach(([value,label])=>{const option=document.createElement('button');option.type='button';option.textContent=label;option.classList.toggle('is-active',(preferences.detailSort||'list')===value);option.addEventListener('click',()=>{preferences.detailSort=value;save();renderProfile()});pop.append(option)})}pop.hidden=false;trigger.setAttribute('aria-expanded','true')}[[sortBtn,'sort'],[filterBtn,'filter'],[menuBtn,'menu']].forEach(([button,kind])=>button.addEventListener('click',event=>{event.stopPropagation();if(kind==='sort'&&preferences.reordering){preferences.reordering=false;preferences.detailSort='list';save();renderProfile();return}if(!pop.hidden&&pop.dataset.kind===kind){pop.hidden=true;button.setAttribute('aria-expanded','false');return}$$('.profileListDetailTool[aria-expanded="true"]').forEach(item=>item.setAttribute('aria-expanded','false'));showPopover(kind,button)}));document.addEventListener('click',event=>{if(!detailTools.contains(event.target)){pop.hidden=true;$$('.profileListDetailTool').forEach(item=>item.setAttribute('aria-expanded','false'))}},{once:true});head.append(detailTools)}}
+      if(profileListsPageOpen){const back=document.createElement('button');back.type='button';back.className='profileListsPageBack';back.setAttribute('aria-label',openList?'Voltar a todas as listas':'Voltar ao Perfil');back.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="m15 18-6-6 6-6M9 12h11"></path></svg>';back.addEventListener('click',()=>{if(openList){profileListsPageOpen=false;profileOpenListId=null;renderProfile();scrollToWithoutAnimation(profileListsScrollTop);return}profileListsPageOpen=false;profileOpenListId=null;renderProfile();scrollToWithoutAnimation(profileListsScrollTop)});head.replaceChildren(back,title);section.classList.add('profileListsFullPage');if(openList){const detailTools=document.createElement('div');detailTools.className='profileListDetailTools';const makeTool=(label,icon)=>{const button=document.createElement('button');button.type='button';button.className='profileListDetailTool';button.setAttribute('aria-label',label);button.title=label;button.innerHTML=icon;detailTools.append(button);return button};const sortBtn=makeTool(preferences.reordering?'Concluir reorganiza\u00e7\u00e3o':'Ordenar lista',preferences.reordering?'<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="m5 12 4 4L19 6"></path></svg>':'<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 4v16m0 0-4-4m4 4 4-4M16 20V4m0 0-4 4m4-4 4 4"></path></svg>'),menuBtn=makeTool('Opções da lista','<svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true"><circle cx="5" cy="12" r="1"></circle><circle cx="12" cy="12" r="1"></circle><circle cx="19" cy="12" r="1"></circle></svg>');const pop=document.createElement('div');pop.className='profileListDetailPopover';pop.hidden=true;detailTools.append(pop);function showPopover(kind,trigger){pop.replaceChildren();pop.dataset.kind=kind;if(kind==='filter')pop.classList.add('profileListFilterMenu');else pop.classList.remove('profileListFilterMenu');if(kind==='menu'){const reorder=document.createElement('button');reorder.type='button';reorder.textContent='Reorganizar';reorder.hidden=!!preferences.reordering;reorder.addEventListener('click',()=>{preferences.reordering=true;preferences.detailSort='list';preferences.detailType='all';preferences.detailStatus='all';save();renderProfile()});const rename=document.createElement('button');rename.type='button';rename.textContent='Renomear lista';rename.addEventListener('click',()=>{const next=window.prompt('Novo nome da lista:',openList.name||'');if(next!==null)renameProfileCustomList(openList.id,next)});const del=document.createElement('button');del.type='button';del.textContent='Eliminar a lista';del.addEventListener('click',()=>deleteProfileCustomList(openList.id));pop.append(reorder,rename,del)}else if(kind==='filter'){for(const [value,text] of profileSeriesFilterOptions){const option=document.createElement('button');option.type='button';option.className='profileListFilterOption';option.textContent=text;option.setAttribute('role','menuitemradio');option.setAttribute('aria-checked',String((preferences.detailStatus||'all')===value));option.addEventListener('click',()=>{const selectedListId=String(openList.id);preferences.detailType='all';preferences.detailStatus=value;save();renderProfile();if(value==='inDay'){const pending=(openList.items||[]).filter(item=>mediaTypeOf(item)==='tv'&&!profileMetadataCache.has('tv:'+item.id));if(pending.length)profileCollectionMapLimit(pending,item=>profileCollectionMetadata(item,'tv'),4).then(()=>{if(profileListsPageOpen&&String(profileOpenListId)===selectedListId&&preferences.detailStatus===value)renderProfile()})}});pop.append(option)}}else{const options=[['list','Ordem da lista'],['seen','Vistos recentemente'],['name','Nome (A → Z)'],['progress','Progresso'],['added','Adicionado recentemente']];options.forEach(([value,label])=>{const option=document.createElement('button');option.type='button';option.textContent=label;option.classList.toggle('is-active',(preferences.detailSort||'list')===value);option.addEventListener('click',()=>{preferences.detailSort=value;save();renderProfile()});pop.append(option)})}pop.hidden=false;trigger.setAttribute('aria-expanded','true')}[[sortBtn,'sort'],[menuBtn,'menu']].forEach(([button,kind])=>button.addEventListener('click',event=>{event.stopPropagation();if(kind==='sort'&&preferences.reordering){preferences.reordering=false;preferences.detailSort='list';save();renderProfile();return}if(!pop.hidden&&pop.dataset.kind===kind){pop.hidden=true;button.setAttribute('aria-expanded','false');return}$$('.profileListDetailTool[aria-expanded="true"]').forEach(item=>item.setAttribute('aria-expanded','false'));showPopover(kind,button)}));document.addEventListener('click',event=>{if(!detailTools.contains(event.target)){pop.hidden=true;$$('.profileListDetailTool').forEach(item=>item.setAttribute('aria-expanded','false'))}},{once:true});head.append(detailTools)}}
     section.append(head);
     const listBox=document.createElement('div');listBox.className='profileCustomLists profileCustomListsGrid'+(profileListsPageOpen?'':' profileCustomListCarousel');
     const allLists=profileCustomListSort(user.customLists,preferences.sort||'recent');
@@ -6312,12 +6395,13 @@ return null}
       const open=document.createElement('button');open.type='button';open.className='profileCustomListOpen';open.setAttribute('aria-label','Abrir lista '+(list.name||'sem nome'));
       const listIcon=document.createElement('span');listIcon.className='profileCustomListIcon';listIcon.setAttribute('aria-hidden','true');listIcon.textContent='☷';
       const name=document.createElement('strong');name.textContent=String(list.name||'Lista sem nome');
-      const summary=document.createElement('small');summary.textContent=String(list.items.length);
+      const listItems=profileCustomListItemsForType(list);
+      const summary=document.createElement('small');summary.textContent=String(listItems.length);
       const arrow=document.createElement('span');arrow.className='profileCustomListArrow';arrow.setAttribute('aria-hidden','true');arrow.textContent='›';
-      open.append(listIcon,name,summary,arrow);open.addEventListener('click',()=>{profileOpenListId=String(list.id);profileListsScrollTop=window.scrollY||0;profileListsPageOpen=true;renderProfile();window.scrollTo({top:0,behavior:'smooth'});const selectedListId=String(list.id),pending=(list.items||[]).filter(item=>mediaTypeOf(item)==='tv'&&!profileMetadataCache.has('tv:'+item.id));if(pending.length)profileCollectionMapLimit(pending,item=>profileCollectionMetadata(item,'tv'),4).then(()=>{if(profileListsPageOpen&&String(profileOpenListId)===selectedListId)renderProfile()})});
+      open.append(listIcon,name,summary,arrow);open.addEventListener('click',()=>{profileOpenListId=String(list.id);profileListsScrollTop=window.scrollY||0;profileListsPageOpen=true;renderProfile();window.scrollTo({top:0,behavior:'smooth'});const selectedListId=String(list.id),pending=profileCustomListItemsForType(list).filter(item=>mediaTypeOf(item)==='tv'&&!profileMetadataCache.has('tv:'+item.id));if(pending.length)profileCollectionMapLimit(pending,item=>profileCollectionMetadata(item,'tv'),4).then(()=>{if(profileListsPageOpen&&String(profileOpenListId)===selectedListId)renderProfile()})});
       header.append(open);row.append(header);
       const posters=document.createElement('div');posters.className='profileCustomListPosters';posters.setAttribute('aria-label','Títulos da lista '+(list.name||''));
-      list.items.forEach(item=>{const type=mediaTypeOf(item),poster=document.createElement('button');poster.type='button';poster.className='profileCustomListPoster';poster.title=profileCustomListTitle(item);poster.setAttribute('aria-label','Abrir '+profileCustomListTitle(item));const src=profileCustomListPoster(item);if(src){const image=document.createElement('img');image.src=src;image.alt='';image.loading='lazy';poster.append(image)}else{const fallback=document.createElement('span');fallback.textContent=profileCustomListTitle(item);poster.append(fallback)}poster.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);posters.append(poster)});
+      listItems.forEach(item=>{const type=mediaTypeOf(item),poster=document.createElement('button');poster.type='button';poster.className='profileCustomListPoster';poster.title=profileCustomListTitle(item);poster.setAttribute('aria-label','Abrir '+profileCustomListTitle(item));const src=profileCustomListPoster(item);if(src){const image=document.createElement('img');image.src=src;image.alt='';image.loading='lazy';poster.append(image)}else{const fallback=document.createElement('span');fallback.textContent=profileCustomListTitle(item);poster.append(fallback)}poster.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);posters.append(poster)});
       row.append(posters);listBox.append(row);
     });
     view.addEventListener('click',()=>{if(!lists.length)return;profileListsScrollTop=window.scrollY||0;profileOpenListId=null;profileListsPageOpen=true;renderProfile();window.scrollTo({top:0,behavior:'smooth'})});
@@ -6326,51 +6410,40 @@ return null}
     if(profileListsPageOpen&&openList){
       if(!Array.isArray(openList.items))openList.items=[];
       const detail=document.createElement('div');detail.className='profileCustomListDetail';detail.id='profileCustomListDetail';
-      const itemsBox=document.createElement('div');itemsBox.className='profileCustomListItems';if(preferences.reordering)itemsBox.classList.add('profileCustomListItemsReordering');const selectedType=preferences.detailType||'all',selectedStatus=preferences.detailStatus||'all';const visibleItems=openList.items.filter(item=>{if(selectedType!=='all'&&mediaTypeOf(item)!==selectedType)return false;if(selectedStatus==='all')return true;const status=profileCollectionStatus(item);return profileCustomListMatchesStatus(item,selectedStatus)});
-      if(!visibleItems.length&&!openList.items.length&&selectedType==='all'&&selectedStatus==='all'){const empty=document.createElement('div');empty.className='profileListEmptyState';empty.innerHTML='<div class="profileListEmptyIcon" aria-hidden="true"><svg viewBox="0 0 64 64"><path class="profileListEmptyIconBracket" d="M8 17v34a5 5 0 0 0 5 5h37"></path><rect class="profileListEmptyIconBox" x="20" y="6" width="40" height="42" rx="6"></rect><path class="profileListEmptyIconCheck" d="m29 27 8 8 15-16"></path></svg></div><h3>Lista vazia</h3><p>Adicione séries ou filmes pelo botão + ou pela ficha de cada título.</p><button type="button" class="profileCreateList profileListEmptyAdd">＋ Adicionar títulos</button>';empty.querySelector('button').addEventListener('click',event=>openProfileListPicker(openList.id,event.currentTarget));itemsBox.append(empty)}
+      const listType=profileCustomListMediaType(openList),listItems=profileCustomListItemsForType(openList);const itemsBox=document.createElement('div');itemsBox.className='profileCustomListItems';if(preferences.reordering)itemsBox.classList.add('profileCustomListItemsReordering');const selectedType=listType==='movie'||listType==='tv'?listType:(preferences.detailType||'all'),selectedStatus='all';const visibleItems=listItems.filter(item=>{if(selectedType!=='all'&&mediaTypeOf(item)!==selectedType)return false;if(selectedStatus==='all')return true;const status=profileCollectionStatus(item);return profileCustomListMatchesStatus(item,selectedStatus)});
+      if(!visibleItems.length&&!listItems.length&&selectedType==='all'&&selectedStatus==='all'){const empty=document.createElement('div');empty.className='profileListEmptyState';empty.innerHTML='<div class="profileListEmptyIcon" aria-hidden="true"><svg viewBox="0 0 64 64"><path class="profileListEmptyIconBracket" d="M8 17v34a5 5 0 0 0 5 5h37"></path><rect class="profileListEmptyIconBox" x="20" y="6" width="40" height="42" rx="6"></rect><path class="profileListEmptyIconCheck" d="m29 27 8 8 15-16"></path></svg></div><h3>Lista vazia</h3><p>Adicione séries ou filmes pela ficha de cada título.</p>';itemsBox.append(empty)}
       const sortedItems=[...visibleItems],sortMode=preferences.detailSort||'list';if(sortMode==='name')sortedItems.sort((a,b)=>profileCustomListTitle(a).localeCompare(profileCustomListTitle(b),'pt-BR'));else if(sortMode==='seen')sortedItems.sort((a,b)=>profileCollectionLastActivity(b)-profileCollectionLastActivity(a));else if(sortMode==='progress')sortedItems.sort((a,b)=>{const progressA=profileCollectionProgress(a),progressB=profileCollectionProgress(b),valueA=progressA.total?progressA.watched/progressA.total:progressA.watched,valueB=progressB.total?progressB.watched/progressB.total:progressB.watched;return valueB-valueA});else if(sortMode==='added')sortedItems.sort((a,b)=>{const addedAt=item=>{const value=item?.addedAt,time=typeof value==='number'?value:Date.parse(value||'');return Number.isFinite(time)?time:0};return addedAt(b)-addedAt(a)});else if(sortMode==='status'){const order=['toWatch','upcoming','notStarted','later','inDay','finished','canceled','interrupted','watched','other'];sortedItems.sort((a,b)=>order.indexOf(profileCustomListStatusGroupKey(a))-order.indexOf(profileCustomListStatusGroupKey(b))||profileCustomListTitle(a).localeCompare(profileCustomListTitle(b),'pt-BR'))}
       const renderGalleryItem=(item,index,target)=>{const type=mediaTypeOf(item),name=profileCustomListTitle(item);if(preferences.reordering){const row=document.createElement('article');row.className='profileListReorderItem';row.dataset.itemKey=profileCustomListItemKey(item);const open=document.createElement('button');open.type='button';open.className='profileListReorderPoster';open.setAttribute('aria-label',`Abrir ${name}`);const src=profileCustomListPoster(item);if(src){const image=document.createElement('img');image.src=src;image.alt='';image.loading='lazy';image.addEventListener('error',()=>{image.remove()},{once:true});open.append(image)}else{open.setAttribute('aria-hidden','true')}const order=document.createElement('span');order.className='profileListGalleryOrder';order.textContent=String(index+1);open.append(order);open.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);const title=document.createElement('button');title.type='button';title.className='profileListReorderTitle';title.textContent=name;title.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);const typeIcon=document.createElement('span');typeIcon.className='profileListReorderType';typeIcon.setAttribute('aria-label',type==='tv'?'Série':'Filme');typeIcon.title=type==='tv'?'Série':'Filme';typeIcon.innerHTML=type==='tv'?'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v13H3zM8 21h8m-4-3v3"></path></svg>':'<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5h18v14H3zM3 9h18M7 5l3 4m3-4 3 4m3-4 2 3"></path></svg>';const remove=document.createElement('button');remove.type='button';remove.className='profileListReorderRemove';remove.setAttribute('aria-label',`Remover ${name} da lista`);remove.title='Remover da lista';remove.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"></circle><path d="M8 12h8"></path></svg>';remove.addEventListener('click',()=>removeProfileCustomListItem(openList.id,profileCustomListItemKey(item)));const handle=document.createElement('button');handle.type='button';handle.className='profileListsReorderHandle profileListReorderHandle';handle.setAttribute('aria-label',`Reordenar ${name}`);handle.title='Arraste para reordenar';handle.innerHTML='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"></path></svg>';row.append(open,title,typeIcon,remove,handle);target.append(row);return}const poster=document.createElement('article');poster.className='profileListGalleryItem';const open=document.createElement('button');open.type='button';open.className='profileListGalleryPoster';open.setAttribute('aria-label',`Abrir ${name}`);const src=profileCustomListPoster(item);if(src){const image=document.createElement('img');image.src=src;image.alt='';image.loading='lazy';image.addEventListener('error',()=>{image.remove();const fallback=document.createElement('span');fallback.className='profileListGalleryFallback';fallback.textContent='Pôster indisponível';open.prepend(fallback)},{once:true});open.append(image)}else{const fallback=document.createElement('span');fallback.className='profileListGalleryFallback';fallback.textContent='Pôster indisponível';open.append(fallback)}const order=document.createElement('span');order.className='profileListGalleryOrder';order.textContent=String(index+1);open.append(order);open.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);const progress=profileCollectionProgress(item),track=document.createElement('span');track.className='profileListGalleryProgress';track.dataset.status=profileCustomListStatusGroupKey(item);track.setAttribute('role','progressbar');track.setAttribute('aria-label',`Progresso de ${name}`);track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');track.setAttribute('aria-valuenow',String(Math.max(0,Math.min(100,Number(progress?.percent)||0))));const fill=document.createElement('i');fill.style.width=`${Math.max(0,Math.min(100,Number(progress?.percent)||0))}%`;track.append(fill);const titleButton=document.createElement('button');titleButton.type='button';titleButton.className='profileListGalleryTitle';titleButton.textContent=name;titleButton.addEventListener('click',()=>location.hash=(type==='tv'?'tv-':'movie-')+item.id);poster.append(open,track,titleButton);target.append(poster)};
-      if(sortMode==='status'){
-        itemsBox.classList.add('profileListGroupedByStatus');
-        const groups=profileCustomListStatusGroups(),byKey=new Map(groups.map(group=>[group.key,group]));
-        sortedItems.forEach(item=>{const key=profileCustomListStatusGroupKey(item),group=byKey.get(key)||byKey.get('toWatch');group.items.push(item)});
-        const inDayGroup=byKey.get('inDay');if(inDayGroup&&!preferences.reordering){const seen=new Set(inDayGroup.items.map(item=>profileCustomListItemKey(item)).filter(Boolean));(Array.isArray(user.list)?user.list:[]).filter(item=>mediaTypeOf(item)==='tv').forEach(item=>{const status=profileCollectionStatus(item);if(status.canceled||status.finished||profileCollectionSeriesStatusGroupKey(item)!=='inDay')return;const syncedItem={...item,media_type:'tv'},key=profileCustomListItemKey(syncedItem);if(!key||seen.has(key))return;seen.add(key);inDayGroup.items.push(syncedItem)})}
-        groups.forEach(group=>{
-          if(!group.items.length&&group.key!=='inDay')return;
-          const sectionGroup=document.createElement('section');sectionGroup.className='profileCustomListStatusGroup';sectionGroup.dataset.statusGroup=group.key;
-          const heading=document.createElement('h3');heading.className='profileCustomListStatusTitle';heading.textContent=group.label;
-          if(!group.items.length){const empty=document.createElement('p');empty.className='profileCustomListStatusEmpty';empty.textContent='Nenhuma série em dia nesta lista.';sectionGroup.append(heading,empty);itemsBox.append(sectionGroup);return}
-          const grid=document.createElement('div');grid.className='profileCustomListStatusGrid';
-          group.items.forEach((item,index)=>renderGalleryItem(item,index,grid));
-          sectionGroup.append(heading,grid);itemsBox.append(sectionGroup);
-        });
-      }else sortedItems.forEach((item,index)=>renderGalleryItem(item,index,itemsBox));
-      if(preferences.reordering){let draggedRow=null;const commitOrder=()=>{if(!draggedRow)return;draggedRow.classList.remove('is-dragging');draggedRow=null;const byKey=new Map((openList.items||[]).map(item=>[profileCustomListItemKey(item),item]));const ordered=Array.from(itemsBox.querySelectorAll('.profileListReorderItem'),row=>byKey.get(row.dataset.itemKey)).filter(Boolean);if(ordered.length===(openList.items||[]).length){openList.items=ordered;openList.updatedAt=new Date().toISOString();save();renderProfile()}};itemsBox.addEventListener('pointerdown',event=>{const handle=event.target.closest('.profileListReorderHandle'),row=handle?.closest('.profileListReorderItem');if(!row)return;event.preventDefault();draggedRow=row;row.classList.add('is-dragging');try{handle.setPointerCapture(event.pointerId)}catch{}});itemsBox.addEventListener('pointermove',event=>{if(!draggedRow)return;const target=document.elementFromPoint(event.clientX,event.clientY)?.closest('.profileListReorderItem');if(!target||target===draggedRow||target.parentElement!==itemsBox)return;const rect=target.getBoundingClientRect();itemsBox.insertBefore(draggedRow,event.clientY<rect.top+rect.height/2?target:target.nextSibling)});itemsBox.addEventListener('pointerup',commitOrder);itemsBox.addEventListener('pointercancel',commitOrder);itemsBox.addEventListener('keydown',event=>{const handle=event.target.closest('.profileListReorderHandle'),row=handle?.closest('.profileListReorderItem');if(!row||!['ArrowUp','ArrowDown'].includes(event.key))return;const sibling=event.key==='ArrowUp'?row.previousElementSibling:row.nextElementSibling;if(!sibling)return;event.preventDefault();itemsBox.insertBefore(row,event.key==='ArrowUp'?sibling:sibling.nextSibling);draggedRow=row;commitOrder()})}
+      sortedItems.forEach((item,index)=>renderGalleryItem(item,index,itemsBox));
+      if(preferences.reordering){let draggedRow=null;const commitOrder=()=>{if(!draggedRow)return;draggedRow.classList.remove('is-dragging');draggedRow=null;const byKey=new Map((openList.items||[]).map(item=>[profileCustomListItemKey(item),item]));const ordered=Array.from(itemsBox.querySelectorAll('.profileListReorderItem'),row=>byKey.get(row.dataset.itemKey)).filter(Boolean),visibleKeys=new Set(ordered.map(profileCustomListItemKey)),hiddenItems=(openList.items||[]).filter(item=>!visibleKeys.has(profileCustomListItemKey(item)));if(ordered.length===listItems.length){openList.items=[...ordered,...hiddenItems];openList.updatedAt=new Date().toISOString();save();renderProfile()}};itemsBox.addEventListener('pointerdown',event=>{const handle=event.target.closest('.profileListReorderHandle'),row=handle?.closest('.profileListReorderItem');if(!row)return;event.preventDefault();draggedRow=row;row.classList.add('is-dragging');try{handle.setPointerCapture(event.pointerId)}catch{}});itemsBox.addEventListener('pointermove',event=>{if(!draggedRow)return;const target=document.elementFromPoint(event.clientX,event.clientY)?.closest('.profileListReorderItem');if(!target||target===draggedRow||target.parentElement!==itemsBox)return;const rect=target.getBoundingClientRect();itemsBox.insertBefore(draggedRow,event.clientY<rect.top+rect.height/2?target:target.nextSibling)});itemsBox.addEventListener('pointerup',commitOrder);itemsBox.addEventListener('pointercancel',commitOrder);itemsBox.addEventListener('keydown',event=>{const handle=event.target.closest('.profileListReorderHandle'),row=handle?.closest('.profileListReorderItem');if(!row||!['ArrowUp','ArrowDown'].includes(event.key))return;const sibling=event.key==='ArrowUp'?row.previousElementSibling:row.nextElementSibling;if(!sibling)return;event.preventDefault();itemsBox.insertBefore(row,event.key==='ArrowUp'?sibling:sibling.nextSibling);draggedRow=row;commitOrder()})}
       detail.append(itemsBox);section.append(detail);
     }
     container.append(section);
-  }  function createCustomList(name){
-    const clean=String(name||'').trim().slice(0,60);
+  }  function createCustomList(name,mediaType){
+    const clean=String(name||'').trim().slice(0,60),type=String(mediaType||'').trim();
     if(!clean)return {ok:false,message:'Digite um nome para a lista.'};
+    if(type!=='movie'&&type!=='tv')return {ok:false,message:'Escolha se a lista será de filmes ou séries.'};
     const existing=Array.isArray(user.customLists)?user.customLists:[];
     const normalized=clean.toLocaleLowerCase('pt-BR');
     if(existing.some(list=>String(list?.name||'').trim().toLocaleLowerCase('pt-BR')===normalized))return {ok:false,message:'Já existe uma lista com esse nome.'};
     const id=`custom-${Date.now()}-${Math.random().toString(36).slice(2,8)}`;
     user.customLists=existing;
-    const list={id,name:clean,items:[]};user.customLists.push(list);
+    const list={id,name:clean,mediaType:type,items:[]};user.customLists.push(list);
     save();
     renderProfile();
     return {ok:true,list};
   }
-  function openCreateProfileListModal(onCreated=null){
+  function openCreateProfileListModal(onCreated=null,suggestedMediaType=''){
+    if(typeof onCreated!=='function')onCreated=null;
     const previousOverflow=document.body.style.overflow,returnFocus=document.activeElement;
     const wrap=document.createElement('div');
     wrap.className='customListModalOverlay';
-    wrap.innerHTML=`<section class="customListModal" role="dialog" aria-modal="true" aria-labelledby="createListModalTitle" aria-describedby="createListModalError"><form class="customListModalForm" novalidate><h2 id="createListModalTitle">Nova lista</h2><input id="createListName" class="customListNameInput" type="text" maxlength="60" placeholder="Nome da lista" aria-label="Nome da lista" autocomplete="off" required><div id="createListModalError" class="customListModalError" role="alert" aria-live="polite"></div><div class="customListModalActions"><button class="customListCancel" type="button">Cancelar</button><button class="customListSubmit" type="submit">Criar</button></div></form></section>`;
+    wrap.innerHTML=`<section class="customListModal" role="dialog" aria-modal="true" aria-labelledby="createListModalTitle" aria-describedby="createListModalError"><form class="customListModalForm" novalidate><h2 id="createListModalTitle">Nova lista</h2><label for="createListType">Tipo de títulos</label><select id="createListType" class="customListTypeSelect" required><option value="">Escolha filmes ou séries</option><option value="movie">Filmes</option><option value="tv">Séries</option></select><input id="createListName" class="customListNameInput" type="text" maxlength="60" placeholder="Nome da lista" aria-label="Nome da lista" autocomplete="off" required><div id="createListModalError" class="customListModalError" role="alert" aria-live="polite"></div><div class="customListModalActions"><button class="customListCancel" type="button">Cancelar</button><button class="customListSubmit" type="submit">Criar</button></div></form></section>`;
     document.body.appendChild(wrap);
     document.body.style.overflow='hidden';
-    const form=$('.customListModalForm',wrap),input=$('.customListNameInput',wrap),error=$('.customListModalError',wrap),cancel=$('.customListCancel',wrap),submit=$('.customListSubmit',wrap);
-    const focusables=[input,cancel,submit];
+    const form=$('.customListModalForm',wrap),input=$('.customListNameInput',wrap),typeSelect=$('.customListTypeSelect',wrap),error=$('.customListModalError',wrap),cancel=$('.customListCancel',wrap),submit=$('.customListSubmit',wrap);
+    if(suggestedMediaType==='movie'||suggestedMediaType==='tv'){typeSelect.value=suggestedMediaType;typeSelect.disabled=true}
+    const focusables=[...(typeSelect.disabled?[]:[typeSelect]),input,cancel,submit];
     function close(restoreFocus=true){
       document.removeEventListener('keydown',onKeydown);
       document.body.style.overflow=previousOverflow;
@@ -6387,15 +6460,16 @@ return null}
     cancel.addEventListener('click',()=>close());
     wrap.addEventListener('click',event=>{if(event.target===wrap)close()});
     input.addEventListener('input',()=>{input.removeAttribute('aria-invalid');error.textContent=''});
+    typeSelect.addEventListener('change',()=>{typeSelect.removeAttribute('aria-invalid');error.textContent=''});
     form.addEventListener('submit',event=>{
       event.preventDefault();
-      const result=createCustomList(input.value);
-      if(!result.ok){error.textContent=result.message;input.setAttribute('aria-invalid','true');input.focus();return}
+      const result=createCustomList(input.value,typeSelect.value);
+      if(!result.ok){error.textContent=result.message;if(typeSelect.value)input.focus();else typeSelect.focus();return}
       close(false);
       if(typeof onCreated==='function')onCreated(result.list);else $('#createProfileList')?.focus({preventScroll:true});
     });
     document.addEventListener('keydown',onKeydown);
-    input.focus();
+    typeSelect.disabled?input.focus():typeSelect.focus();
   }
   function renderProfile(){
     const c=$('#profileContent');if(!c)return;c.innerHTML='';
@@ -6428,19 +6502,6 @@ return null}
     document.body.classList.remove('favoritesOnly');
     const current=location.hash.replace(/^#perfil-colecao-/,'');if(location.hash.startsWith('#perfil-colecao-'))renderProfileCollectionPage(current);
   }  function positionKey(tvId,season,episode){return `tv-${tvId}-${season}-${episode}`;}
-  function recordEpisodeStart(tvId,season,episode,show){
-    const key=positionKey(tvId,season,episode);
-    const now=new Date().toISOString();
-    user.positions=user.positions||{};
-    clearContinueDismissal(key);
-    const oldSeconds=getPosition(tvId,season,episode);
-    user.positions[key]={seconds:Math.max(60,oldSeconds),updatedAt:now};
-    delete user.positions[`${tvId}-${season}-${episode}`];
-    if(show && !user.list.some(x=>Number(x.id)===Number(tvId)&&x.media_type==='tv')) user.list.push({id:Number(tvId),media_type:'tv',name:show.name,title:show.name,poster_path:show.poster_path,first_air_date:show.first_air_date});
-    save();
-    syncStateNow().catch(()=>{});
-    return key;
-  }
   function moviePositionKey(movieId){return `movie-${movieId}`;}
   function formatPosition(seconds){
     seconds=Math.max(0,Math.floor(Number(seconds)||0));
@@ -6569,7 +6630,7 @@ return null}
       const episode=(seasonCache.get(Number(entry.season))?.episodes||[]).find(item=>Number(item.episode_number)===Number(entry.episode));
       return{...entry,name:episode?.name||`Episódio ${entry.episode}`,poster:episode?.still_path||show.poster_path,runtime:Number(episode?.runtime||0)};
     });
-    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}</div><div class="scName">${escapeHtml(entry.name)}</div></div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck" type="button" data-continue-index="${index}" aria-label="Marcar T${String(entry.season).padStart(2,'0')} E${String(entry.episode).padStart(2,'0')} como assistido" title="Marcar como assistido"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
+    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}</div><div class="scName">${escapeHtml(entry.name)}</div>${episodePositionProgressMarkup(entry.pos?.seconds,entry.runtime)}</div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck" type="button" data-continue-index="${index}" aria-label="Marcar T${String(entry.season).padStart(2,'0')} E${String(entry.episode).padStart(2,'0')} como assistido" title="Marcar como assistido"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
     const html=`<div class="seriesContinue"><div class="seriesContinueTitle"><svg class="uiIcon"><use href="#i-play-circle"></use></svg>Continuar acompanhando</div><div class="seriesContinueRail" role="region" aria-label="Episódios para continuar acompanhando" tabindex="0">${cards}</div></div>`;
     return{html,entries:hydrated};
   }
@@ -6942,6 +7003,22 @@ return null}
     backdrop.querySelectorAll('[data-episode-watch-choice]').forEach(button=>button.addEventListener('click',async()=>{const choice=button.dataset.episodeWatchChoice;close();try{if(choice==='rewatched'&&!user.watched?.[key]){const episodeNumber=Number(String(key).split('-').pop()),season=Number(String(key).split('-')[1]),pending=(episodes||[]).filter(item=>Number(item.episode_number)<episodeNumber&&!user.watched?.[state.current.id+'-'+season+'-'+item.episode_number]).length;if(episodeNumber===Number(episodes?.[episodes.length-1]?.episode_number)&&pending>0&&shouldPromptPreviousEpisódios(state.current.id)){promptPreviousEpisódios(state.current.name||state.current.title||'esta série',season,episodeNumber,pending,choice=>applyEpisodeWatchChoice(key,'rewatched',runtime,choice==='yes',episodes).catch(error=>toast(error.message)));return}}await applyEpisodeWatchChoice(key,choice,runtime,false,episodes)}catch(error){toast(error.message||'Não foi possível atualizar o episódio.')}}));
     document.body.append(backdrop);document.addEventListener('keydown',onKey,true);backdrop.querySelector('[data-episode-watch-choice]')?.focus({preventScroll:true});
   }
+  function seriesDetailUpcomingDateMarkup(value){
+    const match=String(value||'').slice(0,10).match(/^(\d{4})-(\d{2})-(\d{2})$/);if(!match)return'';
+    const year=Number(match[1]),month=Number(match[2]),day=Number(match[3]),releaseUtc=Date.UTC(year,month-1,day),release=new Date(releaseUtc);
+    if(release.toISOString().slice(0,10)!==match[0])return'';
+    const now=new Date(),todayUtc=Date.UTC(now.getFullYear(),now.getMonth(),now.getDate()),days=Math.round((releaseUtc-todayUtc)/86400000);if(days<0)return'';
+    const dateLabel=new Intl.DateTimeFormat('pt-BR',{day:'numeric',month:'long',year:'numeric',timeZone:'UTC'}).format(release),countdown=days===0?'Hoje':`Em ${days} ${days===1?'dia':'dias'}`;
+    return `<div class="episodeAirDate"><time datetime="${match[0]}">${dateLabel}</time><span>${countdown}</span></div>`;
+  }
+  function episodePositionProgressMarkup(seconds,runtimeMinutes=0){
+    const elapsed=Number(seconds);if(!Number.isFinite(elapsed)||elapsed<=0)return "";
+    const durationSeconds=Math.floor(Math.max(0,Number(runtimeMinutes)||0)*60);
+    const hasDuration=durationSeconds>0;const percent=hasDuration?Math.max(0,Math.min(100,Math.floor(elapsed/durationSeconds*100))):null;
+    const timeLabel=formatPosition(elapsed);const durationLabel=hasDuration?formatPosition(durationSeconds):"";
+    return `<div class="episodePositionProgress"><div class="episodePositionProgressInfo"><span><svg class="uiIcon" aria-hidden="true"><use href="#i-clock"></use></svg> Você parou em <strong>${timeLabel}</strong>${hasDuration?` de ${durationLabel}`:""}</span>${hasDuration?`<span>${percent}%</span>`:""}</div>${hasDuration?`<div class="episodePositionProgressTrack" role="progressbar" aria-label="Progresso salvo do episódio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i style="width:${percent}%"></i></div>`:""}</div>`;
+  }
+
   async function loadTemporada(n){
     if(!state.current)return;
     state.season=n;
@@ -6972,7 +7049,7 @@ return null}
       return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${episodes.map(e=>{
         const key=`${state.current.id}-${n}-${e.episode_number}`;
         const done=!!user.watched[key]; const pos=getVisibleEpisodePosition(state.current.id,n,e.episode_number);
-         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${pos?`<div class="positionMini"><svg class="uiIcon"><use href="#i-clock"></use></svg>Parou em <strong>${formatPosition(pos)}</strong></div>`:''}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
+         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${seriesDetailUpcomingDateMarkup(e.air_date)}${episodePositionProgressMarkup(pos,e.runtime)}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
       }).join('')}</div>`:''}`;
     }).join('');
 
@@ -7003,16 +7080,6 @@ return null}
         try{await applyEpisodeWatchChoice(key,'rewatched',Number(episode?.runtime)||0,false,episodes)}catch(error){toast(error.message||'Não foi possível atualizar o episódio.')}return
       }
       openEpisodeWatchMenu(key,Number(episode?.runtime)||0,episodes);
-    });
-    $$('.episode[data-episode-open]',$('#detailEpisódios')).forEach(article=>{
-      article.addEventListener('click',async e=>{
-        if(e.target.closest('button,select,input,a'))return;
-        const ep=Number(article.dataset.episodeOpen);
-        if(!ep || !state.current)return;
-        recordEpisodeStart(Number(state.current.id),n,ep,state.current);
-        await loadTemporada(n);
-        renderProfile(); ; await renderContinue('#continueGrid'); await renderEpisódiosFeed();
-      });
     });
   }
 
@@ -7137,12 +7204,12 @@ return null}
             <div class="detailMeta"><span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${escapeHtml((d.release_date||'').slice(0,4)||'—')}</span>${d.genres?.length?`<span class="dot">•</span><span>${genresPt(d.genres).map(escapeHtml).join(' • ')}</span>`:''}<span class="dot">•</span><span>${runtime?formatPosition(runtime*60):'Duração não informada'}</span></div>
           </div></div>
         </div>
+        <div id="moviePositionProgress" class="moviePositionProgress" hidden></div>
         <div class="movieDetailBody">
           <h2>Sobre o filme</h2>
           <p class="movieOverview">${escapeHtml(d.overview||'Sem sinopse disponível.')}</p>
           ${castSectionMarkup(d.credits?.cast)}
           ${similarMovieSectionMarkup(d.similar,id)}
-          <div id="movieCompletionArea"></div>
         </div>
       </div>`;
       box.removeAttribute('aria-busy');
@@ -7160,11 +7227,24 @@ return null}
     }
   }
 
+  function renderMoviePositionProgress(movieId,runtime=0){
+    const area=$("#moviePositionProgress");if(!area)return;
+    const positions=user.positions||{};const saved=positions[moviePositionKey(movieId)];
+    const seconds=Number(saved?.seconds);
+    if(!saved||!Number.isFinite(seconds)||seconds<0){area.hidden=true;area.replaceChildren();return}
+    const durationSeconds=Math.max(0,Number(runtime)||0)*60;
+    const hasDuration=durationSeconds>0;const percent=hasDuration?Math.max(0,Math.min(100,Math.floor(seconds/durationSeconds*100))):null;
+    const timeLabel=formatPosition(seconds);const durationLabel=hasDuration?formatPosition(durationSeconds):"";
+    area.hidden=false;
+    area.innerHTML=`<div class="moviePositionProgressInfo"><span>Você parou em <strong>${timeLabel}</strong>${hasDuration?` de ${durationLabel}`:""}</span>${hasDuration?`<span>${percent}%</span>`:""}</div>${hasDuration?`<div class="moviePositionProgressTrack" role="progressbar" aria-label="Progresso do filme salvo" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i style="width:${percent}%"></i></div>`:""}`;
+  }
+
   function renderMovieCompletion(movieId,title,runtime=0){
+    renderMoviePositionProgress(movieId,runtime);
     const area=$('#movieCompletionArea'); if(!area)return;
     const done=!!user.watchedMovies[String(movieId)];
-    area.innerHTML=`<div class="movieDetailActions"><button type="button" class="btn yellow finishMovieBtn" id="finishMovieBtn" aria-pressed="${done}" aria-label="${done?'Desmarcar filme como assistido':'Marcar filme como assistido'}">${done?'✓ Filme assistido':'✓ Marcar filme como assistido'}</button><button type="button" class="btn dark moviePositionButton" id="moviePositionButton">Onde você parou?</button></div>`;
-    $('#moviePositionButton').onclick=()=>openMoviePositionEditor(movieId,runtime,()=>renderContinue());
+    area.innerHTML=`<div class="movieDetailActions"><button type="button" class="detailListAction finishMovieBtn" id="finishMovieBtn" role="menuitem" aria-pressed="${done}" aria-label="${done?'Desmarcar filme como assistido':'Marcar filme como assistido'}">${cardActionIcon('i-check')}<span>${done?'Desmarcar filme como assistido':'Marcar filme como assistido'}</span></button><button type="button" class="detailListAction moviePositionButton" id="moviePositionButton" role="menuitem">${cardActionIcon('i-clock')}<span>Onde você parou?</span></button></div>`;
+    $('#moviePositionButton').onclick=()=>openMoviePositionEditor(movieId,runtime,()=>{renderMoviePositionProgress(movieId,runtime);renderContinue()});
     $('#finishMovieBtn').onclick=async()=>{
       if(done){
         delete user.watchedMovies[String(movieId)];
@@ -7549,13 +7629,10 @@ return null}
       seriesTrackerSortByLastActivity(stale);
       if(renderSeq!==seriesTrackerRenderSeq||!$('#episodios')?.classList.contains('active'))return;
       box.innerHTML=[
-        seriesTrackerGroupMarkup('Histórico de assistidos',[],'Os episódios marcados como assistidos aparecerão aqui.','history'),
         seriesTrackerGroupMarkup('Assistir a seguir',follow,'Nenhum episódio pendente para assistir agora.','follow'),
         seriesTrackerGroupMarkup('Não assistidas já faz um tempo',stale,'Nenhuma série acompanhada está parada há mais de 30 dias.','stale'),
         seriesTrackerGroupMarkup('Não iniciadas',notStarted,'Todas as séries da sua lista já foram iniciadas.','not-started')
       ].join('');
-      syncSeriesTrackerHistoryReveal();
-      if(seriesTrackerHistoryRevealed)loadSeriesTrackerHistoryForCurrentContexts();
     }
     bindSeriesTrackerRows(box);
     if(viewportAnchor)seriesTrackerRestoreViewportAnchor(viewportAnchor);
@@ -7601,15 +7678,21 @@ return null}
     fill('#searchHomeSeries',normalize(d.tv?.results,'tv').slice(0,12));
     fill('#searchHomeMovies',normalize(d.movies?.results,'movie').slice(0,12));
   }
-let timer,searchRequestId=0,searchResultsState=null,searchTarget='busca';
+let timer,searchRequestId=0,searchResultsState=null,searchTarget='busca',searchTypeFilter='all';
 function searchResultElements(target=searchTarget){const discover=target==='discover';return{box:$(discover?'#discoverSearchGrid':'#searchGrid'),wrap:$(discover?'#discoverSearchResultsLoad':'#searchResultsLoad'),button:$(discover?'#loadMoreDiscoverSearch':'#loadMoreSearch'),results:discover?$('#discoverSearchResults'):null}}
 function updateSearchLoadControl(){const{wrap,button}=searchResultElements(searchResultsState?.target||searchTarget),state=searchResultsState;if(!wrap||!button)return;wrap.hidden=!state||(state.shown>=state.items.length&&state.page>=state.totalPages);button.disabled=!!state?.loading;button.textContent=state?.loading?'Carregando...':'Carregar mais'}
-function appendSearchResultsBatch(){const state=searchResultsState;if(!state)return;const{box}=searchResultElements(state.target);if(!box)return;const next=state.items.slice(state.shown,state.shown+progressiveGridBatchSize),fragment=document.createDocumentFragment();next.forEach(item=>fragment.appendChild(card(item)));appendDomPreservingScroll(box,fragment);state.shown+=next.length;updateSearchLoadControl()}
+function searchItemMatchesType(item){return searchTypeFilter==='all'||item.media_type===searchTypeFilter}
+function updateSearchResultSummary(){const discover=searchTarget==='discover',summary=$(discover?'#discoverSearchSummary':'#searchResultSummary'),state=searchResultsState,toolbar=$(discover?'#discoverSearchToolbar':'#searchResultsToolbar');if(!toolbar)return;toolbar.hidden=!state?.query;if(!summary)return;if(!state){summary.textContent='';return}const visible=state.items.slice(0,state.shown).filter(searchItemMatchesType).length;const noun=searchTypeFilter==='movie'?'filmes':searchTypeFilter==='tv'?'séries e animes':'títulos';summary.textContent=`${visible} ${noun} encontrados entre ${state.shown} resultados carregados`}
+function renderFilteredSearchResults(){const state=searchResultsState;if(!state)return;const{box}=searchResultElements(state.target);if(!box)return;const visible=state.items.slice(0,state.shown).filter(searchItemMatchesType);box.replaceChildren();if(visible.length){const fragment=document.createDocumentFragment();visible.forEach(item=>fragment.appendChild(card(item)));box.appendChild(fragment)}else if(state.shown){const empty=document.createElement('div');empty.className='searchFeedback searchFilterEmpty';empty.setAttribute('role','status');empty.setAttribute('aria-live','polite');empty.textContent=state.page>=state.totalPages&&state.shown>=state.items.length?'Nenhum título desse tipo foi encontrado.':'Ainda não apareceu um título desse tipo. Carregue mais resultados para procurar.';box.appendChild(empty)}updateSearchResultSummary()}
+function setSearchTypeFilter(type){searchTypeFilter=type;$$('[data-search-type]').forEach(button=>{const active=button.dataset.searchType===type;button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});renderFilteredSearchResults();updateSearchResultSummary()}
+$$('[data-search-type]').forEach(button=>button.addEventListener('click',()=>setSearchTypeFilter(button.dataset.searchType||'all')));
+function appendSearchResultsBatch(){const state=searchResultsState;if(!state)return;const{box}=searchResultElements(state.target);if(!box)return;const next=state.items.slice(state.shown,state.shown+progressiveGridBatchSize);state.shown+=next.length;renderFilteredSearchResults();updateSearchLoadControl()}
 async function loadMoreSearchResults(target=searchTarget){const state=searchResultsState;if(!state||state.loading)return;searchTarget=state.target||target;if(state.shown<state.items.length){appendSearchResultsBatch();return}if(state.page>=state.totalPages){updateSearchLoadControl();return}state.loading=true;updateSearchLoadControl();const requestId=state.requestId;try{const nextPage=state.page+1,d=await api('/api/search?q='+encodeURIComponent(state.query)+'&page='+nextPage);if(!searchResultsState||searchResultsState.requestId!==requestId)return;state.page=nextPage;state.totalPages=Math.max(nextPage,Number(d.total_pages)||nextPage);(d.results||[]).filter(x=>x&&(x.media_type==='tv'||x.media_type==='movie')&&x.id!=null).forEach(item=>{const key=`${item.media_type}:${item.id}`;if(state.seen.has(key))return;state.seen.add(key);state.items.push(item)});appendSearchResultsBatch()}catch{if(searchResultsState?.requestId===requestId)toast('Não foi possível carregar mais resultados agora. Tente novamente.')}finally{if(searchResultsState?.requestId===requestId){state.loading=false;updateSearchLoadControl()}}}
 function showSearchFeedback(message,{loading=false,error=false,retryQuery=''}={}){
   const{box}=searchResultElements(searchTarget);
   if(!box)return;
   searchResultsState=null;updateSearchLoadControl();
+  const discover=searchTarget==='discover',toolbar=$(discover?'#discoverSearchToolbar':'#searchResultsToolbar'),summary=$(discover?'#discoverSearchSummary':'#searchResultSummary');if(toolbar)toolbar.hidden=false;if(summary)summary.textContent=loading?'Buscando...':error?'Busca indisponível':'0 resultados';
   box.replaceChildren();
   const state=document.createElement('div');
   state.className='searchFeedback'+(error?' error':'');
@@ -7627,7 +7710,10 @@ function doSearch(q,target='busca'){
   const requestId=++searchRequestId;
   const sections=$('#searchHomeSections');
   const{box,results}=searchResultElements(target);
-  if(target==='discover'){$$('#descobrir>.section').forEach(section=>section.hidden=!!query);if(results)results.hidden=!query}
+  searchTypeFilter='all';$$('[data-search-type]').forEach(button=>{const active=button.dataset.searchType==='all';button.classList.toggle('active',active);button.setAttribute('aria-pressed',String(active))});
+  const toolbar=$(target==='discover'?'#discoverSearchToolbar':'#searchResultsToolbar'),summary=$(target==='discover'?'#discoverSearchSummary':'#searchResultSummary');if(toolbar)toolbar.hidden=!query;
+  if(summary)summary.textContent=query?'Buscando...':'';
+  if(target==='discover'){$('#descobrir')?.classList.toggle('isSearching',!!query);$$('#descobrir>.section').forEach(section=>section.hidden=!!query);if(results)results.hidden=!query}
   if(!query){searchResultsState=null;updateSearchLoadControl();if(sections)sections.style.display='block';if(box)box.replaceChildren();if(target==='busca')renderSearchHome();return}
   if(sections)sections.style.display='none';
   showSearchFeedback('Buscando títulos...',{loading:true});
@@ -7704,7 +7790,7 @@ function doSearch(q,target='busca'){
     fill('#homeSeries',popularSeries);
     const popularMovies=takeUnique((d.movies?.results||[]).map(x=>({...x,media_type:'movie'})),12);
     fill('#homeMovies',popularMovies);
-    fill('#homeTopRatedSeries',(d.topRatedTv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,12));
+    fill('#homeTopRatedSeries',(d.newestTv?.results||[]).map(x=>({...x,media_type:'tv'})).slice(0,12));
     fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
   }
   async function home(){if(!user.sessionToken)return;invalidateMoviesGalleryUpcoming();moviesHomeCatalogStatus='loading';try{const d=await api('/api/home');state.home=d;moviesHomeCatalogStatus='ready';renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;moviesHomeCatalogStatus='error';homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
@@ -7724,10 +7810,11 @@ function doSearch(q,target='busca'){
       const sameAccount=!previousAccountId||previousAccountId===accountId;
       const localPositions=sameAccount?(user.positions||{}):{};
       const pendingState=readPendingAccountMerge(accountId);
-      const restoredState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
+      const mergedState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
+      const restoredState=applyPendingCustomListOperations(mergedState,accountId);
       user={...restoredState,profile:data.user?.name||'Coruja',username:data.user?.username||'',avatar:data.user?.avatar||'',userId:accountId,sessionToken:'cookie-session',followersCount:data.user?.followers||0,followingCount:data.user?.following||0};
       user.positions=mergePositionStates(localPositions,user.positions);
-      if(pendingState){const syncResult=await syncMergedAccountState(accountId);if(!syncResult.synced)toast(syncResult.pendingSaved?'A sincronização ainda falhou. Os dados mesclados permanecem salvos neste dispositivo e serão reenviados ao entrar novamente.':'A sincronização falhou e não foi possível guardar a recuperação automática. Mantenha esta sessão aberta e tente novamente.')}else save();
+      if(pendingState){const syncResult=await syncMergedAccountState(accountId);if(!syncResult.synced)toast(syncResult.pendingSaved?'A sincronização ainda falhou. Os dados mesclados permanecem salvos neste dispositivo e serão reenviados ao entrar novamente.':'A sincronização falhou e não foi possível guardar a recuperação automática. Mantenha esta sessão aberta e tente novamente.')}else{save({sync:false});if(readPendingCustomListOperations(accountId).length)await syncPendingCustomListOperations()}
     }catch{
       if(legacyToken||previousAccountId){user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},episodeWatchCounts:{},watchDurations:{episodes:{},movies:{},episodeRewatches:{}},profile:'Coruja',commentCount:0,comments:[],sessionToken:'',userId:''};}
       else user.sessionToken='';
@@ -7763,5 +7850,64 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   window.addEventListener('load', () => navigator.serviceWorker.register('/service-worker.js', { scope: '/' }).catch(() => {}));
 }
 </script>
+<style id="coruja-search-screen-refresh">
+#busca.searchView{padding-top:calc(var(--header-height) + 24px)}
+#busca.searchView>.sectionHead{display:none!important}
+#busca .searchIntro{position:relative;isolation:isolate;overflow:hidden;margin:0 0 17px;padding:22px 24px;border:1px solid #303a31;border-left:3px solid #b8f34a;border-radius:15px;background:linear-gradient(125deg,#1a211b 0%,#111612 72%,#111511 100%);box-shadow:0 12px 28px #0003}
+#busca .searchIntro::after{position:absolute;z-index:-1;right:-28px;top:-80px;width:220px;height:220px;border-radius:50%;background:radial-gradient(circle,rgba(184,243,74,.13),transparent 70%);content:"";pointer-events:none}
+#busca .searchIntroKicker{display:block;margin:0 0 8px;color:#b8f34a;font-size:10px;font-weight:900;letter-spacing:.15em}
+#busca .searchIntro h1{max-width:760px;margin:0;color:#f5f7f3;font-size:clamp(24px,3.4vw,32px);line-height:1.12;letter-spacing:-.025em}
+#busca .searchIntro>p{max-width:670px;margin:9px 0 13px;color:#c0c8bd;font-size:14px;line-height:1.5}
+#busca .searchIntroNote{display:flex;align-items:flex-start;gap:8px;max-width:760px;color:#a7b2a3;font-size:11px;line-height:1.45}
+#busca .searchIntroNote span{flex:0 0 auto;color:#b8f34a;font-weight:900}
+#busca>#bigSearch{width:100%;max-width:none;height:50px;margin:0 0 22px;padding:0 15px 0 44px;border:1px solid #343d34;border-radius:12px;background-color:#161b16;color:#f4f5f2;font-size:16px;box-shadow:inset 0 1px 0 #ffffff08}
+#busca>#bigSearch::placeholder{color:#8a9387}
+#busca>#bigSearch:focus{border-color:#b8f34a;outline:0;box-shadow:0 0 0 3px rgba(184,243,74,.12)}
+#busca .searchResultsToolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:12px 13px;border:1px solid #2b342c;border-radius:12px;background:#121713}
+#busca .searchResultsToolbar[hidden]{display:none!important}
+#busca .searchResultSummary{color:#dce4d7;font-size:12px;font-weight:800}
+#busca .searchTypeFilters{display:flex;gap:7px;flex-wrap:wrap}
+#busca .searchTypeFilter{min-height:34px;padding:7px 12px;border:1px solid #394438;border-radius:999px;background:#171d18;color:#c4cdbf;font-size:12px;font-weight:800;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+#busca .searchTypeFilter:hover{border-color:#7b9947;color:#eff7e8}
+#busca .searchTypeFilter.active{border-color:#b8f34a;background:#b8f34a;color:#11170b}
+#busca #searchGrid{grid-template-columns:repeat(auto-fill,minmax(145px,1fr));gap:19px 13px}
+#busca #searchGrid .card{width:100%;min-width:0}
+#busca #searchGrid .poster{width:100%;height:auto;aspect-ratio:2/3}
+#busca #searchGrid .searchFilterEmpty{grid-column:1/-1;min-height:125px;padding:20px;border:1px dashed #394438;border-radius:12px;background:#121713;color:#aeb9aa;text-align:center;line-height:1.5}
+#descobrir .discoverSearchHint{margin:7px 3px 0;color:#a7b2a3;font-size:11px;line-height:1.4}
+#descobrir.isSearching .discoverSearchHint{display:none}
+#descobrir #discoverSearchToolbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin:0 0 16px;padding:12px 13px;border:1px solid #2b342c;border-radius:12px;background:#121713}
+#descobrir #discoverSearchToolbar[hidden]{display:none!important}
+#descobrir #discoverSearchSummary{color:#dce4d7;font-size:12px;font-weight:800}
+#descobrir .searchTypeFilters{display:flex;gap:7px;flex-wrap:wrap}
+#descobrir .searchTypeFilter{min-height:34px;padding:7px 12px;border:1px solid #394438;border-radius:999px;background:#171d18;color:#c4cdbf;font-size:12px;font-weight:800;cursor:pointer;transition:background .16s,border-color .16s,color .16s}
+#descobrir .searchTypeFilter:hover{border-color:#7b9947;color:#eff7e8}
+#descobrir .searchTypeFilter.active{border-color:#b8f34a;background:#b8f34a;color:#11170b}
+#descobrir.isSearching #discoverSearchGrid .score,#descobrir.isSearching #discoverSearchGrid .stars{display:block!important}
+#descobrir.isSearching #discoverSearchGrid .poster>.add,#descobrir.isSearching #discoverSearchGrid .poster>.favorite{display:grid!important}
+#descobrir #discoverSearchGrid .searchFilterEmpty{grid-column:1/-1;min-height:125px;padding:20px;border:1px dashed #394438;border-radius:12px;background:#121713;color:#aeb9aa;text-align:center;line-height:1.5}
+@media(max-width:650px){
+#busca.searchView{padding-top:calc(var(--header-height) + 12px + env(safe-area-inset-top))}
+#busca.searchView{padding:calc(var(--header-height) + 12px + env(safe-area-inset-top)) 12px 24px}
+  #busca .searchIntro{margin-bottom:14px;padding:18px 16px;border-radius:13px}
+  #busca .searchIntro h1{font-size:23px}
+  #busca .searchIntro>p{margin:8px 0 11px;font-size:13px}
+  #busca .searchIntroNote{font-size:10px}
+  #busca>#bigSearch{height:46px;margin-bottom:18px;font-size:15px}
+  #busca .searchResultsToolbar{align-items:flex-start;gap:9px;margin-bottom:13px;padding:10px}
+  #busca .searchTypeFilters{width:100%;gap:6px}
+  #busca .searchTypeFilter{flex:1;padding:7px 6px;font-size:10px;white-space:nowrap}
+  #busca #searchGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px 9px}
+  #busca #searchGrid .card h3{font-size:12px}
+  #busca #searchGrid .card small{font-size:10px}
+  #descobrir .discoverSearchHint{margin:6px 3px 0;font-size:10px}
+  #descobrir #discoverSearchToolbar{align-items:flex-start;gap:9px;margin-bottom:13px;padding:10px}
+  #descobrir .searchTypeFilters{width:100%;gap:6px}
+  #descobrir .searchTypeFilter{flex:1;padding:7px 6px;font-size:10px;white-space:nowrap}
+  #descobrir #discoverSearchGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px 9px}
+  #descobrir #discoverSearchGrid .card h3{font-size:12px}
+  #descobrir #discoverSearchGrid .card small{font-size:10px}
+}
+</style>
 </body>
 </html>

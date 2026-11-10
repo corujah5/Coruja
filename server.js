@@ -726,26 +726,41 @@ app.get('/api/home', async (_,res)=>{
     const today=new Date().toISOString().slice(0,10);
     const since90=new Date(Date.now()-90*24*60*60*1000).toISOString().slice(0,10);
     const requests = [
-      tmdb('/trending/all/day',{language:'pt-BR'}),
-      tmdb('/trending/all/week',{language:'pt-BR'}),
-      tmdb('/tv/popular',{language:'pt-BR',page:1}),
-      tmdb('/movie/popular',{language:'pt-BR',region:'BR',page:1}),
-      tmdb('/tv/on_the_air',{language:'pt-BR',page:1}),
-      tmdb('/movie/now_playing',{language:'pt-BR',region:'BR',page:1}),
-      tmdb('/discover/tv',{language:'pt-BR',watch_region:'BR',sort_by:'popularity.desc',first_air_date_gte:since90,first_air_date_lte:today,page:1}),
-      tmdb('/discover/movie',{language:'pt-BR',region:'BR',watch_region:'BR',sort_by:'popularity.desc',primary_release_date_gte:since90,primary_release_date_lte:today,page:1}),
-      tmdb('/tv/top_rated',{language:'pt-BR',page:1}),
-      tmdb('/movie/upcoming',{language:'pt-BR',region:'BR',page:1})
+      ()=>tmdb('/trending/all/day',{language:'pt-BR'}),
+      ()=>tmdb('/trending/all/week',{language:'pt-BR'}),
+      ()=>tmdb('/tv/popular',{language:'pt-BR',page:1}),
+      ()=>tmdb('/movie/popular',{language:'pt-BR',region:'BR',page:1}),
+      ()=>tmdb('/tv/on_the_air',{language:'pt-BR',page:1}),
+      ()=>tmdb('/movie/now_playing',{language:'pt-BR',region:'BR',page:1}),
+      ()=>tmdb('/discover/tv',{language:'pt-BR',watch_region:'BR',sort_by:'popularity.desc',first_air_date_gte:since90,first_air_date_lte:today,page:1}),
+      ()=>tmdb('/discover/movie',{language:'pt-BR',region:'BR',watch_region:'BR',sort_by:'popularity.desc',primary_release_date_gte:since90,primary_release_date_lte:today,page:1}),
+      ()=>tmdb('/tv/top_rated',{language:'pt-BR',page:1}),
+      ()=>tmdb('/movie/upcoming',{language:'pt-BR',region:'BR',page:1}),
+      ()=>tmdb('/discover/tv',{language:'pt-BR',sort_by:'popularity.desc','first_air_date.gte':since90,'first_air_date.lte':today,page:1})
     ];
-    // Uma categoria com erro no TMDB não pode derrubar o catálogo inteiro.
-    const settled = await Promise.allSettled(requests);
+    // Limita a concorrência para evitar respostas vazias quando o TMDB recebe
+    // muitas consultas de catálogo de uma vez.
+    const settled = new Array(requests.length);
+    const concurrency = 2;
+    for(let i=0;i<requests.length;i+=concurrency){
+      const batch=await Promise.allSettled(requests.slice(i,i+concurrency).map(request=>request()));
+      batch.forEach((result,index)=>{settled[i+index]=result});
+    }
+    // Tenta novamente respostas com erro ou sem resultados antes de devolver
+    // carrosséis vazios para a página inicial.
+    for(let i=2;i<requests.length;i++){
+      const result=settled[i];
+      if(result?.status==='fulfilled'&&Array.isArray(result.value?.results)&&result.value.results.length)continue;
+      try{settled[i]={status:'fulfilled',value:await requests[i]()}}catch(error){settled[i]={status:'rejected',reason:error}}
+    }
     const value = (i, fallback={results:[]}) => settled[i].status==='fulfilled' ? settled[i].value : fallback;
     const data={
       trendingDay:value(0), trending:value(1), tv:value(2), movies:value(3), popularTv:value(4),
       popularMovies:value(5), newTv:value(6), newMovies:value(7),
-      topRatedTv:value(8), upcomingMovies:value(9)
+      topRatedTv:value(8), upcomingMovies:value(9), newestTv:value(10)
     };
-    homeCache={data,expires:Date.now()+15*60*1000};
+    const categoriesLoaded=settled.slice(2).every(result=>result?.status==='fulfilled'&&Array.isArray(result.value?.results)&&result.value.results.length>0);
+    homeCache={data,expires:Date.now()+(categoriesLoaded?15*60*1000:30*1000)};
     res.json(data);
   } catch(e){res.status(500).json({error:e.message});}
 });
@@ -786,6 +801,16 @@ app.get('/api/series/top-rated', async (req,res)=>{
   try {
     const page=Math.max(1,Math.min(500,Number(req.query.page)||1));
     const d=await tmdb('/tv/top_rated',{language:'pt-BR',page});
+    res.json(d);
+  } catch(e){res.status(500).json({error:e.message});}
+});
+
+app.get('/api/series/new', async (req,res)=>{
+  try {
+    const page=Math.max(1,Math.min(500,Number(req.query.page)||1));
+    const today=new Date().toISOString().slice(0,10);
+    const since90=new Date(Date.now()-90*24*60*60*1000).toISOString().slice(0,10);
+    const d=await tmdb('/discover/tv',{language:'pt-BR',sort_by:'popularity.desc','first_air_date.gte':since90,'first_air_date.lte':today,page});
     res.json(d);
   } catch(e){res.status(500).json({error:e.message});}
 });
