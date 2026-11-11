@@ -4596,7 +4596,7 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   <div id="communityPeople" class="peopleResults"></div>
 </section>
 <section id="perfil-publico" class="view"><div id="publicProfileContent"></div></section>
-<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><div id="detailCollectionActions" class="detailCollectionActions" aria-label="Ações da série"></div><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
+<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><div id="detailCollectionActions" class="detailCollectionActions" aria-label="Ações da série"></div><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div id="detailFinishedBar" class="detailFinishedBar" role="status" aria-label="Série concluída por você" hidden></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
 <section id="admin-mobile" class="view adminMobileView">
   <div class="adminMobileShell">
 <header class="adminMobileHeader"><div class="adminMobileBrand"><img src="/logo.png" alt="CORUJA"><div><h1>Painel administrativo</h1><p>Crie credenciais individuais de acesso.</p></div></div><div class="adminMobileHeaderActions"><a class="adminMobileClassic" href="#admin-classic">Painel clássico</a><button type="button" id="adminMobileDisconnect" class="adminMobileButton secondary" hidden>Sair do painel</button></div></header>
@@ -6124,10 +6124,10 @@ return{all:true,toWatch:unfinished,upcoming,notStarted:!interrupted&&!hasWatched
   function profileCollectionSortValue(item,state){const type=profileCollectionType(state.kind),meta=profileMetadataCache.get(`${type}:${item.id}`)||{},status=profileCollectionStatus(item);if(state.sort==='manual'&&state.kind==='series-favoritas'){const ids=state.reorderMode&&Array.isArray(state.pendingFavoriteOrder)?state.pendingFavoriteOrder:profileSeriesFavoriteOrderIds(),index=ids.indexOf(String(item.id));return index<0?Number.MAX_SAFE_INTEGER:index}if(state.sort==='name')return String(item.name||item.title||meta.name||meta.title||'').toLocaleLowerCase('pt-BR');if(state.sort==='seen')return Number(profileCollectionLastActivity(item))||0;if(state.sort==='progress'){const progress=status.progress;return progress.total?progress.watched/progress.total:progress.watched}if(state.sort==='status'&&state.kind==='series'){const order={toWatch:0,upcoming:1,notStarted:2,later:3,inDay:4,finished:5,canceled:6,interrupted:7};return order[status.upcoming?'upcoming':status.later?'later':profileCollectionSeriesMainGroupKey(item)]??8}if(state.sort==='status')return status.rank??9;if(state.sort==='added'){const value=item.addedAt,time=typeof value==='number'?value:Date.parse(value||'');return Number.isFinite(time)?time:0}return 0}
   function profileCollectionVisibleItems(state){const query=String(state.query||'').trim().toLocaleLowerCase('pt-BR'),items=state.items.filter(item=>profileCollectionMatchesFilter(item,state)&&(!query||String(item.name||item.title||'').toLocaleLowerCase('pt-BR').includes(query)));const direction=state.kind==='series'?(state.sort==='name'||state.sort==='status'?1:-1):state.kind==='series-favoritas'&&state.sort==='manual'||state.direction==='asc'?1:-1;return items.map((item,index)=>({item,index,value:profileCollectionSortValue(item,state)})).sort((a,b)=>{let result;if(typeof a.value==='string'||typeof b.value==='string')result=String(a.value).localeCompare(String(b.value),'pt-BR')*direction;else result=(a.value-b.value)*direction;if(result)return result;if(state.kind==='series'&&state.sort==='status'){const titleA=String(a.item.name||a.item.title||'').trim(),titleB=String(b.item.name||b.item.title||'').trim();return titleA.localeCompare(titleB,'pt-BR')}return a.index-b.index}).map(entry=>entry.item)}
   function profileCollectionCard(item,type,options={}){const normalized={...item,media_type:type},el=card(normalized);el.classList.add('profileCollectionPosterCard');el.querySelectorAll('.score,.add,.seriesWatchStatus,.seriesProgressTrack,.profileProgressPercent,small,.stars,.profilePosterRule').forEach(node=>node.remove());if(options.keepFavorite)el.classList.add('profileCollectionFavoriteMovieCard');else el.querySelector('.favorite')?.remove();const poster=$('.poster',el);if(poster)poster.style.aspectRatio='2 / 3';return el}
-  function profileCollectionStatusBar(item,seriesStatusView=false,statusOverride='',mainSeriesShelf=false){const status=profileCollectionStatus(item),progress=status.progress,isMovie=mediaTypeOf(item)==='movie',key=statusOverride||(isMovie?(progress.completed?'movieWatched':'movieToWatch'):seriesStatusView?(mainSeriesShelf?profileCollectionSeriesMainGroupKey(item):profileCollectionSeriesStatusGroupKey(item)):profileCollectionStatusGroupKey(status)),percent=isMovie?(progress.completed?100:0):Math.max(0,Math.min(100,Number(progress.percent)||0)),track=document.createElement('span'),fill=document.createElement('i');track.className='profileCollectionStatusTrack';track.dataset.status=key||'';track.setAttribute('role','progressbar');track.setAttribute('aria-label',`${isMovie?'Status de visualização':'Progresso real de episódios'} de ${item.name||item.title||(isMovie?'filme':'série')}`);track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');track.setAttribute('aria-valuenow',String(percent));fill.style.width=`${percent}%`;track.append(fill);return track}
+  function profileCollectionStatusBar(item,seriesStatusView=false,statusOverride='',mainSeriesShelf=false){const status=profileCollectionStatus(item),progress=status.progress,isMovie=mediaTypeOf(item)==='movie',key=statusOverride||(isMovie?(progress.completed?'movieWatched':'movieToWatch'):seriesStatusView?(mainSeriesShelf?profileCollectionMainShelfStatusKey(item):profileCollectionSeriesStatusGroupKey(item)):profileCollectionStatusGroupKey(status)),percent=isMovie?(progress.completed?100:0):mainSeriesShelf&&key==='finished'?100:Math.max(0,Math.min(100,Number(progress.percent)||0)),track=document.createElement('span'),fill=document.createElement('i');track.className='profileCollectionStatusTrack';track.dataset.status=key||'';track.setAttribute('role','progressbar');track.setAttribute('aria-label',`${isMovie?'Status de visualização':'Progresso real de episódios'} de ${item.name||item.title||(isMovie?'filme':'série')}`);track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');track.setAttribute('aria-valuenow',String(percent));fill.style.width=`${percent}%`;track.append(fill);return track}
   function updateProfileCollectionStatusBar(cardEl,item,seriesStatusView=true){const current=$('.profileCollectionStatusTrack',cardEl);if(!current)return;const groupKey=cardEl.closest('.profileCollectionStatusGroup')?.dataset.statusGroup,statusOverride=mediaTypeOf(item)==='tv'&&groupKey?groupKey:'',mainSeriesShelf=cardEl.dataset.profileSeriesStatusShelf==='true';current.replaceWith(profileCollectionStatusBar(item,seriesStatusView,statusOverride,mainSeriesShelf))}
   function profileCollectionStatusCard(item,seriesStatusView=false,options={}){const el=profileCollectionCard(item,mediaTypeOf(item),options),poster=$('.poster',el);if(!poster)return el;poster.after(profileCollectionStatusBar(item,seriesStatusView,options.statusOverride||''));return el}
-  function profileCollectionSeriesMainGroupKey(item,options={}){
+  function profileCollectionMainShelfStatusKey(item){return profileCollectionSeriesMainGroupKey(item)}function profileCollectionSeriesMainGroupKey(item,options={}){
 const status=profileCollectionStatus(item,options);
 if(status.interrupted)return'interrupted';
 if(status.canceled)return'canceled';
@@ -6866,11 +6866,13 @@ return null}
     const routeHash='#tv-'+id;
     const view=$('#detalhe');
     const about=$('#detailAbout');
+    $('#detailFinishedBar').hidden=true;
     showView('detalhe');
     view.setAttribute('aria-busy','true');
     $('#detailBackdrop').removeAttribute('src');
     $('#detailTitle').textContent='Carregando série…';
     $('#detailMeta').replaceChildren();
+      $('#detailFinishedBar').hidden=true;
     $('#detailSinopse').textContent='';
     $('#detailActions').replaceChildren();
     $('#detailCollectionActions').replaceChildren();
@@ -6899,6 +6901,8 @@ return null}
       };
       const situation=statusMap[d.status]||statusMap[d.status]||d.status||'Não informado';
       const statusTag=situation==='Finalizada'||situation==='Renovada'?`<strong class="statusBadge ${situation==='Finalizada'?'finished':'renewed'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>${escapeHtml(situation)}</strong>`:`<strong class="statusBadge ${situation==='Cancelada'?'cancelled':''}">Situação: ${escapeHtml(situation)}</strong>`;
+      profileMetadataCache.set(`tv:${Number(id)}`,d);
+      $('#detailFinishedBar').hidden=!profileCollectionStatus({...d,media_type:'tv'}).finished;
       $('#detailMeta').innerHTML=`<span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${year}</span><span class="dot">•</span><span>${genres||'Série'}</span><span class="dot">•</span><span>${(d.number_of_seasons||0)} temporada${d.number_of_seasons===1?'':'s'}</span>${statusTag}`;
       $('#detailSinopse').textContent=d.overview||'Sem sinopse disponível.';
       $('#detailCollectionActions').innerHTML=detailCollectionActionsMarkup(d,'tv');
@@ -6927,6 +6931,7 @@ return null}
       view.removeAttribute('aria-busy');
       $('#detailTitle').textContent='Série indisponível';
       $('#detailMeta').replaceChildren();
+      $('#detailFinishedBar').hidden=true;
       $('#detailSinopse').textContent='Não foi possível carregar os detalhes agora.';
       renderDetailStatus(about,'Tente novamente em instantes.',true);
       toast('Não foi possível abrir a série: '+e.message);
@@ -7908,6 +7913,9 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   #descobrir #discoverSearchGrid .card h3{font-size:12px}
   #descobrir #discoverSearchGrid .card small{font-size:10px}
 }
+
+#detailFinishedBar.detailFinishedBar{height:7px;width:100%;background:#a64cf5;box-shadow:0 0 10px #a64cf555}
+#detailFinishedBar.detailFinishedBar[hidden]{display:none!important}
 </style>
 </body>
 </html>
