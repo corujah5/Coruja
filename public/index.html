@@ -7844,7 +7844,7 @@ function doSearch(q,target='busca'){
     fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
   }
   async function home(){if(!user.sessionToken)return;invalidateMoviesGalleryUpcoming();moviesHomeCatalogStatus='loading';try{const d=await api('/api/home');state.home=d;moviesHomeCatalogStatus='ready';renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;moviesHomeCatalogStatus='error';homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
-  async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();syncBaseState=d.state||{};const localPositions=user.positions||{};user={...(d.state||{}),profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:d.user?.id||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};user.positions=mergePositionStates(localPositions,user.positions);save();updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
+  async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const localState=JSON.parse(JSON.stringify(user)),r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();syncBaseState=d.state||{};const sameAccount=String(localState.userId||'')===String(d.user?.id||'');const accountState=sameAccount?mergeAccountAndGuestState(d.state||{},localState):(d.state||{});user={...accountState,profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:d.user?.id||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};if(sameAccount){await syncMergedAccountState(user.userId)}else save({sync:false});updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
   async function bootstrapAuth(){
     // Decide a tela antes de carregar o catálogo para nunca mostrar a página
     // principal por alguns instantes antes do login/painel.
@@ -7859,14 +7859,15 @@ function doSearch(q,target='busca'){
       const accountId=String(data.user?.id||'');
       if(previousAccountId&&previousAccountId!==accountId)syncBaseState=null;
       syncBaseState=data.state||{};
-      const sameAccount=!previousAccountId||previousAccountId===accountId;
+      const sameAccount=previousAccountId===accountId;
       const localPositions=sameAccount?(user.positions||{}):{};
       const pendingState=readPendingAccountMerge(accountId);
-      const mergedState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
+      let mergedState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
+      if(sameAccount)mergedState=mergeAccountAndGuestState(mergedState,user);
       const restoredState=applyPendingCustomListOperations(mergedState,accountId);
       user={...restoredState,profile:data.user?.name||'Coruja',username:data.user?.username||'',avatar:data.user?.avatar||'',userId:accountId,sessionToken:'cookie-session',followersCount:data.user?.followers||0,followingCount:data.user?.following||0};
       user.positions=mergePositionStates(localPositions,user.positions);
-      if(pendingState){const syncResult=await syncMergedAccountState(accountId);if(!syncResult.synced)toast(syncResult.pendingSaved?'A sincronização ainda falhou. Os dados mesclados permanecem salvos neste dispositivo e serão reenviados ao entrar novamente.':'A sincronização falhou e não foi possível guardar a recuperação automática. Mantenha esta sessão aberta e tente novamente.')}else{save({sync:false});if(readPendingCustomListOperations(accountId).length)await syncPendingCustomListOperations()}
+      if(pendingState||sameAccount){const syncResult=await syncMergedAccountState(accountId);if(!syncResult.synced)toast(syncResult.pendingSaved?'A sincronização ainda falhou. Os dados mesclados permanecem salvos neste dispositivo e serão reenviados ao entrar novamente.':'A sincronização falhou e não foi possível guardar a recuperação automática. Mantenha esta sessão aberta e tente novamente.')}else{save({sync:false});if(readPendingCustomListOperations(accountId).length)await syncPendingCustomListOperations()}
     }catch{
       if(legacyToken||previousAccountId){user={list:[],favorites:{series:[],movies:[]},watched:{},watchedAt:{},watchedMovies:{},positions:{},episodeRatings:{},movieRatings:{},seasonPromptNever:{},completedShows:{},episodeWatchCounts:{},watchDurations:{episodes:{},movies:{},episodeRewatches:{}},profile:'Coruja',commentCount:0,comments:[],sessionToken:'',userId:''};}
       else user.sessionToken='';
