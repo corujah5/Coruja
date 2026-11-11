@@ -367,6 +367,61 @@ function cleanState(input){
   return out;
 }
 
+function stateEqual(a,b){
+  try{return JSON.stringify(a)===JSON.stringify(b)}catch{return false}
+}
+function stateArrayKey(item,path){
+  if(!item||typeof item!=='object')return null;
+  if(path==='list')return item.id==null?null:`${item.media_type||item.mediaType||((item.name&&!item.title)?'tv':'movie')}:${item.id}`;
+  if(path==='favorites.series')return item.id==null?null:`tv:${item.id}`;
+  if(path==='favorites.movies')return item.id==null?null:`movie:${item.id}`;
+  if(path==='customLists'||/^customLists\..+\.items$/.test(path))return item.id==null?null:(/^customLists\..+\.items$/.test(path)?`${item.media_type||item.mediaType||((item.name&&!item.title)?'tv':'movie')}:${item.id}`:String(item.id));
+  if(path==='comments')return item.id==null?null:String(item.id);
+  return item.id==null?null:String(item.id);
+}
+function mergeChangedArray(base,incoming,current,path){
+  const baseKeys=base.map(item=>stateArrayKey(item,path));
+  const incomingKeys=incoming.map(item=>stateArrayKey(item,path));
+  if(baseKeys.some(key=>key==null)||incomingKeys.some(key=>key==null))return stateEqual(current,base)?incoming:current;
+  const result=Array.isArray(current)?current.slice():[];
+  const currentKeys=result.map(item=>stateArrayKey(item,path));
+  const baseMap=new Map(base.map((item,index)=>[baseKeys[index],item]));
+  const incomingMap=new Map(incoming.map((item,index)=>[incomingKeys[index],item]));
+  const resultMap=new Map(result.map((item,index)=>[currentKeys[index],item]));
+  for(const [key,oldItem] of baseMap){
+    if(!incomingMap.has(key)){resultMap.delete(key);continue;}
+    const nextItem=incomingMap.get(key);
+    if(!stateEqual(oldItem,nextItem))resultMap.set(key,mergeChangedState(oldItem,nextItem,resultMap.get(key)??oldItem,`${path}.${key}`));
+  }
+  for(const [key,item] of incomingMap)if(!baseMap.has(key))resultMap.set(key,item);
+  const desiredOrderChanged=!stateEqual(baseKeys,incomingKeys);
+  if(desiredOrderChanged){
+    const ordered=[];for(const key of incomingKeys)if(resultMap.has(key)){ordered.push(resultMap.get(key));resultMap.delete(key);}
+    return ordered.concat(result.filter(item=>{const key=stateArrayKey(item,path);return resultMap.has(key)}).map(item=>{const key=stateArrayKey(item,path),value=resultMap.get(key);resultMap.delete(key);return value;}),[...resultMap.values()]);
+  }
+  return [...resultMap.values()];
+}
+function mergeChangedState(base,incoming,current,path=''){
+  if(stateEqual(base,incoming))return current;
+  if(Array.isArray(base)&&Array.isArray(incoming))return mergeChangedArray(base,incoming,current,path);
+  const isObject=value=>value&&typeof value==='object'&&!Array.isArray(value);
+  if(isObject(base)&&isObject(incoming)){
+    const result=isObject(current)?{...current}:{};
+    for(const key of new Set([...Object.keys(base),...Object.keys(incoming)])){
+      const childPath=path?`${path}.${key}`:key;
+      if(!Object.prototype.hasOwnProperty.call(incoming,key)){if(Object.prototype.hasOwnProperty.call(base,key))delete result[key];continue;}
+      if(!Object.prototype.hasOwnProperty.call(base,key)){result[key]=incoming[key];continue;}
+      result[key]=mergeChangedState(base[key],incoming[key],result[key],childPath);
+    }
+    return result;
+  }
+  return stateEqual(current,base)?incoming:current;
+}
+function mergeIncomingUserState(account,incoming,baseState){
+  const current=readUserState(account),next=cleanState(baseState&&typeof baseState==='object'?mergeChangedState(cleanState(baseState),cleanState(incoming),current):incoming);
+  return writeUserState(account,next);
+}
+
 // Contas e perfis sociais. O progresso fica associado à conta para funcionar em outro aparelho.
 function readInvites(){ return readJson(INVITES_FILE, []); }
 function writeInvites(items){ writeJson(INVITES_FILE, items); }
@@ -557,11 +612,11 @@ app.post('/api/auth/logout', (req,res) => {
   res.json({ ok: true });
 });
 app.get('/api/me',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});res.json({user:publicUser(u),state:readUserState(u)});});
-app.put('/api/me/profile',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const name=cleanText(req.body?.name,60);if(name)u.name=name; const requestedUsername=normalizeUsername(req.body?.username); if(requestedUsername){ if(!/^[a-z0-9_.]{3,30}$/.test(requestedUsername)) return res.status(400).json({error:'O nome de usuário deve ter de 3 a 30 caracteres.'}); if(readUsers().some(x=>x.id!==u.id&&normalizeUsername(x.username)===requestedUsername)) return res.status(409).json({error:'Este nome de usuário já está em uso.'}); u.username=requestedUsername; } u.avatar=cleanText(req.body?.avatar,250000);writeUserState(u,req.body?.state||readUserState(u));writeUsers(users);res.json({user:publicUser(u),state:readUserState(u)});});
-app.post('/api/me/state',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers(); const clean=cleanState(req.body?.state); writeUserState(u,clean); if(req.body?.name)u.name=cleanText(req.body.name,60); writeUsers(users); res.json({ok:true,state:clean});});
+app.put('/api/me/profile',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const name=cleanText(req.body?.name,60);if(name)u.name=name; const requestedUsername=normalizeUsername(req.body?.username); if(requestedUsername){ if(!/^[a-z0-9_.]{3,30}$/.test(requestedUsername)) return res.status(400).json({error:'O nome de usuário deve ter de 3 a 30 caracteres.'}); if(readUsers().some(x=>x.id!==u.id&&normalizeUsername(x.username)===requestedUsername)) return res.status(409).json({error:'Este nome de usuário já está em uso.'}); u.username=requestedUsername; } u.avatar=cleanText(req.body?.avatar,250000);mergeIncomingUserState(u,req.body?.state||readUserState(u),req.body?.baseState);writeUsers(users);res.json({user:publicUser(u),state:readUserState(u)});});
+app.post('/api/me/state',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const clean=mergeIncomingUserState(u,req.body?.state,req.body?.baseState);if(req.body?.name)u.name=cleanText(req.body.name,60);writeUsers(users);res.json({ok:true,state:clean});});
 // Salvamento para celular/fechamento de aba: sendBeacon não permite cabeçalho Authorization,
 // então aceitamos o token no corpo apenas neste endpoint e validamos a mesma sessão.
-app.post('/api/me/state-beacon',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const account=users.find(x=>x.id===u.id);if(!account||account.blocked)return res.status(401).json({error:'Não autenticado.'});const clean=cleanState(req.body?.state);writeUserState(account,clean);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);res.json({ok:true});});
+app.post('/api/me/state-beacon',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const account=users.find(x=>x.id===u.id);if(!account||account.blocked)return res.status(401).json({error:'Não autenticado.'});mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);res.json({ok:true});});
 
 app.get('/api/users/search',(req,res)=>{
   const q=cleanText(req.query.q,60).toLowerCase(); if(!q)return res.json({users:[]});
