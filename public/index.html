@@ -7921,6 +7921,11 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 #detailFinishedBar.detailFinishedBar[data-status="canceled"]>i{background:#b3261e}
 #detailFinishedBar.detailFinishedBar[data-status="finished"]>i{background:#a64cf5}
 #detailFinishedBar.detailFinishedBar[hidden]{display:none!important}
+#detalhe .detailHero #backDetail,#movieDetail .movieDetailHero #movieBack{border:1px solid rgba(255,255,255,.22);background:rgba(5,8,7,.38);color:#fff;box-shadow:0 3px 12px rgba(0,0,0,.28)}
+#detalhe .detailHero #backDetail::before,#movieDetail .movieDetailHero #movieBack::before{background:#fff}
+#detalhe .detailHero #backDetail:hover,#movieDetail .movieDetailHero #movieBack:hover{border-color:rgba(255,255,255,.4);background:rgba(5,8,7,.58);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35);transform:none}
+#detalhe .detailHero #backDetail:active,#movieDetail .movieDetailHero #movieBack:active{border-color:rgba(255,255,255,.4);background:rgba(5,8,7,.68);transform:scale(.96)}
+#detalhe .detailHero #backDetail:focus-visible,#movieDetail .movieDetailHero #movieBack:focus-visible{outline:2px solid #fff;outline-offset:3px;box-shadow:0 0 0 4px rgba(255,255,255,.2)}
 </style>
 </body>
 </html>
