@@ -4596,7 +4596,7 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   <div id="communityPeople" class="peopleResults"></div>
 </section>
 <section id="perfil-publico" class="view"><div id="publicProfileContent"></div></section>
-<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><div id="detailCollectionActions" class="detailCollectionActions" aria-label="Ações da série"></div><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div id="detailFinishedBar" class="detailFinishedBar" role="status" aria-label="Série concluída por você" hidden></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
+<section id="detalhe" class="view"><div class="detail"><div class="detailHero"><button class="backBtn" id="backDetail">←</button><div id="detailCollectionActions" class="detailCollectionActions" aria-label="Ações da série"></div><img id="detailBackdrop" alt=""><div class="detailOverlay"><div class="detailInfo"><h1 id="detailTitle"></h1><div id="detailMeta" class="detailMeta"></div><p id="detailSinopse"></p><div id="detailActions"></div></div></div></div><div id="detailFinishedBar" class="detailFinishedBar" role="progressbar" aria-label="Progresso da série" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" hidden><i></i></div><div class="tabs"><button class="tab active" id="tabSobre">SOBRE</button><button class="tab" id="tabEpisodios">EPISÓDIOS</button></div><div id="detailAbout" class="detailSection"></div><div id="detailEpisódios" class="detailSection" style="display:none"></div></div></section>
 <section id="admin-mobile" class="view adminMobileView">
   <div class="adminMobileShell">
 <header class="adminMobileHeader"><div class="adminMobileBrand"><img src="/logo.png" alt="CORUJA"><div><h1>Painel administrativo</h1><p>Crie credenciais individuais de acesso.</p></div></div><div class="adminMobileHeaderActions"><a class="adminMobileClassic" href="#admin-classic">Painel clássico</a><button type="button" id="adminMobileDisconnect" class="adminMobileButton secondary" hidden>Sair do painel</button></div></header>
@@ -5205,9 +5205,9 @@ return `<div class="detailCollectionActions" data-media-id="${safeId}" data-medi
     return {watched,total,started,completed,percent:total?Math.min(100,Math.floor(watched/total*100)):0};
   }
   function countSeriesEpisodes(detail){
-    const direct=Number(detail?.number_of_episodes)||0;
-    if(direct>0)return direct;
-    return (detail?.seasons||[]).filter(season=>Number(season.season_number)>0).reduce((sum,season)=>sum+Math.max(0,Number(season.episode_count)||0),0);
+    const seasons=(detail?.seasons||[]).filter(season=>Number(season.season_number)>=0&&Number(season.episode_count)>0);
+    const listedTotal=seasons.reduce((sum,season)=>sum+Math.max(0,Number(season.episode_count)||0),0);
+    return listedTotal||Number(detail?.number_of_episodes)||0;
   }
   function updateSeriesProgressCard(cardEl){
     if(!cardEl?.classList.contains('hasSeriesProgress'))return;
@@ -6063,7 +6063,7 @@ window.addEventListener('hashchange',()=>{if(location.hash!=='#perfil')profileLi
   function profileCollectionType(kind){return kind==='series'||kind==='series-favoritas'?'tv':'movie'}
   function profileCollectionToday(){const parts=new Intl.DateTimeFormat('en-CA',{timeZone:'America/Sao_Paulo',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date());return `${parts.find(x=>x.type==='year')?.value}-${parts.find(x=>x.type==='month')?.value}-${parts.find(x=>x.type==='day')?.value}`}
   function profileCollectionLastActivity(item){const type=mediaTypeOf(item),id=Number(item?.id);if(type==='tv')return typeof seriesTrackerLastActivity==='function'?seriesTrackerLastActivity(id,seriesTrackerWatchedEpisodes(id)):0;const values=[user.watchedMovies?.[String(id)],user.positions?.[moviePositionKey(id)]?.updatedAt];return values.reduce((latest,value)=>Math.max(latest,Date.parse(value||'')||0),0)}
-  function profileCollectionProgress(item){const type=mediaTypeOf(item),id=Number(item?.id),meta=profileMetadataCache.get(`${type}:${id}`)||{};if(type==='tv'){const total=Number(meta.number_of_episodes)||seriesEpisodeTotals.get(String(id))||Number(item.number_of_episodes)||0;return seriesProgressSnapshot(id,total)}const done=!!user.watchedMovies?.[String(id)],seconds=Number(user.positions?.[moviePositionKey(id)]?.seconds||0),runtime=Number(meta.runtime)||Number(item.runtime)||0;return{started:done||seconds>0,completed:done,watched:done?1:seconds>0?0.5:0,total:1,percent:done?100:runtime?Math.min(99,Math.floor(seconds/(runtime*60)*100)):seconds>0?1:0}}
+  function profileCollectionProgress(item){const type=mediaTypeOf(item),id=Number(item?.id),meta=profileMetadataCache.get(`${type}:${id}`)||{};if(type==='tv'){const total=countSeriesEpisodes(meta)||seriesEpisodeTotals.get(String(id))||Number(item.number_of_episodes)||0;return seriesProgressSnapshot(id,total)}const done=!!user.watchedMovies?.[String(id)],seconds=Number(user.positions?.[moviePositionKey(id)]?.seconds||0),runtime=Number(meta.runtime)||Number(item.runtime)||0;return{started:done||seconds>0,completed:done,watched:done?1:seconds>0?0.5:0,total:1,percent:done?100:runtime?Math.min(99,Math.floor(seconds/(runtime*60)*100)):seconds>0?1:0}}
   function profileCollectionWatchLaterIds(){const lists=Array.isArray(user.customLists)?user.customLists:[];const named=lists.filter(list=>['ver mais tarde','assistir mais tarde','watch later'].includes(String(list?.name||'').trim().toLocaleLowerCase('pt-BR')));const ids=new Set(named.flatMap(list=>(Array.isArray(list.items)?list.items:[]).filter(item=>item?.id!=null).map(item=>`tv:${item.id}`)));for(const item of Array.isArray(user.list)?user.list:[])if(item?.watchLater===true&&item?.id!=null)ids.add(`tv:${item.id}`);return ids}
   function profileCollectionHasRewatchedEpisodes(item){if(mediaTypeOf(item)!=='tv')return false;const id=Number(item?.id),counts=user.episodeWatchCounts||{},rewatches=user.watchDurations?.episodeRewatches||{};return Object.entries(user.watched||{}).some(([key,done])=>{if(!done)return false;const match=/^(?:tv-)?(\d+)-(\d+)-(\d+)$/.exec(key);if(!match||Number(match[1])!==id)return false;return Number(counts[key]||0)>1||Number(rewatches[key]||0)>0})}
   function profileCollectionHasExplicitInterruptedStatus(item){const id=String(Number(item?.id)),values=[item?.userStatus,item?.profileStatus,item?.trackingStatus,item?.status,user.seriesStatuses?.[id],user.profileSeriesStatuses?.[id]];return values.some(value=>['interrupted','interrompida','interrompido'].includes(String(value||'').trim().toLocaleLowerCase('pt-BR')))}
@@ -6127,6 +6127,7 @@ return{all:true,toWatch:unfinished,upcoming,notStarted:!interrupted&&!hasWatched
   function profileCollectionStatusBar(item,seriesStatusView=false,statusOverride='',mainSeriesShelf=false){const status=profileCollectionStatus(item),progress=status.progress,isMovie=mediaTypeOf(item)==='movie',key=statusOverride||(isMovie?(progress.completed?'movieWatched':'movieToWatch'):seriesStatusView?(mainSeriesShelf?profileCollectionMainShelfStatusKey(item):profileCollectionSeriesStatusGroupKey(item)):profileCollectionStatusGroupKey(status)),percent=isMovie?(progress.completed?100:0):mainSeriesShelf&&key==='finished'?100:Math.max(0,Math.min(100,Number(progress.percent)||0)),track=document.createElement('span'),fill=document.createElement('i');track.className='profileCollectionStatusTrack';track.dataset.status=key||'';track.setAttribute('role','progressbar');track.setAttribute('aria-label',`${isMovie?'Status de visualização':'Progresso real de episódios'} de ${item.name||item.title||(isMovie?'filme':'série')}`);track.setAttribute('aria-valuemin','0');track.setAttribute('aria-valuemax','100');track.setAttribute('aria-valuenow',String(percent));fill.style.width=`${percent}%`;track.append(fill);return track}
   function updateProfileCollectionStatusBar(cardEl,item,seriesStatusView=true){const current=$('.profileCollectionStatusTrack',cardEl);if(!current)return;const groupKey=cardEl.closest('.profileCollectionStatusGroup')?.dataset.statusGroup,statusOverride=mediaTypeOf(item)==='tv'&&groupKey?groupKey:'',mainSeriesShelf=cardEl.dataset.profileSeriesStatusShelf==='true';current.replaceWith(profileCollectionStatusBar(item,seriesStatusView,statusOverride,mainSeriesShelf))}
   function profileCollectionStatusCard(item,seriesStatusView=false,options={}){const el=profileCollectionCard(item,mediaTypeOf(item),options),poster=$('.poster',el);if(!poster)return el;poster.after(profileCollectionStatusBar(item,seriesStatusView,options.statusOverride||''));return el}
+  function updateDetailSeriesProgressBar(show=state.current){const bar=$('#detailFinishedBar'),fill=$('i',bar),id=Number(show?.id);if(!bar||!fill||!id){if(bar)bar.hidden=true;return}const total=countSeriesEpisodes(show)||seriesEpisodeTotals.get(String(id))||0,progress=seriesProgressSnapshot(id,total),personalStatus=profileCollectionStatus({...show,media_type:'tv'}),finished=!!personalStatus.finished,canceled=!!personalStatus.canceled,visible=finished||progress.started;bar.hidden=!visible;if(!visible)return;const percent=finished?100:Math.max(2,Math.min(100,Number(progress.percent)||0));bar.dataset.status=finished?'finished':canceled?'canceled':'watching';bar.setAttribute('aria-label',finished?'Série concluída por você':`Progresso de ${show.name||'série'} assistida`);bar.setAttribute('aria-valuenow',String(percent));bar.setAttribute('aria-valuetext',`${progress.watched} de ${progress.total||'total desconhecido'} episódios assistidos`);fill.style.width=`${percent}%`}
   function profileCollectionMainShelfStatusKey(item){return profileCollectionSeriesMainGroupKey(item)}function profileCollectionSeriesMainGroupKey(item,options={}){
 const status=profileCollectionStatus(item,options);
 if(status.interrupted)return'interrupted';
@@ -6902,7 +6903,7 @@ return null}
       const situation=statusMap[d.status]||statusMap[d.status]||d.status||'Não informado';
       const statusTag=situation==='Finalizada'||situation==='Renovada'?`<strong class="statusBadge ${situation==='Finalizada'?'finished':'renewed'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>${escapeHtml(situation)}</strong>`:`<strong class="statusBadge ${situation==='Cancelada'?'cancelled':''}">Situação: ${escapeHtml(situation)}</strong>`;
       profileMetadataCache.set(`tv:${Number(id)}`,d);
-      $('#detailFinishedBar').hidden=!profileCollectionStatus({...d,media_type:'tv'}).finished;
+      updateDetailSeriesProgressBar({...d,media_type:'tv'});
       $('#detailMeta').innerHTML=`<span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${year}</span><span class="dot">•</span><span>${genres||'Série'}</span><span class="dot">•</span><span>${(d.number_of_seasons||0)} temporada${d.number_of_seasons===1?'':'s'}</span>${statusTag}`;
       $('#detailSinopse').textContent=d.overview||'Sem sinopse disponível.';
       $('#detailCollectionActions').innerHTML=detailCollectionActionsMarkup(d,'tv');
@@ -7059,6 +7060,7 @@ return null}
     }).join('');
 
     $('#detailEpisódios').innerHTML=`${continueSection.html}${seriesAllEpisodesToggleMarkup(state.current)}${seasonRows}`;
+    updateDetailSeriesProgressBar();
     $$('[data-episode-image]',$('#detailEpisódios')).forEach(im=>setImageFallback(im,state.current.poster_path));
     $$('[data-season-row]',$('#detailEpisódios')).forEach(row=>row.onclick=()=>{const sn=Number(row.dataset.seasonRow);if(sn===Number(state.season)){renderSeasonListCollapsed();}else{loadTemporada(sn);}});
     bindSeasonToggleButtons($('#detailEpisódios'),()=>loadTemporada(n));
@@ -7179,6 +7181,7 @@ return null}
       return `<div class="seasonRow" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">▾</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>`;
     }).join('');
     $('#detailEpisódios').innerHTML=`${continueSection.html}${seriesAllEpisodesToggleMarkup(state.current)}${rows}`;
+    updateDetailSeriesProgressBar();
     $('[data-episode-image]',$('#detailEpisódios'));
     $$('[data-season-row]',$('#detailEpisódios')).forEach(row=>row.onclick=()=>loadTemporada(Number(row.dataset.seasonRow)));
     bindSeasonToggleButtons($('#detailEpisódios'),()=>renderSeasonListCollapsed());
@@ -7914,7 +7917,10 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   #descobrir #discoverSearchGrid .card small{font-size:10px}
 }
 
-#detailFinishedBar.detailFinishedBar{height:7px;width:100%;background:#a64cf5;box-shadow:0 0 10px #a64cf555}
+#detailFinishedBar.detailFinishedBar{height:7px;width:100%;overflow:hidden;background:#252925}
+#detailFinishedBar.detailFinishedBar>i{display:block;width:0;height:100%;background:#f0c820;transition:width .25s ease}
+#detailFinishedBar.detailFinishedBar[data-status="canceled"]>i{background:#b3261e}
+#detailFinishedBar.detailFinishedBar[data-status="finished"]>i{background:#a64cf5}
 #detailFinishedBar.detailFinishedBar[hidden]{display:none!important}
 </style>
 </body>
