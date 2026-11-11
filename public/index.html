@@ -4481,14 +4481,6 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
     <input id="discoverSearch" class="searchBox" type="search" aria-label="Pesquisar filmes, séries e animes" placeholder="Buscar filmes, séries e animes..." autocomplete="off">
     <p class="discoverSearchHint">Encontre títulos para organizar na sua lista e acompanhar o que quer assistir.</p>
     <div id="discoverSearchResults" class="discoverSearchResults" hidden>
-      <div id="discoverSearchToolbar" class="searchResultsToolbar" hidden>
-        <span id="discoverSearchSummary" class="searchResultSummary" aria-live="polite"></span>
-        <div class="searchTypeFilters" role="group" aria-label="Filtrar resultados por tipo">
-          <button type="button" class="searchTypeFilter active" data-search-type="all" aria-pressed="true">Tudo</button>
-          <button type="button" class="searchTypeFilter" data-search-type="movie" aria-pressed="false">Filmes</button>
-          <button type="button" class="searchTypeFilter" data-search-type="tv" aria-pressed="false">Séries e animes</button>
-        </div>
-      </div>
       <div id="discoverSearchGrid" class="grid"></div>
       <div id="discoverSearchResultsLoad" class="loadMoreWrap" hidden><button id="loadMoreDiscoverSearch" class="loadMoreBtn" type="button">Carregar mais</button></div>
     </div>
@@ -4496,9 +4488,9 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 <section class="section trendsSection"><div class="sectionHead trendsHead"><h2><svg class="uiIcon"><use href="#i-sparkles"></use></svg>Tendências</h2><div class="trendTabs"><button id="trendToday" class="trendTab active">Hoje</button><button id="trendWeek" class="trendTab">Nesta Semana</button></div></div><div id="homeTrending" class="row trendRow"></div></section>
   <section class="section"><div class="sectionHead"><h2>Novas séries</h2><button data-route="series-avaliadas" aria-label="Ver todas as novas séries">Ver todas ›</button></div><p style="color:#777;margin-top:-8px">Séries com estreia nos últimos 90 dias, ordenadas por popularidade.</p><div id="homeTopRatedSeries" class="row"></div></section>
   <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Nos cinemas</h2><button data-route="filmes-cartaz" aria-label="Ver todos os filmes nos cinemas">Ver todos ›</button></div><p style="color:#777;margin-top:-8px">Filmes atualmente em cartaz nos cinemas do Brasil.</p><div id="homeNowPlayingMovies" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><div id="homePopularMovies" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><div id="homePopularSeries" class="row"></div></section>
-  <section class="section"><div class="sectionHead"><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2><button data-route="filmes-breve">Ver todos ›</button></div><div id="homeUpcomingMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>Filmes populares</h2><button data-route="filmes-populares">Ver todos ›</button></div><p class="providerPageDesc">Os filmes mais populares</p><div id="homePopularMovies" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>Séries populares</h2><button data-route="series-populares">Ver todas ›</button></div><p class="providerPageDesc">As séries mais populares</p><div id="homePopularSeries" class="row"></div></section>
+  <section class="section"><div class="sectionHead"><h2>Filmes que estreiam em breve</h2><button data-route="filmes-breve">Ver todos ›</button></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="homeUpcomingMovies" class="row"></div></section>
 </section>
 
 <section id="series-novas" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries novas</h2></div><div id="seriesNovasGrid" class="grid"></div></section>
@@ -4534,23 +4526,15 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
     <section class="section"><div class="sectionHead"><h2>Séries populares</h2><button data-route="series-populares">Explorar ›</button></div><div id="searchHomeSeries" class="row"></div></section>
     <section class="section"><div class="sectionHead"><h2>Filmes populares</h2><button data-route="filmes-populares">Explorar ›</button></div><div id="searchHomeMovies" class="row"></div></section>
   </div>
-  <div id="searchResultsToolbar" class="searchResultsToolbar" hidden>
-    <span id="searchResultSummary" class="searchResultSummary" aria-live="polite"></span>
-    <div class="searchTypeFilters" role="group" aria-label="Filtrar resultados por tipo">
-      <button type="button" class="searchTypeFilter active" data-search-type="all" aria-pressed="true">Tudo</button>
-      <button type="button" class="searchTypeFilter" data-search-type="movie" aria-pressed="false">Filmes</button>
-      <button type="button" class="searchTypeFilter" data-search-type="tv" aria-pressed="false">Séries e animes</button>
-    </div>
-  </div>
   <div class="section"><div id="searchGrid" class="grid"></div><div id="searchResultsLoad" class="loadMoreWrap" hidden><button id="loadMoreSearch" class="loadMoreBtn" type="button">Carregar mais</button></div></div>
 </section>
 <section id="principais" class="view"><div class="sectionHead"><button type="button" id="principaisBack" aria-label="Voltar à Pesquisa">Voltar</button><h2>Principais para você</h2></div><p style="color:#777;margin-top:-8px">Sugestões escolhidas com base no que você acompanha e, quando ainda não há histórico, em títulos populares.</p><div id="principaisGrid" class="grid"></div></section>
 <section id="em-alta" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-chart"></use></svg>Em alta</h2></div><p class="providerPageDesc">Os títulos mais populares do momento no CORUJA.</p><div id="emAltaGrid" class="grid"></div></section>
 <section id="series-avaliadas" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2>Novas séries</h2></div><p class="providerPageDesc">Séries com estreia nos últimos 90 dias, ordenadas por popularidade.</p><div id="topRatedSeriesGrid" class="grid"></div><div id="topRatedSeriesLoad" class="loadMoreWrap"><button id="loadMoreTopRatedSeries" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="filmes-cartaz" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Nos cinemas</h2></div><p class="providerPageDesc">Filmes atualmente em cartaz nos cinemas do Brasil.</p><div id="nowPlayingMoviesGrid" class="grid"></div><div id="nowPlayingMoviesLoad" class="loadMoreWrap"><button id="loadMoreNowPlayingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
-<section id="filmes-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-film"></use></svg>Filmes populares</h2></div><p class="providerPageDesc">Os filmes mais populares do TMDB.</p><div id="popularMoviesGrid" class="grid"></div><div id="popularMoviesLoad" class="loadMoreWrap"><button id="loadMorePopularMovies" class="loadMoreBtn">Carregar mais</button></div></section>
-<section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-tv"></use></svg>Séries populares</h2></div><p class="providerPageDesc">As séries mais populares no TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
-<section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-calendar"></use></svg>Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2>Filmes populares</h2></div><p class="providerPageDesc">Os filmes mais populares do TMDB.</p><div id="popularMoviesGrid" class="grid"></div><div id="popularMoviesLoad" class="loadMoreWrap"><button id="loadMorePopularMovies" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="series-populares" class="view catalogView"><div class="catalogHead"><button data-catalog-back data-route="descobrir">‹ Voltar</button><h2>Séries populares</h2></div><p class="providerPageDesc">As séries mais populares no TMDB.</p><div id="popularSeriesGrid" class="grid"></div><div id="popularSeriesLoad" class="loadMoreWrap"><button id="loadMorePopularSeries" class="loadMoreBtn">Carregar mais</button></div></section>
+<section id="filmes-breve" class="view catalogView"><div class="catalogHead"><button data-route="descobrir">‹ Voltar</button><h2>Filmes que estreiam em breve</h2></div><p class="providerPageDesc">Próximos lançamentos de filmes previstos para o Brasil.</p><div id="upcomingMoviesGrid" class="grid"></div><div id="upcomingMoviesLoad" class="loadMoreWrap"><button id="loadMoreUpcomingMovies" class="loadMoreBtn">Carregar mais</button></div></section>
 <section id="minha-lista" class="view"><div class="sectionHead"><button data-route="favoritos">‹ Voltar</button><h2><svg class="uiIcon"><use href="#i-bookmark"></use></svg>Minha lista</h2></div><div id="listGrid" class="grid"></div></section>
 <section id="episodios" class="view active seriesTrackerScreen">
   <header class="seriesTrackerHeader">
@@ -7932,6 +7916,8 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 #descobrir .searchTypeFilter.active{border-color:#b8f34a;background:#b8f34a;color:#11170b}
 #descobrir.isSearching #discoverSearchGrid .score,#descobrir.isSearching #discoverSearchGrid .stars{display:block!important}
 #descobrir.isSearching #discoverSearchGrid .poster>.add,#descobrir.isSearching #discoverSearchGrid .poster>.favorite{display:grid!important}
+#descobrir.isSearching #discoverSearchGrid .score,#descobrir.isSearching #discoverSearchGrid .poster>.favorite,#busca #searchGrid .score,#busca #searchGrid .poster>.favorite{display:none!important}
+#descobrir.isSearching #discoverSearchGrid .card>small,#descobrir.isSearching #discoverSearchGrid .card>.stars,#busca #searchGrid .card>small,#busca #searchGrid .card>.stars{display:none!important}
 #descobrir #discoverSearchGrid .searchFilterEmpty{grid-column:1/-1;min-height:125px;padding:20px;border:1px dashed #394438;border-radius:12px;background:#121713;color:#aeb9aa;text-align:center;line-height:1.5}
 @media(max-width:650px){
 #busca.searchView{padding-top:calc(var(--header-height) + 12px + env(safe-area-inset-top))}
