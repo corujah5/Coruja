@@ -7859,7 +7859,7 @@ function doSearch(q,target='busca'){
       const accountId=String(data.user?.id||'');
       if(previousAccountId&&previousAccountId!==accountId)syncBaseState=null;
       syncBaseState=data.state||{};
-      const sameAccount=previousAccountId===accountId;
+      const sameAccount=!previousAccountId||previousAccountId===accountId;
       const localPositions=sameAccount?(user.positions||{}):{};
       const pendingState=readPendingAccountMerge(accountId);
       let mergedState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
