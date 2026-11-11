@@ -5961,7 +5961,7 @@ function renderCollectionGridWithoutLoadMore(box,items,renderItem){if(!box)retur
       button.setAttribute('aria-pressed',String(listed));
     });
   }
-  function toggleList(x){const type=mediaTypeOf(x);const i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type);if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,addedAt:new Date().toISOString()});}if(type==='movie'&&typeof invalidateMoviesGalleryUpcoming==='function')invalidateMoviesGalleryUpcoming();save();if(type==='movie'&&location.hash==='#filmes'&&moviesGalleryTab==='upcoming'&&typeof renderMoviesPage==='function')renderMoviesPage();refreshPersonalMarkers();renderList();if(typeof location!=='undefined'&&location.hash==='#perfil-colecao-filmes-favoritos')renderProfileCollectionPage('filmes-favoritos');else renderProfile()}
+  async function toggleList(x){const type=mediaTypeOf(x),i=user.list.findIndex(a=>Number(a.id)===Number(x.id)&&mediaTypeOf(a)===type),wasAdded=i<0;if(i>=0){user.list.splice(i,1);}else{user.list.push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,addedAt:new Date().toISOString()});}if(type==='movie'&&typeof invalidateMoviesGalleryUpcoming==='function')invalidateMoviesGalleryUpcoming();save();if(type==='movie'&&location.hash==='#filmes'&&moviesGalleryTab==='upcoming'&&typeof renderMoviesPage==='function')renderMoviesPage();refreshPersonalMarkers();renderList();if(typeof location!=='undefined'&&location.hash==='#perfil-colecao-filmes-favoritos')renderProfileCollectionPage('filmes-favoritos');else renderProfile();const synced=await persistUserChange();if(synced&&user.sessionToken)toast(wasAdded?'Adicionado à minha lista!':'Removido da minha lista.')}
   function toggleFavorite(x){const type=mediaTypeOf(x);const key=type==='tv'?'series':'movies';user.favorites=user.favorites||{series:[],movies:[]};user.favorites[key]=Array.isArray(user.favorites[key])?user.favorites[key]:[];const i=user.favorites[key].findIndex(a=>Number(a.id)===Number(x.id));if(i>=0){user.favorites[key].splice(i,1);}else{user.favorites[key].push({id:x.id,media_type:type,name:x.name,title:x.title,poster_path:x.poster_path,first_air_date:x.first_air_date,release_date:x.release_date,vote_average:x.vote_average,addedAt:new Date().toISOString()});}save();refreshPersonalMarkers(); if(location.hash==='#favoritos-series') renderFavoriteTypePage('series'); else if(location.hash==='#favoritos-filmes') renderFavoriteTypePage('movies'); else if(location.hash==='#favoritos') renderFavoritesPage(); else if(typeof location!=='undefined'&&location.hash==='#perfil-colecao-filmes-favoritos')renderProfileCollectionPage('filmes-favoritos');else renderProfile()}
   function renderList(){
     const b=$('#listGrid');if(!b)return;b.innerHTML='';
@@ -6707,7 +6707,15 @@ return null}
     });
     if(changed) save();
   }
-  async function syncStateNow(){if(!user.sessionToken)return;await syncStateToServer()}
+  async function syncStateNow(){if(!user.sessionToken)return true;clearTimeout(syncTimer);syncTimer=null;return await syncStateToServer()}
+  async function persistUserChange(successMessage=''){
+    if(!user.sessionToken)return true;
+    let synced=await syncStateNow();
+    if(!synced){await new Promise(resolve=>setTimeout(resolve,800));synced=await syncStateNow()}
+    if(!synced)toast(`A sincronização falhou. Os dados continuam salvos neste aparelho.${syncLastFailure?` (${syncLastFailure})`:''}`);
+    else if(successMessage)toast(successMessage);
+    return synced;
+  }
   async function setPosition(tvId,season,episode,seconds,runtimeMinutes){
     seconds=Math.max(0,Math.floor(Number(seconds)||0));
     const max=runtimeMinutes?Math.max(60,Math.floor(Number(runtimeMinutes)*60)):86400;
@@ -7039,7 +7047,7 @@ return null}
       if(!user.list.some(item=>Number(item.id)===showId&&item.media_type==='tv'))user.list.push({id:showId,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});
       const isLastEpisode=Number(episodes?.[episodes.length-1]?.episode_number)===episode;if(!wasWatched&&isLastEpisode&&(state.current.status==='Ended'||state.current.status==='Canceled')&&season===Number(state.current.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp;}
     }else return;
-    save();renderProfile();await loadTemporada(season);await renderEpisódiosFeed();
+    save();await persistUserChange('Episódio sincronizado.');renderProfile();await loadTemporada(season);await renderEpisódiosFeed();
   }
   function openEpisodeWatchMenu(key,runtime,episodes){
     if(document.querySelector('.episodeWatchMenuBackdrop'))return;
@@ -7164,7 +7172,7 @@ return null}
       if((show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp}
     }
     if(wasDone&&(show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)&&user.completedShows)delete user.completedShows[String(showId)];
-    save();renderProfile();if(afterUpdate)await afterUpdate(season);await renderEpisódiosFeed();
+    save();await persistUserChange('Temporada sincronizada.');renderProfile();if(afterUpdate)await afterUpdate(season);await renderEpisódiosFeed();
   }
   function bindSeasonToggleButtons(container,afterUpdate){
     $$('.seasonToggle',container).forEach(button=>button.onclick=async event=>{event.stopPropagation();const season=Number(button.dataset.seasonToggle),total=Number((state.current?.seasons||[]).find(item=>Number(item.season_number)===season)?.episode_count||0);await toggleSeasonWatched(season,total,afterUpdate)});
@@ -7203,7 +7211,7 @@ return null}
       if(!user.list.some(item=>Number(item.id)===showId&&item.media_type==='tv'))user.list.push({id:showId,media_type:'tv',name:show.name,title:show.name,poster_path:show.poster_path,first_air_date:show.first_air_date});
       if(show.status==='Ended'||show.status==='Canceled'){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp;}
     }
-    save();renderProfile();if(afterUpdate)await afterUpdate();await renderEpisódiosFeed();
+    save();await persistUserChange('Progresso da série sincronizado.');renderProfile();if(afterUpdate)await afterUpdate();await renderEpisódiosFeed();
   }
   function bindAllEpisodesToggle(container,afterUpdate){
     const button=$('[data-toggle-all-episodes]',container);
@@ -7623,7 +7631,7 @@ return null}
         user.completedShows=user.completedShows||{};
         if(wasDone)delete user.completedShows[String(showId)];else user.completedShows[String(showId)]=now;
       }
-      save();renderProfile();try{await renderEpisódiosFeed({viewportAnchor})}finally{seriesTrackerPendingEpisodeActions.delete(key)}
+      save();await persistUserChange('Episódio sincronizado.');renderProfile();try{await renderEpisódiosFeed({viewportAnchor})}finally{seriesTrackerPendingEpisodeActions.delete(key)}
     });
     $$('img.seriesTrackerThumb',box).forEach(image=>setImageFallback(image,image.dataset.trackerFallback||''));
   }
