@@ -4652,7 +4652,47 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 
 
 
-<nav class="bottom" aria-label="Navegação principal"><button type="button" data-route="episodios"><svg class="uiIcon"><use href="#i-tv"></use></svg><span>Séries</span></button><button type="button" data-route="filmes"><svg class="uiIcon" viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M3 8h18v13H3z"/><path d="m2 4 18 3.5-.8 3.5L1.2 7.5z"/><path d="m7 4.9-2 3.4m7-2.3-2 3.4m7-2.3-2 3.4"/></svg><span>Filmes</span></button><button type="button" id="bottomSearch" data-route="descobrir"><svg class="uiIcon"><use href="#i-search"></use></svg><span>Pesquisar</span></button><button type="button" data-route="perfil"><svg class="uiIcon"><use href="#i-user"></use></svg><span>Perfil</span></button></nav>
+<nav class="bottom" aria-label="Navegação principal"><button type="button" data-route="episodios"><svg class="tvtimeNavIcon" xmlns="http://www.w3.org/2000/svg" width="28" height="26" viewBox="0 0 28 26" aria-hidden="true" focusable="false">
+    <g fill="none" fill-rule="evenodd">
+        <g fill="currentColor">
+            <g>
+                <g>
+                    <path d="M21.85.475c.27.436.164.998-.229 1.309l-.095.067-5.106 3.153h9.08c1.325 0 2.41 1.032 2.495 2.336l.005.164v16c0 1.326-1.032 2.41-2.336 2.495l-.164.005h-23c-1.325 0-2.41-1.031-2.495-2.335L0 23.504v-16C0 6.18 1.032 5.094 2.336 5.01l.164-.006h9.077L6.472 1.851c-.47-.29-.615-.907-.325-1.376.27-.437.82-.593 1.274-.381l.102.055 6.475 4 6.476-4 .103-.055c.454-.212 1.004-.056 1.274.38zm3.65 6.53h-23c-.245 0-.45.176-.492.41L2 7.504v16c0 .245.177.449.41.491l.09.008h23c.245 0 .45-.177.492-.41l.008-.09v-16c0-.245-.177-.45-.41-.492l-.09-.008z" transform="translate(-31 -5) translate(30 5) translate(1 -.004)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg><span>Séries</span></button><button type="button" data-route="filmes"><svg class="tvtimeNavIcon" xmlns="http://www.w3.org/2000/svg" width="27" height="27" viewBox="0 0 27 27" aria-hidden="true" focusable="false">
+    <g fill="none" fill-rule="evenodd">
+        <g fill="currentColor">
+            <g>
+                <g>
+                    <path d="M22.272.075c1.286-.32 2.588.418 2.986 1.663l.045.158.362 1.455c.321 1.286-.417 2.588-1.662 2.986l-.159.045-12.58 3.136H24.37c1.326 0 2.41 1.032 2.495 2.336l.005.164v12c0 1.326-1.031 2.41-2.335 2.495l-.165.005h-21c-1.325 0-2.41-1.031-2.495-2.335l-.005-.165v-12c0-.417.103-.811.284-1.157-.291-.272-.52-.617-.656-1.016l-.06-.204-.363-1.455C-.245 6.9.493 5.598 1.738 5.2l.158-.045L22.272.075zm2.598 16.443h-22v7.5c0 .246.177.45.41.492l.09.008h21c.246 0 .45-.176.492-.41l.008-.09v-7.5zm-19.717-5H3.37c-.245 0-.45.177-.492.41l-.008.09v2.5h1.071l1.212-3zm5.5 0H7.309l-1.212 3h3.344l1.212-3zm5.5 0h-3.344l-1.212 3h3.344l1.212-3zm5.5 0h-3.344l-1.212 3h3.344l1.212-3zm2.717 0h-.561l-1.212 3h2.273v-2.5c0-.245-.177-.45-.41-.491l-.09-.009zM3.105 6.914l-.725.182c-.239.06-.394.28-.378.517l.013.089.363 1.455c.06.239.28.394.517.378l.09-.013 1.705-.426-1.585-2.182zm5.337-1.33l-3.244.808 1.585 2.182 3.243-.809-1.584-2.181zm5.336-1.331l-3.244.809 1.585 2.181 3.244-.808-1.585-2.182zm5.337-1.33l-3.244.808 1.585 2.182 3.244-.809-1.585-2.181zm3.73-.921l-.09.013-1.547.386 1.585 2.181.568-.14c.238-.06.393-.281.378-.518l-.014-.089-.363-1.455c-.06-.239-.28-.394-.517-.378z" transform="translate(-126 -4) translate(124 4) translate(2.13 .482)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg><span>Filmes</span></button><button type="button" id="bottomSearch" data-route="descobrir"><svg class="tvtimeNavIcon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+    <g fill="none" fill-rule="evenodd">
+        <g fill="currentColor">
+            <g>
+                <g>
+                    <path d="M10.472 0C4.702 0 0 4.701 0 10.472c0 5.77 4.701 10.471 10.472 10.471 2.495 0 4.787-.881 6.59-2.347l7.086 7.087c.423.423 1.111.423 1.535 0 .423-.424.423-1.1 0-1.524l-7.087-7.086c1.469-1.803 2.347-4.103 2.347-6.601C20.943 4.702 16.242 0 10.472 0zm.028 2c4.708 0 8.5 3.792 8.5 8.5S15.208 19 10.5 19 2 15.208 2 10.5 5.792 2 10.5 2z" transform="translate(-220 -5) translate(213 5) translate(7)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg><span>Pesquisar</span></button><button type="button" data-route="perfil"><svg class="tvtimeNavIcon" xmlns="http://www.w3.org/2000/svg" width="26" height="26" viewBox="0 0 26 26" aria-hidden="true" focusable="false">
+    <g fill="none" fill-rule="evenodd">
+        <g fill="currentColor">
+            <g>
+                <g>
+                    <path d="M18.095 16.37c3.065 0 5.8 1.928 6.83 4.815l.8 2.242c.358 1.001-.164 2.103-1.166 2.46-.208.075-.427.113-.647.113H1.926C.862 26 0 25.138 0 24.074c0-.244.047-.486.137-.713l.868-2.176c1.16-2.907 3.973-4.815 7.104-4.815h9.986zm0 1.926H8.109c-2.342 0-4.448 1.427-5.315 3.603l-.868 2.175h21.986l-.8-2.241c-.757-2.121-2.766-3.537-5.017-3.537zM13.395 0c3.723 0 6.741 3.018 6.741 6.74 0 3.724-3.018 6.741-6.74 6.741-3.724 0-6.742-3.017-6.742-6.74C6.654 3.018 9.672 0 13.395 0zm0 1.926c-2.659 0-4.815 2.156-4.815 4.815 0 2.659 2.156 4.815 4.815 4.815 2.66 0 4.815-2.156 4.815-4.815 0-2.66-2.156-4.815-4.815-4.815z" transform="translate(-315 -5) translate(314 5) translate(1)"/>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg><span>Perfil</span></button></nav>
 
 
 <div class="authModal" id="authModal"><div class="authCard"><button class="movieModalClose" id="authClose" aria-label="Fechar">×</button><div class="authBrand"><img src="/logo.png" alt="CORUJA"></div><h2 id="authTitle"></h2><p id="authSubtitle">Use o usuário e a senha fornecidos pelo administrador.</p><form id="authForm"><div class="authField"><label for="authIdentifier">Usuário</label><input id="authIdentifier" type="text" required autocomplete="username" placeholder="Seu usuário"></div><div class="authField"><label for="authPassword">Senha</label><input id="authPassword" type="password" required autocomplete="current-password" placeholder="Sua senha"></div><div class="authError" id="authError" role="alert"></div><div class="authActions"><button type="submit" class="btn yellow" id="authSubmit">Entrar</button></div></form></div></div>
@@ -7926,6 +7966,7 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 #detalhe .detailHero #backDetail:hover,#movieDetail .movieDetailHero #movieBack:hover{border-color:rgba(255,255,255,.4);background:rgba(5,8,7,.58);color:#fff;box-shadow:0 4px 14px rgba(0,0,0,.35);transform:none}
 #detalhe .detailHero #backDetail:active,#movieDetail .movieDetailHero #movieBack:active{border-color:rgba(255,255,255,.4);background:rgba(5,8,7,.68);transform:scale(.96)}
 #detalhe .detailHero #backDetail:focus-visible,#movieDetail .movieDetailHero #movieBack:focus-visible{outline:2px solid #fff;outline-offset:3px;box-shadow:0 0 0 4px rgba(255,255,255,.2)}
+ .bottom button .tvtimeNavIcon{display:block;width:auto;height:24px;flex:0 0 auto;fill:currentColor}
 </style>
 </body>
 </html>
