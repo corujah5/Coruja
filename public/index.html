@@ -6473,7 +6473,7 @@ return null}
     section.append(head);
     const listBox=document.createElement('div');listBox.className='profileCustomLists profileCustomListsGrid'+(profileListsPageOpen?'':' profileCustomListCarousel');
     const allLists=profileCustomListSort(user.customLists,preferences.sort||'recent');
-    const lists=profileListsPageOpen?allLists:allLists.filter(list=>{const items=Array.isArray(list.items)?list.items:[],isEmptyWatchLater=!items.length&&['ver mais tarde','assistir mais tarde','watch later'].includes(String(list.name||'').trim().toLocaleLowerCase('pt-BR'));return items.length>0||!isEmptyWatchLater});
+    const lists=allLists;
     view.hidden=!profileListsPageOpen&&!lists.length;
     if(!lists.length){const empty=document.createElement('p');empty.className='profileListsEmptyHint';empty.textContent='Crie listas temáticas («para descontrair», «ver sem falta»...).';listBox.append(empty)}
     lists.forEach(list=>{
