@@ -7032,6 +7032,24 @@ return null}
     const content=count>1?'<span class="episodeWatchCount" aria-hidden="true">'+count+'x</span>':'<svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>';
     return '<button class="check seriesTrackerCheck episodeWatchToggle '+(count?'done isDone':'')+'" data-ep="'+key+'" type="button" title="Marcar como..." aria-label="'+label+'" aria-pressed="'+(count>0)+'" aria-haspopup="dialog">'+content+'</button>';
   }
+  function refreshEpisodeProgressImmediately(key,episodes=[]){
+    const [showId,season]=String(key).split('-').map(Number),count=episodeWatchCount(key),label=count>1?`Assistido ${count} vezes. Abrir opções de marcação`:count===1?'Assistido uma vez. Abrir opções de marcação':'Marcar como assistido';
+    $$('.episodeWatchToggle[data-ep],.seriesTrackerCheck[data-tracker-show-id]').forEach(button=>{
+      const buttonKey=button.dataset.ep||seriesTrackerEpisodeKey(button.dataset.trackerShowId,button.dataset.trackerSeason,button.dataset.trackerEpisode);
+      if(buttonKey!==key)return;
+      button.classList.toggle('done',count>0);button.classList.toggle('isDone',count>0);button.setAttribute('aria-pressed',String(count>0));
+      if(button.dataset.ep){button.setAttribute('aria-label',label);button.innerHTML=count>1?`<span class="episodeWatchCount" aria-hidden="true">${count}x</span>`:'<svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>'}
+      else{const episodeLabel=count?(count>1?`Assistido ${count} vezes`:'Desmarcar como assistido'):'Marcar como assistido',row=button.closest('.seriesTrackerItem'),title=$('.seriesTrackerShow',row)?.textContent||'Série',code=$('.seriesTrackerMeta strong',row)?.textContent||'';button.setAttribute('aria-label',`${episodeLabel}: ${title} ${code}`);button.title=episodeLabel;button.innerHTML=count>1?`<span class="seriesTrackerWatchCount" aria-hidden="true">${count}×</span>`:'<svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg>'}
+    });
+    const show=state.current;if(!show||Number(show.id)!==showId)return;
+    const row=$(`[data-season-row="${season}"]`,$('#detailEpisódios'));
+    if(row){const total=Number((show.seasons||[]).find(item=>Number(item.season_number)===season)?.episode_count||episodes.length||0),watched=seasonWatchedCount(showId,season,total),progress=seasonProgressState(showId,season,total,watched),complete=total>0&&watched>=total;
+      row.dataset.progressState=progress.state;row.style.setProperty('--season-progress',`${progress.percent}%`);$('.seasonCount',row).textContent=`${watched}/${total}`;
+      const bar=$('.seasonProgress',row);bar?.setAttribute('aria-valuenow',String(progress.percent));const seasonButton=$('.seasonToggle',row);if(seasonButton){seasonButton.classList.toggle('isDone',complete);seasonButton.setAttribute('aria-pressed',String(complete));seasonButton.setAttribute('aria-label',complete?'Desmarcar temporada como assistida':'Marcar temporada como assistida');seasonButton.title=complete?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}
+    }
+    const allToggle=$('.seriesAllEpisodesCheck',$('#detailEpisódios'));if(allToggle){const complete=seriesEpisodeStats(show).complete;allToggle.classList.toggle('isDone',complete);allToggle.setAttribute('aria-pressed',String(complete));allToggle.setAttribute('aria-label',complete?'Desmarcar todos os episódios como assistidos':'Marcar todos os episódios como assistidos')}
+    updateDetailSeriesProgressBar(show);
+  }
   async function applyEpisodeWatchChoice(key,choice,runtime,markPrevious,episodes){
     if(!state.current)return;
     const parts=String(key).split('-'),showId=Number(parts[0]),season=Number(parts[1]),episode=Number(parts[2]);
@@ -7052,7 +7070,7 @@ return null}
       if(!user.list.some(item=>Number(item.id)===showId&&item.media_type==='tv'))user.list.push({id:showId,media_type:'tv',name:state.current.name,title:state.current.name,poster_path:state.current.poster_path,first_air_date:state.current.first_air_date});
       const isLastEpisode=Number(episodes?.[episodes.length-1]?.episode_number)===episode;if(!wasWatched&&isLastEpisode&&(state.current.status==='Ended'||state.current.status==='Canceled')&&season===Number(state.current.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp;}
     }else return;
-    save();await persistUserChange('Episódio sincronizado.');renderProfile();await loadTemporada(season);await renderEpisódiosFeed();
+    save();refreshEpisodeProgressImmediately(key,episodes);const syncPromise=persistUserChange('Episódio sincronizado.');renderProfile();await syncPromise;await loadTemporada(season);await renderEpisódiosFeed();
   }
   function openEpisodeWatchMenu(key,runtime,episodes){
     if(document.querySelector('.episodeWatchMenuBackdrop'))return;
@@ -7636,7 +7654,7 @@ return null}
         user.completedShows=user.completedShows||{};
         if(wasDone)delete user.completedShows[String(showId)];else user.completedShows[String(showId)]=now;
       }
-      save();await persistUserChange('Episódio sincronizado.');renderProfile();try{await renderEpisódiosFeed({viewportAnchor})}finally{seriesTrackerPendingEpisodeActions.delete(key)}
+      save();refreshEpisodeProgressImmediately(key);renderProfile();try{await persistUserChange('Episódio sincronizado.');await renderEpisódiosFeed({viewportAnchor})}finally{seriesTrackerPendingEpisodeActions.delete(key)}
     });
     $$('img.seriesTrackerThumb',box).forEach(image=>setImageFallback(image,image.dataset.trackerFallback||''));
   }
