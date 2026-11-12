@@ -131,7 +131,7 @@ test('recovers an acknowledged custom-list addition after reload without adding 
   const cookie = login.headers.get('set-cookie')?.split(';')[0];
   assert.ok(cookie);
   const headers = { 'content-type': 'application/json', cookie };
-  const save = await fetch(`${server.base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: restored }) });
+  const save = await fetch(`${server.base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: restored, baseState: {} }) });
   assert.equal(save.status, 200);
   const afterReload = await fetch(`${server.base}/api/me`, { headers: { cookie } });
   assert.equal(afterReload.status, 200);

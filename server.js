@@ -418,7 +418,12 @@ function mergeChangedState(base,incoming,current,path=''){
   return stateEqual(current,base)?incoming:current;
 }
 function mergeIncomingUserState(account,incoming,baseState){
-  const current=readUserState(account),next=cleanState(baseState&&typeof baseState==='object'?mergeChangedState(cleanState(baseState),cleanState(incoming),current):incoming);
+  if(!baseState||typeof baseState!=='object'||Array.isArray(baseState)){
+    const error=new Error('Esta página está desatualizada. Atualize o site antes de salvar.');
+    error.status=409;
+    throw error;
+  }
+  const current=readUserState(account),next=cleanState(mergeChangedState(cleanState(baseState),cleanState(incoming),current));
   return writeUserState(account,next);
 }
 
@@ -612,11 +617,11 @@ app.post('/api/auth/logout', (req,res) => {
   res.json({ ok: true });
 });
 app.get('/api/me',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});res.json({user:publicUser(u),state:readUserState(u)});});
-app.put('/api/me/profile',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const name=cleanText(req.body?.name,60);if(name)u.name=name; const requestedUsername=normalizeUsername(req.body?.username); if(requestedUsername){ if(!/^[a-z0-9_.]{3,30}$/.test(requestedUsername)) return res.status(400).json({error:'O nome de usuário deve ter de 3 a 30 caracteres.'}); if(readUsers().some(x=>x.id!==u.id&&normalizeUsername(x.username)===requestedUsername)) return res.status(409).json({error:'Este nome de usuário já está em uso.'}); u.username=requestedUsername; } u.avatar=cleanText(req.body?.avatar,250000);mergeIncomingUserState(u,req.body?.state||readUserState(u),req.body?.baseState);writeUsers(users);res.json({user:publicUser(u),state:readUserState(u)});});
-app.post('/api/me/state',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const clean=mergeIncomingUserState(u,req.body?.state,req.body?.baseState);if(req.body?.name)u.name=cleanText(req.body.name,60);writeUsers(users);res.json({ok:true,state:clean});});
+app.put('/api/me/profile',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account)return res.status(401).json({error:'Não autenticado.'});const name=cleanText(req.body?.name,60);if(name)account.name=name;const requestedUsername=normalizeUsername(req.body?.username);if(requestedUsername){if(!/^[a-z0-9_.]{3,30}$/.test(requestedUsername))return res.status(400).json({error:'O nome de usuário deve ter de 3 a 30 caracteres.'});if(users.some(x=>x.id!==account.id&&normalizeUsername(x.username)===requestedUsername))return res.status(409).json({error:'Este nome de usuário já está em uso.'});account.username=requestedUsername;}account.avatar=cleanText(req.body?.avatar,250000);mergeIncomingUserState(account,req.body?.state||readUserState(account),req.body?.baseState);writeUsers(users);return res.json({user:publicUser(account),state:readUserState(account)});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar o perfil.'});}});
+app.post('/api/me/state',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account)return res.status(401).json({error:'Não autenticado.'});const clean=mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);return res.json({ok:true,state:clean});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar seus dados.'});}});
 // Salvamento para celular/fechamento de aba: sendBeacon não permite cabeçalho Authorization,
 // então aceitamos o token no corpo apenas neste endpoint e validamos a mesma sessão.
-app.post('/api/me/state-beacon',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});const users=readUsers();const account=users.find(x=>x.id===u.id);if(!account||account.blocked)return res.status(401).json({error:'Não autenticado.'});mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);res.json({ok:true});});
+app.post('/api/me/state-beacon',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account||account.blocked)return res.status(401).json({error:'Não autenticado.'});mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);return res.json({ok:true});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar seus dados.'});}});
 
 app.get('/api/users/search',(req,res)=>{
   const q=cleanText(req.query.q,60).toLowerCase(); if(!q)return res.json({users:[]});

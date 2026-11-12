@@ -308,13 +308,13 @@ test('movie list state survives a reload through the authenticated API in an iso
   const headers = { 'content-type': 'application/json', cookie };
   const item = { id: 445566, media_type: 'movie', title: 'Synthetic Movie', name: 'Synthetic Movie', poster_path: '/poster.jpg', release_date: '2024-01-01' };
 
-  const added = await fetch(`${base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: { list: [item] } }) });
+  const added = await fetch(`${base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: { list: [item] }, baseState: {} }) });
   assert.equal(added.status, 200);
   const afterReload = await fetch(`${base}/api/me`, { headers: { cookie } });
   assert.equal(afterReload.status, 200);
-  assert.deepEqual((await afterReload.json()).state.list.map(entry => [entry.id, entry.media_type]), [[445566, 'movie']]);
-
-  const removed = await fetch(`${base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: { list: [] } }) });
+  const beforeRemoval = (await afterReload.json()).state;
+  assert.deepEqual(beforeRemoval.list.map(entry => [entry.id, entry.media_type]), [[445566, 'movie']]);
+  const removed = await fetch(`${base}/api/me/state`, { method: 'POST', headers, body: JSON.stringify({ state: { ...beforeRemoval, list: [] }, baseState: beforeRemoval }) });
   assert.equal(removed.status, 200);
   const afterRemoval = await fetch(`${base}/api/me`, { headers: { cookie } });
   assert.equal(afterRemoval.status, 200);
