@@ -6524,7 +6524,7 @@ return null}
       clearTimeout(syncTimer);syncTimer=null;
       const synced=await syncStateToServer();
       const confirmed=(Array.isArray(syncBaseState?.customLists)?syncBaseState.customLists:[]).some(saved=>String(saved?.id)===id);
-      if(!synced||!confirmed)toast('A lista ficou salva neste dispositivo, mas não foi possível sincronizá-la. Tente novamente.');
+      if(!synced||!confirmed)toast(`A lista ficou salva neste dispositivo, mas não foi possível sincronizá-la.${syncLastFailure?` (${syncLastFailure})`:''}`);
     }
     return {ok:true,list};
   }
