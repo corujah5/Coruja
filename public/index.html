@@ -6527,10 +6527,19 @@ return null}
       carousel?.scrollTo({left:0,behavior:'smooth'});
     });
     if(user.sessionToken){
-      clearTimeout(syncTimer);syncTimer=null;
-      const synced=await syncStateToServer();
-      const confirmed=(Array.isArray(syncBaseState?.customLists)?syncBaseState.customLists:[]).some(saved=>String(saved?.id)===id);
-      if(!synced||!confirmed)toast(`A lista ficou salva neste dispositivo, mas não foi possível sincronizá-la.${syncLastFailure?` (${syncLastFailure})`:''}`);
+      try{
+        const response=await fetch('/api/me/custom-lists',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id,name:clean,mediaType:type}),credentials:'same-origin'}),data=await response.json().catch(()=>null);
+        if(!response.ok||!data?.list)throw Error(data?.error||`servidor respondeu HTTP ${response.status}`);
+        const previousBase=Array.isArray(syncBaseState?.customLists)?syncBaseState.customLists:existing,serverLists=Array.isArray(data.customLists)?data.customLists:[data.list];
+        user.customLists=mergeSyncState(previousBase,user.customLists,serverLists);
+        syncBaseState={...(syncBaseState||{}),customLists:serverLists};
+        save({sync:false});renderProfile();
+        requestAnimationFrame(()=>{const section=$('.profileListsSection'),carousel=$('.profileCustomListCarousel',section);section?.scrollIntoView({block:'start',behavior:'smooth'});carousel?.scrollTo({left:0,behavior:'smooth'})});
+      }catch(error){
+        syncLastFailure=String(error?.message||'erro de conexão').slice(0,120);
+        if(user.userId)writePendingAccountMerge(user.userId,user,syncBaseState);
+        toast(`A lista ficou salva neste dispositivo, mas não foi possível sincronizá-la. (${syncLastFailure})`);
+      }
     }
     return {ok:true,list};
   }

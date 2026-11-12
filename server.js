@@ -619,6 +619,28 @@ app.post('/api/auth/logout', (req,res) => {
 app.get('/api/me',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});res.json({user:publicUser(u),state:readUserState(u)});});
 app.put('/api/me/profile',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account)return res.status(401).json({error:'Não autenticado.'});const name=cleanText(req.body?.name,60);if(name)account.name=name;const requestedUsername=normalizeUsername(req.body?.username);if(requestedUsername){if(!/^[a-z0-9_.]{3,30}$/.test(requestedUsername))return res.status(400).json({error:'O nome de usuário deve ter de 3 a 30 caracteres.'});if(users.some(x=>x.id!==account.id&&normalizeUsername(x.username)===requestedUsername))return res.status(409).json({error:'Este nome de usuário já está em uso.'});account.username=requestedUsername;}account.avatar=cleanText(req.body?.avatar,250000);mergeIncomingUserState(account,req.body?.state||readUserState(account),req.body?.baseState);writeUsers(users);return res.json({user:publicUser(account),state:readUserState(account)});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar o perfil.'});}});
 app.post('/api/me/state',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account)return res.status(401).json({error:'Não autenticado.'});const clean=mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);return res.json({ok:true,state:clean});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar seus dados.'});}});
+app.post('/api/me/custom-lists',(req,res)=>{
+  const user=authUser(req);
+  if(!user)return res.status(401).json({error:'Não autenticado.'});
+  try{
+    const users=readUsers(),account=users.find(item=>item.id===user.id);
+    if(!account)return res.status(401).json({error:'Não autenticado.'});
+    const name=cleanText(req.body?.name,60),mediaType=String(req.body?.mediaType||'');
+    const id=cleanText(req.body?.id,100);
+    if(!name)return res.status(400).json({error:'Digite um nome para a lista.'});
+    if(mediaType!=='movie'&&mediaType!=='tv')return res.status(400).json({error:'Escolha se a lista será de filmes ou séries.'});
+    const state=readUserState(account),lists=Array.isArray(state.customLists)?state.customLists:[];
+    const byId=lists.find(list=>String(list?.id)===id);
+    if(byId)return res.json({ok:true,list:byId,customLists:lists});
+    const normalized=name.toLocaleLowerCase('pt-BR');
+    if(lists.some(list=>String(list?.name||'').trim().toLocaleLowerCase('pt-BR')===normalized))return res.status(409).json({error:'Já existe uma lista com esse nome.'});
+    const list={id:id||`custom-${Date.now()}-${Math.random().toString(36).slice(2,8)}`,name,mediaType,items:[],createdAt:new Date().toISOString()};
+    state.customLists=[...lists,list];
+    writeUserState(account,state);
+    writeUsers(users);
+    return res.status(201).json({ok:true,list,customLists:state.customLists});
+  }catch(error){return res.status(500).json({error:error.message||'Não foi possível salvar a lista.'});}
+});
 // Salvamento para celular/fechamento de aba: sendBeacon não permite cabeçalho Authorization,
 // então aceitamos o token no corpo apenas neste endpoint e validamos a mesma sessão.
 app.post('/api/me/state-beacon',(req,res)=>{const u=authUser(req);if(!u)return res.status(401).json({error:'Não autenticado.'});try{const users=readUsers(),account=users.find(x=>x.id===u.id);if(!account||account.blocked)return res.status(401).json({error:'Não autenticado.'});mergeIncomingUserState(account,req.body?.state,req.body?.baseState);if(req.body?.name)account.name=cleanText(req.body.name,60);writeUsers(users);return res.json({ok:true});}catch(error){return res.status(error.status||500).json({error:error.message||'Não foi possível salvar seus dados.'});}});
