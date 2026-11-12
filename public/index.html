@@ -7198,14 +7198,27 @@ return null}
     if(hasPosition&&percent===0)percent=2;
     return{state:started?'in-progress':'empty',percent};
   }
+  function syncBaselineBeforeEpisodeChanges(showId,keys=[]){
+    const paths=new Set(['list',`completedShows.${showId}`,`seriesTrackerHistoryAfterAnchor.${showId}`]);
+    for(const key of keys){
+      const match=/^(?:tv-)?(\d+)-(\d+)-(\d+)$/.exec(String(key));
+      if(!match)continue;
+      const [,id,season,episode]=match,modernPositionKey=positionKey(Number(id),Number(season),Number(episode));
+      paths.add(`watched.${key}`);paths.add(`watchedAt.${key}`);paths.add(`episodeWatchCounts.${key}`);
+      paths.add(`watchDurations.episodeRewatches.${key}`);paths.add(`positions.${modernPositionKey}`);paths.add(`positions.${key}`);
+    }
+    paths.forEach(syncBaselineBeforeMutation);
+  }
   async function toggleSeasonWatched(seasonNumber,total,afterUpdate){
     const show=state.current,showId=Number(show?.id),season=Number(seasonNumber),episodeTotal=Number(total);
     if(!showId||season<0||!episodeTotal)return;
     user.watched=user.watched||{};user.watchedAt=user.watchedAt||{};user.positions=user.positions||{};
+    const keys=Array.from({length:episodeTotal},(_,index)=>`${showId}-${season}-${index+1}`);
+    syncBaselineBeforeEpisodeChanges(showId,keys);
     const wasDone=seasonWatchedCount(showId,season,episodeTotal)>=episodeTotal;
     if(wasDone){for(let episode=1;episode<=episodeTotal;episode++){const key=`${showId}-${season}-${episode}`;user.watched[key]=false;delete user.watchedAt[key];delete user.episodeWatchCounts?.[key];delete user.watchDurations.episodeRewatches?.[key]}}
     else{
-      const keys=Array.from({length:episodeTotal},(_,index)=>`${showId}-${season}-${index+1}`),timestamp=seriesTrackerRecordWatchedActivities(keys);
+      const timestamp=seriesTrackerRecordWatchedActivities(keys.filter(key=>!user.watched[key]));
       for(let episode=1;episode<=episodeTotal;episode++){const key=`${showId}-${season}-${episode}`;delete user.positions[positionKey(showId,season,episode)];delete user.positions[key]}
       if(!user.list.some(item=>Number(item.id)===showId&&item.media_type==='tv'))user.list.push({id:showId,media_type:'tv',name:show.name,title:show.name,poster_path:show.poster_path,first_air_date:show.first_air_date});
       if((show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp}
@@ -7235,7 +7248,9 @@ return null}
     const show=state.current,stats=seriesEpisodeStats(show),showId=Number(show?.id);
     if(!showId||!stats.total)return;
     user.watched=user.watched||{};user.watchedAt=user.watchedAt||{};user.positions=user.positions||{};
-    const timestamp=stats.complete?'':seriesTrackerRecordWatchedActivities(stats.seasons.flatMap(season=>Array.from({length:Math.max(0,Number(season.episode_count)||0)},(_,index)=>`${showId}-${Number(season.season_number)}-${index+1}`)));
+    const keys=stats.seasons.flatMap(season=>Array.from({length:Math.max(0,Number(season.episode_count)||0)},(_,index)=>`${showId}-${Number(season.season_number)}-${index+1}`));
+    syncBaselineBeforeEpisodeChanges(showId,keys);
+    const timestamp=stats.complete?'':seriesTrackerRecordWatchedActivities(keys.filter(key=>!user.watched[key]));
     for(const season of stats.seasons){
       const seasonNumber=Number(season.season_number),episodeCount=Math.max(0,Number(season.episode_count)||0);
       for(let episode=1;episode<=episodeCount;episode++){
