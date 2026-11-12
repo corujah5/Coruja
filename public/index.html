@@ -7265,7 +7265,7 @@ return null}
       if(!user.list.some(item=>Number(item.id)===showId&&item.media_type==='tv'))user.list.push({id:showId,media_type:'tv',name:show.name,title:show.name,poster_path:show.poster_path,first_air_date:show.first_air_date});
       if(show.status==='Ended'||show.status==='Canceled'){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp;}
     }
-    save();await persistUserChange('Progresso da série sincronizado.');renderProfile();if(afterUpdate)await afterUpdate();await renderEpisódiosFeed();
+    save();await persistUserChange();renderProfile();if(afterUpdate)await afterUpdate();await renderEpisódiosFeed();
   }
   function bindAllEpisodesToggle(container,afterUpdate){
     const button=$('[data-toggle-all-episodes]',container);
