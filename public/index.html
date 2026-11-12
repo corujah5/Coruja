@@ -4696,6 +4696,9 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
   const syncListBaselineKey=userId=>`${KEY}:sync-list-base:${encodeURIComponent(String(userId||''))}`;
   function readSyncListBaseline(userId){if(!userId)return null;try{const value=JSON.parse(localStorage.getItem(syncListBaselineKey(userId))||'null');return Array.isArray(value)?value:null}catch{return null}}
   function writeSyncListBaseline(userId,list){if(!userId||!Array.isArray(list))return;try{localStorage.setItem(syncListBaselineKey(userId),JSON.stringify(list))}catch{}}
+  const syncCollectionBaselineKey=(userId,collection)=>`${KEY}:sync-collection-base:${encodeURIComponent(String(userId||''))}:${encodeURIComponent(String(collection||''))}`;
+  function readSyncCollectionBaseline(userId,collection){if(!userId)return null;try{const value=JSON.parse(localStorage.getItem(syncCollectionBaselineKey(userId,collection))||'null');return Array.isArray(value)?value:null}catch{return null}}
+  function writeSyncCollectionBaseline(userId,collection,items){if(!userId||!Array.isArray(items))return;try{localStorage.setItem(syncCollectionBaselineKey(userId,collection),JSON.stringify(items))}catch{}}
   let user=loadState();
   const escapeHtml=value=>String(value??'').replace(/[&<>"']/g,character=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[character]));
   const safeImageUrl=value=>{const raw=String(value||'');if(/^\/[a-z0-9/_-]+\.(png|jpe?g|webp)$/i.test(raw))return img(raw);try{const url=new URL(raw);return url.protocol==='https:'&&url.hostname==='image.tmdb.org'&&/^\/t\/p\//.test(url.pathname)?url.href:''}catch{return ''}};
@@ -4903,6 +4906,7 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
     else delete baseNode[key];
     syncBaseState=baseline;
     if(parts[0]==='list')writeSyncListBaseline(user.userId,baseline.list);
+    if(parts[0]==='favorites'&&parts.length===2)writeSyncCollectionBaseline(user.userId,`favorites.${parts[1]}`,baseline.favorites?.[parts[1]]);
   }
   function syncArrayKey(item,path){
     if(!item||typeof item!=='object')return null;
@@ -4930,9 +4934,17 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
     if(isObject(base)&&isObject(incoming)){const result=isObject(current)?{...current}:{};for(const key of new Set([...Object.keys(base),...Object.keys(incoming)])){const childPath=path?`${path}.${key}`:key;if(!Object.prototype.hasOwnProperty.call(incoming,key)){if(Object.prototype.hasOwnProperty.call(base,key))delete result[key];continue}if(!Object.prototype.hasOwnProperty.call(base,key)){result[key]=incoming[key];continue}result[key]=mergeSyncState(base[key],incoming[key],result[key],childPath)}return result}
     return syncStateEqual(current,base)?incoming:current;
   }
+  function mergeSameAccountArray(serverArray,localArray,baseline,path){
+    if(Array.isArray(baseline))return mergeSyncState(baseline,Array.isArray(localArray)?localArray:[],Array.isArray(serverArray)?serverArray:[],path);
+    return Array.isArray(serverArray)?serverArray:[];
+  }
   function mergeSameAccountList(serverList,localList,baseline){
-    if(Array.isArray(baseline))return mergeSyncState(baseline,Array.isArray(localList)?localList:[],Array.isArray(serverList)?serverList:[],'list');
-    return Array.isArray(serverList)?serverList:[];
+    return mergeSameAccountArray(serverList,localList,baseline,'list');
+  }
+  function mergeSameAccountFavorites(serverFavorites,localFavorites,baselines){
+    const server=serverFavorites&&typeof serverFavorites==='object'?serverFavorites:{};
+    const local=localFavorites&&typeof localFavorites==='object'?localFavorites:{};
+    return {series:mergeSameAccountArray(server.series,local.series,baselines?.series,'favorites.series'),movies:mergeSameAccountArray(server.movies,local.movies,baselines?.movies,'favorites.movies')};
   }
   let syncBaseState=null,syncInFlight=null,syncRequested=false,syncLastFailure='';
   let syncTimer=null;
@@ -4946,7 +4958,7 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
       // reaplica apenas as diferenças sobre a versão mais nova que ele devolveu.
       const desiredState=mergeSyncState(baseState,snapshot,result.state);
       if(!syncStateEqual(desiredState,result.state)){const retryBaseState=result.state,retry=await fetch('/api/me/state',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({state:desiredState,baseState:retryBaseState,name:user.profile||'Coruja'}),credentials:'same-origin'});if(!retry.ok){syncLastFailure=`servidor respondeu HTTP ${retry.status} ao confirmar as mudanças`;return false}const confirmed=await retry.json().catch(()=>null);if(!confirmed?.state){syncLastFailure='resposta inválida ao confirmar as mudanças';return false}if(!syncStateEqual(mergeSyncState(retryBaseState,desiredState,confirmed.state),confirmed.state)){syncLastFailure='o servidor não confirmou todas as alterações';return false}result=confirmed}
-      syncBaseState=result.state;writeSyncListBaseline(syncUserId,result.state.list);const latest=user,latestState={...latest};delete latestState.sessionToken;delete latestState.password;const rebased=mergeSyncState(snapshot,latestState,result.state);user={...rebased,sessionToken:latest.sessionToken};if(!syncStateEqual(snapshot,latestState))syncRequested=true;save({sync:false})}while(syncRequested);if(syncUserId){clearPendingAccountMerge(syncUserId);const confirmed=readPendingCustomListOperations(syncUserId).filter(operation=>customListOperationIds.includes(operation.id)&&customListOperationConfirmed(result?.state,operation)).map(operation=>operation.id);clearPendingCustomListOperations(syncUserId,confirmed)}return true}catch(error){syncLastFailure=String(error?.message||'erro de conexão').slice(0,120);return false}})();
+      syncBaseState=result.state;writeSyncListBaseline(syncUserId,result.state.list);writeSyncCollectionBaseline(syncUserId,'favorites.series',result.state.favorites?.series);writeSyncCollectionBaseline(syncUserId,'favorites.movies',result.state.favorites?.movies);const latest=user,latestState={...latest};delete latestState.sessionToken;delete latestState.password;const rebased=mergeSyncState(snapshot,latestState,result.state);user={...rebased,sessionToken:latest.sessionToken};if(!syncStateEqual(snapshot,latestState))syncRequested=true;save({sync:false})}while(syncRequested);if(syncUserId){clearPendingAccountMerge(syncUserId);const confirmed=readPendingCustomListOperations(syncUserId).filter(operation=>customListOperationIds.includes(operation.id)&&customListOperationConfirmed(result?.state,operation)).map(operation=>operation.id);clearPendingCustomListOperations(syncUserId,confirmed)}return true}catch(error){syncLastFailure=String(error?.message||'erro de conexão').slice(0,120);return false}})();
     try{return await syncInFlight}finally{syncInFlight=null}
   }
   const save=(options={})=>{const persisted={...user};delete persisted.sessionToken;try{localStorage.setItem(KEY,JSON.stringify(persisted))}catch(e){try{const slim={...persisted,avatar:''};localStorage.setItem(KEY,JSON.stringify(slim))}catch{}}refreshSeriesProgressCards();if(options.sync!==false&&user.sessionToken){clearTimeout(syncTimer);syncTimer=setTimeout(()=>syncStateToServer(),500)}};
@@ -7914,7 +7926,7 @@ function doSearch(q,target='busca'){
     fill('#homeNowPlayingMovies',(d.popularMovies?.results||[]).filter(x=>x&&x.poster_path).map(x=>({...x,media_type:'movie'})).slice(0,12));
   }
   async function home(){if(!user.sessionToken)return;invalidateMoviesGalleryUpcoming();moviesHomeCatalogStatus='loading';try{const d=await api('/api/home');state.home=d;moviesHomeCatalogStatus='ready';renderTrendingHome(d);if(location.hash.replace(/^#/,'')==='em-alta')renderEmAltaPage();renderDiscoverySections(d);renderHomeExtraCatalogs(d);renderPrincipaisPage();renderSearchHome();renderProgressiveGrid('seriesGrid',(d.tv?.results||[]).concat(d.popularTv?.results||[]).map(x=>({...x,media_type:'tv'})),item=>card(item,{seriesProgress:true}));renderMoviesPage();renderList();renderProfile();renderEpisódiosFeed();renderContinue()}catch(e){if(!user.sessionToken)return;moviesHomeCatalogStatus='error';homeFallback();if(location.hash.replace(/^#/,'')==='em-alta'){const emAltaBox=$('#emAltaGrid');if(emAltaBox)emAltaBox.innerHTML='<div class="empty" role="status">Não foi possível carregar títulos em alta agora.</div>';}toast('Catálogo carregado em modo offline. Verifique o TMDB se quiser as capas atualizadas.')}}
-  async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const localState=JSON.parse(JSON.stringify(user)),r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();const accountId=String(d.user?.id||''),listBaseline=readSyncListBaseline(accountId);syncBaseState=d.state||{};const sameAccount=String(localState.userId||'')===accountId;const accountState=sameAccount?mergeAccountAndGuestState(d.state||{},localState):(d.state||{});if(sameAccount&&localState.userId)accountState.list=mergeSameAccountList(d.state?.list,localState.list,listBaseline);user={...accountState,profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:accountId||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};if(sameAccount){await syncMergedAccountState(user.userId)}else save({sync:false});updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
+  async function restoreAccount(){if(!user.sessionToken){updateLoginButton();return}try{const localState=JSON.parse(JSON.stringify(user)),r=await fetch('/api/me',{credentials:'same-origin'});const d=await r.json();if(!r.ok)throw Error();const accountId=String(d.user?.id||''),listBaseline=readSyncListBaseline(accountId),favoriteBaselines={series:readSyncCollectionBaseline(accountId,'favorites.series'),movies:readSyncCollectionBaseline(accountId,'favorites.movies')};syncBaseState=d.state||{};const sameAccount=String(localState.userId||'')===accountId;const accountState=sameAccount?mergeAccountAndGuestState(d.state||{},localState):(d.state||{});if(sameAccount&&localState.userId){accountState.list=mergeSameAccountList(d.state?.list,localState.list,listBaseline);accountState.favorites=mergeSameAccountFavorites(d.state?.favorites,localState.favorites,favoriteBaselines)}user={...accountState,profile:d.user?.name||user.profile,username:d.user?.username||user.username,userId:accountId||user.userId,sessionToken:'cookie-session',followersCount:d.user?.followers||0,followingCount:d.user?.following||0};if(sameAccount){await syncMergedAccountState(user.userId)}else save({sync:false});updateLoginButton()}catch{user.sessionToken='';save();updateLoginButton()}}
   async function bootstrapAuth(){
     // Decide a tela antes de carregar o catálogo para nunca mostrar a página
     // principal por alguns instantes antes do login/painel.
@@ -7926,7 +7938,7 @@ function doSearch(q,target='busca'){
         : await fetch('/api/me',{credentials:'same-origin'});
       const data=await response.json().catch(()=>({}));
       if(!response.ok)throw new Error('Sessão expirada.');
-      const accountId=String(data.user?.id||''),listBaseline=readSyncListBaseline(accountId);
+      const accountId=String(data.user?.id||''),listBaseline=readSyncListBaseline(accountId),favoriteBaselines={series:readSyncCollectionBaseline(accountId,'favorites.series'),movies:readSyncCollectionBaseline(accountId,'favorites.movies')};
       if(previousAccountId&&previousAccountId!==accountId)syncBaseState=null;
       syncBaseState=data.state||{};
       if(!listBaseline)writeSyncListBaseline(accountId,syncBaseState.list||[]);
@@ -7934,7 +7946,7 @@ function doSearch(q,target='busca'){
       const localPositions=sameAccount?(user.positions||{}):{};
       const pendingState=readPendingAccountMerge(accountId);
       let mergedState=pendingState?mergeAccountAndGuestState(data.state||{},pendingState):(data.state||{});
-      if(sameAccount){mergedState=mergeAccountAndGuestState(mergedState,user);if(previousAccountId===accountId)mergedState.list=mergeSameAccountList(pendingState?mergedState.list:data.state?.list,user.list,listBaseline)}
+      if(sameAccount){mergedState=mergeAccountAndGuestState(mergedState,user);if(previousAccountId===accountId){mergedState.list=mergeSameAccountList(pendingState?mergedState.list:data.state?.list,user.list,listBaseline);mergedState.favorites=mergeSameAccountFavorites(pendingState?mergedState.favorites:data.state?.favorites,user.favorites,favoriteBaselines)}}
       const restoredState=applyPendingCustomListOperations(mergedState,accountId);
       user={...restoredState,profile:data.user?.name||'Coruja',username:data.user?.username||'',avatar:data.user?.avatar||'',userId:accountId,sessionToken:'cookie-session',followersCount:data.user?.followers||0,followingCount:data.user?.following||0};
       user.positions=mergePositionStates(localPositions,user.positions);
