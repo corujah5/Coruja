@@ -4447,6 +4447,22 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 }
 @media(prefers-reduced-motion:reduce){#descobrir .row{scroll-behavior:auto}}
 </style>
+<style id="profile-series-bottom-gap-fix">.profileCollectionPage.seriesProfileCollectionPage{min-height:0;padding-bottom:0}</style>
+<style id="profile-other-collections-bottom-gap-fix">
+/* Remove apenas a margem residual depois do último grupo; o padding do menu fica intacto. */
+.profileCollectionPage.seriesFavoritesCollectionPage #profileCollectionGrid>.profileCollectionStatusGroup:last-child,
+.profileCollectionPage.movieProfileCollectionPage #profileCollectionGrid>.profileCollectionStatusGroup:last-child,
+.profileCollectionPage.movieFavoritesCollectionPage #profileCollectionGrid>.profileCollectionStatusGroup:last-child{margin-bottom:0}
+.profileCollectionPage.movieProfileCollectionPage,
+.profileCollectionPage.movieFavoritesCollectionPage{min-height:0;padding-bottom:0}
+#perfil-colecao.active:has(.profileCollectionPage.seriesFavoritesCollectionPage),
+#perfil-colecao.active:has(.profileCollectionPage.movieProfileCollectionPage),
+#perfil-colecao.active:has(.profileCollectionPage.movieFavoritesCollectionPage){padding-bottom:0}
+/* As listas abertas já usam o recuo inferior do painel para liberar o menu fixo. */
+.profileListsSection.profileListsFullPage{margin-bottom:0}
+.profileListsFullPage .profileCustomListDetail{padding-bottom:0}
+#perfil:has(.profileListsSection.profileListsFullPage) .profileDashboard{padding-bottom:0}
+</style>
 </head>
 <body class="booting">
 <svg class="iconSprite" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" focusable="false">
