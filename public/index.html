@@ -6813,14 +6813,15 @@ return null}
     input.focus();
     input.select();
     $('.btn.outline',wrap).onclick=()=>wrap.remove();
-    $('.btn.yellow',wrap).onclick=async()=>{
+    $('.btn.yellow',wrap).onclick=()=>{
       const seconds=parsePosition(input.value);
       if(seconds===null){toast('Digite um tempo válido, como 32:15.');input.focus();return;}
-      await setPosition(tvId,season,episode,seconds,runtimeMinutes);
+      const syncPromise=setPosition(tvId,season,episode,seconds,runtimeMinutes);
       wrap.remove();
       toast(`Ponto salvo em ${formatPosition(seconds)}.`);
       if(onDone)onDone();
       renderContinue();
+      syncPromise.catch(error=>toast(error.message||'Ponto salvo neste dispositivo, mas a sincronização falhou.'));
     };
     wrap.onclick=e=>{if(e.target===wrap)wrap.remove();};
     input.onkeydown=e=>{if(e.key==='Enter')$('.btn.yellow',wrap).click();if(e.key==='Escape')wrap.remove();};
@@ -7196,7 +7197,7 @@ return null}
       return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${episodes.map(e=>{
         const key=`${state.current.id}-${n}-${e.episode_number}`;
         const done=!!user.watched[key]; const pos=getVisibleEpisodePosition(state.current.id,n,e.episode_number);
-         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><div class="episodeCodeLine"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b>${!done?episodeEstimatedEndMarkup(e.runtime,pos):''}</div><p>${escapeHtml(e.name||'Episódio')}</p>${seriesDetailUpcomingDateMarkup(e.air_date)}${episodePositionProgressMarkup(pos,e.runtime)}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
+         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><div class="episodeCodeLine"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b>${!done?episodeEstimatedEndMarkup(e.runtime,pos):''}</div><p>${escapeHtml(e.name||'Episódio')}</p>${seriesDetailUpcomingDateMarkup(e.air_date)}${episodePositionProgressMarkup(pos,e.runtime)}</div><div class="episodeActions"><button type="button" class="positionEdit episodePositionEdit" aria-label="Marcar onde parou em S${String(n).padStart(2,'0')} E${String(e.episode_number).padStart(2,'0')}" title="Marcar onde parou"><svg class="uiIcon" aria-hidden="true"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
       }).join('')}</div>`:''}`;
     }).join('');
 
@@ -7210,6 +7211,7 @@ return null}
     bindSeriesContinueCarousel($('#detailEpisódios'));
 
     $$('.episodePositionEdit',$('#detailEpisódios')).forEach(btn=>btn.onclick=async e=>{
+      e.preventDefault();
       e.stopPropagation();
       const article=btn.closest('[data-episode-open]');
       const ep=Number(article?.dataset.episodeOpen||0);
