@@ -8101,6 +8101,11 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
 #descobrir.isSearching #discoverSearchGrid .score,#descobrir.isSearching #discoverSearchGrid .poster>.favorite,#busca #searchGrid .score,#busca #searchGrid .poster>.favorite{display:none!important}
 #descobrir.isSearching #discoverSearchGrid .card>small,#descobrir.isSearching #discoverSearchGrid .card>.stars,#busca #searchGrid .card>small,#busca #searchGrid .card>.stars{display:none!important}
 #descobrir #discoverSearchGrid .searchFilterEmpty{grid-column:1/-1;min-height:125px;padding:20px;border:1px dashed #394438;border-radius:12px;background:#121713;color:#aeb9aa;text-align:center;line-height:1.5}
+/* Espaçamento compacto entre prateleiras, restrito à tela Descobrir. */
+#descobrir>.section{margin-block:8px;padding-block:6px}
+  #descobrir>.section:not(.trendsSection){padding-block:6px}
+#descobrir .row{padding-bottom:4px}
+#descobrir .row:empty{min-height:32px;padding-block:4px}
 @media(max-width:650px){
 #busca.searchView{padding-top:calc(var(--header-height) + 12px + env(safe-area-inset-top))}
 #busca.searchView{padding:calc(var(--header-height) + 12px + env(safe-area-inset-top)) 12px 24px}
@@ -8122,6 +8127,11 @@ if ('serviceWorker' in navigator && (location.protocol === 'https:' || location.
   #descobrir #discoverSearchGrid{grid-template-columns:repeat(3,minmax(0,1fr));gap:17px 9px}
   #descobrir #discoverSearchGrid .card h3{font-size:12px}
   #descobrir #discoverSearchGrid .card small{font-size:10px}
+  #descobrir>.section{margin-block:3px;padding-block:6px}
+  #descobrir>.section:not(.trendsSection){margin-block:3px;padding-block:6px}
+  #descobrir .row{padding-bottom:4px}
+  #descobrir .row:empty{min-height:32px;padding-block:4px}
+  .page:has(>#descobrir.active){padding-bottom:calc(80px + env(safe-area-inset-bottom))}
 }
 
 #detailFinishedBar.detailFinishedBar{height:7px;width:100%;overflow:hidden;background:#252925}
