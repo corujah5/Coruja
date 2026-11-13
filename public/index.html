@@ -7160,11 +7160,32 @@ return null}
     const timeLabel=formatPosition(elapsed);const durationLabel=hasDuration?formatPosition(durationSeconds):"";
     return `<div class="episodePositionProgress"><div class="episodePositionProgressInfo"><span><svg class="uiIcon" aria-hidden="true"><use href="#i-clock"></use></svg> Você parou em <strong>${timeLabel}</strong>${hasDuration?` de ${durationLabel}`:""}</span>${hasDuration?`<span>${percent}%</span>`:""}</div>${hasDuration?`<div class="episodePositionProgressTrack" role="progressbar" aria-label="Progresso salvo do episódio" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i style="width:${percent}%"></i></div>`:""}</div>`;
   }
+  let estimatedEndTimeRefreshTimer=null;
+  function refreshEstimatedEndTimes(){
+    const formatter=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'});
+    $$('[data-estimated-end-runtime]').forEach(element=>{
+      const duration=Math.max(0,Number(element.dataset.estimatedEndRuntime)||0)*60;
+      const elapsed=Math.min(duration,Math.max(0,Number(element.dataset.estimatedEndElapsed)||0));
+      const end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
+      element.textContent=` | Termina às ${formatter.format(end)}`;
+    });
+  }
+  function scheduleEstimatedEndTimeRefresh(){
+    clearTimeout(estimatedEndTimeRefreshTimer);
+    const delay=60000-(Date.now()%60000)+25;
+    estimatedEndTimeRefreshTimer=setTimeout(()=>{
+      refreshEstimatedEndTimes();
+      scheduleEstimatedEndTimeRefresh();
+    },delay);
+  }
+  scheduleEstimatedEndTimeRefresh();
+  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshEstimatedEndTimes()});
+  window.addEventListener('focus',refreshEstimatedEndTimes);
   function episodeEstimatedEndMarkup(runtimeMinutes,elapsedSeconds=0){
     const duration=Math.max(0,Number(runtimeMinutes)||0)*60;if(!duration)return'';
     const elapsed=Math.min(duration,Math.max(0,Number(elapsedSeconds)||0)),end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
     const label=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'}).format(end);
-    return `<span class="episodeEstimatedEnd" title="Previsão${elapsed>0?' a partir do ponto salvo':''}, se assistir agora"> | Termina às ${label}</span>`;
+    return `<span class="episodeEstimatedEnd" data-estimated-end-runtime="${Number(runtimeMinutes)||0}" data-estimated-end-elapsed="${elapsed}" title="Previsão${elapsed>0?' a partir do ponto salvo':''}, se assistir agora"> | Termina às ${label}</span>`;
   }
 
   async function loadTemporada(n){
