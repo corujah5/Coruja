@@ -7306,7 +7306,7 @@ return null}
       if((show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)){user.completedShows=user.completedShows||{};user.completedShows[String(showId)]=timestamp}
     }
     if(wasDone&&(show.status==='Ended'||show.status==='Canceled')&&season===Number(show.number_of_seasons||season)&&user.completedShows)delete user.completedShows[String(showId)];
-    save();await persistUserChange('Temporada sincronizada.');renderProfile();if(afterUpdate)await afterUpdate(season);await renderEpisódiosFeed();
+    save();await persistUserChange();renderProfile();if(afterUpdate)await afterUpdate(season);await renderEpisódiosFeed();
   }
   function bindSeasonToggleButtons(container,afterUpdate){
     $$('.seasonToggle',container).forEach(button=>button.onclick=async event=>{event.stopPropagation();const season=Number(button.dataset.seasonToggle),total=Number((state.current?.seasons||[]).find(item=>Number(item.season_number)===season)?.episode_count||0);await toggleSeasonWatched(season,total,afterUpdate)});
