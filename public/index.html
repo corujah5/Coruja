@@ -4419,7 +4419,8 @@ body:has(#episodios.seriesTrackerScreen.active){overflow-x:clip;overflow-y:visib
 #detailEpisódios .episodePositionProgressInfo strong,#detailEpisódios .episodePositionProgressInfo>span:last-child{color:#b8f34a;font-weight:800}
 #detailEpisódios .episodePositionProgressTrack{height:4px;overflow:hidden;border-radius:99px;background:#252b25}
 #detailEpisódios .episodePositionProgressTrack i{display:block;height:100%;border-radius:inherit;background:#b8f34a;transition:width .2s ease}
-.episodeEstimatedEnd{margin-top:4px;color:#b8f34a;font-size:10px;font-weight:800;line-height:1.25}
+.episodeEstimatedEnd{display:inline;margin-left:5px;color:#b8f34a;font-size:10px;font-weight:800;line-height:1.25;white-space:nowrap}
+.episodeCodeLine{display:flex;align-items:baseline;flex-wrap:wrap;gap:0}
 </style>
 <style id="discoverCarouselProfileStyles">
 #descobrir>.section:not(.trendsSection){border-color:transparent;background:transparent;box-shadow:none}
@@ -6744,7 +6745,7 @@ return null}
       const episode=(seasonCache.get(Number(entry.season))?.episodes||[]).find(item=>Number(item.episode_number)===Number(entry.episode));
       return{...entry,name:episode?.name||`Episódio ${entry.episode}`,poster:episode?.still_path||show.poster_path,runtime:Number(episode?.runtime||0)};
     });
-    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}</div><div class="scName">${escapeHtml(entry.name)}</div>${episodeEstimatedEndMarkup(entry.runtime,entry.pos?.seconds)}${episodePositionProgressMarkup(entry.pos?.seconds,entry.runtime)}</div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck" type="button" data-continue-index="${index}" aria-label="Marcar T${String(entry.season).padStart(2,'0')} E${String(entry.episode).padStart(2,'0')} como assistido" title="Marcar como assistido"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
+    const cards=hydrated.map((entry,index)=>`<div class="seriesContinueCard" data-continue-card="${index}"><img src="${escapeHtml(safeImageUrl(entry.poster))}" alt=""><div class="scInfo"><div class="scSeries">${escapeHtml(show.name||'Série')}</div><div class="scCode">T${String(entry.season).padStart(2,'0')} | E${String(entry.episode).padStart(2,'0')}${episodeEstimatedEndMarkup(entry.runtime,entry.pos?.seconds)}</div><div class="scName">${escapeHtml(entry.name)}</div>${episodePositionProgressMarkup(entry.pos?.seconds,entry.runtime)}</div><div class="seriesContinueActions"><button class="check continueCheck seriesTrackerCheck" type="button" data-continue-index="${index}" aria-label="Marcar T${String(entry.season).padStart(2,'0')} E${String(entry.episode).padStart(2,'0')} como assistido" title="Marcar como assistido"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button></div></div>`).join('');
     const html=`<div class="seriesContinue"><div class="seriesContinueTitle"><svg class="uiIcon"><use href="#i-play-circle"></use></svg>Continuar acompanhando</div><div class="seriesContinueRail" role="region" aria-label="Episódios para continuar acompanhando" tabindex="0">${cards}</div></div>`;
     return{html,entries:hydrated};
   }
@@ -7162,7 +7163,7 @@ return null}
     const duration=Math.max(0,Number(runtimeMinutes)||0)*60;if(!duration)return'';
     const elapsed=Math.min(duration,Math.max(0,Number(elapsedSeconds)||0)),end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
     const label=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'}).format(end);
-    return `<div class="episodeEstimatedEnd" title="Previsão${elapsed>0?' a partir do ponto salvo':''}, se assistir agora">Termina às ${label}</div>`;
+    return `<span class="episodeEstimatedEnd" title="Previsão${elapsed>0?' a partir do ponto salvo':''}, se assistir agora"> | Termina às ${label}</span>`;
   }
 
   async function loadTemporada(n){
@@ -7195,7 +7196,7 @@ return null}
       return `<div class="seasonRow ${expanded?'active':''}" data-season-row="${sn}" data-progress-state="${progress.state}" style="--season-progress:${percent}%"><div class="seasonLeft"><span class="seasonArrow">${expanded?'▴':'▾'}</span><span>${seasonLabel}</span></div><span class="seasonCount">${count}/${total}</span><button type="button" class="seasonToggle seriesTrackerCheck ${done?'isDone':''}" data-season-toggle="${sn}" aria-pressed="${done}" aria-label="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}" title="${done?'Desmarcar temporada como assistida':'Marcar temporada como assistida'}"><svg class="uiIcon" aria-hidden="true"><use href="#i-check"></use></svg></button><span class="seasonProgress" role="progressbar" aria-label="Progresso de ${seasonLabel}" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${percent}"><i></i></span></div>${expanded?`<div class="seasonEpisodes">${episodes.map(e=>{
         const key=`${state.current.id}-${n}-${e.episode_number}`;
         const done=!!user.watched[key]; const pos=getVisibleEpisodePosition(state.current.id,n,e.episode_number);
-         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b><p>${escapeHtml(e.name||'Episódio')}</p>${!done?episodeEstimatedEndMarkup(e.runtime,pos):''}${seriesDetailUpcomingDateMarkup(e.air_date)}${episodePositionProgressMarkup(pos,e.runtime)}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
+         return `<article class="episode" data-episode-open="${e.episode_number}"><img src="${escapeHtml(safeImageUrl(e.still_path||state.current.poster_path))}" data-episode-image="1" alt="${escapeHtml(e.name||'Episódio')}"><div class="episodeMain"><div class="episodeCodeLine"><b>S${String(n).padStart(2,'0')} | E${String(e.episode_number).padStart(2,'0')}</b>${!done?episodeEstimatedEndMarkup(e.runtime,pos):''}</div><p>${escapeHtml(e.name||'Episódio')}</p>${seriesDetailUpcomingDateMarkup(e.air_date)}${episodePositionProgressMarkup(pos,e.runtime)}</div><div class="episodeActions"><button class="positionEdit episodePositionEdit" type="button" title="Marcar onde parou"><svg class="uiIcon"><use href="#i-pencil"></use></svg></button>${episodeWatchButtonMarkup(key)}</div></article>`
       }).join('')}</div>`:''}`;
     }).join('');
 
