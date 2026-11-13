@@ -7340,7 +7340,19 @@ return null}
   $('#tabSobre').onclick=()=>{$('#tabSobre').classList.add('active');$('#tabEpisodios').classList.remove('active');$('#detailAbout').style.display='block';$('#detailEpisódios').style.display='none'};
   $('#tabEpisodios').onclick=()=>{$('#tabEpisodios').classList.add('active');$('#tabSobre').classList.remove('active');$('#detailAbout').style.display='none';$('#detailEpisódios').style.display='block';renderSeasonListCollapsed()};
   $('#backDetail').onclick=returnFromDetail;
+  let movieEndTimeInterval=null;
+  function renderMovieEstimatedEndTime(movieId,runtime=0){
+    const timeEl=$('#movieEstimatedEndTime');if(!timeEl)return;
+    const duration=Math.max(0,Number(runtime)||0)*60;
+    if(!duration||user.watchedMovies?.[String(movieId)]){timeEl.hidden=true;return}
+    const elapsed=Math.min(duration,Math.max(0,Number(getMoviePosition(movieId))||0));
+    const end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
+    timeEl.textContent=`Termina às ${new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'}).format(end)}`;
+    timeEl.title=elapsed>0?'Previsão a partir do ponto salvo, se assistir agora':'Previsão se começar agora';
+    timeEl.hidden=false;
+  }
   async function openMovie(id){
+    clearInterval(movieEndTimeInterval);movieEndTimeInterval=null;
     const routeHash='#movie-'+id;
     const box=$('#movieDetailContent');
     showView('movieDetail');
@@ -7357,7 +7369,7 @@ return null}
         ${safeBackdropUrl(d.backdrop_path)?`<img src="${escapeHtml(safeBackdropUrl(d.backdrop_path))}" alt="">`:''}
           <div class="movieDetailOverlay"><div class="movieDetailInfo">
             <h1>${escapeHtml(d.title||'Filme')}</h1>
-            <div class="detailMeta"><span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${escapeHtml((d.release_date||'').slice(0,4)||'—')}</span>${d.genres?.length?`<span class="dot">•</span><span>${genresPt(d.genres).map(escapeHtml).join(' • ')}</span>`:''}<span class="dot">•</span><span>${runtime?formatPosition(runtime*60):'Duração não informada'}</span></div>
+            <div class="detailMeta"><span>${Math.round((d.vote_average||0)*10)}%</span><span class="dot">•</span><span>${escapeHtml((d.release_date||'').slice(0,4)||'—')}</span>${d.genres?.length?`<span class="dot">•</span><span>${genresPt(d.genres).map(escapeHtml).join(' • ')}</span>`:''}<span class="dot">•</span><span>${runtime?formatPosition(runtime*60):'Duração não informada'}</span>${runtime?`<span class="dot">•</span><span id="movieEstimatedEndTime" class="movieEstimatedEndTime" title="Previsão se começar agora"></span>`:''}</div>
           </div></div>
         </div>
         <div id="moviePositionProgress" class="moviePositionProgress" hidden></div>
@@ -7375,6 +7387,11 @@ return null}
       bindCastPhotoFallbacks(box);
       bindSimilarMovieActions(box);
       renderMovieCompletion(id,d.title||'Filme',runtime);
+      renderMovieEstimatedEndTime(id,runtime);
+      if(runtime)movieEndTimeInterval=setInterval(()=>{
+        if(location.hash!==routeHash||!$('#movieDetail')?.classList.contains('active')){clearInterval(movieEndTimeInterval);movieEndTimeInterval=null;return}
+        renderMovieEstimatedEndTime(id,runtime);
+      },30000);
     }catch(e){
       if(!isCurrentDetailRoute(routeHash,box))return;
       box.removeAttribute('aria-busy');
@@ -7399,8 +7416,9 @@ return null}
     renderMoviePositionProgress(movieId,runtime);
     const area=$('#movieCompletionArea'); if(!area)return;
     const done=!!user.watchedMovies[String(movieId)];
+    renderMovieEstimatedEndTime(movieId,runtime);
     area.innerHTML=`<div class="movieDetailActions"><button type="button" class="detailListAction finishMovieBtn" id="finishMovieBtn" role="menuitem" aria-pressed="${done}" aria-label="${done?'Desmarcar filme como assistido':'Marcar filme como assistido'}">${cardActionIcon('i-check')}<span>${done?'Desmarcar filme como assistido':'Marcar filme como assistido'}</span></button><button type="button" class="detailListAction moviePositionButton" id="moviePositionButton" role="menuitem">${cardActionIcon('i-clock')}<span>Onde você parou?</span></button></div>`;
-    $('#moviePositionButton').onclick=()=>openMoviePositionEditor(movieId,runtime,()=>{renderMoviePositionProgress(movieId,runtime);renderContinue()});
+    $('#moviePositionButton').onclick=()=>openMoviePositionEditor(movieId,runtime,()=>{renderMoviePositionProgress(movieId,runtime);renderMovieEstimatedEndTime(movieId,runtime);renderContinue()});
     $('#finishMovieBtn').onclick=async()=>{
       if(done){
         delete user.watchedMovies[String(movieId)];
