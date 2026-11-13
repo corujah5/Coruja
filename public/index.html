@@ -7167,11 +7167,14 @@ return null}
   let estimatedEndTimeRefreshTimer=null;
   function refreshEstimatedEndTimes(){
     const formatter=new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'});
-    $$('[data-estimated-end-runtime]').forEach(element=>{
+    const elements=$$('[data-estimated-end-runtime]');
+    const movieTime=$('#movieEstimatedEndTime');
+    if(movieTime&&!elements.includes(movieTime))elements.push(movieTime);
+    elements.forEach(element=>{
       const duration=Math.max(0,Number(element.dataset.estimatedEndRuntime)||0)*60;
       const elapsed=Math.min(duration,Math.max(0,Number(element.dataset.estimatedEndElapsed)||0));
       const end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
-      element.textContent=` | Termina às ${formatter.format(end)}`;
+      element.textContent=`${element.classList.contains('episodeEstimatedEnd')?' | ':''}Termina às ${formatter.format(end)}`;
     });
   }
   function scheduleEstimatedEndTimeRefresh(){
@@ -7375,19 +7378,19 @@ return null}
   $('#tabSobre').onclick=()=>{$('#tabSobre').classList.add('active');$('#tabEpisodios').classList.remove('active');$('#detailAbout').style.display='block';$('#detailEpisódios').style.display='none'};
   $('#tabEpisodios').onclick=()=>{$('#tabEpisodios').classList.add('active');$('#tabSobre').classList.remove('active');$('#detailAbout').style.display='none';$('#detailEpisódios').style.display='block';renderSeasonListCollapsed()};
   $('#backDetail').onclick=returnFromDetail;
-  let movieEndTimeInterval=null;
   function renderMovieEstimatedEndTime(movieId,runtime=0){
     const timeEl=$('#movieEstimatedEndTime');if(!timeEl)return;
     const duration=Math.max(0,Number(runtime)||0)*60;
     if(!duration||user.watchedMovies?.[String(movieId)]){timeEl.hidden=true;return}
     const elapsed=Math.min(duration,Math.max(0,Number(getMoviePosition(movieId))||0));
+    timeEl.dataset.estimatedEndRuntime=String(Number(runtime)||0);
+    timeEl.dataset.estimatedEndElapsed=String(elapsed);
     const end=new Date(Date.now()+Math.max(0,duration-elapsed)*1000);
     timeEl.textContent=`Termina às ${new Intl.DateTimeFormat('pt-BR',{hour:'numeric',minute:'2-digit'}).format(end)}`;
     timeEl.title=elapsed>0?'Previsão a partir do ponto salvo, se assistir agora':'Previsão se começar agora';
     timeEl.hidden=false;
   }
   async function openMovie(id){
-    clearInterval(movieEndTimeInterval);movieEndTimeInterval=null;
     const routeHash='#movie-'+id;
     const box=$('#movieDetailContent');
     showView('movieDetail');
@@ -7423,10 +7426,6 @@ return null}
       bindSimilarMovieActions(box);
       renderMovieCompletion(id,d.title||'Filme',runtime);
       renderMovieEstimatedEndTime(id,runtime);
-      if(runtime)movieEndTimeInterval=setInterval(()=>{
-        if(location.hash!==routeHash||!$('#movieDetail')?.classList.contains('active')){clearInterval(movieEndTimeInterval);movieEndTimeInterval=null;return}
-        renderMovieEstimatedEndTime(id,runtime);
-      },30000);
     }catch(e){
       if(!isCurrentDetailRoute(routeHash,box))return;
       box.removeAttribute('aria-busy');
