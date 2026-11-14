@@ -459,13 +459,13 @@ test('series tracker visual polish keeps episode thumbnails, codes, titles, prog
   assert.doesNotMatch(html.slice(trackerCssStart, trackerCssEnd), /#perfil|#filmes/);
 });
 
-test('general profile series exposes the 11 remaining filter choices in the requested order', () => {
+test('general profile series exposes the 10 filter choices in the requested order', () => {
   const optionsStart = html.indexOf('const profileSeriesFilterOptions=');
   const optionsEnd = html.indexOf(';', optionsStart);
   assert.ok(optionsStart >= 0 && optionsEnd > optionsStart);
   const options = html.slice(optionsStart, optionsEnd);
   const labels = Array.from(options.matchAll(/\['[^']+','([^']+)'\]/g), match => match[1]);
-  assert.deepEqual(labels, ['Todas', 'Para ver', 'Brevemente', 'Sem ver há algum tempo', 'Não iniciadas', 'Ver mais tarde', 'Em dia', 'Terminadas', 'Canceladas', 'Interrompidas', 'Favoritas']);
+  assert.deepEqual(labels, ['Todas', 'Para ver', 'Brevemente', 'Sem ver há algum tempo', 'Não iniciadas', 'Em dia', 'Terminadas', 'Canceladas', 'Interrompidas', 'Favoritas']);
   assert.match(html, /id="profileCollectionFilterToggle"[^>]*hidden/);
   assert.match(html, /id="profileCollectionFilterMenu" class="profileCollectionFilterMenu" role="menu"/);
   assert.match(html, /data-profile-series-filter/);
